@@ -1,0 +1,29 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+      {
+        "name": "NODE DEBUG",
+        "program": "${workspaceFolder}/build/node-test/index.js",
+        "request": "launch",
+        "skipFiles": ["<node_internals>/**"],
+        "type": "node"
+      },
+      {
+        "type": "node",
+        "request": "launch",
+        "name": "TEST",
+        "program": "${workspaceRoot}/node_modules/jest/bin/jest.js",
+        "args": [
+          "--colors",
+          "--workerThreads",
+          "--maxWorkers",
+          "1",
+        ],
+        "skipFiles": [
+          "${workspaceRoot}/../../node_modules/**/*",
+          "<node_internals>/**/*"
+        ]
+      }
+    ]
+  }
+  

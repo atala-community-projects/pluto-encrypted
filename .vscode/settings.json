@@ -1,0 +1,15 @@
+{
+  "editor.formatOnSave": true,
+  "typescript.tsdk": "./node_modules/typescript/lib",
+  "files.exclude": {
+    "**/.git": true,
+    "**/.DS_Store": true
+  },
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "eslint.validate": ["typescript", "typescriptreact"],
+  "files.watcherExclude": {
+    "**/target": true
+  }
+}
