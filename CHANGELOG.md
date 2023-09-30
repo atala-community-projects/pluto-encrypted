@@ -1,3 +1,10 @@
+## [0.0.9](https://github.com/elribonazo/pluto-encrypted/compare/v0.0.8...v0.0.9) (2023-09-30)
+
+
+### Bug Fixes
+
+* encrypt privatekey sensitive data. ([#9](https://github.com/elribonazo/pluto-encrypted/issues/9)) ([bc30040](https://github.com/elribonazo/pluto-encrypted/commit/bc3004022e5c22e6b90b2970e8a58b9529841785))
+
 ## [0.0.8](https://github.com/elribonazo/pluto-encrypted/compare/v0.0.7...v0.0.8) (2023-09-30)
 
 
