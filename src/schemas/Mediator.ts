@@ -1,11 +1,6 @@
-import { GenerateDBSchema } from "../types";
+import { GenerateDBSchema, MediarorSchemaType } from "../types";
 
-const MediatorSchema: GenerateDBSchema<{
-  id: string;
-  mediatorDID: string;
-  hostDID: string;
-  routingDID: string;
-}> = {
+const MediatorSchema: GenerateDBSchema<MediarorSchemaType> = {
   version: 0,
   primaryKey: "id",
   type: "object",

@@ -1,7 +1,6 @@
-import { Domain } from "@input-output-hk/atala-prism-wallet-sdk";
-import { GenerateDBSchema } from "../types";
+import { GenerateDBSchema, MessageSchemaType } from "../types";
 
-const MessageSchema: GenerateDBSchema<Domain.Message> = {
+const MessageSchema: GenerateDBSchema<MessageSchemaType> = {
   version: 0,
   primaryKey: "id",
   type: "object",
