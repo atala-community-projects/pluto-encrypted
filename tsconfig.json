@@ -34,7 +34,7 @@
     "incremental": true,
     "composite": true,
     "noEmit": true,
-    "types": ["jest"]
+    "types": ["jest", "node"]
   },
   "exclude": ["node_modules"],
   "include": ["src"]

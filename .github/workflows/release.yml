@@ -3,7 +3,7 @@ name: Release
 on:
   push:
     branches:
-      - main  # adjust this to your main development branch if it's not "main"
+      - master  # adjust this to your main development branch if it's not "main"
   workflow_dispatch:  # this allows for manual triggering
 
 jobs:
