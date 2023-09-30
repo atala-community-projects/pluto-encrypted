@@ -1,7 +1,7 @@
 {
   "name": "pluto-encrypted",
   "version": "0.0.1",
-  "description": "Contains an [Atala Prism Wallet SDK Pluto](https://input-output-hk.github.io/atala-prism-wallet-sdk-ts/interfaces/Domain.Pluto.html) implementation using Dexie and Dexie Encrypted.",
+  "description": "A \"secure\" IndexDB Wrapper for AtalaPrism -> Pluto storage.",
   "main": "./build/index.js",
   "types": "./build/index.d.ts",
   "type": "module",
@@ -61,7 +61,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/elribonazo/prism-pluto-encrypted.git"
+    "url": "https://github.com/elribonazo/pluto-encrypted.git"
   },
   "devDependencies": {
     "@babel/preset-env": "^7.22.20",
