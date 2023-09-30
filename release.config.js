@@ -9,6 +9,7 @@ export default {
         assets: ["package.json"],
         message:
           "chore(release): ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}",
+        signedCommit: true,
       },
     ],
     "@semantic-release/github",
