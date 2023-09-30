@@ -3,6 +3,15 @@
 
 ### Bug Fixes
 
+* change test db name ([09b594a](https://github.com/elribonazo/pluto-encrypted/commit/09b594a2083e0ec6a757a483cb38d6be5bd03e47))
+* change test db name ([#7](https://github.com/elribonazo/pluto-encrypted/issues/7)) ([c5fa3ae](https://github.com/elribonazo/pluto-encrypted/commit/c5fa3ae142c1362f8c2e96048117e8ac3cd5071a))
+* Fix models ([79f7468](https://github.com/elribonazo/pluto-encrypted/commit/79f7468c0632f7cb73359eb69fcedc5426246274))
+
+## [0.0.8](https://github.com/elribonazo/pluto-encrypted/compare/v0.0.7...v0.0.8) (2023-09-30)
+
+
+### Bug Fixes
+
 * change test db name ([#7](https://github.com/elribonazo/pluto-encrypted/issues/7)) ([c5fa3ae](https://github.com/elribonazo/pluto-encrypted/commit/c5fa3ae142c1362f8c2e96048117e8ac3cd5071a))
 * Fix models ([79f7468](https://github.com/elribonazo/pluto-encrypted/commit/79f7468c0632f7cb73359eb69fcedc5426246274))
 
