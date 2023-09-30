@@ -5,7 +5,8 @@ import { Database } from "../src";
 import { randomUUID } from "crypto";
 import { Apollo, Domain } from "@input-output-hk/atala-prism-wallet-sdk";
 
-const databaseName = "test";
+const databaseName = "prism-db";
+
 describe("Pluto + Dexie encrypted integration for browsers", () => {
   it("Should be able to instanciate an encrypted IndexDB Database and throw an error if started with wrong password", async () => {
     async function createAndLoad(password: Uint8Array) {
