@@ -5,10 +5,11 @@ import { createRxDatabase } from "rxdb";
 import { RxError } from "rxdb/dist/lib/rx-error";
 import { addRxPlugin } from "rxdb";
 import { RxDBMigrationPlugin } from "rxdb/plugins/migration";
+import { v4 as uuidv4 } from "uuid";
 
 import MessageSchema from "./schemas/Message";
 import DIDSchema from "./schemas/DID";
-import { PlutoCollections, PlutoDatabase } from "./types";
+import { KeySpec, PlutoCollections, PlutoDatabase } from "./types";
 import CredentialSchema from "./schemas/Credential";
 import DIDPairSchema from "./schemas/DIDPair";
 import MediatorSchema from "./schemas/Mediator";
@@ -78,17 +79,87 @@ export class Database implements Domain.Pluto {
     did: Domain.DID,
     keyPathIndex: number,
     privateKey: Domain.PrivateKey,
-    privateKeyMetaId: string | null,
+    privateKeyMetaId?: string | null,
     alias?: string | undefined
   ): Promise<void> {
-    throw new Error("Method not implemented.");
+    await this.db.dids.insert({
+      did: did.toString(),
+      method: did.method,
+      methodId: did.methodId,
+      schema: did.schema,
+      alias: alias,
+    });
+
+    const initialSpec: KeySpec[] = [
+      {
+        type: "string",
+        name: "raw",
+        value: Buffer.from(privateKey.getEncoded()).toString("hex"),
+      },
+      {
+        type: "number",
+        name: "index",
+        value: `${keyPathIndex}`,
+      },
+    ];
+
+    const keySpecification = Array.from(privateKey.keySpecification).reduce(
+      (all, [key, value]) => {
+        all.push({
+          type: "string",
+          name: key,
+          value: `${value}`,
+        });
+        return all;
+      },
+      initialSpec
+    );
+
+    await this.db.privateKeys.insert({
+      id: uuidv4(),
+      did: did.toString(),
+      type: privateKey.type,
+      keySpecification,
+    });
   }
 
-  storePeerDID(
+  async storePeerDID(
     did: Domain.DID,
     privateKeys: Domain.PrivateKey[]
   ): Promise<void> {
-    throw new Error("Method not implemented.");
+    await this.db.dids.insert({
+      did: did.toString(),
+      method: did.method,
+      methodId: did.methodId,
+      schema: did.schema,
+    });
+
+    await Promise.all(
+      privateKeys.map((prv) =>
+        this.db.privateKeys.insert({
+          id: uuidv4(),
+          did: did.toString(),
+          type: prv.type,
+          keySpecification: Array.from(prv.keySpecification).reduce(
+            (all, [key, value]) => {
+              all.push({
+                type: "string",
+                name: key,
+                value: `${value}`,
+              });
+              return all;
+            },
+            [
+              {
+                type: "string",
+                name: "raw",
+                value: Buffer.from(prv.getEncoded()).toString("hex"),
+              },
+            ] as KeySpec[]
+          ),
+        })
+      )
+    );
   }
 
   storeDIDPair(
@@ -99,21 +170,51 @@ export class Database implements Domain.Pluto {
     throw new Error("Method not implemented.");
   }
 
-  storePrivateKeys(
+  async storePrivateKeys(
     privateKey: Domain.PrivateKey,
     did: Domain.DID,
     keyPathIndex: number,
     metaId: string | null
   ): Promise<void> {
-    throw new Error("Method not implemented.");
+    await this.db.privateKeys.insert({
+      id: uuidv4(),
+      did: did.toString(),
+      type: privateKey.type,
+      keySpecification: Array.from(privateKey.keySpecification).reduce(
+        (all, [key, value]) => {
+          all.push({
+            type: "string",
+            name: key,
+            value: `${value}`,
+          });
+          return all;
+        },
+        [
+          {
+            type: "string",
+            name: "raw",
+            value: Buffer.from(privateKey.getEncoded()).toString("hex"),
+          },
+          {
+            type: "number",
+            name: "index",
+            value: `${keyPathIndex}`,
+          },
+        ] as KeySpec[]
+      ),
+    });
   }
 
-  storeMediator(
+  async storeMediator(
     mediator: Domain.DID,
     host: Domain.DID,
     routing: Domain.DID
   ): Promise<void> {
-    throw new Error("Method not implemented.");
+    await this.db.mediators.insert({
+      mediatorDID: mediator.toString(),
+      hostDID: host.toString(),
+      routingDID: routing.toString(),
+    });
   }
 
   storeCredential(credential: Domain.VerifiableCredential): Promise<void> {

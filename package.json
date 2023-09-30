@@ -26,6 +26,9 @@
       "node_modules/(?!sinon)"
     ],
     "moduleNameMapper": {
+      "^uint8arrays$": "<rootDir>/node_modules/uint8arrays/cjs/src",
+      "^uint8arrays/(.*)$": "<rootDir>/node_modules/uint8arrays/cjs/src/$1",
+      "^multiformats/(.*)$": "<rootDir>/node_modules/multiformats/cjs/src/$1",
       "^rxdb/(.*)$": "<rootDir>/node_modules/rxdb/$1",
       "^dexie$": "<rootDir>/node_modules/dexie",
       "^core-js/modules/(.*)$": "<rootDir>/node_modules/core-js/modules/$1"
@@ -121,6 +124,7 @@
     "dexie": "^3.2.4",
     "dexie-encrypted": "https://github.com/metafig/dexie-encrypted.git",
     "reflect-metadata": "^0.1.13",
-    "rxdb": "^14.17.0"
+    "rxdb": "^14.17.0",
+    "uuid": "^9.0.1"
   }
 }
