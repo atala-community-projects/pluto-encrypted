@@ -1,6 +1,6 @@
-import { GenerateDBSchema, MessageSchemaType } from "../types";
+import { Schema, MessageSchemaType } from "../types";
 
-const MessageSchema: GenerateDBSchema<MessageSchemaType> = {
+const MessageSchema: Schema<MessageSchemaType> = {
   version: 0,
   primaryKey: "id",
   type: "object",

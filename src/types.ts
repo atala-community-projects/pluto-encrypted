@@ -15,7 +15,7 @@ export type DIDSchemaType = NoKeys<Domain.DID, "toString"> & {
   alias?: string;
   did: string;
 };
-export type DIDPairSchemaType = Domain.DIDPair;
+export type DIDPairSchemaType = Domain.DIDPair & { id: string };
 export type KeySpec = {
   name: string;
   type: string;
@@ -29,6 +29,7 @@ export type KeySchemaType = {
 };
 
 export type MediarorSchemaType = {
+  id: string;
   mediatorDID: string;
   hostDID: string;
   routingDID: string;

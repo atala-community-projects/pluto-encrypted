@@ -1,6 +1,6 @@
-import { DIDPairSchemaType, GenerateDBSchema } from "../types";
+import { DIDPairSchemaType, Schema } from "../types";
 
-const DIDPairSchema: GenerateDBSchema<DIDPairSchemaType> = {
+const DIDPairSchema: Schema<DIDPairSchemaType> = {
   version: 0,
   primaryKey: "id",
   type: "object",

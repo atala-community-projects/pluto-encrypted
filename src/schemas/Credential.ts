@@ -1,6 +1,6 @@
-import { CredentialSchemaType, GenerateDBSchema } from "../types";
+import { CredentialSchemaType, Schema } from "../types";
 
-const CredentialSchema: GenerateDBSchema<CredentialSchemaType> = {
+const CredentialSchema: Schema<CredentialSchemaType> = {
   version: 0,
   primaryKey: "id",
   type: "object",
