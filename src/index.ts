@@ -211,6 +211,7 @@ export class Database implements Domain.Pluto {
     routing: Domain.DID
   ): Promise<void> {
     await this.db.mediators.insert({
+      id: uuidv4(),
       mediatorDID: mediator.toString(),
       hostDID: host.toString(),
       routingDID: routing.toString(),
