@@ -33,8 +33,8 @@ const PrivateKeySchema: Schema<KeySchemaType> = {
       },
     },
   },
-  encrypted: [],
-  required: [],
+  encrypted: ["keySpecification", "type"],
+  required: ["keySpecification", "did", "type", "id"],
 };
 
 export default PrivateKeySchema;
