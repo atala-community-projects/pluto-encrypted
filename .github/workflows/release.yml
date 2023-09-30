@@ -21,6 +21,7 @@ jobs:
             submodules: 'recursive'
             token: ${{ secrets.PLUTO_GITHUB }}
             fetch-depth: 0
+            ref: ${{ github.event.pull_request.base.ref }}
 
       - name: Setup Node.js
         uses: actions/setup-node@v3

@@ -1,6 +1,6 @@
 {
   "name": "prism-pluto-encrypted",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "Contains an [Atala Prism Wallet SDK Pluto](https://input-output-hk.github.io/atala-prism-wallet-sdk-ts/interfaces/Domain.Pluto.html) implementation using Dexie and Dexie Encrypted.",
   "main": "./build/index.js",
   "types": "./build/index.d.ts",
