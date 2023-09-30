@@ -1,3 +1,10 @@
+## [0.0.7](https://github.com/elribonazo/pluto-encrypted/compare/v0.0.6...v0.0.7) (2023-09-30)
+
+
+### Bug Fixes
+
+* Simplify models ([#6](https://github.com/elribonazo/pluto-encrypted/issues/6)) ([c25f0b1](https://github.com/elribonazo/pluto-encrypted/commit/c25f0b11cfd0833de04e1be0a4f0b4ffa733353e))
+
 ## [0.0.6](https://github.com/elribonazo/pluto-encrypted/compare/v0.0.5...v0.0.6) (2023-09-30)
 
 
