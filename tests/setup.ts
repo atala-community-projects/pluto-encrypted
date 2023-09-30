@@ -1,4 +1,5 @@
 import "fake-indexeddb/auto";
+import { TextEncoder, TextDecoder } from "util";
 import { addRxPlugin } from "rxdb";
 import { RxDBDevModePlugin } from "rxdb/plugins/dev-mode";
 import nodeCrypto from "crypto";
@@ -12,3 +13,5 @@ Object.defineProperty(globalThis, "crypto", {
     getRandomValues: (arr) => nodeCrypto.getRandomValues(arr),
   },
 });
+
+Object.assign(global, { TextDecoder, TextEncoder });

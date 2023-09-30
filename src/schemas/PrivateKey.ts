@@ -1,6 +1,6 @@
-import { GenerateDBSchema, KeySchemaType } from "../types";
+import { Schema, KeySchemaType } from "../types";
 
-const PrivateKeySchema: GenerateDBSchema<KeySchemaType> = {
+const PrivateKeySchema: Schema<KeySchemaType> = {
   version: 0,
   primaryKey: "id",
   type: "object",
@@ -9,10 +9,10 @@ const PrivateKeySchema: GenerateDBSchema<KeySchemaType> = {
       type: "string",
       maxLength: 60,
     },
-    type: {
+    did: {
       type: "string",
     },
-    raw: {
+    type: {
       type: "string",
     },
     keySpecification: {
@@ -33,8 +33,8 @@ const PrivateKeySchema: GenerateDBSchema<KeySchemaType> = {
       },
     },
   },
-  encrypted: ["keySpecification", "raw"],
-  required: ["id", "keySpecification", "type", "raw"],
+  encrypted: [],
+  required: [],
 };
 
 export default PrivateKeySchema;

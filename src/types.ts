@@ -1,34 +1,34 @@
 import type { Domain } from "@input-output-hk/atala-prism-wallet-sdk";
 import { RxJsonSchema, RxCollection, RxDatabase } from "rxdb";
 
-export type ExcludeKeys<T, K extends keyof T> = {
+export type NoKeys<T, K extends keyof T> = {
   [P in Exclude<keyof T, K>]: T[P];
 };
 
-export type GenerateDBSchema<T> = RxJsonSchema<T> & {
+export type Schema<T> = RxJsonSchema<T> & {
   encrypted: (keyof T)[];
 };
 
 export type CredentialSchemaType = Domain.VerifiableCredential;
-export type DIDSchemaType = ExcludeKeys<
-  Domain.DID & { readonly alias: string; readonly did: string },
-  "toString"
->;
-export type DIDPairSchemaType = Domain.DIDPair & { readonly id: string };
-export type KeySchemaType = ExcludeKeys<
-  Domain.Key & { readonly id: string },
-  | "isExportable"
-  | "size"
-  | "getProperty"
-  | "isDerivable"
-  | "isSignable"
-  | "getEncoded"
-  | "canVerify"
-  | "isCurve"
->;
+
+export type DIDSchemaType = NoKeys<Domain.DID, "toString"> & {
+  alias?: string;
+  did: string;
+};
+export type DIDPairSchemaType = Domain.DIDPair;
+export type KeySpec = {
+  name: string;
+  type: string;
+  value: string;
+};
+export type KeySchemaType = {
+  id: string;
+  type: string;
+  did: string;
+  keySpecification: KeySpec[];
+};
 
 export type MediarorSchemaType = {
-  id: string;
   mediatorDID: string;
   hostDID: string;
   routingDID: string;

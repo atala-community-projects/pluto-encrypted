@@ -1,6 +1,6 @@
-import { DIDSchemaType, GenerateDBSchema } from "../types";
+import { DIDSchemaType, Schema } from "../types";
 
-const DIDSchema: GenerateDBSchema<DIDSchemaType> = {
+const DIDSchema: Schema<DIDSchemaType> = {
   version: 0,
   primaryKey: "did",
   type: "object",
@@ -27,7 +27,7 @@ const DIDSchema: GenerateDBSchema<DIDSchemaType> = {
     },
   },
   encrypted: ["method", "methodId", "schema"],
-  required: ["method", "methodId", "alias", "did", "schema"],
+  required: ["method", "methodId", "did", "schema"],
 };
 
 export default DIDSchema;
