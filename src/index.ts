@@ -1,4 +1,4 @@
-import { Domain } from "@input-output-hk/atala-prism-wallet-sdk";
+import type { Domain } from "@input-output-hk/atala-prism-wallet-sdk";
 import { getRxStorageDexie } from "rxdb/plugins/storage-dexie";
 import { wrappedKeyEncryptionCryptoJsStorage } from "rxdb/plugins/encryption-crypto-js";
 import { createRxDatabase } from "rxdb";
@@ -8,7 +8,7 @@ import { RxDBMigrationPlugin } from "rxdb/plugins/migration";
 
 import MessageSchema from "./schemas/Message";
 import DIDSchema from "./schemas/DID";
-import { PlutoDatabase } from "./types";
+import { PlutoCollections, PlutoDatabase } from "./types";
 import CredentialSchema from "./schemas/Credential";
 import DIDPairSchema from "./schemas/DIDPair";
 import MediatorSchema from "./schemas/Mediator";
@@ -16,6 +16,7 @@ import PrivateKeySchema from "./schemas/PrivateKey";
 
 addRxPlugin(RxDBMigrationPlugin);
 //New change
+
 export class Database implements Domain.Pluto {
   constructor(private db: PlutoDatabase) {}
 
@@ -29,14 +30,14 @@ export class Database implements Domain.Pluto {
         }),
         password: Buffer.from(encryptionKey).toString("hex"),
       });
-      await myDatabase.addCollections({
+      await myDatabase.addCollections<PlutoCollections>({
         messages: {
           schema: MessageSchema,
         },
         dids: {
           schema: DIDSchema,
         },
-        credentials: {
+        verifiableCredentials: {
           schema: CredentialSchema,
         },
         didpairs: {
@@ -73,7 +74,7 @@ export class Database implements Domain.Pluto {
     throw new Error("Method not implemented.");
   }
 
-  storePrismDID(
+  async storePrismDID(
     did: Domain.DID,
     keyPathIndex: number,
     privateKey: Domain.PrivateKey,
@@ -114,6 +115,7 @@ export class Database implements Domain.Pluto {
   ): Promise<void> {
     throw new Error("Method not implemented.");
   }
+
   storeCredential(credential: Domain.VerifiableCredential): Promise<void> {
     throw new Error("Method not implemented.");
   }
@@ -150,7 +152,6 @@ export class Database implements Domain.Pluto {
   getPairByName(name: string): Promise<Domain.DIDPair | null> {
     throw new Error("Method not implemented.");
   }
-
   getAllMessagesByDID(did: Domain.DID): Promise<Domain.Message[]> {
     throw new Error("Method not implemented.");
   }
