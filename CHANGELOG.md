@@ -1,3 +1,10 @@
+## [0.0.6](https://github.com/elribonazo/pluto-encrypted/compare/v0.0.5...v0.0.6) (2023-09-30)
+
+
+### Bug Fixes
+
+* Improve types and add method ([#5](https://github.com/elribonazo/pluto-encrypted/issues/5)) ([468e590](https://github.com/elribonazo/pluto-encrypted/commit/468e5909d7ea7b8c60b37c83e8a509ff1af5022b))
+
 ## [0.0.5](https://github.com/elribonazo/pluto-encrypted/compare/v0.0.4...v0.0.5) (2023-09-30)
 
 
