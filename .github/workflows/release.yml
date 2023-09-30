@@ -18,7 +18,7 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v3
         with:
-            submodules: 'recursive'  # ensures submodules are cloned properly
+            submodules: 'recursive'
             token: ${{ secrets.PLUTO_GITHUB }}
             fetch-depth: 0
 
