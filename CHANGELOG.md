@@ -1,3 +1,10 @@
+## [0.0.14](https://github.com/elribonazo/pluto-encrypted/compare/v0.0.13...v0.0.14) (2023-10-01)
+
+
+### Bug Fixes
+
+* change rollup build to es ([#15](https://github.com/elribonazo/pluto-encrypted/issues/15)) ([e316378](https://github.com/elribonazo/pluto-encrypted/commit/e316378b3e496aa67af6c8a3046ff1c445f05252))
+
 ## [0.0.13](https://github.com/elribonazo/pluto-encrypted/compare/v0.0.12...v0.0.13) (2023-10-01)
 
 
