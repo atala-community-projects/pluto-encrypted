@@ -18,7 +18,7 @@ function CreateConfig(buildPath, plugins = [], extraInputs = []) {
     output: {
       sourcemap: true,
       dir: buildPath ? `build/${buildPath}` : `build`,
-      format: "iife",
+      format: "es",
     },
     plugins: [
       ignore(externals),
