@@ -440,7 +440,6 @@ export class Database implements Domain.Pluto {
 
   async getDIDInfoByAlias(alias: string): Promise<Domain.PrismDIDInfo[]> {
     const dids = await this.db.dids.find().where({ alias: alias }).exec();
-    debugger;
     const prismDIDInfo: Domain.PrismDIDInfo[] = [];
     for (let did of dids) {
       const didPrivateKeys = await this.getDIDPrivateKeysByDID(
