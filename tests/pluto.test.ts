@@ -4,6 +4,7 @@ import expect from "expect";
 import { Database } from "../src";
 import { randomUUID } from "crypto";
 import { Apollo, Domain } from "@input-output-hk/atala-prism-wallet-sdk";
+import * as Fixtures from "./fixtures";
 
 const databaseName = "prism-db";
 const keyData = new Uint8Array(32);
@@ -42,7 +43,7 @@ describe("Pluto + Dexie encrypted integration for browsers", () => {
     );
   });
 
-  it("Should store a new DID and its privateKeys", async () => {
+  it("Should store a new Prism DID and its privateKeys", async () => {
     const db = await Database.createEncrypted(
       `${databaseName}${randomUUID()}`,
       defaultPassword
@@ -51,10 +52,7 @@ describe("Pluto + Dexie encrypted integration for browsers", () => {
     const did = Domain.DID.fromString(
       "did:prism:733e594871d7700d35e6116011a08fc11e88ff9d366d8b5571ffc1aa18d249ea:Ct8BCtwBEnQKH2F1dGhlbnRpY2F0aW9uYXV0aGVudGljYXRpb25LZXkQBEJPCglzZWNwMjU2azESIDS5zeYUkLCSAJLI6aLXRTPRxstCLPUEI6TgBrAVCHkwGiDk-ffklrHIFW7pKkT8i-YksXi-XXi5h31czUMaVClcpxJkCg9tYXN0ZXJtYXN0ZXJLZXkQAUJPCglzZWNwMjU2azESIDS5zeYUkLCSAJLI6aLXRTPRxstCLPUEI6TgBrAVCHkwGiDk-ffklrHIFW7pKkT8i-YksXi-XXi5h31czUMaVClcpw"
     );
-    const privateKey = apollo.createPrivateKey({
-      type: Domain.KeyTypes.EC,
-      curve: Domain.Curve.ED25519,
-    });
+    const privateKey = Fixtures.secp256K1.privateKey;
     await db.storePrismDID(did, 0, privateKey);
   });
 
@@ -102,14 +100,8 @@ describe("Pluto + Dexie encrypted integration for browsers", () => {
       "2.Ez6LSms555YhFthn1WV8ciDBpZm86hK9tp83WojJUmxPGk1hZ.Vz6MkmdBjMyB4TS5UbbQw54szm8yvMMf1ftGV2sQVYAxaeWhE.SeyJpZCI6Im5ldy1pZCIsInQiOiJkbSIsInMiOiJodHRwczovL21lZGlhdG9yLnJvb3RzaWQuY2xvdWQiLCJhIjpbImRpZGNvbW0vdjIiXX0"
     );
     await db.storePeerDID(did, [
-      apollo.createPrivateKey({
-        type: Domain.KeyTypes.EC,
-        curve: Domain.Curve.ED25519,
-      }),
-      apollo.createPrivateKey({
-        type: Domain.KeyTypes.Curve25519,
-        curve: Domain.Curve.X25519,
-      }),
+      Fixtures.ed25519.privateKey,
+      Fixtures.x25519.privateKey,
     ]);
   });
 
