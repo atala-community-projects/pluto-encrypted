@@ -1,9 +1,5 @@
 import {
   Domain,
-  Ed25519PrivateKey,
-  KeyProperties,
-  Secp256k1PrivateKey,
-  X25519PrivateKey,
 } from "@input-output-hk/atala-prism-wallet-sdk";
 import { getRxStorageDexie } from "rxdb/plugins/storage-dexie";
 import { wrappedKeyEncryptionCryptoJsStorage } from "rxdb/plugins/encryption-crypto-js";
@@ -20,7 +16,7 @@ import DIDSchema, { DIDSchemaType } from "./schemas/DID";
 import CredentialSchema, { CredentialSchemaType } from "./schemas/Credential";
 import DIDPairSchema, { DIDPairSchemaType } from "./schemas/DIDPair";
 import MediatorSchema, { MediarorSchemaType } from "./schemas/Mediator";
-import PrivateKeySchema, { KeySchemaType, KeySpec } from "./schemas/PrivateKey";
+import PrivateKeySchema, { KeySpec, PrivateKeyColletion, PrivateKeyDocument, PrivateKeyMethods } from "./schemas/PrivateKey";
 
 addRxPlugin(RxDBMigrationPlugin);
 addRxPlugin(RxDBQueryBuilderPlugin);
@@ -39,7 +35,7 @@ export type PlutoCollections = {
   verifiableCredentials: RxCollection<CredentialSchemaType>;
   didpairs: RxCollection<DIDPairSchemaType>;
   mediators: RxCollection<MediarorSchemaType>;
-  privateKeys: RxCollection<KeySchemaType>;
+  privateKeys: PrivateKeyColletion;
 };
 export type PlutoDatabase = RxDatabase<PlutoCollections>;
 
@@ -58,26 +54,6 @@ export class Database implements Domain.Pluto {
     return this._db;
   }
 
-  private collections = {
-    messages: {
-      schema: MessageSchema,
-    },
-    dids: {
-      schema: DIDSchema,
-    },
-    verifiableCredentials: {
-      schema: CredentialSchema,
-    },
-    didpairs: {
-      schema: DIDPairSchema,
-    },
-    mediators: {
-      schema: MediatorSchema,
-    },
-    privateKeys: {
-      schema: PrivateKeySchema,
-    },
-  };
 
   constructor(private dbOptions: RxDatabaseCreator) { }
 
@@ -118,10 +94,30 @@ export class Database implements Domain.Pluto {
   }
 
   async start(): Promise<void> {
-    const { dbOptions, collections } = this;
+    const { dbOptions } = this;
     try {
       const database = await createRxDatabase<PlutoDatabase>(dbOptions);
-      await database.addCollections<PlutoCollections>(collections);
+      await database.addCollections<PlutoCollections>({
+        messages: {
+          schema: MessageSchema,
+        },
+        dids: {
+          schema: DIDSchema,
+        },
+        verifiableCredentials: {
+          schema: CredentialSchema,
+        },
+        didpairs: {
+          schema: DIDPairSchema,
+        },
+        mediators: {
+          schema: MediatorSchema,
+        },
+        privateKeys: {
+          schema: PrivateKeySchema,
+          methods: PrivateKeyMethods
+        },
+      });
       this._db = database;
     } catch (err) {
       if (err instanceof RxError && (err as RxError).code === "DB1") {
@@ -295,100 +291,9 @@ export class Database implements Domain.Pluto {
   }
 
   private getPrivateKeyFromDB(
-    privateKey: RxDocument<KeySchemaType, {}>
+    privateKey: PrivateKeyDocument
   ): Domain.PrivateKey {
-    const { type, keySpecification } = privateKey;
-    const curve = keySpecification.find(
-      (item) => item.name === KeyProperties.curve
-    );
-    const raw = keySpecification.find(
-      (item) => item.name === KeyProperties.rawKey
-    );
-    if (!(type in Domain.KeyTypes)) {
-      throw new Error(`Invalid KeyType ${type}`);
-    }
-    if (!curve) {
-      throw new Error("Undefined key curve");
-    }
-    if (!raw) {
-      throw new Error("Undefined key raw");
-    }
-
-    if (
-      curve.value !== Domain.Curve.SECP256K1 &&
-      curve.value !== Domain.Curve.ED25519 &&
-      curve.value !== Domain.Curve.X25519
-    ) {
-      throw new Error(`Invalid key curve ${curve.value}`);
-    }
-
-    if (type === Domain.KeyTypes.EC) {
-      if (curve.value === Domain.Curve.SECP256K1) {
-        const index = keySpecification.find(
-          (item) => item.name === KeyProperties.index
-        );
-        const seed = keySpecification.find(
-          (item) => item.name === KeyProperties.seed
-        );
-
-        const privateKey = new Secp256k1PrivateKey(
-          Buffer.from(raw.value, "hex")
-        );
-
-        privateKey.keySpecification.set(Domain.KeyProperties.rawKey, raw.value);
-
-        privateKey.keySpecification.set(
-          Domain.KeyProperties.curve,
-          Domain.Curve.SECP256K1
-        );
-
-        if (index) {
-          privateKey.keySpecification.set(
-            Domain.KeyProperties.index,
-            index.value
-          );
-        }
-
-        if (seed) {
-          privateKey.keySpecification.set(
-            Domain.KeyProperties.seed,
-            seed.value
-          );
-        }
-
-        return privateKey;
-      }
-
-      if (curve.value === Domain.Curve.ED25519) {
-        const privateKey = new Ed25519PrivateKey(Buffer.from(raw.value, "hex"));
-
-        privateKey.keySpecification.set(Domain.KeyProperties.rawKey, raw.value);
-
-        privateKey.keySpecification.set(
-          Domain.KeyProperties.curve,
-          Domain.Curve.SECP256K1
-        );
-
-        return privateKey;
-      }
-    }
-
-    if (type === Domain.KeyTypes.Curve25519) {
-      if (curve.value === Domain.Curve.X25519) {
-        const privateKey = new X25519PrivateKey(Buffer.from(raw.value, "hex"));
-
-        privateKey.keySpecification.set(Domain.KeyProperties.rawKey, raw.value);
-
-        privateKey.keySpecification.set(
-          Domain.KeyProperties.curve,
-          Domain.Curve.SECP256K1
-        );
-
-        return privateKey;
-      }
-    }
-
-    throw new Error(`Invalid key${curve.value} ${type}`);
+    return privateKey.toPrivateKey()
   }
 
   async getDIDPrivateKeysByDID(did: Domain.DID): Promise<Domain.PrivateKey[]> {
