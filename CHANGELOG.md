@@ -1,3 +1,10 @@
+## [0.0.19](https://github.com/elribonazo/pluto-encrypted/compare/v0.0.18...v0.0.19) (2023-10-01)
+
+
+### Bug Fixes
+
+* Improve typedocs. ([44174f9](https://github.com/elribonazo/pluto-encrypted/commit/44174f9892c9ca9352f7c8e0b12a078819f105a6))
+
 ## [0.0.18](https://github.com/elribonazo/pluto-encrypted/compare/v0.0.17...v0.0.18) (2023-10-01)
 
 
