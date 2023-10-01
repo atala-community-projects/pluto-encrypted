@@ -7,7 +7,7 @@ import {
 } from "@input-output-hk/atala-prism-wallet-sdk";
 import { getRxStorageDexie } from "rxdb/plugins/storage-dexie";
 import { wrappedKeyEncryptionCryptoJsStorage } from "rxdb/plugins/encryption-crypto-js";
-import { RxCollection, RxDatabase, RxDatabaseCreator, RxDocument, RxJsonSchema, createRxDatabase } from "rxdb";
+import { MangoQuerySelector, RxCollection, RxDatabase, RxDatabaseCreator, RxDocument, RxJsonSchema, createRxDatabase } from "rxdb";
 import { RxError } from "rxdb/dist/lib/rx-error";
 import { addRxPlugin } from "rxdb";
 import { RxDBMigrationPlugin } from "rxdb/plugins/migration";
@@ -93,11 +93,19 @@ export class Database implements Domain.Pluto {
   }
 
   async getMessage(id: string): Promise<Domain.Message | null> {
-    return this.db.messages.findOne().where({ id: id }).exec();
+    const message = await this.db.messages.findOne().where({ id: id }).exec()
+    if (message) {
+      return this.getDomainMessage(message)
+    }
+    return null;
   }
 
   async storeMessage(message: Domain.Message): Promise<void> {
-    await this.db.messages.insert(message);
+    await this.db.messages.insert({
+      ...message,
+      to: message.to?.toString(),
+      from: message.from?.toString()
+    });
   }
 
   async storeMessages(messages: Domain.Message[]): Promise<void> {
@@ -105,7 +113,8 @@ export class Database implements Domain.Pluto {
   }
 
   async getAllMessages(): Promise<Domain.Message[]> {
-    return this.db.messages.find().exec();
+    const messages = await this.db.messages.find().exec()
+    return messages.map((message) => this.getDomainMessage(message))
   }
 
   async start(): Promise<void> {
@@ -483,6 +492,114 @@ export class Database implements Domain.Pluto {
     return prismDIDInfo;
   }
 
+
+  private getDomainMessage(message: RxDocument<MessageSchemaType, {}>) {
+    return Domain.Message.fromJson(JSON.stringify(message.toJSON()))
+  }
+
+  async getAllMessagesByDID(did: Domain.DID): Promise<Domain.Message[]> {
+    const messages = await this.db.messages.find().where({
+      $or: [
+        {
+          to: did.toString()
+        },
+        {
+          from: did.toString()
+        }
+      ]
+    }).exec()
+    return messages.map(message => this.getDomainMessage(message))
+  }
+
+  async getAllMessagesSent(): Promise<Domain.Message[]> {
+    const messages = await this.db.messages.find().where({
+      $or: [
+        {
+          direction: Domain.MessageDirection.SENT
+        }
+      ]
+    }).exec()
+    return messages.map(message => this.getDomainMessage(message))
+  }
+
+  async getAllMessagesReceived(): Promise<Domain.Message[]> {
+    const messages = await this.db.messages.find().where({
+      $or: [
+        {
+          direction: Domain.MessageDirection.SENT
+        }
+      ]
+    }).exec()
+    return messages.map(message => this.getDomainMessage(message))
+  }
+
+  async getAllMessagesSentTo(did: Domain.DID): Promise<Domain.Message[]> {
+    const messages = await this.db.messages.find().where({
+      $or: [
+        {
+          to: did.toString()
+        }
+      ]
+    }).exec()
+    return messages.map(message => this.getDomainMessage(message))
+  }
+
+  async getAllMessagesReceivedFrom(did: Domain.DID): Promise<Domain.Message[]> {
+    const messages = await this.db.messages.find().where({
+      $or: [
+        {
+          from: did.toString()
+        }
+      ]
+    }).exec()
+    return messages.map(message => this.getDomainMessage(message))
+  }
+
+  async getAllMessagesOfType(
+    type: string,
+    relatedWithDID?: Domain.DID | undefined
+  ): Promise<Domain.Message[]> {
+    const query: MangoQuerySelector<MessageSchemaType>[] = [
+      {
+        piuri: type
+      },
+    ];
+    if (relatedWithDID) {
+      query.push({
+        $or: [
+          {
+            from: relatedWithDID.toString()
+          },
+          {
+            to: relatedWithDID.toString()
+          }
+        ]
+      })
+    }
+    const messages = await this.db.messages.find().where({
+      $and: query
+    }).exec()
+    return messages.map(message => this.getDomainMessage(message))
+  }
+
+  async getAllMessagesByFromToDID(
+    from: Domain.DID,
+    to: Domain.DID
+  ): Promise<Domain.Message[]> {
+    const messages = await this.db.messages.find().where({
+      $or: [
+        {
+          from: from.toString()
+        },
+        {
+          to: to.toString()
+        }
+      ]
+    }).exec()
+    return messages.map(message => this.getDomainMessage(message))
+  }
+
+
   getPrismDIDKeyPathIndex(did: Domain.DID): Promise<number | null> {
     throw new Error("Method not implemented.");
   }
@@ -496,40 +613,6 @@ export class Database implements Domain.Pluto {
   }
 
   getAllPeerDIDs(): Promise<Domain.PeerDID[]> {
-    throw new Error("Method not implemented.");
-  }
-
-  getAllMessagesByDID(did: Domain.DID): Promise<Domain.Message[]> {
-    throw new Error("Method not implemented.");
-  }
-
-  getAllMessagesSent(): Promise<Domain.Message[]> {
-    throw new Error("Method not implemented.");
-  }
-
-  getAllMessagesReceived(): Promise<Domain.Message[]> {
-    throw new Error("Method not implemented.");
-  }
-
-  getAllMessagesSentTo(did: Domain.DID): Promise<Domain.Message[]> {
-    throw new Error("Method not implemented.");
-  }
-
-  getAllMessagesReceivedFrom(did: Domain.DID): Promise<Domain.Message[]> {
-    throw new Error("Method not implemented.");
-  }
-
-  getAllMessagesOfType(
-    type: string,
-    relatedWithDID?: Domain.DID | undefined
-  ): Promise<Domain.Message[]> {
-    throw new Error("Method not implemented.");
-  }
-
-  getAllMessagesByFromToDID(
-    from: Domain.DID,
-    to: Domain.DID
-  ): Promise<Domain.Message[]> {
     throw new Error("Method not implemented.");
   }
 

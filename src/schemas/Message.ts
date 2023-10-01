@@ -1,7 +1,24 @@
 import type { Domain } from "@input-output-hk/atala-prism-wallet-sdk";
 import type { Schema } from "../types";
 
-export type MessageSchemaType = Domain.Message;
+
+
+export type MessageSchemaType = {
+  readonly body: string;
+  readonly id: string;
+  readonly piuri: string;
+  readonly from?: string | undefined;
+  readonly to?: string | undefined;
+  readonly attachments: Domain.AttachmentDescriptor[];
+  readonly thid?: string;
+  readonly extraHeaders: string[];
+  readonly createdTime: string;
+  readonly expiresTimePlus: string;
+  readonly ack: string[];
+  readonly direction: Domain.MessageDirection;
+  readonly fromPrior?: string | undefined;
+  readonly pthid?: string | undefined;
+};
 
 /**
  * MessageSchema
@@ -23,6 +40,39 @@ const MessageSchema: Schema<MessageSchemaType> = {
     },
     attachments: {
       type: "array",
+      items: {
+        type: "object",
+        properties: {
+          id: {
+            type: "id",
+            maxLength: 60,
+          },
+          description: {
+            type: "string",
+          },
+          byteCount: {
+            type: "number",
+          },
+          lastModTime: {
+            type: "string",
+          },
+          format: {
+            type: 'string'
+          },
+          filename: {
+            type: "array",
+            items: {
+              type: "string"
+            }
+          },
+          mediaType: {
+            type: 'string'
+          },
+          data: {
+            type: 'object'
+          }
+        },
+      },
     },
     extraHeaders: {
       type: "array",
