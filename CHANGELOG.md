@@ -1,3 +1,10 @@
+## [0.0.24](https://github.com/elribonazo/pluto-encrypted/compare/v0.0.23...v0.0.24) (2023-10-01)
+
+
+### Bug Fixes
+
+* docs path ([8aa56bb](https://github.com/elribonazo/pluto-encrypted/commit/8aa56bb1e1418d6753ee123acabda52f1ef10c50))
+
 ## [0.0.23](https://github.com/elribonazo/pluto-encrypted/compare/v0.0.22...v0.0.23) (2023-10-01)
 
 
