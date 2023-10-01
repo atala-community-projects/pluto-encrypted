@@ -1,4 +1,19 @@
-import type { Schema, KeySchemaType } from "../types";
+import type { Schema } from "../types";
+
+/**
+ * PrivateKeySchema
+ */
+export type KeySpec = {
+  name: string;
+  type: string;
+  value: string;
+};
+export type KeySchemaType = {
+  id: string;
+  type: string;
+  did: string;
+  keySpecification: KeySpec[];
+};
 
 const PrivateKeySchema: Schema<KeySchemaType> = {
   version: 0,

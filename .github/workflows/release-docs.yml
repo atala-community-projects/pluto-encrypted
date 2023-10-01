@@ -31,12 +31,20 @@ jobs:
       - name: Install Dependencies
         run: npm ci  # or use "npm install" if you don't have a lock file
 
-      - name: Test
-        run: npm test && npx jest-coverage-badges  # adjust this to your project's test command
+      - name: Build Docs
+        run: npm run docs
 
-      - name: Semantic Release
+      - name: Get Latest Release Tag
+        id: get_latest_tag
+        run: |
+          echo "##[set-output name=tag]$(git describe --tags --abbrev=0)"
+        shell: bash
+
+      - name: Push
+        uses: s0/git-publish-subdir-action@develop
         env:
-          GH_TOKEN: ${{ secrets.PLUTO_GITHUB }}
-          GITHUB_TOKEN: ${{ secrets.PLUTO_GITHUB }}
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-        run: npx semantic-release 
+          REPO: self
+          BRANCH: gh-pages # The branch name where you want to push the assets
+          FOLDER: docs/${{ steps.get_latest_tag.outputs.tag }} # The directory where your assets are generated
+          GITHUB_TOKEN: ${{ secrets.PLUTO_GITHUB }} # GitHub will automatically add this - you don't need to bother getting a token
+          MESSAGE: "feat(docs): ({sha}) {msg}" # The commit message

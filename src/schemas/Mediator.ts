@@ -1,5 +1,15 @@
-import type { Schema, MediarorSchemaType } from "../types";
+import type { Schema } from "../types";
 
+
+export type MediarorSchemaType = {
+  id: string;
+  mediatorDID: string;
+  hostDID: string;
+  routingDID: string;
+};
+/**
+ * MediatorSchema
+ */
 const MediatorSchema: Schema<MediarorSchemaType> = {
   version: 0,
   primaryKey: "id",

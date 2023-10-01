@@ -7,30 +7,48 @@ import {
 } from "@input-output-hk/atala-prism-wallet-sdk";
 import { getRxStorageDexie } from "rxdb/plugins/storage-dexie";
 import { wrappedKeyEncryptionCryptoJsStorage } from "rxdb/plugins/encryption-crypto-js";
-import { RxDatabaseCreator, RxDocument, createRxDatabase } from "rxdb";
+import { RxCollection, RxDatabase, RxDatabaseCreator, RxDocument, RxJsonSchema, createRxDatabase } from "rxdb";
 import { RxError } from "rxdb/dist/lib/rx-error";
 import { addRxPlugin } from "rxdb";
 import { RxDBMigrationPlugin } from "rxdb/plugins/migration";
 import { RxDBQueryBuilderPlugin } from "rxdb/plugins/query-builder";
 import { v4 as uuidv4 } from "uuid";
 
-import type {
-  KeySchemaType,
-  KeySpec,
-  PlutoCollections,
-  PlutoDatabase,
-} from "./types";
 
-import MessageSchema from "./schemas/Message";
-import DIDSchema from "./schemas/DID";
-import CredentialSchema from "./schemas/Credential";
-import DIDPairSchema from "./schemas/DIDPair";
-import MediatorSchema from "./schemas/Mediator";
-import PrivateKeySchema from "./schemas/PrivateKey";
+import MessageSchema, { MessageSchemaType } from "./schemas/Message";
+import DIDSchema, { DIDSchemaType } from "./schemas/DID";
+import CredentialSchema, { CredentialSchemaType } from "./schemas/Credential";
+import DIDPairSchema, { DIDPairSchemaType } from "./schemas/DIDPair";
+import MediatorSchema, { MediarorSchemaType } from "./schemas/Mediator";
+import PrivateKeySchema, { KeySchemaType, KeySpec } from "./schemas/PrivateKey";
 
 addRxPlugin(RxDBMigrationPlugin);
 addRxPlugin(RxDBQueryBuilderPlugin);
 
+
+export * from "./schemas/Message";
+export * from './schemas/DID';
+export * from './schemas/Credential';
+export * from './schemas/DIDPair';
+export * from './schemas/Mediator';
+export * from './schemas/PrivateKey';
+
+export type PlutoCollections = {
+  messages: RxCollection<MessageSchemaType>;
+  dids: RxCollection<DIDSchemaType>;
+  verifiableCredentials: RxCollection<CredentialSchemaType>;
+  didpairs: RxCollection<DIDPairSchemaType>;
+  mediators: RxCollection<MediarorSchemaType>;
+  privateKeys: RxCollection<KeySchemaType>;
+};
+export type PlutoDatabase = RxDatabase<PlutoCollections>;
+
+/**
+ * Pluto is a storage interface describing storage requirements of the edge agents
+ * which will be implemented using this SDK. Implement this interface using your
+ * preferred underlying storage technology, most appropriate for your use case.
+ *
+ */
 export class Database implements Domain.Pluto {
   private _db!: PlutoDatabase;
   private get db() {
@@ -61,7 +79,7 @@ export class Database implements Domain.Pluto {
     },
   };
 
-  constructor(private dbOptions: RxDatabaseCreator) {}
+  constructor(private dbOptions: RxDatabaseCreator) { }
 
   static async createEncrypted(name: string, encryptionKey: Uint8Array) {
     return new Database({
@@ -143,14 +161,14 @@ export class Database implements Domain.Pluto {
           did: did.toString(),
           type: prv.type,
           keySpecification: Array.from(prv.keySpecification).reduce(
-            (all, [key, value]) => {
-              all.push({
+            (all, [key, value]) => [
+              ...all,
+              {
                 type: "string",
                 name: key,
                 value: `${value}`,
-              });
-              return all;
-            },
+              },
+            ],
             [
               {
                 type: "string",
@@ -219,6 +237,7 @@ export class Database implements Domain.Pluto {
         new DIDPair(DID.fromString(hostDID), DID.fromString(receiverDID), name)
     );
   }
+
   async getPairByDID(did: Domain.DID): Promise<Domain.DIDPair | null> {
     const { DID, DIDPair } = Domain;
     const didPair = await this.db.didpairs
@@ -234,14 +253,16 @@ export class Database implements Domain.Pluto {
         ],
       })
       .exec();
+
     return didPair
       ? new DIDPair(
-          DID.fromString(didPair.hostDID),
-          DID.fromString(didPair.receiverDID),
-          didPair.name
-        )
+        DID.fromString(didPair.hostDID),
+        DID.fromString(didPair.receiverDID),
+        didPair.name
+      )
       : null;
   }
+
   async getPairByName(name: string): Promise<Domain.DIDPair | null> {
     const { DID, DIDPair } = Domain;
     const didPair = await this.db.didpairs
@@ -254,12 +275,13 @@ export class Database implements Domain.Pluto {
         ],
       })
       .exec();
+
     return didPair
       ? new DIDPair(
-          DID.fromString(didPair.hostDID),
-          DID.fromString(didPair.receiverDID),
-          didPair.name
-        )
+        DID.fromString(didPair.hostDID),
+        DID.fromString(didPair.receiverDID),
+        didPair.name
+      )
       : null;
   }
 
@@ -282,7 +304,12 @@ export class Database implements Domain.Pluto {
     if (!raw) {
       throw new Error("Undefined key raw");
     }
-    if (!(curve.value in Domain.Curve)) {
+
+    if (
+      curve.value !== Domain.Curve.SECP256K1 &&
+      curve.value !== Domain.Curve.ED25519 &&
+      curve.value !== Domain.Curve.X25519
+    ) {
       throw new Error(`Invalid key curve ${curve.value}`);
     }
 
@@ -387,7 +414,9 @@ export class Database implements Domain.Pluto {
     const prismDIDInfo: Domain.PrismDIDInfo[] = [];
 
     for (let did of dids) {
-      const didPrivateKeys = await this.getDIDPrivateKeysByDID(did);
+      const didPrivateKeys = await this.getDIDPrivateKeysByDID(
+        Domain.DID.fromString(did.did)
+      );
 
       for (let privateKey of didPrivateKeys) {
         const indexProp = privateKey.getProperty(Domain.KeyProperties.index);
@@ -414,7 +443,10 @@ export class Database implements Domain.Pluto {
       .exec();
 
     if (didDB) {
-      const [privateKey] = await this.getDIDPrivateKeysByDID(did);
+      const [privateKey] = await this.getDIDPrivateKeysByDID(
+        Domain.DID.fromString(didDB.did)
+      );
+
       if (privateKey) {
         const indexProp = privateKey.getProperty(Domain.KeyProperties.index);
         const index = indexProp ? parseInt(indexProp) : undefined;
@@ -430,10 +462,12 @@ export class Database implements Domain.Pluto {
   }
 
   async getDIDInfoByAlias(alias: string): Promise<Domain.PrismDIDInfo[]> {
-    const dids = await this.db.dids.find().where({ alias }).exec();
+    const dids = await this.db.dids.find().where({ alias: alias }).exec();
     const prismDIDInfo: Domain.PrismDIDInfo[] = [];
     for (let did of dids) {
-      const didPrivateKeys = await this.getDIDPrivateKeysByDID(did);
+      const didPrivateKeys = await this.getDIDPrivateKeysByDID(
+        Domain.DID.fromString(did.did)
+      );
       for (let privateKey of didPrivateKeys) {
         const indexProp = privateKey.getProperty(Domain.KeyProperties.index);
         const index = indexProp ? parseInt(indexProp) : undefined;
@@ -452,6 +486,7 @@ export class Database implements Domain.Pluto {
   getPrismDIDKeyPathIndex(did: Domain.DID): Promise<number | null> {
     throw new Error("Method not implemented.");
   }
+
   getPrismLastKeyPathIndex(): Promise<number> {
     throw new Error("Method not implemented.");
   }
@@ -467,24 +502,30 @@ export class Database implements Domain.Pluto {
   getAllMessagesByDID(did: Domain.DID): Promise<Domain.Message[]> {
     throw new Error("Method not implemented.");
   }
+
   getAllMessagesSent(): Promise<Domain.Message[]> {
     throw new Error("Method not implemented.");
   }
+
   getAllMessagesReceived(): Promise<Domain.Message[]> {
     throw new Error("Method not implemented.");
   }
+
   getAllMessagesSentTo(did: Domain.DID): Promise<Domain.Message[]> {
     throw new Error("Method not implemented.");
   }
+
   getAllMessagesReceivedFrom(did: Domain.DID): Promise<Domain.Message[]> {
     throw new Error("Method not implemented.");
   }
+
   getAllMessagesOfType(
     type: string,
     relatedWithDID?: Domain.DID | undefined
   ): Promise<Domain.Message[]> {
     throw new Error("Method not implemented.");
   }
+
   getAllMessagesByFromToDID(
     from: Domain.DID,
     to: Domain.DID
@@ -495,6 +536,7 @@ export class Database implements Domain.Pluto {
   getAllMediators(): Promise<Domain.Mediator[]> {
     throw new Error("Method not implemented.");
   }
+
   getAllCredentials(): Promise<Domain.VerifiableCredential[]> {
     throw new Error("Method not implemented.");
   }

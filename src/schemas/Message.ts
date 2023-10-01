@@ -1,5 +1,11 @@
-import type { Schema, MessageSchemaType } from "../types";
+import type { Domain } from "@input-output-hk/atala-prism-wallet-sdk";
+import type { Schema } from "../types";
 
+export type MessageSchemaType = Domain.Message;
+
+/**
+ * MessageSchema
+ */
 const MessageSchema: Schema<MessageSchemaType> = {
   version: 0,
   primaryKey: "id",
