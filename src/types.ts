@@ -11,14 +11,18 @@ export type Schema<T> = RxJsonSchema<T> & {
 
 export type CredentialSchemaType = Domain.VerifiableCredential;
 
-export type DIDSchemaType = NoKeys<Domain.DID, "toString"> & {
+export type DIDSchemaType = {
+  schema: string;
+  method: string;
+  methodId: string;
   alias?: string;
   did: string;
 };
+
 export type DIDPairSchemaType = {
-  readonly hostDID: string;
-  readonly receiverDID: string;
-  readonly name: string;
+  hostDID: string;
+  receiverDID: string;
+  name: string;
 };
 export type KeySpec = {
   name: string;

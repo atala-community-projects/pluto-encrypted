@@ -62,6 +62,16 @@ describe("Pluto + Dexie encrypted integration for browsers", () => {
       expect((await db.getAllPrismDIDs()).length).toBe(1);
     });
 
+    it("Should store a new Prism DID and its privateKeys and fetch it by its alias", async () => {
+      const did = Domain.DID.fromString(
+        "did:prism:733e594871d7700d35e6116011a08fc11e88ff9d366d8b5571ffc1aa18d249ea:Ct8BCtwBEnQKH2F1dGhlbnRpY2F0aW9uYXV0aGVudGljYXRpb25LZXkQBEJPCglzZWNwMjU2azESIDS5zeYUkLCSAJLI6aLXRTPRxstCLPUEI6TgBrAVCHkwGiDk-ffklrHIFW7pKkT8i-YksXi-XXi5h31czUMaVClcpxJkCg9tYXN0ZXJtYXN0ZXJLZXkQAUJPCglzZWNwMjU2azESIDS5zeYUkLCSAJLI6aLXRTPRxstCLPUEI6TgBrAVCHkwGiDk-ffklrHIFW7pKkT8i-YksXi-XXi5h31czUMaVClcpw"
+      );
+      const alias = "default";
+      const privateKey = Fixtures.secp256K1.privateKey;
+      await db.storePrismDID(did, 0, privateKey, null, alias);
+      expect((await db.getDIDInfoByAlias(alias)).length).toBe(1);
+    });
+
     it("Should store a Message", async () => {
       const message = createMessage();
       await db.storeMessage(message);

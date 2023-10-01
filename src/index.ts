@@ -421,7 +421,9 @@ export class Database implements Domain.Pluto {
       .exec();
 
     if (didDB) {
-      const [privateKey] = await this.getDIDPrivateKeysByDID(did);
+      const [privateKey] = await this.getDIDPrivateKeysByDID(
+        Domain.DID.fromString(didDB.did)
+      );
       if (privateKey) {
         const indexProp = privateKey.getProperty(Domain.KeyProperties.index);
         const index = indexProp ? parseInt(indexProp) : undefined;
@@ -437,10 +439,13 @@ export class Database implements Domain.Pluto {
   }
 
   async getDIDInfoByAlias(alias: string): Promise<Domain.PrismDIDInfo[]> {
-    const dids = await this.db.dids.find().where({ alias }).exec();
+    const dids = await this.db.dids.find().where({ alias: alias }).exec();
+    debugger;
     const prismDIDInfo: Domain.PrismDIDInfo[] = [];
     for (let did of dids) {
-      const didPrivateKeys = await this.getDIDPrivateKeysByDID(did);
+      const didPrivateKeys = await this.getDIDPrivateKeysByDID(
+        Domain.DID.fromString(did.did)
+      );
       for (let privateKey of didPrivateKeys) {
         const indexProp = privateKey.getProperty(Domain.KeyProperties.index);
         const index = indexProp ? parseInt(indexProp) : undefined;
@@ -459,6 +464,7 @@ export class Database implements Domain.Pluto {
   getPrismDIDKeyPathIndex(did: Domain.DID): Promise<number | null> {
     throw new Error("Method not implemented.");
   }
+
   getPrismLastKeyPathIndex(): Promise<number> {
     throw new Error("Method not implemented.");
   }
@@ -474,24 +480,30 @@ export class Database implements Domain.Pluto {
   getAllMessagesByDID(did: Domain.DID): Promise<Domain.Message[]> {
     throw new Error("Method not implemented.");
   }
+
   getAllMessagesSent(): Promise<Domain.Message[]> {
     throw new Error("Method not implemented.");
   }
+
   getAllMessagesReceived(): Promise<Domain.Message[]> {
     throw new Error("Method not implemented.");
   }
+
   getAllMessagesSentTo(did: Domain.DID): Promise<Domain.Message[]> {
     throw new Error("Method not implemented.");
   }
+
   getAllMessagesReceivedFrom(did: Domain.DID): Promise<Domain.Message[]> {
     throw new Error("Method not implemented.");
   }
+
   getAllMessagesOfType(
     type: string,
     relatedWithDID?: Domain.DID | undefined
   ): Promise<Domain.Message[]> {
     throw new Error("Method not implemented.");
   }
+
   getAllMessagesByFromToDID(
     from: Domain.DID,
     to: Domain.DID
@@ -502,6 +514,7 @@ export class Database implements Domain.Pluto {
   getAllMediators(): Promise<Domain.Mediator[]> {
     throw new Error("Method not implemented.");
   }
+
   getAllCredentials(): Promise<Domain.VerifiableCredential[]> {
     throw new Error("Method not implemented.");
   }
