@@ -207,21 +207,21 @@ export class Database implements Domain.Pluto {
     privateKey: Domain.PrivateKey,
     did: Domain.DID,
     keyPathIndex: number,
-    metaId: string | null
+    metaId?: string | null
   ): Promise<void> {
     await this.db.privateKeys.insert({
       id: uuidv4(),
       did: did.toString(),
       type: privateKey.type,
       keySpecification: Array.from(privateKey.keySpecification).reduce(
-        (all, [key, value]) => {
-          all.push({
+        (all, [key, value]) => [
+          ...all,
+          {
             type: "string",
             name: key,
             value: `${value}`,
-          });
-          return all;
-        },
+          },
+        ],
         [
           {
             type: "string",
@@ -456,15 +456,18 @@ export class Database implements Domain.Pluto {
         Domain.DID.fromString(didDB.did)
       );
 
-      if (privateKey) {
-        const indexProp = privateKey.getProperty(Domain.KeyProperties.index);
-        const index = indexProp ? parseInt(indexProp) : undefined;
-        return new Domain.PrismDIDInfo(
-          Domain.DID.fromString(didDB.did),
-          index,
-          didDB.alias
-        );
+      if (!privateKey) {
+        throw new Error("Imposible to recover PrismDIDInfo without its privateKey data.")
       }
+
+      const indexProp = privateKey.getProperty(Domain.KeyProperties.index);
+      const index = indexProp ? parseInt(indexProp) : undefined;
+      return new Domain.PrismDIDInfo(
+        Domain.DID.fromString(didDB.did),
+        index,
+        didDB.alias
+      );
+
     }
 
     return null;
