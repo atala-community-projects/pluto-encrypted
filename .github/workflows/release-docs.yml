@@ -46,6 +46,6 @@ jobs:
         env:
           REPO: self
           BRANCH: gh-pages # The branch name where you want to push the assets
-          FOLDER: docs/${{ steps.get_latest_tag.outputs.tag }} # The directory where your assets are generated
+          FOLDER: docs # The directory where your assets are generated
           GITHUB_TOKEN: ${{ secrets.PLUTO_GITHUB }} # GitHub will automatically add this - you don't need to bother getting a token
           MESSAGE: "feat(docs): ({sha}) {msg}" # The commit message
