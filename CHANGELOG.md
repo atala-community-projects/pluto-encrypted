@@ -1,3 +1,10 @@
+## [0.0.16](https://github.com/elribonazo/pluto-encrypted/compare/v0.0.15...v0.0.16) (2023-10-01)
+
+
+### Bug Fixes
+
+* add test fixtures. ([7000b41](https://github.com/elribonazo/pluto-encrypted/commit/7000b41ddca1d956576975ff70311e5375e299f2))
+
 ## [0.0.15](https://github.com/elribonazo/pluto-encrypted/compare/v0.0.14...v0.0.15) (2023-10-01)
 
 
