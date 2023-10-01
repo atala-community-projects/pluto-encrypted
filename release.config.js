@@ -20,6 +20,10 @@ export default {
           "coverage/badge-statements.svg",
           "package-lock.json",
           "CHANGELOG.md",
+          "README.md",
+          "modules.md",
+          ".nojekyll",
+          "classes/*.md"
         ],
         message:
           "chore(release): ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}",

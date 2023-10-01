@@ -14,7 +14,7 @@
     "excludeNotDocumented": false,
     "includeVersion": true,
     "theme": "default",
-    "plugin": ["typedoc-plugin-superstruct", "typedoc-plugin-rename-defaults"],
+    "plugin": ["typedoc-plugin-superstruct", "typedoc-plugin-rename-defaults", "typedoc-plugin-markdown"],
     "navigationLinks": {
         "Docs": "https://elribonazo.github.io/pluto-encrypted/",
         "GitHub": "https://github.com/elribonazo/pluto-encrypted"
