@@ -1,3 +1,16 @@
+# [0.1.0](https://github.com/elribonazo/pluto-encrypted/compare/v0.0.25...v0.1.0) (2023-10-01)
+
+
+### Bug Fixes
+
+* move command ([#20](https://github.com/elribonazo/pluto-encrypted/issues/20)) ([2b80c30](https://github.com/elribonazo/pluto-encrypted/commit/2b80c304c68725584f0c2f0b1e29222e81ef0842))
+* threshold ([2852455](https://github.com/elribonazo/pluto-encrypted/commit/28524554e7a46e0e44daa6fdb911971e66808aaf))
+
+
+### Features
+
+* Implement Messaging and improve test coverage to decent levels. ([38acb81](https://github.com/elribonazo/pluto-encrypted/commit/38acb81bea559598131dd9991c973af5a9b4d936))
+
 ## [0.0.25](https://github.com/elribonazo/pluto-encrypted/compare/v0.0.24...v0.0.25) (2023-10-01)
 
 

@@ -1,4 +1,4 @@
-# pluto-encrypted - v0.0.24
+# pluto-encrypted - v0.0.25
 
 ## Classes
 
@@ -12,7 +12,7 @@
 
 #### Defined in
 
-[schemas/Credential.ts:4](https://github.com/elribonazo/pluto-encrypted/blob/e5fa647/src/schemas/Credential.ts#L4)
+[schemas/Credential.ts:4](https://github.com/elribonazo/pluto-encrypted/blob/2b80c30/src/schemas/Credential.ts#L4)
 
 ___
 
@@ -30,7 +30,7 @@ ___
 
 #### Defined in
 
-[schemas/DIDPair.ts:4](https://github.com/elribonazo/pluto-encrypted/blob/e5fa647/src/schemas/DIDPair.ts#L4)
+[schemas/DIDPair.ts:4](https://github.com/elribonazo/pluto-encrypted/blob/2b80c30/src/schemas/DIDPair.ts#L4)
 
 ___
 
@@ -50,7 +50,7 @@ ___
 
 #### Defined in
 
-[schemas/DID.ts:3](https://github.com/elribonazo/pluto-encrypted/blob/e5fa647/src/schemas/DID.ts#L3)
+[schemas/DID.ts:3](https://github.com/elribonazo/pluto-encrypted/blob/2b80c30/src/schemas/DID.ts#L3)
 
 ___
 
@@ -69,7 +69,7 @@ ___
 
 #### Defined in
 
-[schemas/PrivateKey.ts:11](https://github.com/elribonazo/pluto-encrypted/blob/e5fa647/src/schemas/PrivateKey.ts#L11)
+[schemas/PrivateKey.ts:11](https://github.com/elribonazo/pluto-encrypted/blob/2b80c30/src/schemas/PrivateKey.ts#L11)
 
 ___
 
@@ -89,7 +89,7 @@ PrivateKeySchema
 
 #### Defined in
 
-[schemas/PrivateKey.ts:6](https://github.com/elribonazo/pluto-encrypted/blob/e5fa647/src/schemas/PrivateKey.ts#L6)
+[schemas/PrivateKey.ts:6](https://github.com/elribonazo/pluto-encrypted/blob/2b80c30/src/schemas/PrivateKey.ts#L6)
 
 ___
 
@@ -108,17 +108,36 @@ ___
 
 #### Defined in
 
-[schemas/Mediator.ts:4](https://github.com/elribonazo/pluto-encrypted/blob/e5fa647/src/schemas/Mediator.ts#L4)
+[schemas/Mediator.ts:4](https://github.com/elribonazo/pluto-encrypted/blob/2b80c30/src/schemas/Mediator.ts#L4)
 
 ___
 
 ### MessageSchemaType
 
-Ƭ **MessageSchemaType**: `Domain.Message`
+Ƭ **MessageSchemaType**: `Object`
+
+#### Type declaration
+
+| Name | Type |
+| :------ | :------ |
+| `ack` | `string`[] |
+| `attachments` | `Domain.AttachmentDescriptor`[] |
+| `body` | `string` |
+| `createdTime` | `string` |
+| `direction` | `Domain.MessageDirection` |
+| `expiresTimePlus` | `string` |
+| `extraHeaders` | `string`[] |
+| `from?` | `string` |
+| `fromPrior?` | `string` |
+| `id` | `string` |
+| `piuri` | `string` |
+| `pthid?` | `string` |
+| `thid?` | `string` |
+| `to?` | `string` |
 
 #### Defined in
 
-[schemas/Message.ts:4](https://github.com/elribonazo/pluto-encrypted/blob/e5fa647/src/schemas/Message.ts#L4)
+[schemas/Message.ts:6](https://github.com/elribonazo/pluto-encrypted/blob/2b80c30/src/schemas/Message.ts#L6)
 
 ___
 
@@ -139,7 +158,7 @@ ___
 
 #### Defined in
 
-[index.ts:36](https://github.com/elribonazo/pluto-encrypted/blob/e5fa647/src/index.ts#L36)
+[index.ts:36](https://github.com/elribonazo/pluto-encrypted/blob/2b80c30/src/index.ts#L36)
 
 ___
 
@@ -149,4 +168,4 @@ ___
 
 #### Defined in
 
-[index.ts:44](https://github.com/elribonazo/pluto-encrypted/blob/e5fa647/src/index.ts#L44)
+[index.ts:44](https://github.com/elribonazo/pluto-encrypted/blob/2b80c30/src/index.ts#L44)
