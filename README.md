@@ -11,7 +11,7 @@ Not ready for production use most of the methods are not yet implemented!!
 
 ### Documentation
 
-[SDK Reference](/modules.md)
+[SDK Reference](https://github.com/elribonazo/pluto-encrypted/blob/master/modules.md)
 
 ## USAGE
 To install simply run
