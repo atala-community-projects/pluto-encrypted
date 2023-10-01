@@ -143,14 +143,14 @@ export class Database implements Domain.Pluto {
           did: did.toString(),
           type: prv.type,
           keySpecification: Array.from(prv.keySpecification).reduce(
-            (all, [key, value]) => {
-              all.push({
+            (all, [key, value]) => [
+              ...all,
+              {
                 type: "string",
                 name: key,
                 value: `${value}`,
-              });
-              return all;
-            },
+              },
+            ],
             [
               {
                 type: "string",
@@ -219,6 +219,7 @@ export class Database implements Domain.Pluto {
         new DIDPair(DID.fromString(hostDID), DID.fromString(receiverDID), name)
     );
   }
+
   async getPairByDID(did: Domain.DID): Promise<Domain.DIDPair | null> {
     const { DID, DIDPair } = Domain;
     const didPair = await this.db.didpairs
@@ -234,6 +235,7 @@ export class Database implements Domain.Pluto {
         ],
       })
       .exec();
+
     return didPair
       ? new DIDPair(
           DID.fromString(didPair.hostDID),
@@ -242,6 +244,7 @@ export class Database implements Domain.Pluto {
         )
       : null;
   }
+
   async getPairByName(name: string): Promise<Domain.DIDPair | null> {
     const { DID, DIDPair } = Domain;
     const didPair = await this.db.didpairs
@@ -254,6 +257,7 @@ export class Database implements Domain.Pluto {
         ],
       })
       .exec();
+
     return didPair
       ? new DIDPair(
           DID.fromString(didPair.hostDID),
@@ -424,6 +428,7 @@ export class Database implements Domain.Pluto {
       const [privateKey] = await this.getDIDPrivateKeysByDID(
         Domain.DID.fromString(didDB.did)
       );
+
       if (privateKey) {
         const indexProp = privateKey.getProperty(Domain.KeyProperties.index);
         const index = indexProp ? parseInt(indexProp) : undefined;
