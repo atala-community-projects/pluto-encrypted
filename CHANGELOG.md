@@ -1,3 +1,10 @@
+## [0.0.13](https://github.com/elribonazo/pluto-encrypted/compare/v0.0.12...v0.0.13) (2023-10-01)
+
+
+### Bug Fixes
+
+* Implementing the didpair methods and convert back to objects. ([#14](https://github.com/elribonazo/pluto-encrypted/issues/14)) ([3dce952](https://github.com/elribonazo/pluto-encrypted/commit/3dce952ec56f4eadf378ba25d718241ecf1085d5))
+
 ## [0.0.12](https://github.com/elribonazo/pluto-encrypted/compare/v0.0.11...v0.0.12) (2023-10-01)
 
 
