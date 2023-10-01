@@ -22,7 +22,7 @@ preferred underlying storage technology, most appropriate for your use case.
 
 #### Defined in
 
-[index.ts:82](https://github.com/elribonazo/pluto-encrypted/blob/2b80c30/src/index.ts#L82)
+[index.ts:82](https://github.com/elribonazo/pluto-encrypted/blob/59fc391/src/index.ts#L82)
 
 ## Properties
 
@@ -32,7 +32,7 @@ preferred underlying storage technology, most appropriate for your use case.
 
 #### Defined in
 
-[index.ts:53](https://github.com/elribonazo/pluto-encrypted/blob/2b80c30/src/index.ts#L53)
+[index.ts:53](https://github.com/elribonazo/pluto-encrypted/blob/59fc391/src/index.ts#L53)
 
 ___
 
@@ -59,7 +59,7 @@ ___
 
 #### Defined in
 
-[index.ts:61](https://github.com/elribonazo/pluto-encrypted/blob/2b80c30/src/index.ts#L61)
+[index.ts:61](https://github.com/elribonazo/pluto-encrypted/blob/59fc391/src/index.ts#L61)
 
 ___
 
@@ -69,7 +69,7 @@ ___
 
 #### Defined in
 
-[index.ts:82](https://github.com/elribonazo/pluto-encrypted/blob/2b80c30/src/index.ts#L82)
+[index.ts:82](https://github.com/elribonazo/pluto-encrypted/blob/59fc391/src/index.ts#L82)
 
 ## Accessors
 
@@ -83,7 +83,7 @@ ___
 
 #### Defined in
 
-[index.ts:54](https://github.com/elribonazo/pluto-encrypted/blob/2b80c30/src/index.ts#L54)
+[index.ts:54](https://github.com/elribonazo/pluto-encrypted/blob/59fc391/src/index.ts#L54)
 
 ## Methods
 
@@ -101,7 +101,7 @@ Domain.Pluto.getAllCredentials
 
 #### Defined in
 
-[index.ts:626](https://github.com/elribonazo/pluto-encrypted/blob/2b80c30/src/index.ts#L626)
+[index.ts:626](https://github.com/elribonazo/pluto-encrypted/blob/59fc391/src/index.ts#L626)
 
 ___
 
@@ -119,7 +119,7 @@ Domain.Pluto.getAllDidPairs
 
 #### Defined in
 
-[index.ts:241](https://github.com/elribonazo/pluto-encrypted/blob/2b80c30/src/index.ts#L241)
+[index.ts:241](https://github.com/elribonazo/pluto-encrypted/blob/59fc391/src/index.ts#L241)
 
 ___
 
@@ -137,7 +137,7 @@ Domain.Pluto.getAllMediators
 
 #### Defined in
 
-[index.ts:622](https://github.com/elribonazo/pluto-encrypted/blob/2b80c30/src/index.ts#L622)
+[index.ts:622](https://github.com/elribonazo/pluto-encrypted/blob/59fc391/src/index.ts#L622)
 
 ___
 
@@ -155,7 +155,7 @@ Domain.Pluto.getAllMessages
 
 #### Defined in
 
-[index.ts:115](https://github.com/elribonazo/pluto-encrypted/blob/2b80c30/src/index.ts#L115)
+[index.ts:115](https://github.com/elribonazo/pluto-encrypted/blob/59fc391/src/index.ts#L115)
 
 ___
 
@@ -179,7 +179,7 @@ Domain.Pluto.getAllMessagesByDID
 
 #### Defined in
 
-[index.ts:503](https://github.com/elribonazo/pluto-encrypted/blob/2b80c30/src/index.ts#L503)
+[index.ts:503](https://github.com/elribonazo/pluto-encrypted/blob/59fc391/src/index.ts#L503)
 
 ___
 
@@ -204,7 +204,7 @@ Domain.Pluto.getAllMessagesByFromToDID
 
 #### Defined in
 
-[index.ts:588](https://github.com/elribonazo/pluto-encrypted/blob/2b80c30/src/index.ts#L588)
+[index.ts:588](https://github.com/elribonazo/pluto-encrypted/blob/59fc391/src/index.ts#L588)
 
 ___
 
@@ -229,7 +229,7 @@ Domain.Pluto.getAllMessagesOfType
 
 #### Defined in
 
-[index.ts:561](https://github.com/elribonazo/pluto-encrypted/blob/2b80c30/src/index.ts#L561)
+[index.ts:561](https://github.com/elribonazo/pluto-encrypted/blob/59fc391/src/index.ts#L561)
 
 ___
 
@@ -247,7 +247,7 @@ Domain.Pluto.getAllMessagesReceived
 
 #### Defined in
 
-[index.ts:528](https://github.com/elribonazo/pluto-encrypted/blob/2b80c30/src/index.ts#L528)
+[index.ts:528](https://github.com/elribonazo/pluto-encrypted/blob/59fc391/src/index.ts#L528)
 
 ___
 
@@ -271,7 +271,7 @@ Domain.Pluto.getAllMessagesReceivedFrom
 
 #### Defined in
 
-[index.ts:550](https://github.com/elribonazo/pluto-encrypted/blob/2b80c30/src/index.ts#L550)
+[index.ts:550](https://github.com/elribonazo/pluto-encrypted/blob/59fc391/src/index.ts#L550)
 
 ___
 
@@ -289,7 +289,7 @@ Domain.Pluto.getAllMessagesSent
 
 #### Defined in
 
-[index.ts:517](https://github.com/elribonazo/pluto-encrypted/blob/2b80c30/src/index.ts#L517)
+[index.ts:517](https://github.com/elribonazo/pluto-encrypted/blob/59fc391/src/index.ts#L517)
 
 ___
 
@@ -313,7 +313,7 @@ Domain.Pluto.getAllMessagesSentTo
 
 #### Defined in
 
-[index.ts:539](https://github.com/elribonazo/pluto-encrypted/blob/2b80c30/src/index.ts#L539)
+[index.ts:539](https://github.com/elribonazo/pluto-encrypted/blob/59fc391/src/index.ts#L539)
 
 ___
 
@@ -331,7 +331,7 @@ Domain.Pluto.getAllPeerDIDs
 
 #### Defined in
 
-[index.ts:618](https://github.com/elribonazo/pluto-encrypted/blob/2b80c30/src/index.ts#L618)
+[index.ts:618](https://github.com/elribonazo/pluto-encrypted/blob/59fc391/src/index.ts#L618)
 
 ___
 
@@ -349,7 +349,7 @@ Domain.Pluto.getAllPrismDIDs
 
 #### Defined in
 
-[index.ts:420](https://github.com/elribonazo/pluto-encrypted/blob/2b80c30/src/index.ts#L420)
+[index.ts:420](https://github.com/elribonazo/pluto-encrypted/blob/59fc391/src/index.ts#L420)
 
 ___
 
@@ -373,7 +373,7 @@ Domain.Pluto.getDIDInfoByAlias
 
 #### Defined in
 
-[index.ts:476](https://github.com/elribonazo/pluto-encrypted/blob/2b80c30/src/index.ts#L476)
+[index.ts:476](https://github.com/elribonazo/pluto-encrypted/blob/59fc391/src/index.ts#L476)
 
 ___
 
@@ -397,7 +397,7 @@ Domain.Pluto.getDIDInfoByDID
 
 #### Defined in
 
-[index.ts:448](https://github.com/elribonazo/pluto-encrypted/blob/2b80c30/src/index.ts#L448)
+[index.ts:448](https://github.com/elribonazo/pluto-encrypted/blob/59fc391/src/index.ts#L448)
 
 ___
 
@@ -421,7 +421,7 @@ Domain.Pluto.getDIDPrivateKeyByID
 
 #### Defined in
 
-[index.ts:402](https://github.com/elribonazo/pluto-encrypted/blob/2b80c30/src/index.ts#L402)
+[index.ts:402](https://github.com/elribonazo/pluto-encrypted/blob/59fc391/src/index.ts#L402)
 
 ___
 
@@ -445,7 +445,7 @@ Domain.Pluto.getDIDPrivateKeysByDID
 
 #### Defined in
 
-[index.ts:394](https://github.com/elribonazo/pluto-encrypted/blob/2b80c30/src/index.ts#L394)
+[index.ts:394](https://github.com/elribonazo/pluto-encrypted/blob/59fc391/src/index.ts#L394)
 
 ___
 
@@ -465,7 +465,7 @@ ___
 
 #### Defined in
 
-[index.ts:499](https://github.com/elribonazo/pluto-encrypted/blob/2b80c30/src/index.ts#L499)
+[index.ts:499](https://github.com/elribonazo/pluto-encrypted/blob/59fc391/src/index.ts#L499)
 
 ___
 
@@ -489,7 +489,7 @@ Domain.Pluto.getMessage
 
 #### Defined in
 
-[index.ts:95](https://github.com/elribonazo/pluto-encrypted/blob/2b80c30/src/index.ts#L95)
+[index.ts:95](https://github.com/elribonazo/pluto-encrypted/blob/59fc391/src/index.ts#L95)
 
 ___
 
@@ -513,7 +513,7 @@ Domain.Pluto.getPairByDID
 
 #### Defined in
 
-[index.ts:250](https://github.com/elribonazo/pluto-encrypted/blob/2b80c30/src/index.ts#L250)
+[index.ts:250](https://github.com/elribonazo/pluto-encrypted/blob/59fc391/src/index.ts#L250)
 
 ___
 
@@ -537,7 +537,7 @@ Domain.Pluto.getPairByName
 
 #### Defined in
 
-[index.ts:275](https://github.com/elribonazo/pluto-encrypted/blob/2b80c30/src/index.ts#L275)
+[index.ts:275](https://github.com/elribonazo/pluto-encrypted/blob/59fc391/src/index.ts#L275)
 
 ___
 
@@ -561,7 +561,7 @@ Domain.Pluto.getPrismDIDKeyPathIndex
 
 #### Defined in
 
-[index.ts:606](https://github.com/elribonazo/pluto-encrypted/blob/2b80c30/src/index.ts#L606)
+[index.ts:606](https://github.com/elribonazo/pluto-encrypted/blob/59fc391/src/index.ts#L606)
 
 ___
 
@@ -579,7 +579,7 @@ Domain.Pluto.getPrismLastKeyPathIndex
 
 #### Defined in
 
-[index.ts:610](https://github.com/elribonazo/pluto-encrypted/blob/2b80c30/src/index.ts#L610)
+[index.ts:610](https://github.com/elribonazo/pluto-encrypted/blob/59fc391/src/index.ts#L610)
 
 ___
 
@@ -599,7 +599,7 @@ ___
 
 #### Defined in
 
-[index.ts:297](https://github.com/elribonazo/pluto-encrypted/blob/2b80c30/src/index.ts#L297)
+[index.ts:297](https://github.com/elribonazo/pluto-encrypted/blob/59fc391/src/index.ts#L297)
 
 ___
 
@@ -617,7 +617,7 @@ Domain.Pluto.start
 
 #### Defined in
 
-[index.ts:120](https://github.com/elribonazo/pluto-encrypted/blob/2b80c30/src/index.ts#L120)
+[index.ts:120](https://github.com/elribonazo/pluto-encrypted/blob/59fc391/src/index.ts#L120)
 
 ___
 
@@ -641,7 +641,7 @@ Domain.Pluto.storeCredential
 
 #### Defined in
 
-[index.ts:614](https://github.com/elribonazo/pluto-encrypted/blob/2b80c30/src/index.ts#L614)
+[index.ts:614](https://github.com/elribonazo/pluto-encrypted/blob/59fc391/src/index.ts#L614)
 
 ___
 
@@ -667,7 +667,7 @@ Domain.Pluto.storeDIDPair
 
 #### Defined in
 
-[index.ts:194](https://github.com/elribonazo/pluto-encrypted/blob/2b80c30/src/index.ts#L194)
+[index.ts:194](https://github.com/elribonazo/pluto-encrypted/blob/59fc391/src/index.ts#L194)
 
 ___
 
@@ -693,7 +693,7 @@ Domain.Pluto.storeMediator
 
 #### Defined in
 
-[index.ts:407](https://github.com/elribonazo/pluto-encrypted/blob/2b80c30/src/index.ts#L407)
+[index.ts:407](https://github.com/elribonazo/pluto-encrypted/blob/59fc391/src/index.ts#L407)
 
 ___
 
@@ -717,7 +717,7 @@ Domain.Pluto.storeMessage
 
 #### Defined in
 
-[index.ts:103](https://github.com/elribonazo/pluto-encrypted/blob/2b80c30/src/index.ts#L103)
+[index.ts:103](https://github.com/elribonazo/pluto-encrypted/blob/59fc391/src/index.ts#L103)
 
 ___
 
@@ -741,7 +741,7 @@ Domain.Pluto.storeMessages
 
 #### Defined in
 
-[index.ts:111](https://github.com/elribonazo/pluto-encrypted/blob/2b80c30/src/index.ts#L111)
+[index.ts:111](https://github.com/elribonazo/pluto-encrypted/blob/59fc391/src/index.ts#L111)
 
 ___
 
@@ -766,7 +766,7 @@ Domain.Pluto.storePeerDID
 
 #### Defined in
 
-[index.ts:155](https://github.com/elribonazo/pluto-encrypted/blob/2b80c30/src/index.ts#L155)
+[index.ts:155](https://github.com/elribonazo/pluto-encrypted/blob/59fc391/src/index.ts#L155)
 
 ___
 
@@ -794,7 +794,7 @@ Domain.Pluto.storePrismDID
 
 #### Defined in
 
-[index.ts:133](https://github.com/elribonazo/pluto-encrypted/blob/2b80c30/src/index.ts#L133)
+[index.ts:133](https://github.com/elribonazo/pluto-encrypted/blob/59fc391/src/index.ts#L133)
 
 ___
 
@@ -821,7 +821,7 @@ Domain.Pluto.storePrivateKeys
 
 #### Defined in
 
-[index.ts:206](https://github.com/elribonazo/pluto-encrypted/blob/2b80c30/src/index.ts#L206)
+[index.ts:206](https://github.com/elribonazo/pluto-encrypted/blob/59fc391/src/index.ts#L206)
 
 ___
 
@@ -842,4 +842,4 @@ ___
 
 #### Defined in
 
-[index.ts:84](https://github.com/elribonazo/pluto-encrypted/blob/2b80c30/src/index.ts#L84)
+[index.ts:84](https://github.com/elribonazo/pluto-encrypted/blob/59fc391/src/index.ts#L84)

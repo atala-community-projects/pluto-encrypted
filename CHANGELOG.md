@@ -1,3 +1,10 @@
+## [0.1.1](https://github.com/elribonazo/pluto-encrypted/compare/v0.1.0...v0.1.1) (2023-10-01)
+
+
+### Bug Fixes
+
+* CI include new coverage badges. ([59fc391](https://github.com/elribonazo/pluto-encrypted/commit/59fc391ef207ae82f51df5eedf707410bea5bc53))
+
 # [0.1.0](https://github.com/elribonazo/pluto-encrypted/compare/v0.0.25...v0.1.0) (2023-10-01)
 
 
