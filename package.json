@@ -26,6 +26,9 @@
       "node_modules/(?!@noble)",
       "node_modules/(?!sinon)"
     ],
+    "collectCoverageFrom": [
+      "src/**/*.{js,ts}"
+    ],
     "moduleNameMapper": {
       "^uint8arrays$": "<rootDir>/node_modules/uint8arrays/cjs/src",
       "^uint8arrays/(.*)$": "<rootDir>/node_modules/uint8arrays/cjs/src/$1",
