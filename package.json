@@ -135,6 +135,9 @@
     "@input-output-hk/atala-prism-wallet-sdk": "file:./sdk"
   },
   "dependencies": {
+
+    "dexie": "^3.2.4",
+    "dexie-encrypted": "https://github.com/metafig/dexie-encrypted.git",
     "reflect-metadata": "^0.1.13",
     "rxdb": "^14.17.0",
     "uuid": "^9.0.1"
