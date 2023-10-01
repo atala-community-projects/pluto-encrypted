@@ -8,7 +8,6 @@ Not ready for production use most of the methods are not yet implemented!!
 | --------------------------- | ----------------------- | ------------------------- | ----------------- |
 | ![Statements](https://raw.githubusercontent.com/elribonazo/pluto-encrypted/master/coverage/badge-statements.svg) | ![Branches](https://raw.githubusercontent.com/elribonazo/pluto-encrypted/master/coverage/badge-branches.svg) | ![Functions](https://raw.githubusercontent.com/elribonazo/pluto-encrypted/master/coverage/badge-functions.svg) | ![Lines](https://raw.githubusercontent.com/elribonazo/pluto-encrypted/master/coverage/badge-lines.svg) |
 
-
 ### Documentation
 
 [SDK Reference](https://github.com/elribonazo/pluto-encrypted/blob/master/modules.md)
