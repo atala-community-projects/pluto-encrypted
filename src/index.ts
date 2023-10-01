@@ -1,4 +1,4 @@
-import type { Domain } from "@input-output-hk/atala-prism-wallet-sdk";
+import { Domain } from "@input-output-hk/atala-prism-wallet-sdk";
 import { getRxStorageDexie } from "rxdb/plugins/storage-dexie";
 import { wrappedKeyEncryptionCryptoJsStorage } from "rxdb/plugins/encryption-crypto-js";
 import { createRxDatabase } from "rxdb";
@@ -162,12 +162,16 @@ export class Database implements Domain.Pluto {
     );
   }
 
-  storeDIDPair(
+  async storeDIDPair(
     host: Domain.DID,
     receiver: Domain.DID,
     name: string
   ): Promise<void> {
-    throw new Error("Method not implemented.");
+    await this.db.didpairs.insert({
+      hostDID: host.toString(),
+      receiverDID: receiver.toString(),
+      name,
+    });
   }
 
   async storePrivateKeys(
@@ -245,14 +249,56 @@ export class Database implements Domain.Pluto {
   getDIDPrivateKeyByID(id: string): Promise<Domain.PrivateKey | null> {
     throw new Error("Method not implemented.");
   }
-  getAllDidPairs(): Promise<Domain.DIDPair[]> {
-    throw new Error("Method not implemented.");
+  async getAllDidPairs(): Promise<Domain.DIDPair[]> {
+    const { DID, DIDPair } = Domain;
+    const results = await this.db.didpairs.find().exec();
+    return results.map(
+      ({ hostDID, receiverDID, name }) =>
+        new DIDPair(DID.fromString(hostDID), DID.fromString(receiverDID), name)
+    );
   }
-  getPairByDID(did: Domain.DID): Promise<Domain.DIDPair | null> {
-    throw new Error("Method not implemented.");
+  async getPairByDID(did: Domain.DID): Promise<Domain.DIDPair | null> {
+    const { DID, DIDPair } = Domain;
+    const didPair = await this.db.didpairs
+      .findOne()
+      .where({
+        $or: [
+          {
+            hostDID: did.toString(),
+          },
+          {
+            receiverDID: did.toString(),
+          },
+        ],
+      })
+      .exec();
+    return didPair
+      ? new DIDPair(
+          DID.fromString(didPair.hostDID),
+          DID.fromString(didPair.receiverDID),
+          didPair.name
+        )
+      : null;
   }
-  getPairByName(name: string): Promise<Domain.DIDPair | null> {
-    throw new Error("Method not implemented.");
+  async getPairByName(name: string): Promise<Domain.DIDPair | null> {
+    const { DID, DIDPair } = Domain;
+    const didPair = await this.db.didpairs
+      .findOne()
+      .where({
+        $and: [
+          {
+            name,
+          },
+        ],
+      })
+      .exec();
+    return didPair
+      ? new DIDPair(
+          DID.fromString(didPair.hostDID),
+          DID.fromString(didPair.receiverDID),
+          didPair.name
+        )
+      : null;
   }
   getAllMessagesByDID(did: Domain.DID): Promise<Domain.Message[]> {
     throw new Error("Method not implemented.");

@@ -2,25 +2,21 @@ import { DIDPairSchemaType, Schema } from "../types";
 
 const DIDPairSchema: Schema<DIDPairSchemaType> = {
   version: 0,
-  primaryKey: "id",
+  primaryKey: "name",
   type: "object",
   properties: {
-    id: {
-      type: "string",
-      maxLength: 60,
-    },
-    host: {
+    hostDID: {
       type: "string",
     },
     name: {
       type: "string",
     },
-    receiver: {
+    receiverDID: {
       type: "string",
     },
   },
   encrypted: [],
-  required: ["id", "host", "receiver"],
+  required: ["name", "hostDID", "receiverDID"],
 };
 
 export default DIDPairSchema;
