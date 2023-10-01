@@ -282,7 +282,11 @@ export class Database implements Domain.Pluto {
     if (!raw) {
       throw new Error("Undefined key raw");
     }
-    if (!(curve.value in Domain.Curve)) {
+    if (
+      curve.value !== Domain.Curve.SECP256K1 &&
+      curve.value !== Domain.Curve.ED25519 &&
+      curve.value !== Domain.Curve.X25519
+    ) {
       throw new Error(`Invalid key curve ${curve.value}`);
     }
 
@@ -387,7 +391,9 @@ export class Database implements Domain.Pluto {
     const prismDIDInfo: Domain.PrismDIDInfo[] = [];
 
     for (let did of dids) {
-      const didPrivateKeys = await this.getDIDPrivateKeysByDID(did);
+      const didPrivateKeys = await this.getDIDPrivateKeysByDID(
+        Domain.DID.fromString(did.did)
+      );
 
       for (let privateKey of didPrivateKeys) {
         const indexProp = privateKey.getProperty(Domain.KeyProperties.index);
