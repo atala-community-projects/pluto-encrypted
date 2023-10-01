@@ -14,10 +14,7 @@ export default {
       {
         assets: [
           "package.json",
-          "coverage/badge-branches.svg",
-          "coverage/badge-functions.svg",
-          "coverage/badge-lines.svg",
-          "coverage/badge-statements.svg",
+          "coverage/*.svg",
           "package-lock.json",
           "CHANGELOG.md",
           "README.md",

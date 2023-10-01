@@ -31,12 +31,9 @@ jobs:
       - name: Install Dependencies
         run: npm ci  # or use "npm install" if you don't have a lock file
 
-      - name: Test
-        run: npm test && npx jest-coverage-badges  # adjust this to your project's test command
-
       - name: Semantic Release
         env:
           GH_TOKEN: ${{ secrets.PLUTO_GITHUB }}
           GITHUB_TOKEN: ${{ secrets.PLUTO_GITHUB }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-        run: npm run docs -- --hideInPageTOC true --hideBreadcrumbs true && cp -r docs/* . && npx semantic-release 
+        run: npm test && npx jest-coverage-badges && npm run docs -- --hideInPageTOC true --hideBreadcrumbs true && cp -r docs/* . && npx semantic-release 
