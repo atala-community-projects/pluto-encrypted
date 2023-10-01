@@ -31,3 +31,8 @@ const messages = await db.getAllMessages();
 ```
 
 If the database is later initialised with the wrong password the "createEncrypted" async function will throw an exception and will not let you decrypt any encrypted content.
+
+## Test Coverage
+| Statements                  | Branches                | Functions                 | Lines             |
+| --------------------------- | ----------------------- | ------------------------- | ----------------- |
+| ![Statements](#statements#) | ![Branches](#branches#) | ![Functions](#functions#) | ![Lines](#lines#) |
