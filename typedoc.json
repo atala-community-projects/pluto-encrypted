@@ -16,11 +16,8 @@
     "theme": "default",
     "plugin": ["typedoc-plugin-superstruct", "typedoc-plugin-rename-defaults"],
     "navigationLinks": {
-        "Docs": "https://typedoc.org/guides/overview",
-        "GitHub": "https://github.com/TypeStrong/typedoc"
-    },
-    "sidebarLinks": {
-        "API": "https://typedoc.org/api"
+        "Docs": "https://elribonazo.github.io/pluto-encrypted/",
+        "GitHub": "https://github.com/elribonazo/pluto-encrypted"
     }
   }
   
