@@ -9,7 +9,7 @@ import * as Fixtures from "./fixtures";
 const databaseName = "prism-db";
 const keyData = new Uint8Array(32);
 
-const createMessage = () => new Domain.Message("{}", randomUUID(), "");
+const createMessage = () => new Domain.Message("{}", randomUUID(), "https://didcomm.org/basicmessage/2.0/message");
 const defaultPassword = Buffer.from(keyData);
 
 describe("Pluto + Dexie encrypted integration for browsers", () => {
