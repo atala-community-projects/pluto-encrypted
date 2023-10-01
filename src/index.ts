@@ -1,7 +1,7 @@
 import { Domain } from "@input-output-hk/atala-prism-wallet-sdk";
 import { getRxStorageDexie } from "rxdb/plugins/storage-dexie";
 import { wrappedKeyEncryptionCryptoJsStorage } from "rxdb/plugins/encryption-crypto-js";
-import { createRxDatabase } from "rxdb";
+import { RxDatabaseCreator, createRxDatabase } from "rxdb";
 import { RxError } from "rxdb/dist/lib/rx-error";
 import { addRxPlugin } from "rxdb";
 import { RxDBMigrationPlugin } from "rxdb/plugins/migration";
@@ -19,44 +19,46 @@ addRxPlugin(RxDBMigrationPlugin);
 //New change
 
 export class Database implements Domain.Pluto {
-  constructor(private db: PlutoDatabase) {}
+  private _db!: PlutoDatabase;
+  private get db() {
+    if (!this._db) {
+      throw new Error("Start Pluto first.");
+    }
+    return this._db;
+  }
+
+  private collections = {
+    messages: {
+      schema: MessageSchema,
+    },
+    dids: {
+      schema: DIDSchema,
+    },
+    verifiableCredentials: {
+      schema: CredentialSchema,
+    },
+    didpairs: {
+      schema: DIDPairSchema,
+    },
+    mediators: {
+      schema: MediatorSchema,
+    },
+    privateKeys: {
+      schema: PrivateKeySchema,
+    },
+  };
+
+  constructor(private dbOptions: RxDatabaseCreator) {}
 
   static async createEncrypted(name: string, encryptionKey: Uint8Array) {
-    try {
-      const myDatabase = await createRxDatabase<PlutoDatabase>({
-        ignoreDuplicate: true,
-        name: name,
-        storage: wrappedKeyEncryptionCryptoJsStorage({
-          storage: getRxStorageDexie(),
-        }),
-        password: Buffer.from(encryptionKey).toString("hex"),
-      });
-      await myDatabase.addCollections<PlutoCollections>({
-        messages: {
-          schema: MessageSchema,
-        },
-        dids: {
-          schema: DIDSchema,
-        },
-        verifiableCredentials: {
-          schema: CredentialSchema,
-        },
-        didpairs: {
-          schema: DIDPairSchema,
-        },
-        mediators: {
-          schema: MediatorSchema,
-        },
-        privateKeys: {
-          schema: PrivateKeySchema,
-        },
-      });
-      return new Database(myDatabase);
-    } catch (err) {
-      if (err instanceof RxError && (err as RxError).code === "DB1") {
-        throw new Error("Invalid authentication");
-      } else throw err;
-    }
+    return new Database({
+      ignoreDuplicate: true,
+      name: name,
+      storage: wrappedKeyEncryptionCryptoJsStorage({
+        storage: getRxStorageDexie(),
+      }),
+      password: Buffer.from(encryptionKey).toString("hex"),
+    });
   }
 
   async storeMessage(message: Domain.Message): Promise<void> {
@@ -71,8 +73,17 @@ export class Database implements Domain.Pluto {
     return this.db.messages.find({}).exec();
   }
 
-  start(): Promise<void> {
-    throw new Error("Method not implemented.");
+  async start(): Promise<void> {
+    const { dbOptions, collections } = this;
+    try {
+      const database = await createRxDatabase<PlutoDatabase>(dbOptions);
+      await database.addCollections<PlutoCollections>(collections);
+      this._db = database;
+    } catch (err) {
+      if (err instanceof RxError && (err as RxError).code === "DB1") {
+        throw new Error("Invalid authentication");
+      } else throw err;
+    }
   }
 
   async storePrismDID(

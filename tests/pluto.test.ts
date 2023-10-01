@@ -14,12 +14,14 @@ describe("Pluto + Dexie encrypted integration for browsers", () => {
         databaseName,
         Buffer.from(password)
       );
+      await db.start();
       const messages = await db.getAllMessages();
       expect(messages.length).toEqual(0);
     }
 
     const keyData = new Uint8Array(32);
     await createAndLoad(keyData);
+
     const keyData2 = keyData;
     keyData2[0] = 1;
     keyData2[1] = 2;
@@ -34,6 +36,7 @@ describe("Pluto + Dexie encrypted integration for browsers", () => {
       `${databaseName}${randomUUID()}`,
       Buffer.from(new Uint8Array(32))
     );
+    await db.start();
     const did = Domain.DID.fromString(
       "did:prism:733e594871d7700d35e6116011a08fc11e88ff9d366d8b5571ffc1aa18d249ea:Ct8BCtwBEnQKH2F1dGhlbnRpY2F0aW9uYXV0aGVudGljYXRpb25LZXkQBEJPCglzZWNwMjU2azESIDS5zeYUkLCSAJLI6aLXRTPRxstCLPUEI6TgBrAVCHkwGiDk-ffklrHIFW7pKkT8i-YksXi-XXi5h31czUMaVClcpxJkCg9tYXN0ZXJtYXN0ZXJLZXkQAUJPCglzZWNwMjU2azESIDS5zeYUkLCSAJLI6aLXRTPRxstCLPUEI6TgBrAVCHkwGiDk-ffklrHIFW7pKkT8i-YksXi-XXi5h31czUMaVClcpw"
     );
