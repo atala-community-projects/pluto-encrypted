@@ -1,3 +1,11 @@
+## [0.1.2](https://github.com/elribonazo/pluto-encrypted/compare/v0.1.1...v0.1.2) (2023-10-01)
+
+
+### Bug Fixes
+
+* doc type fix ([c09f011](https://github.com/elribonazo/pluto-encrypted/commit/c09f011ce0bb46747903a0abbec48663afe3a75e))
+* PrivateKey type improvements and static method to easily convert from db to domain. ([32e608d](https://github.com/elribonazo/pluto-encrypted/commit/32e608ddfd3e67abe543eb6fa35589a88d74b585))
+
 ## [0.1.1](https://github.com/elribonazo/pluto-encrypted/compare/v0.1.0...v0.1.1) (2023-10-01)
 
 

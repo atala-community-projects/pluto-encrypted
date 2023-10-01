@@ -1,4 +1,4 @@
-# pluto-encrypted - v0.1.0
+# pluto-encrypted - v0.1.1
 
 ## Classes
 
@@ -12,7 +12,7 @@
 
 #### Defined in
 
-[schemas/Credential.ts:4](https://github.com/elribonazo/pluto-encrypted/blob/59fc391/src/schemas/Credential.ts#L4)
+[schemas/Credential.ts:4](https://github.com/elribonazo/pluto-encrypted/blob/c09f011/src/schemas/Credential.ts#L4)
 
 ___
 
@@ -30,7 +30,7 @@ ___
 
 #### Defined in
 
-[schemas/DIDPair.ts:4](https://github.com/elribonazo/pluto-encrypted/blob/59fc391/src/schemas/DIDPair.ts#L4)
+[schemas/DIDPair.ts:4](https://github.com/elribonazo/pluto-encrypted/blob/c09f011/src/schemas/DIDPair.ts#L4)
 
 ___
 
@@ -50,7 +50,7 @@ ___
 
 #### Defined in
 
-[schemas/DID.ts:3](https://github.com/elribonazo/pluto-encrypted/blob/59fc391/src/schemas/DID.ts#L3)
+[schemas/DID.ts:3](https://github.com/elribonazo/pluto-encrypted/blob/c09f011/src/schemas/DID.ts#L3)
 
 ___
 
@@ -69,7 +69,7 @@ ___
 
 #### Defined in
 
-[schemas/PrivateKey.ts:11](https://github.com/elribonazo/pluto-encrypted/blob/59fc391/src/schemas/PrivateKey.ts#L11)
+[schemas/PrivateKey.ts:13](https://github.com/elribonazo/pluto-encrypted/blob/c09f011/src/schemas/PrivateKey.ts#L13)
 
 ___
 
@@ -89,7 +89,7 @@ PrivateKeySchema
 
 #### Defined in
 
-[schemas/PrivateKey.ts:6](https://github.com/elribonazo/pluto-encrypted/blob/59fc391/src/schemas/PrivateKey.ts#L6)
+[schemas/PrivateKey.ts:8](https://github.com/elribonazo/pluto-encrypted/blob/c09f011/src/schemas/PrivateKey.ts#L8)
 
 ___
 
@@ -108,7 +108,7 @@ ___
 
 #### Defined in
 
-[schemas/Mediator.ts:4](https://github.com/elribonazo/pluto-encrypted/blob/59fc391/src/schemas/Mediator.ts#L4)
+[schemas/Mediator.ts:4](https://github.com/elribonazo/pluto-encrypted/blob/c09f011/src/schemas/Mediator.ts#L4)
 
 ___
 
@@ -137,7 +137,7 @@ ___
 
 #### Defined in
 
-[schemas/Message.ts:6](https://github.com/elribonazo/pluto-encrypted/blob/59fc391/src/schemas/Message.ts#L6)
+[schemas/Message.ts:6](https://github.com/elribonazo/pluto-encrypted/blob/c09f011/src/schemas/Message.ts#L6)
 
 ___
 
@@ -153,12 +153,12 @@ ___
 | `dids` | `RxCollection`<[`DIDSchemaType`](modules.md#didschematype)\> |
 | `mediators` | `RxCollection`<[`MediarorSchemaType`](modules.md#mediarorschematype)\> |
 | `messages` | `RxCollection`<[`MessageSchemaType`](modules.md#messageschematype)\> |
-| `privateKeys` | `RxCollection`<[`KeySchemaType`](modules.md#keyschematype)\> |
+| `privateKeys` | [`PrivateKeyColletion`](modules.md#privatekeycolletion) |
 | `verifiableCredentials` | `RxCollection`<[`CredentialSchemaType`](modules.md#credentialschematype)\> |
 
 #### Defined in
 
-[index.ts:36](https://github.com/elribonazo/pluto-encrypted/blob/59fc391/src/index.ts#L36)
+[index.ts:32](https://github.com/elribonazo/pluto-encrypted/blob/c09f011/src/index.ts#L32)
 
 ___
 
@@ -168,4 +168,50 @@ ___
 
 #### Defined in
 
-[index.ts:44](https://github.com/elribonazo/pluto-encrypted/blob/59fc391/src/index.ts#L44)
+[index.ts:40](https://github.com/elribonazo/pluto-encrypted/blob/c09f011/src/index.ts#L40)
+
+___
+
+### PrivateKeyColletion
+
+Ƭ **PrivateKeyColletion**: `RxCollection`<[`KeySchemaType`](modules.md#keyschematype), [`PrivateKeyMethodTypes`](modules.md#privatekeymethodtypes)\>
+
+#### Defined in
+
+[schemas/PrivateKey.ts:60](https://github.com/elribonazo/pluto-encrypted/blob/c09f011/src/schemas/PrivateKey.ts#L60)
+
+___
+
+### PrivateKeyDocument
+
+Ƭ **PrivateKeyDocument**: `RxDocument`<[`KeySchemaType`](modules.md#keyschematype), [`PrivateKeyMethodTypes`](modules.md#privatekeymethodtypes)\>
+
+#### Defined in
+
+[schemas/PrivateKey.ts:61](https://github.com/elribonazo/pluto-encrypted/blob/c09f011/src/schemas/PrivateKey.ts#L61)
+
+___
+
+### PrivateKeyMethodTypes
+
+Ƭ **PrivateKeyMethodTypes**: `Object`
+
+#### Type declaration
+
+| Name | Type |
+| :------ | :------ |
+| `toPrivateKey` | () => `Domain.PrivateKey` |
+
+#### Defined in
+
+[schemas/PrivateKey.ts:57](https://github.com/elribonazo/pluto-encrypted/blob/c09f011/src/schemas/PrivateKey.ts#L57)
+
+## Variables
+
+### PrivateKeyMethods
+
+• `Const` **PrivateKeyMethods**: [`PrivateKeyMethodTypes`](modules.md#privatekeymethodtypes)
+
+#### Defined in
+
+[schemas/PrivateKey.ts:62](https://github.com/elribonazo/pluto-encrypted/blob/c09f011/src/schemas/PrivateKey.ts#L62)
