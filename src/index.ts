@@ -282,6 +282,7 @@ export class Database implements Domain.Pluto {
     if (!raw) {
       throw new Error("Undefined key raw");
     }
+
     if (
       curve.value !== Domain.Curve.SECP256K1 &&
       curve.value !== Domain.Curve.ED25519 &&

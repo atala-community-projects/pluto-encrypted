@@ -52,10 +52,10 @@
     ],
     "coverageThreshold": {
       "global": {
-        "branches": 2,
-        "functions": 2,
-        "lines": 2,
-        "statements": 2
+        "branches": 36,
+        "functions": 61,
+        "lines": 58,
+        "statements": 59
       }
     },
     "coverageDirectory": "coverage"
