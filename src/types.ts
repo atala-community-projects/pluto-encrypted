@@ -15,7 +15,11 @@ export type DIDSchemaType = NoKeys<Domain.DID, "toString"> & {
   alias?: string;
   did: string;
 };
-export type DIDPairSchemaType = Domain.DIDPair & { id: string };
+export type DIDPairSchemaType = {
+  readonly hostDID: string;
+  readonly receiverDID: string;
+  readonly name: string;
+};
 export type KeySpec = {
   name: string;
   type: string;
