@@ -32,7 +32,7 @@ jobs:
         run: npm ci  # or use "npm install" if you don't have a lock file
 
       - name: Test
-        run: npm test  # adjust this to your project's test command
+        run: npm test && npx jest-coverage-badges  # adjust this to your project's test command
 
       - name: Semantic Release
         env:
