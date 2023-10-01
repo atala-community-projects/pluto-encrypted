@@ -60,7 +60,7 @@ export type PrivateKeyMethodTypes = {
 export type PrivateKeyColletion = RxCollection<KeySchemaType, PrivateKeyMethodTypes>;
 export type PrivateKeyDocument = RxDocument<KeySchemaType, PrivateKeyMethodTypes>
 export const PrivateKeyMethods: PrivateKeyMethodTypes = {
-  toPrivateKey: function (this: KeySchemaType) {
+  toPrivateKey: function (this: PrivateKeyDocument) {
     const { type, keySpecification } = this;
     const curve = keySpecification.find(
       (item) => item.name === KeyProperties.curve
