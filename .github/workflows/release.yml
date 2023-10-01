@@ -40,7 +40,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.PLUTO_GITHUB }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: npx semantic-release 
-        
+
       - name: Get Latest Release Tag
         id: get_latest_tag
         run: |
@@ -48,7 +48,7 @@ jobs:
         shell: bash
 
       - name: Build Docs
-        run: npm run docs -- --out docs/${{ steps.get_latest_tag.outputs.tag }}
+        run: npm run docs
 
       - name: Push
         uses: s0/git-publish-subdir-action@develop
