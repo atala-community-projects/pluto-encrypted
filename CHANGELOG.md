@@ -1,3 +1,10 @@
+## [0.0.15](https://github.com/elribonazo/pluto-encrypted/compare/v0.0.14...v0.0.15) (2023-10-01)
+
+
+### Bug Fixes
+
+* Implementing getDIDInfoByAlias, getDIDInfoByDID, getAllPrismDIDs, storeMediator, getDIDPrivateKeyByID, getDIDPrivateKeysByDID ([3e2e9e5](https://github.com/elribonazo/pluto-encrypted/commit/3e2e9e56ff76432801e39e4ed3c037a86157c0d1))
+
 ## [0.0.14](https://github.com/elribonazo/pluto-encrypted/compare/v0.0.13...v0.0.14) (2023-10-01)
 
 
