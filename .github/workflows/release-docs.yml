@@ -31,14 +31,15 @@ jobs:
       - name: Install Dependencies
         run: npm ci  # or use "npm install" if you don't have a lock file
 
-      - name: Build Docs
-        run: npm run docs
 
       - name: Get Latest Release Tag
         id: get_latest_tag
         run: |
           echo "##[set-output name=tag]$(git describe --tags --abbrev=0)"
         shell: bash
+
+      - name: Build Docs
+        run: npm run docs -- --out docs/${{ steps.get_latest_tag.outputs.tag }}
 
       - name: Push
         uses: s0/git-publish-subdir-action@develop
