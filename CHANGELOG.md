@@ -1,3 +1,12 @@
+## [0.0.22](https://github.com/elribonazo/pluto-encrypted/compare/v0.0.21...v0.0.22) (2023-10-01)
+
+
+### Bug Fixes
+
+* documentation gen ([6661fa2](https://github.com/elribonazo/pluto-encrypted/commit/6661fa20221d76e86cb172e0a2f1ab343ab68f4e))
+* package-lock ([e9386fe](https://github.com/elribonazo/pluto-encrypted/commit/e9386fe7f607fc8e2f369b13ac4dd63e21e4e0f9))
+* readme docs. ([9308431](https://github.com/elribonazo/pluto-encrypted/commit/9308431675f11f2f857633c203ded08225e4d808))
+
 ## [0.0.21](https://github.com/elribonazo/pluto-encrypted/compare/v0.0.20...v0.0.21) (2023-10-01)
 
 

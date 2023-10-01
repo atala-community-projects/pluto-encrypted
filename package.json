@@ -1,6 +1,6 @@
 {
   "name": "pluto-encrypted",
-  "version": "0.0.21",
+  "version": "0.0.22",
   "description": "A \"secure\" IndexDB Wrapper for AtalaPrism -> Pluto storage.",
   "main": "./build/index.js",
   "types": "./build/index.d.ts",
@@ -135,7 +135,6 @@
     "@input-output-hk/atala-prism-wallet-sdk": "file:./sdk"
   },
   "dependencies": {
-
     "dexie": "^3.2.4",
     "dexie-encrypted": "https://github.com/metafig/dexie-encrypted.git",
     "reflect-metadata": "^0.1.13",
