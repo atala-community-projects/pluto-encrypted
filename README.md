@@ -6,7 +6,7 @@ Not ready for production use most of the methods are not yet implemented!!
 ### Coverage
 | Statements                  | Branches                | Functions                 | Lines             |
 | --------------------------- | ----------------------- | ------------------------- | ----------------- |
-| ![Statements](coverage/badge-statements.svg) | ![Branches](coverage/badge-branches.svg) | ![Functions](coverage/badge-functions.svg) | ![Lines](coverage/badge-lines.svg) |
+| ![Statements](https://raw.githubusercontent.com/elribonazo/pluto-encrypted/master/coverage/badge-statements.svg) | ![Branches](https://raw.githubusercontent.com/elribonazo/pluto-encrypted/master/coverage/badge-branches.svg) | ![Functions](https://raw.githubusercontent.com/elribonazo/pluto-encrypted/master/coverage/badge-functions.svg) | ![Lines](https://raw.githubusercontent.com/elribonazo/pluto-encrypted/master/coverage/badge-lines.svg) |
 
 ## USAGE
 To install simply run
