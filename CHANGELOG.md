@@ -1,3 +1,10 @@
+## [0.0.12](https://github.com/elribonazo/pluto-encrypted/compare/v0.0.11...v0.0.12) (2023-10-01)
+
+
+### Bug Fixes
+
+* update coverage ([#13](https://github.com/elribonazo/pluto-encrypted/issues/13)) ([f117a8f](https://github.com/elribonazo/pluto-encrypted/commit/f117a8fb7ea7db0c22480d9a2e85b39471b53603))
+
 ## [0.0.11](https://github.com/elribonazo/pluto-encrypted/compare/v0.0.10...v0.0.11) (2023-10-01)
 
 
