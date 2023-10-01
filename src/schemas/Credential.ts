@@ -1,5 +1,11 @@
-import type { CredentialSchemaType, Schema } from "../types";
+import type { Domain } from "@input-output-hk/atala-prism-wallet-sdk";
+import type { Schema } from "../types";
 
+export type CredentialSchemaType = Domain.VerifiableCredential;
+
+/**
+ * CredentialSchema
+ */
 const CredentialSchema: Schema<CredentialSchemaType> = {
   version: 0,
   primaryKey: "id",

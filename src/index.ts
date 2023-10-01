@@ -7,30 +7,48 @@ import {
 } from "@input-output-hk/atala-prism-wallet-sdk";
 import { getRxStorageDexie } from "rxdb/plugins/storage-dexie";
 import { wrappedKeyEncryptionCryptoJsStorage } from "rxdb/plugins/encryption-crypto-js";
-import { RxDatabaseCreator, RxDocument, createRxDatabase } from "rxdb";
+import { RxCollection, RxDatabase, RxDatabaseCreator, RxDocument, RxJsonSchema, createRxDatabase } from "rxdb";
 import { RxError } from "rxdb/dist/lib/rx-error";
 import { addRxPlugin } from "rxdb";
 import { RxDBMigrationPlugin } from "rxdb/plugins/migration";
 import { RxDBQueryBuilderPlugin } from "rxdb/plugins/query-builder";
 import { v4 as uuidv4 } from "uuid";
 
-import type {
-  KeySchemaType,
-  KeySpec,
-  PlutoCollections,
-  PlutoDatabase,
-} from "./types";
 
-import MessageSchema from "./schemas/Message";
-import DIDSchema from "./schemas/DID";
-import CredentialSchema from "./schemas/Credential";
-import DIDPairSchema from "./schemas/DIDPair";
-import MediatorSchema from "./schemas/Mediator";
-import PrivateKeySchema from "./schemas/PrivateKey";
+import MessageSchema, { MessageSchemaType } from "./schemas/Message";
+import DIDSchema, { DIDSchemaType } from "./schemas/DID";
+import CredentialSchema, { CredentialSchemaType } from "./schemas/Credential";
+import DIDPairSchema, { DIDPairSchemaType } from "./schemas/DIDPair";
+import MediatorSchema, { MediarorSchemaType } from "./schemas/Mediator";
+import PrivateKeySchema, { KeySchemaType, KeySpec } from "./schemas/PrivateKey";
 
 addRxPlugin(RxDBMigrationPlugin);
 addRxPlugin(RxDBQueryBuilderPlugin);
 
+
+export * from "./schemas/Message";
+export * from './schemas/DID';
+export * from './schemas/Credential';
+export * from './schemas/DIDPair';
+export * from './schemas/Mediator';
+export * from './schemas/PrivateKey';
+
+export type PlutoCollections = {
+  messages: RxCollection<MessageSchemaType>;
+  dids: RxCollection<DIDSchemaType>;
+  verifiableCredentials: RxCollection<CredentialSchemaType>;
+  didpairs: RxCollection<DIDPairSchemaType>;
+  mediators: RxCollection<MediarorSchemaType>;
+  privateKeys: RxCollection<KeySchemaType>;
+};
+export type PlutoDatabase = RxDatabase<PlutoCollections>;
+
+/**
+ * Pluto is a storage interface describing storage requirements of the edge agents
+ * which will be implemented using this SDK. Implement this interface using your
+ * preferred underlying storage technology, most appropriate for your use case.
+ *
+ */
 export class Database implements Domain.Pluto {
   private _db!: PlutoDatabase;
   private get db() {
@@ -61,7 +79,7 @@ export class Database implements Domain.Pluto {
     },
   };
 
-  constructor(private dbOptions: RxDatabaseCreator) {}
+  constructor(private dbOptions: RxDatabaseCreator) { }
 
   static async createEncrypted(name: string, encryptionKey: Uint8Array) {
     return new Database({
@@ -238,10 +256,10 @@ export class Database implements Domain.Pluto {
 
     return didPair
       ? new DIDPair(
-          DID.fromString(didPair.hostDID),
-          DID.fromString(didPair.receiverDID),
-          didPair.name
-        )
+        DID.fromString(didPair.hostDID),
+        DID.fromString(didPair.receiverDID),
+        didPair.name
+      )
       : null;
   }
 
@@ -260,10 +278,10 @@ export class Database implements Domain.Pluto {
 
     return didPair
       ? new DIDPair(
-          DID.fromString(didPair.hostDID),
-          DID.fromString(didPair.receiverDID),
-          didPair.name
-        )
+        DID.fromString(didPair.hostDID),
+        DID.fromString(didPair.receiverDID),
+        didPair.name
+      )
       : null;
   }
 

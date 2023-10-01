@@ -1,5 +1,15 @@
-import type { DIDSchemaType, Schema } from "../types";
+import type { Schema } from "../types";
 
+export type DIDSchemaType = {
+  schema: string;
+  method: string;
+  methodId: string;
+  alias?: string;
+  did: string;
+};
+/**
+ * DIDSchema
+ */
 const DIDSchema: Schema<DIDSchemaType> = {
   version: 0,
   primaryKey: "did",

@@ -1,5 +1,14 @@
-import type { DIDPairSchemaType, Schema } from "../types";
+import type { Schema } from "../types";
 
+
+export type DIDPairSchemaType = {
+  hostDID: string;
+  receiverDID: string;
+  name: string;
+};
+/**
+ * DIDPairSchema
+ */
 const DIDPairSchema: Schema<DIDPairSchemaType> = {
   version: 0,
   primaryKey: "name",
