@@ -1,4 +1,4 @@
-import { Schema, MediarorSchemaType } from "../types";
+import type { Schema, MediarorSchemaType } from "../types";
 
 const MediatorSchema: Schema<MediarorSchemaType> = {
   version: 0,

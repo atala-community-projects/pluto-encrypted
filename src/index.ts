@@ -1,62 +1,81 @@
-import { Domain } from "@input-output-hk/atala-prism-wallet-sdk";
+import {
+  Domain,
+  Ed25519PrivateKey,
+  KeyProperties,
+  Secp256k1PrivateKey,
+  X25519PrivateKey,
+} from "@input-output-hk/atala-prism-wallet-sdk";
 import { getRxStorageDexie } from "rxdb/plugins/storage-dexie";
 import { wrappedKeyEncryptionCryptoJsStorage } from "rxdb/plugins/encryption-crypto-js";
-import { createRxDatabase } from "rxdb";
+import { RxDatabaseCreator, RxDocument, createRxDatabase } from "rxdb";
 import { RxError } from "rxdb/dist/lib/rx-error";
 import { addRxPlugin } from "rxdb";
 import { RxDBMigrationPlugin } from "rxdb/plugins/migration";
+import { RxDBQueryBuilderPlugin } from "rxdb/plugins/query-builder";
 import { v4 as uuidv4 } from "uuid";
+
+import type {
+  KeySchemaType,
+  KeySpec,
+  PlutoCollections,
+  PlutoDatabase,
+} from "./types";
 
 import MessageSchema from "./schemas/Message";
 import DIDSchema from "./schemas/DID";
-import { KeySpec, PlutoCollections, PlutoDatabase } from "./types";
 import CredentialSchema from "./schemas/Credential";
 import DIDPairSchema from "./schemas/DIDPair";
 import MediatorSchema from "./schemas/Mediator";
 import PrivateKeySchema from "./schemas/PrivateKey";
 
 addRxPlugin(RxDBMigrationPlugin);
-//New change
+addRxPlugin(RxDBQueryBuilderPlugin);
 
 export class Database implements Domain.Pluto {
-  constructor(private db: PlutoDatabase) {}
+  private _db!: PlutoDatabase;
+  private get db() {
+    if (!this._db) {
+      throw new Error("Start Pluto first.");
+    }
+    return this._db;
+  }
+
+  private collections = {
+    messages: {
+      schema: MessageSchema,
+    },
+    dids: {
+      schema: DIDSchema,
+    },
+    verifiableCredentials: {
+      schema: CredentialSchema,
+    },
+    didpairs: {
+      schema: DIDPairSchema,
+    },
+    mediators: {
+      schema: MediatorSchema,
+    },
+    privateKeys: {
+      schema: PrivateKeySchema,
+    },
+  };
+
+  constructor(private dbOptions: RxDatabaseCreator) {}
 
   static async createEncrypted(name: string, encryptionKey: Uint8Array) {
-    try {
-      const myDatabase = await createRxDatabase<PlutoDatabase>({
-        ignoreDuplicate: true,
-        name: name,
-        storage: wrappedKeyEncryptionCryptoJsStorage({
-          storage: getRxStorageDexie(),
-        }),
-        password: Buffer.from(encryptionKey).toString("hex"),
-      });
-      await myDatabase.addCollections<PlutoCollections>({
-        messages: {
-          schema: MessageSchema,
-        },
-        dids: {
-          schema: DIDSchema,
-        },
-        verifiableCredentials: {
-          schema: CredentialSchema,
-        },
-        didpairs: {
-          schema: DIDPairSchema,
-        },
-        mediators: {
-          schema: MediatorSchema,
-        },
-        privateKeys: {
-          schema: PrivateKeySchema,
-        },
-      });
-      return new Database(myDatabase);
-    } catch (err) {
-      if (err instanceof RxError && (err as RxError).code === "DB1") {
-        throw new Error("Invalid authentication");
-      } else throw err;
-    }
+    return new Database({
+      ignoreDuplicate: true,
+      name: name,
+      storage: wrappedKeyEncryptionCryptoJsStorage({
+        storage: getRxStorageDexie(),
+      }),
+      password: Buffer.from(encryptionKey).toString("hex"),
+    });
+  }
+
+  async getMessage(id: string): Promise<Domain.Message | null> {
+    return this.db.messages.findOne().where({ id: id }).exec();
   }
 
   async storeMessage(message: Domain.Message): Promise<void> {
@@ -64,15 +83,24 @@ export class Database implements Domain.Pluto {
   }
 
   async storeMessages(messages: Domain.Message[]): Promise<void> {
-    await Promise.all(messages.map(this.storeMessage));
+    await Promise.all(messages.map((message) => this.storeMessage(message)));
   }
 
   async getAllMessages(): Promise<Domain.Message[]> {
-    return this.db.messages.find({}).exec();
+    return this.db.messages.find().exec();
   }
 
-  start(): Promise<void> {
-    throw new Error("Method not implemented.");
+  async start(): Promise<void> {
+    const { dbOptions, collections } = this;
+    try {
+      const database = await createRxDatabase<PlutoDatabase>(dbOptions);
+      await database.addCollections<PlutoCollections>(collections);
+      this._db = database;
+    } catch (err) {
+      if (err instanceof RxError && (err as RxError).code === "DB1") {
+        throw new Error("Invalid authentication");
+      } else throw err;
+    }
   }
 
   async storePrismDID(
@@ -89,38 +117,12 @@ export class Database implements Domain.Pluto {
       schema: did.schema,
       alias: alias,
     });
-
-    const initialSpec: KeySpec[] = [
-      {
-        type: "string",
-        name: "raw",
-        value: Buffer.from(privateKey.getEncoded()).toString("hex"),
-      },
-      {
-        type: "number",
-        name: "index",
-        value: `${keyPathIndex}`,
-      },
-    ];
-
-    const keySpecification = Array.from(privateKey.keySpecification).reduce(
-      (all, [key, value]) => {
-        all.push({
-          type: "string",
-          name: key,
-          value: `${value}`,
-        });
-        return all;
-      },
-      initialSpec
+    await this.storePrivateKeys(
+      privateKey,
+      did,
+      keyPathIndex,
+      privateKeyMetaId ?? null
     );
-
-    await this.db.privateKeys.insert({
-      id: uuidv4(),
-      did: did.toString(),
-      type: privateKey.type,
-      keySpecification,
-    });
   }
 
   async storePeerDID(
@@ -209,46 +211,6 @@ export class Database implements Domain.Pluto {
     });
   }
 
-  async storeMediator(
-    mediator: Domain.DID,
-    host: Domain.DID,
-    routing: Domain.DID
-  ): Promise<void> {
-    await this.db.mediators.insert({
-      id: uuidv4(),
-      mediatorDID: mediator.toString(),
-      hostDID: host.toString(),
-      routingDID: routing.toString(),
-    });
-  }
-
-  storeCredential(credential: Domain.VerifiableCredential): Promise<void> {
-    throw new Error("Method not implemented.");
-  }
-  getAllPrismDIDs(): Promise<Domain.PrismDIDInfo[]> {
-    throw new Error("Method not implemented.");
-  }
-  getDIDInfoByDID(did: Domain.DID): Promise<Domain.PrismDIDInfo | null> {
-    throw new Error("Method not implemented.");
-  }
-  getDIDInfoByAlias(alias: string): Promise<Domain.PrismDIDInfo[]> {
-    throw new Error("Method not implemented.");
-  }
-  getPrismDIDKeyPathIndex(did: Domain.DID): Promise<number | null> {
-    throw new Error("Method not implemented.");
-  }
-  getPrismLastKeyPathIndex(): Promise<number> {
-    throw new Error("Method not implemented.");
-  }
-  getAllPeerDIDs(): Promise<Domain.PeerDID[]> {
-    throw new Error("Method not implemented.");
-  }
-  getDIDPrivateKeysByDID(did: Domain.DID): Promise<Domain.PrivateKey[]> {
-    throw new Error("Method not implemented.");
-  }
-  getDIDPrivateKeyByID(id: string): Promise<Domain.PrivateKey | null> {
-    throw new Error("Method not implemented.");
-  }
   async getAllDidPairs(): Promise<Domain.DIDPair[]> {
     const { DID, DIDPair } = Domain;
     const results = await this.db.didpairs.find().exec();
@@ -300,6 +262,208 @@ export class Database implements Domain.Pluto {
         )
       : null;
   }
+
+  private getPrivateKeyFromDB(
+    privateKey: RxDocument<KeySchemaType, {}>
+  ): Domain.PrivateKey {
+    const { type, keySpecification } = privateKey;
+    const curve = keySpecification.find(
+      (item) => item.name === KeyProperties.curve
+    );
+    const raw = keySpecification.find(
+      (item) => item.name === KeyProperties.rawKey
+    );
+    if (!(type in Domain.KeyTypes)) {
+      throw new Error(`Invalid KeyType ${type}`);
+    }
+    if (!curve) {
+      throw new Error("Undefined key curve");
+    }
+    if (!raw) {
+      throw new Error("Undefined key raw");
+    }
+    if (!(curve.value in Domain.Curve)) {
+      throw new Error(`Invalid key curve ${curve.value}`);
+    }
+
+    if (type === Domain.KeyTypes.EC) {
+      if (curve.value === Domain.Curve.SECP256K1) {
+        const index = keySpecification.find(
+          (item) => item.name === KeyProperties.index
+        );
+        const seed = keySpecification.find(
+          (item) => item.name === KeyProperties.seed
+        );
+
+        const privateKey = new Secp256k1PrivateKey(
+          Buffer.from(raw.value, "hex")
+        );
+
+        privateKey.keySpecification.set(Domain.KeyProperties.rawKey, raw.value);
+
+        privateKey.keySpecification.set(
+          Domain.KeyProperties.curve,
+          Domain.Curve.SECP256K1
+        );
+
+        if (index) {
+          privateKey.keySpecification.set(
+            Domain.KeyProperties.index,
+            index.value
+          );
+        }
+
+        if (seed) {
+          privateKey.keySpecification.set(
+            Domain.KeyProperties.seed,
+            seed.value
+          );
+        }
+
+        return privateKey;
+      }
+
+      if (curve.value === Domain.Curve.ED25519) {
+        const privateKey = new Ed25519PrivateKey(Buffer.from(raw.value, "hex"));
+
+        privateKey.keySpecification.set(Domain.KeyProperties.rawKey, raw.value);
+
+        privateKey.keySpecification.set(
+          Domain.KeyProperties.curve,
+          Domain.Curve.SECP256K1
+        );
+
+        return privateKey;
+      }
+    }
+
+    if (type === Domain.KeyTypes.Curve25519) {
+      if (curve.value === Domain.Curve.X25519) {
+        const privateKey = new X25519PrivateKey(Buffer.from(raw.value, "hex"));
+
+        privateKey.keySpecification.set(Domain.KeyProperties.rawKey, raw.value);
+
+        privateKey.keySpecification.set(
+          Domain.KeyProperties.curve,
+          Domain.Curve.SECP256K1
+        );
+
+        return privateKey;
+      }
+    }
+
+    throw new Error(`Invalid key${curve.value} ${type}`);
+  }
+
+  async getDIDPrivateKeysByDID(did: Domain.DID): Promise<Domain.PrivateKey[]> {
+    const privateKeys = await this.db.privateKeys
+      .find()
+      .where({ did: did.toString() })
+      .exec();
+    return privateKeys.map(this.getPrivateKeyFromDB);
+  }
+
+  async getDIDPrivateKeyByID(id: string): Promise<Domain.PrivateKey | null> {
+    const privateKey = await this.db.privateKeys.findOne().where({ id }).exec();
+    return privateKey ? this.getPrivateKeyFromDB(privateKey) : null;
+  }
+
+  async storeMediator(
+    mediator: Domain.DID,
+    host: Domain.DID,
+    routing: Domain.DID
+  ): Promise<void> {
+    await this.db.mediators.insert({
+      id: uuidv4(),
+      mediatorDID: mediator.toString(),
+      hostDID: host.toString(),
+      routingDID: routing.toString(),
+    });
+  }
+
+  async getAllPrismDIDs(): Promise<Domain.PrismDIDInfo[]> {
+    const dids = await this.db.dids.find().where({ method: "prism" }).exec();
+
+    const prismDIDInfo: Domain.PrismDIDInfo[] = [];
+
+    for (let did of dids) {
+      const didPrivateKeys = await this.getDIDPrivateKeysByDID(did);
+
+      for (let privateKey of didPrivateKeys) {
+        const indexProp = privateKey.getProperty(Domain.KeyProperties.index);
+
+        const index = indexProp ? parseInt(indexProp) : undefined;
+
+        prismDIDInfo.push(
+          new Domain.PrismDIDInfo(
+            Domain.DID.fromString(did.did),
+            index,
+            did.alias
+          )
+        );
+      }
+    }
+
+    return prismDIDInfo;
+  }
+
+  async getDIDInfoByDID(did: Domain.DID): Promise<Domain.PrismDIDInfo | null> {
+    const didDB = await this.db.dids
+      .findOne()
+      .where({ did: did.toString() })
+      .exec();
+
+    if (didDB) {
+      const [privateKey] = await this.getDIDPrivateKeysByDID(did);
+      if (privateKey) {
+        const indexProp = privateKey.getProperty(Domain.KeyProperties.index);
+        const index = indexProp ? parseInt(indexProp) : undefined;
+        return new Domain.PrismDIDInfo(
+          Domain.DID.fromString(didDB.did),
+          index,
+          didDB.alias
+        );
+      }
+    }
+
+    return null;
+  }
+
+  async getDIDInfoByAlias(alias: string): Promise<Domain.PrismDIDInfo[]> {
+    const dids = await this.db.dids.find().where({ alias }).exec();
+    const prismDIDInfo: Domain.PrismDIDInfo[] = [];
+    for (let did of dids) {
+      const didPrivateKeys = await this.getDIDPrivateKeysByDID(did);
+      for (let privateKey of didPrivateKeys) {
+        const indexProp = privateKey.getProperty(Domain.KeyProperties.index);
+        const index = indexProp ? parseInt(indexProp) : undefined;
+        prismDIDInfo.push(
+          new Domain.PrismDIDInfo(
+            Domain.DID.fromString(did.did),
+            index,
+            did.alias
+          )
+        );
+      }
+    }
+    return prismDIDInfo;
+  }
+
+  getPrismDIDKeyPathIndex(did: Domain.DID): Promise<number | null> {
+    throw new Error("Method not implemented.");
+  }
+  getPrismLastKeyPathIndex(): Promise<number> {
+    throw new Error("Method not implemented.");
+  }
+
+  storeCredential(credential: Domain.VerifiableCredential): Promise<void> {
+    throw new Error("Method not implemented.");
+  }
+
+  getAllPeerDIDs(): Promise<Domain.PeerDID[]> {
+    throw new Error("Method not implemented.");
+  }
+
   getAllMessagesByDID(did: Domain.DID): Promise<Domain.Message[]> {
     throw new Error("Method not implemented.");
   }
@@ -327,9 +491,7 @@ export class Database implements Domain.Pluto {
   ): Promise<Domain.Message[]> {
     throw new Error("Method not implemented.");
   }
-  getMessage(id: string): Promise<Domain.Message | null> {
-    throw new Error("Method not implemented.");
-  }
+
   getAllMediators(): Promise<Domain.Mediator[]> {
     throw new Error("Method not implemented.");
   }

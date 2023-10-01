@@ -1,4 +1,4 @@
-import { DIDSchemaType, Schema } from "../types";
+import type { DIDSchemaType, Schema } from "../types";
 
 const DIDSchema: Schema<DIDSchemaType> = {
   version: 0,
@@ -26,7 +26,7 @@ const DIDSchema: Schema<DIDSchemaType> = {
       maxLength: 60,
     },
   },
-  encrypted: ["method", "methodId", "schema"],
+  encrypted: [],
   required: ["method", "methodId", "did", "schema"],
 };
 
