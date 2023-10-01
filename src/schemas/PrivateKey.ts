@@ -1,4 +1,4 @@
-import { Schema, KeySchemaType } from "../types";
+import type { Schema, KeySchemaType } from "../types";
 
 const PrivateKeySchema: Schema<KeySchemaType> = {
   version: 0,

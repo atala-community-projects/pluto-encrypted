@@ -1,4 +1,4 @@
-import { DIDPairSchemaType, Schema } from "../types";
+import type { DIDPairSchemaType, Schema } from "../types";
 
 const DIDPairSchema: Schema<DIDPairSchemaType> = {
   version: 0,

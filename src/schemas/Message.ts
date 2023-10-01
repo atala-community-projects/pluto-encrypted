@@ -1,4 +1,4 @@
-import { Schema, MessageSchemaType } from "../types";
+import type { Schema, MessageSchemaType } from "../types";
 
 const MessageSchema: Schema<MessageSchemaType> = {
   version: 0,

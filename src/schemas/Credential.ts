@@ -1,4 +1,4 @@
-import { CredentialSchemaType, Schema } from "../types";
+import type { CredentialSchemaType, Schema } from "../types";
 
 const CredentialSchema: Schema<CredentialSchemaType> = {
   version: 0,
