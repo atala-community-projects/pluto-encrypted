@@ -11,6 +11,7 @@ import { RxDatabaseCreator, RxDocument, createRxDatabase } from "rxdb";
 import { RxError } from "rxdb/dist/lib/rx-error";
 import { addRxPlugin } from "rxdb";
 import { RxDBMigrationPlugin } from "rxdb/plugins/migration";
+import { RxDBQueryBuilderPlugin } from "rxdb/plugins/query-builder";
 import { v4 as uuidv4 } from "uuid";
 
 import type {
@@ -26,9 +27,9 @@ import CredentialSchema from "./schemas/Credential";
 import DIDPairSchema from "./schemas/DIDPair";
 import MediatorSchema from "./schemas/Mediator";
 import PrivateKeySchema from "./schemas/PrivateKey";
-import { Curve } from "@input-output-hk/atala-prism-wallet-sdk/build/typings/domain";
 
 addRxPlugin(RxDBMigrationPlugin);
+addRxPlugin(RxDBQueryBuilderPlugin);
 
 export class Database implements Domain.Pluto {
   private _db!: PlutoDatabase;
@@ -73,16 +74,20 @@ export class Database implements Domain.Pluto {
     });
   }
 
+  async getMessage(id: string): Promise<Domain.Message | null> {
+    return this.db.messages.findOne().where({ id: id }).exec();
+  }
+
   async storeMessage(message: Domain.Message): Promise<void> {
     await this.db.messages.insert(message);
   }
 
   async storeMessages(messages: Domain.Message[]): Promise<void> {
-    await Promise.all(messages.map(this.storeMessage));
+    await Promise.all(messages.map((message) => this.storeMessage(message)));
   }
 
   async getAllMessages(): Promise<Domain.Message[]> {
-    return this.db.messages.find({}).exec();
+    return this.db.messages.find().exec();
   }
 
   async start(): Promise<void> {
@@ -112,38 +117,12 @@ export class Database implements Domain.Pluto {
       schema: did.schema,
       alias: alias,
     });
-
-    const initialSpec: KeySpec[] = [
-      {
-        type: "string",
-        name: "raw",
-        value: Buffer.from(privateKey.getEncoded()).toString("hex"),
-      },
-      {
-        type: "number",
-        name: "index",
-        value: `${keyPathIndex}`,
-      },
-    ];
-
-    const keySpecification = Array.from(privateKey.keySpecification).reduce(
-      (all, [key, value]) => {
-        all.push({
-          type: "string",
-          name: key,
-          value: `${value}`,
-        });
-        return all;
-      },
-      initialSpec
+    await this.storePrivateKeys(
+      privateKey,
+      did,
+      keyPathIndex,
+      privateKeyMetaId ?? null
     );
-
-    await this.db.privateKeys.insert({
-      id: uuidv4(),
-      did: did.toString(),
-      type: privateKey.type,
-      keySpecification,
-    });
   }
 
   async storePeerDID(
@@ -512,9 +491,7 @@ export class Database implements Domain.Pluto {
   ): Promise<Domain.Message[]> {
     throw new Error("Method not implemented.");
   }
-  getMessage(id: string): Promise<Domain.Message | null> {
-    throw new Error("Method not implemented.");
-  }
+
   getAllMediators(): Promise<Domain.Mediator[]> {
     throw new Error("Method not implemented.");
   }
