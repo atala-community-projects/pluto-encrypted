@@ -1,19 +1,35 @@
 import "./setup";
 
 import expect from "expect";
-import { Database } from "../src";
+import { Database, PrivateKeyMethods } from "../src";
 import { randomUUID } from "crypto";
-import { Domain } from "@input-output-hk/atala-prism-wallet-sdk";
+import { Domain, KeyProperties } from "@input-output-hk/atala-prism-wallet-sdk";
 import * as Fixtures from "./fixtures";
+import * as sinon from "sinon";
+import { RxCollectionBase, RxQuery } from "rxdb";
+import { RxQueryBase } from "rxdb/dist/lib/rx-query";
 
 const databaseName = "prism-db";
 const keyData = new Uint8Array(32);
 
-const messageType = "https://didcomm.org/basicmessage/2.0/message"
-const createMessage = (from?: Domain.DID, to?: Domain.DID) => new Domain.Message("{}", randomUUID(), messageType, from, to);
+const messageType = "https://didcomm.org/basicmessage/2.0/message";
+const createMessage = (from?: Domain.DID, to?: Domain.DID) =>
+  new Domain.Message("{}", randomUUID(), messageType, from, to);
 const defaultPassword = Buffer.from(keyData);
 
+let sandbox: sinon.SinonSandbox;
+
 describe("Pluto + Dexie encrypted integration for browsers", () => {
+  afterEach(async () => {
+    jest.useRealTimers();
+    sandbox.restore();
+  });
+
+  beforeEach(async () => {
+    jest.useFakeTimers();
+    sandbox = sinon.createSandbox();
+  });
+
   it("Should require to start pluto database before using it", async () => {
     const db = await Database.createEncrypted(databaseName, defaultPassword);
     expect(db.getAllMessages()).rejects.toThrowError(
@@ -61,26 +77,174 @@ describe("Pluto + Dexie encrypted integration for browsers", () => {
       const privateKey = Fixtures.secp256K1.privateKey;
       await db.storePrismDID(did, 0, privateKey);
       expect((await db.getAllPrismDIDs()).length).toBe(1);
-      expect(await db.getDIDInfoByDID(did)).not.toBe(null)
+      expect(await db.getDIDInfoByDID(did)).not.toBe(null);
+    });
+
+    it("Should throw an exception if a wrong key object from Database is loaded", async () => {
+      const wrongKey: any = {
+        keySpecification: [],
+        toDomainPrivateKey: PrivateKeyMethods.toDomainPrivateKey,
+      };
+      expect(() => {
+        wrongKey.toDomainPrivateKey();
+      }).toThrowError(new Error(`Invalid KeyType undefined`));
+
+      const wrongKey2: any = {
+        type: "sds",
+        keySpecification: [],
+        toDomainPrivateKey: PrivateKeyMethods.toDomainPrivateKey,
+      };
+      expect(() => {
+        wrongKey2.toDomainPrivateKey();
+      }).toThrowError(new Error(`Invalid KeyType sds`));
+
+      const wrongKey3: any = {
+        type: Domain.KeyTypes.Curve25519,
+        keySpecification: [],
+        toDomainPrivateKey: PrivateKeyMethods.toDomainPrivateKey,
+      };
+      expect(() => {
+        wrongKey3.toDomainPrivateKey();
+      }).toThrowError(new Error("Undefined key curve"));
+
+      const wrongKey4: any = {
+        type: Domain.KeyTypes.Curve25519,
+        keySpecification: [
+          {
+            name: Domain.KeyProperties.curve,
+            type: "string",
+            value: "asd",
+          },
+        ],
+        toDomainPrivateKey: PrivateKeyMethods.toDomainPrivateKey,
+      };
+      expect(() => {
+        wrongKey4.toDomainPrivateKey();
+      }).toThrowError(new Error("Invalid key curve asd"));
+
+      const wrongKey5: any = {
+        type: Domain.KeyTypes.Curve25519,
+        keySpecification: [
+          {
+            name: Domain.KeyProperties.curve,
+            type: "string",
+            value: Domain.Curve.ED25519,
+          },
+        ],
+        toDomainPrivateKey: PrivateKeyMethods.toDomainPrivateKey,
+      };
+      expect(() => {
+        wrongKey5.toDomainPrivateKey();
+      }).toThrowError(new Error("Undefined key raw"));
+
+      const correctKey: any = {
+        type: Domain.KeyTypes.EC,
+        keySpecification: [
+          {
+            name: Domain.KeyProperties.curve,
+            type: "string",
+            value: Domain.Curve.SECP256K1,
+          },
+          {
+            name: Domain.KeyProperties.rawKey,
+            type: "string",
+            value: Buffer.from(Fixtures.secp256K1.privateKey.raw).toString(
+              "hex"
+            ),
+          },
+        ],
+        toDomainPrivateKey: PrivateKeyMethods.toDomainPrivateKey,
+      };
+
+      correctKey.toDomainPrivateKey();
+
+      const correctKeyWithIndex: any = {
+        type: Domain.KeyTypes.EC,
+        keySpecification: [
+          {
+            name: Domain.KeyProperties.curve,
+            type: "string",
+            value: Domain.Curve.SECP256K1,
+          },
+          {
+            name: Domain.KeyProperties.rawKey,
+            type: "string",
+            value: Buffer.from(Fixtures.secp256K1.privateKey.raw).toString(
+              "hex"
+            ),
+          },
+          {
+            name: Domain.KeyProperties.index,
+            type: "string",
+            value: Fixtures.secp256K1.privateKey.index,
+          },
+          {
+            name: Domain.KeyProperties.seed,
+            type: "string",
+            value: "A12456",
+          },
+        ],
+        toDomainPrivateKey: PrivateKeyMethods.toDomainPrivateKey,
+      };
+
+      correctKeyWithIndex.toDomainPrivateKey();
+
+      const correctEd25519Key: any = {
+        type: Domain.KeyTypes.EC,
+        keySpecification: [
+          {
+            name: Domain.KeyProperties.curve,
+            type: "string",
+            value: Domain.Curve.ED25519,
+          },
+          {
+            name: Domain.KeyProperties.rawKey,
+            type: "string",
+            value: Buffer.from(Fixtures.ed25519.privateKey.raw).toString("hex"),
+          },
+        ],
+        toDomainPrivateKey: PrivateKeyMethods.toDomainPrivateKey,
+      };
+
+      correctEd25519Key.toDomainPrivateKey();
+
+      const correctX25519Key: any = {
+        type: Domain.KeyTypes.Curve25519,
+        keySpecification: [
+          {
+            name: Domain.KeyProperties.curve,
+            type: "string",
+            value: Domain.Curve.X25519,
+          },
+          {
+            name: Domain.KeyProperties.rawKey,
+            type: "string",
+            value: Buffer.from(Fixtures.x25519.privateKey.raw).toString("hex"),
+          },
+        ],
+        toDomainPrivateKey: PrivateKeyMethods.toDomainPrivateKey,
+      };
+
+      correctX25519Key.toDomainPrivateKey();
     });
 
     it("Should return null when no privateKey is found by its id", async () => {
       const did = Domain.DID.fromString(
         "did:prism:733e594871d7700d35e6116011a08fc11e88ff9d366d8b5571ffc1aa18d249ea:Ct8BCtwBEnQKH2F1dGhlbnRpY2F0aW9uYXV0aGVudGljYXRpb25LZXkQBEJPCglzZWNwMjU2azESIDS5zeYUkLCSAJLI6aLXRTPRxstCLPUEI6TgBrAVCHkwGiDk-ffklrHIFW7pKkT8i-YksXi-XXi5h31czUMaVClcpxJkCg9tYXN0ZXJtYXN0ZXJLZXkQAUJPCglzZWNwMjU2azESIDS5zeYUkLCSAJLI6aLXRTPRxstCLPUEI6TgBrAVCHkwGiDk-ffklrHIFW7pKkT8i-YksXi-XXi5h31czUMaVClcpw"
       );
-      expect(await db.getDIDInfoByDID(did)).toBe(null)
-    })
+      expect(await db.getDIDInfoByDID(did)).toBe(null);
+    });
 
     it("Should return null when no privateKey is found by its id", async () => {
-      expect(await db.getDIDPrivateKeyByID("not fund")).toBe(null)
-    })
+      expect(await db.getDIDPrivateKeyByID("not fund")).toBe(null);
+    });
 
     it("Should return null when no privateKey is found by its did", async () => {
       const did = Domain.DID.fromString(
         "did:prism::t8BCtwBEnQKH2F1dGhlbnRpY2F0aW9uYXV0aGVudGljYXRpb25LZXkQBEJPCglzZWNwMjU2azESIDS5zeYUkLCSAJLI6aLXRTPRxstCLPUEI6TgBrAVCHkwGiDk-ffklrHIFW7pKkT8i-YksXi-XXi5h31czUMaVClcpxJkCg9tYXN0ZXJtYXN0ZXJLZXkQAUJPCglzZWNwMjU2azESIDS5zeYUkLCSAJLI6aLXRTPRxstCLPUEI6TgBrAVCHkwGiDk-ffklrHIFW7pKkT8i-YksXi-XXi5h31czUMaVClcpw"
       );
-      expect((await db.getDIDPrivateKeysByDID(did)).length).toBe(0)
-    })
+      expect((await db.getDIDPrivateKeysByDID(did)).length).toBe(0);
+    });
 
     it("Should store a new Prism DID and its privateKeys with privateKeyMetadataId", async () => {
       const did = Domain.DID.fromString(
@@ -96,7 +260,13 @@ describe("Pluto + Dexie encrypted integration for browsers", () => {
         "did:prism:733e594871d7700d35e6116011a08fc11e88ff9d366d8b5571ffc1aa18d249ea:Ct8BCtwBEnQKH2F1dGhlbnRpY2F0aW9uYXV0aGVudGljYXRpb25LZXkQBEJPCglzZWNwMjU2azESIDS5zeYUkLCSAJLI6aLXRTPRxstCLPUEI6TgBrAVCHkwGiDk-ffklrHIFW7pKkT8i-YksXi-XXi5h31czUMaVClcpxJkCg9tYXN0ZXJtYXN0ZXJLZXkQAUJPCglzZWNwMjU2azESIDS5zeYUkLCSAJLI6aLXRTPRxstCLPUEI6TgBrAVCHkwGiDk-ffklrHIFW7pKkT8i-YksXi-XXi5h31czUMaVClcpw"
       );
       const privateKey = Fixtures.secp256K1.privateKey;
-      await db.storePrismDID(did, 0, privateKey, did.toString(), "defaultalias");
+      await db.storePrismDID(
+        did,
+        0,
+        privateKey,
+        did.toString(),
+        "defaultalias"
+      );
       expect((await db.getAllPrismDIDs()).length).toBe(1);
     });
 
@@ -121,22 +291,25 @@ describe("Pluto + Dexie encrypted integration for browsers", () => {
     it("Should get all the messages", async () => {
       const allMessages = await db.getAllMessages();
       expect(allMessages.length).toBe(0);
-    })
+    });
 
     it("Should fetch stored messages either by type or by did", async () => {
       const from = Domain.DID.fromString("did:prism:123456");
-      const to = Domain.DID.fromString("did:prism:654321")
+      const to = Domain.DID.fromString("did:prism:654321");
       const from2 = Domain.DID.fromString("did:prism:12345644");
-      const to2 = Domain.DID.fromString("did:prism:65432133")
+      const to2 = Domain.DID.fromString("did:prism:65432133");
 
-      await db.storeMessages([createMessage(from, to), createMessage(from2, to2)]);
+      await db.storeMessages([
+        createMessage(from, to),
+        createMessage(from2, to2),
+      ]);
 
-      const byType = await db.getAllMessagesOfType(messageType)
+      const byType = await db.getAllMessagesOfType(messageType);
       expect(byType.length).toBe(2);
 
-      const byType2 = await db.getAllMessagesOfType(messageType, from)
+      const byType2 = await db.getAllMessagesOfType(messageType, from);
       expect(byType2.length).toBe(1);
-    })
+    });
 
     it("Should return null if message is not found by id ", async () => {
       const dbMesaage = await db.getMessage("notfound");
@@ -157,17 +330,6 @@ describe("Pluto + Dexie encrypted integration for browsers", () => {
         Fixtures.ed25519.privateKey,
         Fixtures.x25519.privateKey,
       ]);
-    });
-
-    it("Should store private keys", async () => {
-      const did = new Domain.DID(
-        "did",
-        "peer",
-        "2.Ez6LSms555YhFthn1WV8ciDBpZm86hK9tp83WojJUmxPGk1hZ.Vz6MkmdBjMyB4TS5UbbQw54szm8yvMMf1ftGV2sQVYAxaeWhE.SeyJpZCI6Im5ldy1pZCIsInQiOiJkbSIsInMiOiJodHRwczovL21lZGlhdG9yLnJvb3RzaWQuY2xvdWQiLCJhIjpbImRpZGNvbW0vdjIiXX0"
-      );
-      await db.storePrivateKeys(Fixtures.ed25519.privateKey, did, 0);
-      await db.storePrivateKeys(Fixtures.ed25519.privateKey, did, 0, "id2234");
-
     });
 
     it("Should store a didPair", async () => {
@@ -195,7 +357,6 @@ describe("Pluto + Dexie encrypted integration for browsers", () => {
       await db.storeDIDPair(host, receiver, name);
       expect(await db.getPairByDID(host)).not.toBe(null);
       expect(await db.getPairByDID(notfound)).toBe(null);
-
     });
 
     it("Should get a did pair by its name", async () => {

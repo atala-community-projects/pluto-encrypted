@@ -1,36 +1,48 @@
-import {
-  Domain,
-} from "@input-output-hk/atala-prism-wallet-sdk";
+import { Domain } from "@input-output-hk/atala-prism-wallet-sdk";
 import { getRxStorageDexie } from "rxdb/plugins/storage-dexie";
 import { wrappedKeyEncryptionCryptoJsStorage } from "rxdb/plugins/encryption-crypto-js";
-import { MangoQuerySelector, RxCollection, RxDatabase, RxDatabaseCreator, RxDocument, RxJsonSchema, createRxDatabase } from "rxdb";
+import {
+  MangoQuerySelector,
+  RxCollection,
+  RxDatabase,
+  RxDatabaseCreator,
+  RxDocument,
+  createRxDatabase,
+} from "rxdb";
 import { RxError } from "rxdb/dist/lib/rx-error";
 import { addRxPlugin } from "rxdb";
 import { RxDBMigrationPlugin } from "rxdb/plugins/migration";
 import { RxDBQueryBuilderPlugin } from "rxdb/plugins/query-builder";
 import { v4 as uuidv4 } from "uuid";
 
-
-import MessageSchema, { MessageSchemaType } from "./schemas/Message";
+import MessageSchema, {
+  MessageColletion,
+  MessageMethods,
+  MessageSchemaType,
+} from "./schemas/Message";
 import DIDSchema, { DIDSchemaType } from "./schemas/DID";
 import CredentialSchema, { CredentialSchemaType } from "./schemas/Credential";
 import DIDPairSchema, { DIDPairSchemaType } from "./schemas/DIDPair";
 import MediatorSchema, { MediarorSchemaType } from "./schemas/Mediator";
-import PrivateKeySchema, { KeySpec, PrivateKeyColletion, PrivateKeyDocument, PrivateKeyMethods } from "./schemas/PrivateKey";
+import PrivateKeySchema, {
+  KeySpec,
+  PrivateKeyColletion,
+  PrivateKeyDocument,
+  PrivateKeyMethods,
+} from "./schemas/PrivateKey";
 
 addRxPlugin(RxDBMigrationPlugin);
 addRxPlugin(RxDBQueryBuilderPlugin);
 
-
 export * from "./schemas/Message";
-export * from './schemas/DID';
-export * from './schemas/Credential';
-export * from './schemas/DIDPair';
-export * from './schemas/Mediator';
-export * from './schemas/PrivateKey';
+export * from "./schemas/DID";
+export * from "./schemas/Credential";
+export * from "./schemas/DIDPair";
+export * from "./schemas/Mediator";
+export * from "./schemas/PrivateKey";
 
 export type PlutoCollections = {
-  messages: RxCollection<MessageSchemaType>;
+  messages: MessageColletion;
   dids: RxCollection<DIDSchemaType>;
   verifiableCredentials: RxCollection<CredentialSchemaType>;
   didpairs: RxCollection<DIDPairSchemaType>;
@@ -47,15 +59,14 @@ export type PlutoDatabase = RxDatabase<PlutoCollections>;
  */
 export class Database implements Domain.Pluto {
   private _db!: PlutoDatabase;
-  private get db() {
+  get db() {
     if (!this._db) {
       throw new Error("Start Pluto first.");
     }
     return this._db;
   }
 
-
-  constructor(private dbOptions: RxDatabaseCreator) { }
+  constructor(private dbOptions: RxDatabaseCreator) {}
 
   static async createEncrypted(name: string, encryptionKey: Uint8Array) {
     return new Database({
@@ -69,9 +80,9 @@ export class Database implements Domain.Pluto {
   }
 
   async getMessage(id: string): Promise<Domain.Message | null> {
-    const message = await this.db.messages.findOne().where({ id: id }).exec()
+    const message = await this.db.messages.findOne().where({ id: id }).exec();
     if (message) {
-      return this.getDomainMessage(message)
+      return message.toDomainMessage();
     }
     return null;
   }
@@ -80,7 +91,7 @@ export class Database implements Domain.Pluto {
     await this.db.messages.insert({
       ...message,
       to: message.to?.toString(),
-      from: message.from?.toString()
+      from: message.from?.toString(),
     });
   }
 
@@ -89,8 +100,8 @@ export class Database implements Domain.Pluto {
   }
 
   async getAllMessages(): Promise<Domain.Message[]> {
-    const messages = await this.db.messages.find().exec()
-    return messages.map((message) => this.getDomainMessage(message))
+    const messages = await this.db.messages.find().exec();
+    return messages.map((message) => message.toDomainMessage());
   }
 
   async start(): Promise<void> {
@@ -100,6 +111,7 @@ export class Database implements Domain.Pluto {
       await database.addCollections<PlutoCollections>({
         messages: {
           schema: MessageSchema,
+          methods: MessageMethods,
         },
         dids: {
           schema: DIDSchema,
@@ -115,7 +127,7 @@ export class Database implements Domain.Pluto {
         },
         privateKeys: {
           schema: PrivateKeySchema,
-          methods: PrivateKeyMethods
+          methods: PrivateKeyMethods,
         },
       });
       this._db = database;
@@ -261,10 +273,10 @@ export class Database implements Domain.Pluto {
 
     return didPair
       ? new DIDPair(
-        DID.fromString(didPair.hostDID),
-        DID.fromString(didPair.receiverDID),
-        didPair.name
-      )
+          DID.fromString(didPair.hostDID),
+          DID.fromString(didPair.receiverDID),
+          didPair.name
+        )
       : null;
   }
 
@@ -283,17 +295,17 @@ export class Database implements Domain.Pluto {
 
     return didPair
       ? new DIDPair(
-        DID.fromString(didPair.hostDID),
-        DID.fromString(didPair.receiverDID),
-        didPair.name
-      )
+          DID.fromString(didPair.hostDID),
+          DID.fromString(didPair.receiverDID),
+          didPair.name
+        )
       : null;
   }
 
   private getPrivateKeyFromDB(
     privateKey: PrivateKeyDocument
   ): Domain.PrivateKey {
-    return privateKey.toPrivateKey()
+    return privateKey.toDomainPrivateKey();
   }
 
   async getDIDPrivateKeysByDID(did: Domain.DID): Promise<Domain.PrivateKey[]> {
@@ -362,7 +374,9 @@ export class Database implements Domain.Pluto {
       );
 
       if (!privateKey) {
-        throw new Error("Imposible to recover PrismDIDInfo without its privateKey data.")
+        throw new Error(
+          "Imposible to recover PrismDIDInfo without its privateKey data."
+        );
       }
 
       const indexProp = privateKey.getProperty(Domain.KeyProperties.index);
@@ -372,7 +386,6 @@ export class Database implements Domain.Pluto {
         index,
         didDB.alias
       );
-
     }
 
     return null;
@@ -400,67 +413,81 @@ export class Database implements Domain.Pluto {
     return prismDIDInfo;
   }
 
-
   private getDomainMessage(message: RxDocument<MessageSchemaType, {}>) {
-    return Domain.Message.fromJson(JSON.stringify(message.toJSON()))
+    return Domain.Message.fromJson(JSON.stringify(message.toJSON()));
   }
 
   async getAllMessagesByDID(did: Domain.DID): Promise<Domain.Message[]> {
-    const messages = await this.db.messages.find().where({
-      $or: [
-        {
-          to: did.toString()
-        },
-        {
-          from: did.toString()
-        }
-      ]
-    }).exec()
-    return messages.map(message => this.getDomainMessage(message))
+    const messages = await this.db.messages
+      .find()
+      .where({
+        $or: [
+          {
+            to: did.toString(),
+          },
+          {
+            from: did.toString(),
+          },
+        ],
+      })
+      .exec();
+    return messages.map((message) => message.toDomainMessage());
   }
 
   async getAllMessagesSent(): Promise<Domain.Message[]> {
-    const messages = await this.db.messages.find().where({
-      $or: [
-        {
-          direction: Domain.MessageDirection.SENT
-        }
-      ]
-    }).exec()
-    return messages.map(message => this.getDomainMessage(message))
+    const messages = await this.db.messages
+      .find()
+      .where({
+        $or: [
+          {
+            direction: Domain.MessageDirection.SENT,
+          },
+        ],
+      })
+      .exec();
+    return messages.map((message) => message.toDomainMessage());
   }
 
   async getAllMessagesReceived(): Promise<Domain.Message[]> {
-    const messages = await this.db.messages.find().where({
-      $or: [
-        {
-          direction: Domain.MessageDirection.SENT
-        }
-      ]
-    }).exec()
-    return messages.map(message => this.getDomainMessage(message))
+    const messages = await this.db.messages
+      .find()
+      .where({
+        $or: [
+          {
+            direction: Domain.MessageDirection.SENT,
+          },
+        ],
+      })
+      .exec();
+    return messages.map((message) => message.toDomainMessage());
   }
 
   async getAllMessagesSentTo(did: Domain.DID): Promise<Domain.Message[]> {
-    const messages = await this.db.messages.find().where({
-      $or: [
-        {
-          to: did.toString()
-        }
-      ]
-    }).exec()
-    return messages.map(message => this.getDomainMessage(message))
+    const messages = await this.db.messages
+      .find()
+      .where({
+        $or: [
+          {
+            to: did.toString(),
+          },
+        ],
+      })
+      .exec();
+    return messages.map((message) => message.toDomainMessage());
   }
 
   async getAllMessagesReceivedFrom(did: Domain.DID): Promise<Domain.Message[]> {
-    const messages = await this.db.messages.find().where({
-      $or: [
-        {
-          from: did.toString()
-        }
-      ]
-    }).exec()
-    return messages.map(message => this.getDomainMessage(message))
+    const messages = await this.db.messages
+      .find()
+      .where({
+        $or: [
+          {
+            from: did.toString(),
+          },
+        ],
+      })
+      .exec();
+    return messages.map((message) => message.toDomainMessage());
   }
 
   async getAllMessagesOfType(
@@ -469,44 +496,49 @@ export class Database implements Domain.Pluto {
   ): Promise<Domain.Message[]> {
     const query: MangoQuerySelector<MessageSchemaType>[] = [
       {
-        piuri: type
+        piuri: type,
       },
     ];
     if (relatedWithDID) {
       query.push({
         $or: [
           {
-            from: relatedWithDID.toString()
+            from: relatedWithDID.toString(),
           },
           {
-            to: relatedWithDID.toString()
-          }
-        ]
-      })
+            to: relatedWithDID.toString(),
+          },
+        ],
+      });
     }
-    const messages = await this.db.messages.find().where({
-      $and: query
-    }).exec()
-    return messages.map(message => this.getDomainMessage(message))
+    const messages = await this.db.messages
+      .find()
+      .where({
+        $and: query,
+      })
+      .exec();
+    return messages.map((message) => message.toDomainMessage());
   }
 
   async getAllMessagesByFromToDID(
     from: Domain.DID,
     to: Domain.DID
   ): Promise<Domain.Message[]> {
-    const messages = await this.db.messages.find().where({
-      $or: [
-        {
-          from: from.toString()
-        },
-        {
-          to: to.toString()
-        }
-      ]
-    }).exec()
-    return messages.map(message => this.getDomainMessage(message))
+    const messages = await this.db.messages
+      .find()
+      .where({
+        $or: [
+          {
+            from: from.toString(),
+          },
+          {
+            to: to.toString(),
+          },
+        ],
+      })
+      .exec();
+    return messages.map((message) => message.toDomainMessage());
   }
-
 
   getPrismDIDKeyPathIndex(did: Domain.DID): Promise<number | null> {
     throw new Error("Method not implemented.");
