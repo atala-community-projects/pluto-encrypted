@@ -6,7 +6,6 @@ import {
   RxCollection,
   RxDatabase,
   RxDatabaseCreator,
-  RxDocument,
   createRxDatabase,
 } from "rxdb";
 import { RxError } from "rxdb/dist/lib/rx-error";
@@ -23,7 +22,10 @@ import MessageSchema, {
 import DIDSchema, { DIDSchemaType } from "./schemas/DID";
 import CredentialSchema, { CredentialSchemaType } from "./schemas/Credential";
 import DIDPairSchema, { DIDPairSchemaType } from "./schemas/DIDPair";
-import MediatorSchema, { MediarorSchemaType } from "./schemas/Mediator";
+import MediatorSchema, {
+  MediatorCollection,
+  MediatorMethods,
+} from "./schemas/Mediator";
 import PrivateKeySchema, {
   KeySpec,
   PrivateKeyColletion,
@@ -46,7 +48,7 @@ export type PlutoCollections = {
   dids: RxCollection<DIDSchemaType>;
   verifiableCredentials: RxCollection<CredentialSchemaType>;
   didpairs: RxCollection<DIDPairSchemaType>;
-  mediators: RxCollection<MediarorSchemaType>;
+  mediators: MediatorCollection;
   privateKeys: PrivateKeyColletion;
 };
 export type PlutoDatabase = RxDatabase<PlutoCollections>;
@@ -124,6 +126,7 @@ export class Database implements Domain.Pluto {
         },
         mediators: {
           schema: MediatorSchema,
+          methods: MediatorMethods,
         },
         privateKeys: {
           schema: PrivateKeySchema,
@@ -132,8 +135,10 @@ export class Database implements Domain.Pluto {
       });
       this._db = database;
     } catch (err) {
+      /* istanbul ignore else */
       if (err instanceof RxError && (err as RxError).code === "DB1") {
         throw new Error("Invalid authentication");
+        /* istanbul ignore next */
       } else throw err;
     }
   }
@@ -413,10 +418,6 @@ export class Database implements Domain.Pluto {
     return prismDIDInfo;
   }
 
-  private getDomainMessage(message: RxDocument<MessageSchemaType, {}>) {
-    return Domain.Message.fromJson(JSON.stringify(message.toJSON()));
-  }
-
   async getAllMessagesByDID(did: Domain.DID): Promise<Domain.Message[]> {
     const messages = await this.db.messages
       .find()
@@ -454,7 +455,7 @@ export class Database implements Domain.Pluto {
       .where({
         $or: [
           {
-            direction: Domain.MessageDirection.SENT,
+            direction: Domain.MessageDirection.RECEIVED,
           },
         ],
       })
@@ -556,8 +557,10 @@ export class Database implements Domain.Pluto {
     throw new Error("Method not implemented.");
   }
 
-  getAllMediators(): Promise<Domain.Mediator[]> {
-    throw new Error("Method not implemented.");
+  async getAllMediators(): Promise<Domain.Mediator[]> {
+    return (await this.db.mediators.find().exec()).map((mediator) =>
+      mediator.toDomainMediator()
+    );
   }
 
   getAllCredentials(): Promise<Domain.VerifiableCredential[]> {

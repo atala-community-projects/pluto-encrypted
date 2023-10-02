@@ -107,6 +107,7 @@ const MessageSchema: Schema<MessageSchemaType> = {
   encrypted: ["thid", "attachments", "body"],
   required: ["id"],
 };
+export type MessageDocument = RxDocument<MessageSchemaType, MessageMethodTypes>;
 
 export type MessageMethodTypes = {
   toDomainMessage: (this: MessageDocument) => Domain.Message;
@@ -117,7 +118,6 @@ export type MessageColletion = RxCollection<
   MessageMethodTypes
 >;
 
-export type MessageDocument = RxDocument<MessageSchemaType, MessageMethodTypes>;
 export const MessageMethods: MessageMethodTypes = {
   toDomainMessage: function toDomainMessage(this: MessageDocument) {
     return Domain.Message.fromJson(JSON.stringify(this));

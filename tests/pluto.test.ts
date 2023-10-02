@@ -3,11 +3,9 @@ import "./setup";
 import expect from "expect";
 import { Database, PrivateKeyMethods } from "../src";
 import { randomUUID } from "crypto";
-import { Domain, KeyProperties } from "@input-output-hk/atala-prism-wallet-sdk";
+import { Domain } from "@input-output-hk/atala-prism-wallet-sdk";
 import * as Fixtures from "./fixtures";
 import * as sinon from "sinon";
-import { RxCollectionBase, RxQuery } from "rxdb";
-import { RxQueryBase } from "rxdb/dist/lib/rx-query";
 
 const databaseName = "prism-db";
 const keyData = new Uint8Array(32);
