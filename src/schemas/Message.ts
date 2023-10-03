@@ -1,7 +1,6 @@
-import type { Domain } from "@input-output-hk/atala-prism-wallet-sdk";
+import { Domain } from "@input-output-hk/atala-prism-wallet-sdk";
 import type { Schema } from "../types";
-
-
+import { RxCollection, RxDocument } from "rxdb";
 
 export type MessageSchemaType = {
   readonly body: string;
@@ -57,20 +56,20 @@ const MessageSchema: Schema<MessageSchemaType> = {
             type: "string",
           },
           format: {
-            type: 'string'
+            type: "string",
           },
           filename: {
             type: "array",
             items: {
-              type: "string"
-            }
+              type: "string",
+            },
           },
           mediaType: {
-            type: 'string'
+            type: "string",
           },
           data: {
-            type: 'object'
-          }
+            type: "object",
+          },
         },
       },
     },
@@ -108,5 +107,20 @@ const MessageSchema: Schema<MessageSchemaType> = {
   encrypted: ["thid", "attachments", "body"],
   required: ["id"],
 };
+export type MessageDocument = RxDocument<MessageSchemaType, MessageMethodTypes>;
 
+export type MessageMethodTypes = {
+  toDomainMessage: (this: MessageDocument) => Domain.Message;
+};
+
+export type MessageColletion = RxCollection<
+  MessageSchemaType,
+  MessageMethodTypes
+>;
+
+export const MessageMethods: MessageMethodTypes = {
+  toDomainMessage: function toDomainMessage(this: MessageDocument) {
+    return Domain.Message.fromJson(JSON.stringify(this));
+  },
+};
 export default MessageSchema;

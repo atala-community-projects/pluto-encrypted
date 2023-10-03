@@ -1,4 +1,10 @@
-import { Ed25519PrivateKey, KeyProperties, Secp256k1PrivateKey, X25519PrivateKey, Domain } from "@input-output-hk/atala-prism-wallet-sdk";
+import {
+  Ed25519PrivateKey,
+  KeyProperties,
+  Secp256k1PrivateKey,
+  X25519PrivateKey,
+  Domain,
+} from "@input-output-hk/atala-prism-wallet-sdk";
 import type { Schema } from "../types";
 import { RxCollection, RxDocument } from "rxdb";
 
@@ -55,12 +61,19 @@ const PrivateKeySchema: Schema<KeySchemaType> = {
 };
 
 export type PrivateKeyMethodTypes = {
-  toPrivateKey: () => Domain.PrivateKey
-}
-export type PrivateKeyColletion = RxCollection<KeySchemaType, PrivateKeyMethodTypes>;
-export type PrivateKeyDocument = RxDocument<KeySchemaType, PrivateKeyMethodTypes>
+  toDomainPrivateKey: (this: PrivateKeyDocument) => Domain.PrivateKey;
+};
+export type PrivateKeyColletion = RxCollection<
+  KeySchemaType,
+  PrivateKeyMethodTypes
+>;
+export type PrivateKeyDocument = RxDocument<
+  KeySchemaType,
+  PrivateKeyMethodTypes
+>;
+
 export const PrivateKeyMethods: PrivateKeyMethodTypes = {
-  toPrivateKey: function (this: PrivateKeyDocument) {
+  toDomainPrivateKey: function toDomainPrivateKey(this: PrivateKeyDocument) {
     const { type, keySpecification } = this;
     const curve = keySpecification.find(
       (item) => item.name === KeyProperties.curve
@@ -69,13 +82,10 @@ export const PrivateKeyMethods: PrivateKeyMethodTypes = {
       (item) => item.name === KeyProperties.rawKey
     );
     if (!(type in Domain.KeyTypes)) {
-      throw new Error(`Invalid KeyType ${type}`);
+      throw new Error(`Invalid KeyType ${type || "undefined"}`);
     }
     if (!curve) {
       throw new Error("Undefined key curve");
-    }
-    if (!raw) {
-      throw new Error("Undefined key raw");
     }
 
     if (
@@ -86,7 +96,13 @@ export const PrivateKeyMethods: PrivateKeyMethodTypes = {
       throw new Error(`Invalid key curve ${curve.value}`);
     }
 
+    if (!raw) {
+      throw new Error("Undefined key raw");
+    }
+
+    /* istanbul ignore else */
     if (type === Domain.KeyTypes.EC) {
+      /* istanbul ignore else */
       if (curve.value === Domain.Curve.SECP256K1) {
         const index = keySpecification.find(
           (item) => item.name === KeyProperties.index
@@ -123,6 +139,7 @@ export const PrivateKeyMethods: PrivateKeyMethodTypes = {
         return privateKey;
       }
 
+      /* istanbul ignore else */
       if (curve.value === Domain.Curve.ED25519) {
         const privateKey = new Ed25519PrivateKey(Buffer.from(raw.value, "hex"));
 
@@ -130,14 +147,16 @@ export const PrivateKeyMethods: PrivateKeyMethodTypes = {
 
         privateKey.keySpecification.set(
           Domain.KeyProperties.curve,
-          Domain.Curve.SECP256K1
+          Domain.Curve.ED25519
         );
 
         return privateKey;
       }
     }
 
+    /* istanbul ignore else */
     if (type === Domain.KeyTypes.Curve25519) {
+      /* istanbul ignore else */
       if (curve.value === Domain.Curve.X25519) {
         const privateKey = new X25519PrivateKey(Buffer.from(raw.value, "hex"));
 
@@ -145,16 +164,15 @@ export const PrivateKeyMethods: PrivateKeyMethodTypes = {
 
         privateKey.keySpecification.set(
           Domain.KeyProperties.curve,
-          Domain.Curve.SECP256K1
+          Domain.Curve.X25519
         );
 
         return privateKey;
       }
     }
-
+    /* istanbul ignore next */
     throw new Error(`Invalid key${curve.value} ${type}`);
-  }
-
-}
+  },
+};
 
 export default PrivateKeySchema;

@@ -1,7 +1,8 @@
+import { RxCollection, RxDocument } from "rxdb";
 import type { Schema } from "../types";
+import { Domain } from "@input-output-hk/atala-prism-wallet-sdk";
 
-
-export type MediarorSchemaType = {
+export type MediatorSchemaType = {
   id: string;
   mediatorDID: string;
   hostDID: string;
@@ -10,7 +11,7 @@ export type MediarorSchemaType = {
 /**
  * MediatorSchema
  */
-const MediatorSchema: Schema<MediarorSchemaType> = {
+const MediatorSchema: Schema<MediatorSchemaType> = {
   version: 0,
   primaryKey: "id",
   type: "object",
@@ -31,6 +32,25 @@ const MediatorSchema: Schema<MediarorSchemaType> = {
   },
   encrypted: [],
   required: ["id", "mediatorDID"],
+};
+
+export type MediatorDocument = RxDocument<MediatorSchemaType>;
+export type MediatorMethodTypes = {
+  toDomainMediator: (this: MediatorSchemaType) => Domain.Mediator;
+};
+export type MediatorCollection = RxCollection<
+  MediatorSchemaType,
+  MediatorMethodTypes
+>;
+
+export const MediatorMethods: MediatorMethodTypes = {
+  toDomainMediator: function toDomainMediator(this: MediatorSchemaType) {
+    return {
+      hostDID: Domain.DID.fromString(this.hostDID),
+      routingDID: Domain.DID.fromString(this.routingDID),
+      mediatorDID: Domain.DID.fromString(this.mediatorDID),
+    };
+  },
 };
 
 export default MediatorSchema;
