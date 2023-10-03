@@ -6,7 +6,6 @@
   "types": "./build/index.d.ts",
   "type": "module",
   "scripts": {
-    "postinstall": "cd sdk && npm run build",
     "clean": "rm -rf build",
     "build": "npx rollup -c rollup/rollup.mjs",
     "prepublishOnly": "npm run build",
@@ -122,6 +121,7 @@
     "rollup-plugin-polyfill-node": "^0.12.0",
     "rollup-plugin-typescript": "^1.0.1",
     "rollup-plugin-typescript2": "^0.34.1",
+    "sinon": "^16.0.0",
     "typedoc": "^0.24.8",
     "typedoc-plugin-markdown": "^3.15.3",
     "typedoc-plugin-rename-defaults": "^0.6.5",

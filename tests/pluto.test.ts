@@ -5,6 +5,7 @@ import { Database, PrivateKeyMethods } from "../src";
 import { randomUUID } from "crypto";
 import { Domain } from "@input-output-hk/atala-prism-wallet-sdk";
 import * as Fixtures from "./fixtures";
+import * as sinon from "sinon";
 
 const databaseName = "prism-db";
 const keyData = new Uint8Array(32);
