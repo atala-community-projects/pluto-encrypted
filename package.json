@@ -133,7 +133,7 @@
   "author": "elribonazo@gmail.com",
   "license": "Apache-2.0",
   "peerDependencies": {
-    "@input-output-hk/atala-prism-wallet-sdk": "file:./sdk"
+    "@input-output-hk/atala-prism-wallet-sdk": "^2.4.0"
   },
   "dependencies": {
     "dexie": "^3.2.4",
