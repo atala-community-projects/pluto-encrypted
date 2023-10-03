@@ -374,17 +374,18 @@ export class Database implements Domain.Pluto {
       .exec();
 
     if (didDB) {
-      const [privateKey] = await this.getDIDPrivateKeysByDID(
+      const privateKeys = await this.getDIDPrivateKeysByDID(
         Domain.DID.fromString(didDB.did)
       );
-
-      if (!privateKey) {
+      /* istanbul ignore if */
+      if (!privateKeys.length) {
         throw new Error(
           "Imposible to recover PrismDIDInfo without its privateKey data."
         );
       }
-
-      const indexProp = privateKey.getProperty(Domain.KeyProperties.index);
+      const indexProp = privateKeys
+        .at(0)!
+        .getProperty(Domain.KeyProperties.index);
       const index = indexProp ? parseInt(indexProp) : undefined;
       return new Domain.PrismDIDInfo(
         Domain.DID.fromString(didDB.did),
@@ -467,9 +468,12 @@ export class Database implements Domain.Pluto {
     const messages = await this.db.messages
       .find()
       .where({
-        $or: [
+        $and: [
           {
             to: did.toString(),
+          },
+          {
+            direction: Domain.MessageDirection.SENT,
           },
         ],
       })
@@ -481,9 +485,12 @@ export class Database implements Domain.Pluto {
     const messages = await this.db.messages
       .find()
       .where({
-        $or: [
+        $and: [
           {
             from: did.toString(),
+          },
+          {
+            direction: Domain.MessageDirection.RECEIVED,
           },
         ],
       })

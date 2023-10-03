@@ -11,8 +11,27 @@ const databaseName = "prism-db";
 const keyData = new Uint8Array(32);
 
 const messageType = "https://didcomm.org/basicmessage/2.0/message";
-const createMessage = (from?: Domain.DID, to?: Domain.DID) =>
-  new Domain.Message("{}", randomUUID(), messageType, from, to);
+const createMessage = (
+  from?: Domain.DID,
+  to?: Domain.DID,
+  direction: Domain.MessageDirection = Domain.MessageDirection.SENT
+) => {
+  const message = new Domain.Message(
+    "{}",
+    randomUUID(),
+    messageType,
+    from,
+    to,
+    [],
+    undefined,
+    undefined,
+    undefined,
+    undefined,
+    undefined,
+    direction
+  );
+  return message;
+};
 const defaultPassword = Buffer.from(keyData);
 
 let sandbox: sinon.SinonSandbox;
@@ -298,8 +317,8 @@ describe("Pluto + Dexie encrypted integration for browsers", () => {
       const to2 = Domain.DID.fromString("did:prism:65432133");
 
       await db.storeMessages([
-        createMessage(from, to),
-        createMessage(from2, to2),
+        createMessage(from, to, Domain.MessageDirection.RECEIVED),
+        createMessage(from2, to2, Domain.MessageDirection.SENT),
       ]);
 
       const byType = await db.getAllMessagesOfType(messageType);
@@ -307,6 +326,27 @@ describe("Pluto + Dexie encrypted integration for browsers", () => {
 
       const byType2 = await db.getAllMessagesOfType(messageType, from);
       expect(byType2.length).toBe(1);
+
+      const byType4 = await db.getAllMessagesSent();
+      expect(byType4.length).toBe(1);
+
+      const byType5 = await db.getAllMessagesReceived();
+      expect(byType5.length).toBe(1);
+
+      const byType6 = await db.getAllMessagesSentTo(to2);
+      expect(byType6.length).toBe(1);
+
+      const byType7 = await db.getAllMessagesReceivedFrom(from);
+      expect(byType7.length).toBe(1);
+
+      const byType8 = await db.getAllMessagesByFromToDID(from, to);
+      expect(byType8.length).toBe(1);
+
+      const byType9 = await db.getAllMessagesByDID(from);
+      expect(byType9.length).toBe(1);
+
+      const byType10 = await db.getAllMessages();
+      expect(byType10.length).toBe(2);
     });
 
     it("Should return null if message is not found by id ", async () => {
@@ -371,6 +411,20 @@ describe("Pluto + Dexie encrypted integration for browsers", () => {
       const mediator = Domain.DID.fromString("did:prism:444444");
       const routing = Domain.DID.fromString("did:prism:555555");
       await db.storeMediator(mediator, host, routing);
+    });
+
+    it("Should throw an error when an incomplete did is loaded from db", async () => {
+      const did = Domain.DID.fromString("did:prism:65432133");
+
+      await (db as any).db.dids.insert({
+        did: did.toString(),
+        method: did.method,
+        methodId: did.methodId,
+        schema: did.schema,
+      });
+      expect(db.getDIDInfoByDID(did)).rejects.toThrowError(
+        "Imposible to recover PrismDIDInfo without its privateKey data."
+      );
     });
   });
 });
