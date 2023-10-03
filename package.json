@@ -105,7 +105,7 @@
     "jest-mock": "^29.7.0",
     "lerna": "^7.2.0",
     "mock-aws-s3": "^4.0.2",
-    "postcss": "^8.3.11",
+    "postcss": "^8.4.31",
     "prettier": "^2.4.1",
     "rimraf": "^5.0.1",
     "rollup-plugin-cleanup": "^3.2.1",
