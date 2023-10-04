@@ -27,6 +27,7 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: '18'  # adjust this to your project's Node.js version
+          always-auth: true
 
       - name: Install Dependencies
         run: npm ci  # or use "npm install" if you don't have a lock file
