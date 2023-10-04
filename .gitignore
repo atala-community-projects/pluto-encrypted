@@ -4,3 +4,4 @@ coverage/coverage-summary.json
 junit.xml
 lcov.info
 build
+.npmrc
