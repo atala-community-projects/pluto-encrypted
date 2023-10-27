@@ -410,7 +410,10 @@ describe("Pluto + Dexie encrypted integration for browsers", () => {
       const host = Domain.DID.fromString("did:prism:333333");
       const mediator = Domain.DID.fromString("did:prism:444444");
       const routing = Domain.DID.fromString("did:prism:555555");
+      expect((await db.getAllMediators()).length).toBe(0);
       await db.storeMediator(mediator, host, routing);
+
+      expect((await db.getAllMediators()).length).toBe(1);
     });
 
     it("Should throw an error when an incomplete did is loaded from db", async () => {
