@@ -28,15 +28,12 @@ jobs:
         with:
           node-version: '18'  # adjust this to your project's Node.js version
 
-      - name: Authenticate with private NPM package
-        run: echo "//registry.npmjs.org/:_authToken=${{ secrets.PLUTO_GITHUB }}" > ~/.npmrc
-
       - name: Install Dependencies
         env:
           GH_TOKEN: ${{ secrets.PLUTO_GITHUB }}
           GITHUB_TOKEN: ${{ secrets.PLUTO_GITHUB }}
           NODE_AUTH_TOKEN: ${{ secrets.PLUTO_GITHUB }}
-        run: npm ci --@input-output-hk:registry=https://npm.pkg.github.com
+        run: echo "//registry.npmjs.org/:_authToken=${{ secrets.PLUTO_GITHUB }}" > ~/.npmrc && npm ci --@input-output-hk:registry=https://npm.pkg.github.com
 
       - name: Semantic Release
         env:
