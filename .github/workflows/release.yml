@@ -33,7 +33,7 @@ jobs:
           GH_TOKEN: ${{ secrets.PLUTO_GITHUB }}
           GITHUB_TOKEN: ${{ secrets.PLUTO_GITHUB }}
           NODE_AUTH_TOKEN: ${{ secrets.PLUTO_GITHUB }}
-        run: echo "//registry.npmjs.org/:_authToken=${{ secrets.PLUTO_GITHUB }}" > ~/.npmrc && npm ci --@input-output-hk:registry=https://npm.pkg.github.com
+        run: echo "//registry.npmjs.org/:_authToken=${{ secrets.PLUTO_GITHUB }}\n@input-output-hk:registry=https://npm.pkg.github.com" > ~/.npmrc && npm i
 
       - name: Semantic Release
         env:
