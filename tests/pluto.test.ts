@@ -88,13 +88,26 @@ describe("Pluto + Dexie encrypted integration for browsers", () => {
     });
 
     it("Should store a new Prism DID and its privateKeys", async () => {
+      expect(await db.getPrismLastKeyPathIndex()).toBe(0);
       const did = Domain.DID.fromString(
         "did:prism:733e594871d7700d35e6116011a08fc11e88ff9d366d8b5571ffc1aa18d249ea:Ct8BCtwBEnQKH2F1dGhlbnRpY2F0aW9uYXV0aGVudGljYXRpb25LZXkQBEJPCglzZWNwMjU2azESIDS5zeYUkLCSAJLI6aLXRTPRxstCLPUEI6TgBrAVCHkwGiDk-ffklrHIFW7pKkT8i-YksXi-XXi5h31czUMaVClcpxJkCg9tYXN0ZXJtYXN0ZXJLZXkQAUJPCglzZWNwMjU2azESIDS5zeYUkLCSAJLI6aLXRTPRxstCLPUEI6TgBrAVCHkwGiDk-ffklrHIFW7pKkT8i-YksXi-XXi5h31czUMaVClcpw"
+      );
+      const did2 = Domain.DID.fromString(
+        "did:prism:733e594871d7700d35e6116011a08fc11e88ff9d366d8b5571ffc1aa18d249ea:Ct8BCtwBEnQKH2F1dGhlbnRpY2F0aW9uYXV0aGVudGljYXRpb25LZXkQBEJPCglzZWNwMjU2azESIDS5zeYUkLCSAJLI6aLXRTPRxstCLPUEI6TgBrAVCHkwGiDk-ffklrHIFW7pKkT8i-YksXi-XXi5h31czUMaVClcpxJkCg9tYXN0ZXJtYXN0ZXJLZXkQAUJPCglzZWNwMjU2azESIDS5zeYUkLCSAJLI6aLXRTPRxstCLPUEI6TgBrAVCHkwGiDk-ffklrHIFW7pKkT8i-YksXi-XXi5h31czUMaVClcpw1"
+      );
+      const did3 = Domain.DID.fromString(
+        "did:prism:733e594871d7700d35e6116011a08fc11e88ff9d366d8b5571ffc1aa18d249ea:Ct8BCtwBEnQKH2F1dGhlbnRpY2F0aW9uYXV0aGVudGljYXRpb25LZXkQBEJPCglzZWNwMjU2azESIDS5zeYUkLCSAJLI6aLXRTPRxstCLPUEI6TgBrAVCHkwGiDk-ffklrHIFW7pKkT8i-YksXi-XXi5h31czUMaVClcpxJkCg9tYXN0ZXJtYXN0ZXJLZXkQAUJPCglzZWNwMjU2azESIDS5zeYUkLCSAJLI6aLXRTPRxstCLPUEI6TgBrAVCHkwGiDk-ffklrHIFW7pKkT8i-YksXi-XXi5h31czUMaVClcpw2"
       );
       const privateKey = Fixtures.secp256K1.privateKey;
       await db.storePrismDID(did, 0, privateKey);
       expect((await db.getAllPrismDIDs()).length).toBe(1);
       expect(await db.getDIDInfoByDID(did)).not.toBe(null);
+      expect(await db.getPrismDIDKeyPathIndex(did)).toBe(0);
+      expect(await db.getPrismLastKeyPathIndex()).toBe(0);
+      await db.storePrismDID(did2, 1, privateKey);
+      expect(await db.getPrismDIDKeyPathIndex(did2)).toBe(1);
+      expect(await db.getPrismLastKeyPathIndex()).toBe(1);
+      expect(await db.getPrismDIDKeyPathIndex(did3)).toBe(null);
     });
 
     it("Should throw an exception if a wrong key object from Database is loaded", async () => {
@@ -364,10 +377,13 @@ describe("Pluto + Dexie encrypted integration for browsers", () => {
         "peer",
         "2.Ez6LSms555YhFthn1WV8ciDBpZm86hK9tp83WojJUmxPGk1hZ.Vz6MkmdBjMyB4TS5UbbQw54szm8yvMMf1ftGV2sQVYAxaeWhE.SeyJpZCI6Im5ldy1pZCIsInQiOiJkbSIsInMiOiJodHRwczovL21lZGlhdG9yLnJvb3RzaWQuY2xvdWQiLCJhIjpbImRpZGNvbW0vdjIiXX0"
       );
+      expect((await db.getAllPeerDIDs()).length).toBe(0);
       await db.storePeerDID(did, [
         Fixtures.ed25519.privateKey,
         Fixtures.x25519.privateKey,
       ]);
+      expect((await db.getAllPeerDIDs()).length).toBe(1);
+      await db.getDIDInfoByDID(did);
     });
 
     it("Should store a didPair", async () => {
@@ -428,6 +444,129 @@ describe("Pluto + Dexie encrypted integration for browsers", () => {
       expect(db.getDIDInfoByDID(did)).rejects.toThrowError(
         "Imposible to recover PrismDIDInfo without its privateKey data."
       );
+    });
+
+    it("Should get a privateKey by its ID", async () => {
+      const did = Domain.DID.fromString("did:prism:65432133");
+
+      await (db as any).db.privateKeys.insert({
+        id: "123",
+        did: did.toString(),
+        type: Domain.KeyTypes.EC,
+        keySpecification: [
+          {
+            name: "curve",
+            value: Domain.Curve.ED25519,
+            type: "string",
+          },
+          {
+            name: "curve",
+            value: Domain.Curve.ED25519,
+            type: "string",
+          },
+          {
+            name: "raw",
+            value: new Array(32),
+            type: "string",
+          },
+        ],
+      });
+      expect(await db.getDIDPrivateKeyByID("123")).toHaveProperty("type");
+    });
+
+    it("Should store a verifiable credential", async () => {
+      expect((await db.getAllCredentials()).length).toBe(0);
+      await db.storeCredential({
+        id: "",
+        credentialType: Domain.CredentialType.JWT,
+        context: ["test0", "test1"],
+        type: ["auth"],
+        credentialSchema: {
+          id: randomUUID(),
+          type: "decode_jwt",
+        },
+        credentialSubject: {
+          test: "yes",
+        },
+        credentialStatus: {
+          id: randomUUID(),
+          type: "test",
+        },
+        refreshService: {
+          id: randomUUID(),
+          type: "test",
+        },
+        evidence: {
+          id: randomUUID(),
+          type: "test",
+        },
+        termsOfUse: {
+          id: randomUUID(),
+          type: "test",
+        },
+        issuer: Domain.DID.fromString("did:prism:123"),
+        subject: Domain.DID.fromString("did:prism:123"),
+        issuanceDate: "2023-04-04T13:40:08.435Z",
+        expirationDate: "2023-04-04T13:40:08.435Z",
+        validFrom: {
+          id: randomUUID(),
+          type: "test",
+        },
+        validUntil: {
+          id: randomUUID(),
+          type: "test",
+        },
+        proof: "",
+        aud: ["test0", "test1"],
+      });
+      expect((await db.getAllCredentials()).length).toBe(1);
+    });
+
+    it("Should store a verifiable credential with empty subject", async () => {
+      expect((await db.getAllCredentials()).length).toBe(0);
+      await db.storeCredential({
+        id: "",
+        credentialType: Domain.CredentialType.JWT,
+        context: ["test0", "test1"],
+        type: ["auth"],
+        credentialSchema: {
+          id: randomUUID(),
+          type: "decode_jwt",
+        },
+        credentialSubject: {
+          test: "yes",
+        },
+        credentialStatus: {
+          id: randomUUID(),
+          type: "test",
+        },
+        refreshService: {
+          id: randomUUID(),
+          type: "test",
+        },
+        evidence: {
+          id: randomUUID(),
+          type: "test",
+        },
+        termsOfUse: {
+          id: randomUUID(),
+          type: "test",
+        },
+        issuer: Domain.DID.fromString("did:prism:123"),
+        issuanceDate: "2023-04-04T13:40:08.435Z",
+        expirationDate: "2023-04-04T13:40:08.435Z",
+        validFrom: {
+          id: randomUUID(),
+          type: "test",
+        },
+        validUntil: {
+          id: randomUUID(),
+          type: "test",
+        },
+        proof: "",
+        aud: ["test0", "test1"],
+      });
+      expect((await db.getAllCredentials()).length).toBe(1);
     });
   });
 });

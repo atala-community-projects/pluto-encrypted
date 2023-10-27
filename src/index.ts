@@ -20,7 +20,12 @@ import MessageSchema, {
   MessageSchemaType,
 } from "./schemas/Message";
 import DIDSchema, { DIDSchemaType } from "./schemas/DID";
-import CredentialSchema, { CredentialSchemaType } from "./schemas/Credential";
+import CredentialSchema, {
+  CredentialCollection,
+  CredentialMethods,
+  CredentialSchemaType,
+  CredentialSubjectType,
+} from "./schemas/Credential";
 import DIDPairSchema, { DIDPairSchemaType } from "./schemas/DIDPair";
 import MediatorSchema, {
   MediatorCollection,
@@ -46,10 +51,10 @@ export * from "./schemas/PrivateKey";
 export type PlutoCollections = {
   messages: MessageColletion;
   dids: RxCollection<DIDSchemaType>;
-  verifiableCredentials: RxCollection<CredentialSchemaType>;
   didpairs: RxCollection<DIDPairSchemaType>;
   mediators: MediatorCollection;
   privateKeys: PrivateKeyColletion;
+  verifiableCredentials: CredentialCollection;
 };
 export type PlutoDatabase = RxDatabase<PlutoCollections>;
 
@@ -118,9 +123,6 @@ export class Database implements Domain.Pluto {
         dids: {
           schema: DIDSchema,
         },
-        verifiableCredentials: {
-          schema: CredentialSchema,
-        },
         didpairs: {
           schema: DIDPairSchema,
         },
@@ -131,6 +133,10 @@ export class Database implements Domain.Pluto {
         privateKeys: {
           schema: PrivateKeySchema,
           methods: PrivateKeyMethods,
+        },
+        verifiableCredentials: {
+          schema: CredentialSchema,
+          methods: CredentialMethods,
         },
       });
       this._db = database;
@@ -350,14 +356,12 @@ export class Database implements Domain.Pluto {
       );
 
       for (let privateKey of didPrivateKeys) {
-        const indexProp = privateKey.getProperty(Domain.KeyProperties.index);
-
-        const index = indexProp ? parseInt(indexProp) : undefined;
+        const indexProp = privateKey.getProperty(Domain.KeyProperties.index)!;
 
         prismDIDInfo.push(
           new Domain.PrismDIDInfo(
             Domain.DID.fromString(did.did),
-            index,
+            parseInt(indexProp),
             did.alias
           )
         );
@@ -405,12 +409,11 @@ export class Database implements Domain.Pluto {
         Domain.DID.fromString(did.did)
       );
       for (let privateKey of didPrivateKeys) {
-        const indexProp = privateKey.getProperty(Domain.KeyProperties.index);
-        const index = indexProp ? parseInt(indexProp) : undefined;
+        const indexProp = privateKey.getProperty(Domain.KeyProperties.index)!;
         prismDIDInfo.push(
           new Domain.PrismDIDInfo(
             Domain.DID.fromString(did.did),
-            index,
+            parseInt(indexProp),
             did.alias
           )
         );
@@ -548,20 +551,73 @@ export class Database implements Domain.Pluto {
     return messages.map((message) => message.toDomainMessage());
   }
 
-  getPrismDIDKeyPathIndex(did: Domain.DID): Promise<number | null> {
-    throw new Error("Method not implemented.");
+  async getPrismDIDKeyPathIndex(did: Domain.DID): Promise<number | null> {
+    const [key] = await this.getDIDPrivateKeysByDID(did);
+    if (!key) {
+      return null;
+    }
+    return parseInt(key.index);
   }
 
-  getPrismLastKeyPathIndex(): Promise<number> {
-    throw new Error("Method not implemented.");
+  async getPrismLastKeyPathIndex(): Promise<number> {
+    const results = await this.getAllPrismDIDs();
+    if (results.length === 0) {
+      return 0;
+    }
+    return Math.max(...results.map((result) => result.keyPathIndex));
   }
 
-  storeCredential(credential: Domain.VerifiableCredential): Promise<void> {
-    throw new Error("Method not implemented.");
+  async getAllPeerDIDs(): Promise<Domain.PeerDID[]> {
+    const peerDIDs: Domain.PeerDID[] = [];
+    const dids = await this.db.dids.find().where({ method: "peer" }).exec();
+    for (let did of dids) {
+      peerDIDs.push(new Domain.PeerDID(Domain.DID.fromString(did.did), []));
+    }
+    return peerDIDs;
   }
 
-  getAllPeerDIDs(): Promise<Domain.PeerDID[]> {
-    throw new Error("Method not implemented.");
+  private parseCredentialSubject(credentialSubject: {
+    [name: string]: any;
+  }): CredentialSubjectType[] {
+    return Object.keys(credentialSubject).reduce<CredentialSubjectType[]>(
+      (all, key) => {
+        const value = credentialSubject[key];
+        all.push({
+          type: "string",
+          value: value,
+          name: key,
+        });
+        return all;
+      },
+      []
+    );
+  }
+
+  async storeCredential(
+    credential: Domain.VerifiableCredential
+  ): Promise<void> {
+    await this.db.verifiableCredentials.insert({
+      id: credential.id,
+      credentialType: credential.credentialType,
+      context: credential.context,
+      type: credential.type,
+      credentialSchema: credential.credentialSchema,
+      credentialSubject: this.parseCredentialSubject(
+        credential.credentialSubject
+      ),
+      credentialStatus: credential.credentialStatus,
+      refreshService: credential.refreshService,
+      evidence: credential.evidence,
+      subject: credential.subject ? credential.subject.toString() : undefined,
+      termsOfUse: credential.termsOfUse,
+      issuer: credential.issuer.toString(),
+      issuanceDate: credential.issuanceDate,
+      expirationDate: credential.expirationDate,
+      validFrom: credential.validFrom,
+      validUntil: credential.validUntil,
+      proof: credential.proof,
+      aud: credential.aud,
+    });
   }
 
   async getAllMediators(): Promise<Domain.Mediator[]> {
@@ -570,7 +626,9 @@ export class Database implements Domain.Pluto {
     );
   }
 
-  getAllCredentials(): Promise<Domain.VerifiableCredential[]> {
-    throw new Error("Method not implemented.");
+  async getAllCredentials(): Promise<Domain.VerifiableCredential[]> {
+    return (await this.db.verifiableCredentials.find().exec()).map(
+      (verifiableCredential) => verifiableCredential.toDomainCredential()
+    );
   }
 }

@@ -1,7 +1,33 @@
-import type { Domain } from "@input-output-hk/atala-prism-wallet-sdk";
+import { Domain } from "@input-output-hk/atala-prism-wallet-sdk";
 import type { Schema } from "../types";
+import { RxCollection, RxDocument } from "rxdb";
 
-export type CredentialSchemaType = Domain.VerifiableCredential;
+export type CredentialSubjectType = {
+  type: string;
+  name: string;
+  value: string;
+};
+
+export type CredentialSchemaType = {
+  id?: string;
+  credentialType: Domain.CredentialType;
+  context: string[];
+  type: string[];
+  credentialSchema?: Domain.VerifiableCredentialTypeContainer;
+  credentialSubject: CredentialSubjectType[];
+  credentialStatus?: Domain.VerifiableCredentialTypeContainer;
+  refreshService: Domain.VerifiableCredentialTypeContainer;
+  evidence: Domain.VerifiableCredentialTypeContainer;
+  subject?: string;
+  termsOfUse: Domain.VerifiableCredentialTypeContainer;
+  issuer: string;
+  issuanceDate: string;
+  expirationDate?: string;
+  validFrom?: Domain.VerifiableCredentialTypeContainer;
+  validUntil?: Domain.VerifiableCredentialTypeContainer;
+  proof?: string;
+  aud: string[];
+};
 
 /**
  * CredentialSchema
@@ -14,37 +40,98 @@ const CredentialSchema: Schema<CredentialSchemaType> = {
     id: {
       type: "string",
     },
-    issuer: {
-      type: "string",
-    },
-    subject: {
-      type: "string",
-    },
     credentialType: {
       type: "string",
     },
     context: {
-      type: "string",
+      type: "array",
+      items: {
+        type: "string",
+      },
     },
     type: {
-      type: "string",
+      type: "array",
+      items: {
+        type: "string",
+      },
     },
     credentialSchema: {
-      type: "string",
+      type: "object",
+      properties: {
+        id: {
+          type: "string",
+        },
+        type: {
+          type: "string",
+        },
+      },
     },
     credentialSubject: {
-      type: "string",
+      type: "array",
+      items: {
+        type: "object",
+        properties: {
+          name: {
+            type: "string",
+          },
+          value: {
+            type: "string",
+          },
+          type: {
+            type: "string",
+          },
+        },
+      },
     },
     credentialStatus: {
-      type: "string",
+      type: "object",
+      properties: {
+        id: {
+          type: "string",
+        },
+        type: {
+          type: "string",
+        },
+      },
     },
     refreshService: {
-      type: "string",
+      type: "object",
+      properties: {
+        id: {
+          type: "string",
+        },
+        type: {
+          type: "string",
+        },
+      },
     },
     evidence: {
+      type: "object",
+      properties: {
+        id: {
+          type: "string",
+        },
+        type: {
+          type: "string",
+        },
+      },
+    },
+    subject: {
       type: "string",
     },
+
     termsOfUse: {
+      type: "object",
+      properties: {
+        id: {
+          type: "string",
+        },
+        type: {
+          type: "string",
+        },
+      },
+    },
+    issuer: {
       type: "string",
     },
     issuanceDate: {
@@ -54,20 +141,76 @@ const CredentialSchema: Schema<CredentialSchemaType> = {
       type: "string",
     },
     validFrom: {
-      type: "string",
+      type: "object",
+      properties: {
+        id: {
+          type: "string",
+        },
+        type: {
+          type: "string",
+        },
+      },
     },
     validUntil: {
-      type: "string",
+      type: "object",
+      properties: {
+        id: {
+          type: "string",
+        },
+        type: {
+          type: "string",
+        },
+      },
     },
     proof: {
       type: "string",
     },
     aud: {
-      type: "string",
+      type: "array",
+      items: {
+        type: "string",
+      },
     },
   },
   encrypted: [],
-  required: [],
+  required: [
+    "credentialType",
+    "context",
+    "type",
+    "credentialSubject",
+    "refreshService",
+    "evidence",
+    "termsOfUse",
+    "issuer",
+    "issuanceDate",
+    "aud",
+  ],
 };
+
+export type CredentialDocument = RxDocument<CredentialSchemaType>;
+export type CredentialMethodTypes = {
+  toDomainCredential: (
+    this: CredentialSchemaType
+  ) => Domain.VerifiableCredential;
+};
+
+export const CredentialMethods: CredentialMethodTypes = {
+  toDomainCredential: function toDomainCredential(this: CredentialSchemaType) {
+    return {
+      ...this,
+      subject: this.subject ? Domain.DID.fromString(this.subject) : undefined,
+      issuer: Domain.DID.fromString(this.issuer),
+      credentialSubject: this.credentialSubject.reduce((all, current) => {
+        all[current.name] = current.value;
+        return all;
+      }, {}),
+    };
+  },
+};
+
+export type CredentialCollection = RxCollection<
+  CredentialSchemaType,
+  CredentialMethodTypes
+>;
 
 export default CredentialSchema;
