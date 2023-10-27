@@ -571,7 +571,17 @@ export class Database implements Domain.Pluto {
     const peerDIDs: Domain.PeerDID[] = [];
     const dids = await this.db.dids.find().where({ method: "peer" }).exec();
     for (let did of dids) {
-      peerDIDs.push(new Domain.PeerDID(Domain.DID.fromString(did.did), []));
+      const peerDID = Domain.DID.fromString(did.did);
+      const keys = await this.getDIDPrivateKeysByDID(peerDID);
+      peerDIDs.push(
+        new Domain.PeerDID(
+          peerDID,
+          keys.map((key) => ({
+            keyCurve: key.curve as any,
+            value: key.raw,
+          }))
+        )
+      );
     }
     return peerDIDs;
   }
