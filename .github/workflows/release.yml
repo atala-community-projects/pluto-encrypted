@@ -27,7 +27,10 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: '18'  # adjust this to your project's Node.js version
-    
+
+      - name: Authenticate with private NPM package
+        run: echo "//registry.npmjs.org/:_authToken=${{ secrets.PLUTO_GITHUB }}" > ~/.npmrc
+
       - name: Install Dependencies
         env:
           GH_TOKEN: ${{ secrets.PLUTO_GITHUB }}
