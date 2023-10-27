@@ -1,7 +1,7 @@
 # Pluto-encrypted
 Pluto Encrypted is a secure storage wrapper for IndexDB and [AtalaPrism ](https://input-output-hk.github.io/atala-prism-wallet-sdk-ts/)([Pluto](https://input-output-hk.github.io/atala-prism-wallet-sdk-ts/interfaces/Domain.Pluto.html))
 
-This package is compatible with Atala Prism Wallet SDK Version 2.4.1
+This package is compatible with Atala Prism Wallet SDK v2.4.1
 
 ### Coverage
 | Statements                  | Branches                | Functions                 | Lines             |

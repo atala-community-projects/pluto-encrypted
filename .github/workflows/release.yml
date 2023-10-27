@@ -43,4 +43,4 @@ jobs:
           GH_TOKEN: ${{ secrets.PLUTO_GITHUB }}
           GITHUB_TOKEN: ${{ secrets.PLUTO_GITHUB }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-        run: npm test && npx jest-coverage-badges && npm run docs -- --hideInPageTOC true --hideBreadcrumbs true && cp -r docs/* . && npx semantic-release 
+        run: npm test && npx jest-coverage-badges && npm run docs -- --hideInPageTOC true --hideBreadcrumbs true && cp -r docs/* . && node versioning.cjs && npx semantic-release 
