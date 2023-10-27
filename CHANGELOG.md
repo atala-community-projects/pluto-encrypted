@@ -1,3 +1,13 @@
+## [0.1.5](https://github.com/elribonazo/pluto-encrypted/compare/v0.1.4...v0.1.5) (2023-10-27)
+
+
+### Bug Fixes
+
+* ci ([f0623b5](https://github.com/elribonazo/pluto-encrypted/commit/f0623b50557470d4c6890e0233ac94519f756c2c))
+* Ci improvement ([13bd57e](https://github.com/elribonazo/pluto-encrypted/commit/13bd57e392f798eaa694bfd657ad9130453d40a8))
+* ci repo ([e086ec9](https://github.com/elribonazo/pluto-encrypted/commit/e086ec9782a062d74f4c9c01f88c3ba2f95aabc0))
+* Fix issue when loading peer did private keys. ([4cf77f6](https://github.com/elribonazo/pluto-encrypted/commit/4cf77f6df77ef3201368b6ffc5fe88559fa097e2))
+
 ## [0.1.2](https://github.com/elribonazo/pluto-encrypted/compare/v0.1.1...v0.1.2) (2023-10-01)
 
 
