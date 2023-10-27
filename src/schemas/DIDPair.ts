@@ -1,6 +1,5 @@
 import type { Schema } from "../types";
 
-
 export type DIDPairSchemaType = {
   hostDID: string;
   receiverDID: string;
@@ -19,6 +18,7 @@ const DIDPairSchema: Schema<DIDPairSchemaType> = {
     },
     name: {
       type: "string",
+      maxLength: 60,
     },
     receiverDID: {
       type: "string",

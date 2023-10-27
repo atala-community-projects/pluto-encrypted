@@ -39,6 +39,7 @@ const CredentialSchema: Schema<CredentialSchemaType> = {
   properties: {
     id: {
       type: "string",
+      maxLength: 60,
     },
     credentialType: {
       type: "string",

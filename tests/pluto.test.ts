@@ -449,7 +449,7 @@ describe("Pluto + Dexie encrypted integration for browsers", () => {
     it("Should get a privateKey by its ID", async () => {
       const did = Domain.DID.fromString("did:prism:65432133");
 
-      await (db as any).db.privateKeys.insert({
+      await (db as any).db.privatekeys.insert({
         id: "123",
         did: did.toString(),
         type: Domain.KeyTypes.EC,

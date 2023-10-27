@@ -37,9 +37,11 @@ import PrivateKeySchema, {
   PrivateKeyDocument,
   PrivateKeyMethods,
 } from "./schemas/PrivateKey";
+import { RxDBDevModePlugin } from "rxdb/plugins/dev-mode";
 
 addRxPlugin(RxDBMigrationPlugin);
 addRxPlugin(RxDBQueryBuilderPlugin);
+//addRxPlugin(RxDBDevModePlugin);
 
 export * from "./schemas/Message";
 export * from "./schemas/DID";
@@ -53,8 +55,8 @@ export type PlutoCollections = {
   dids: RxCollection<DIDSchemaType>;
   didpairs: RxCollection<DIDPairSchemaType>;
   mediators: MediatorCollection;
-  privateKeys: PrivateKeyColletion;
-  verifiableCredentials: CredentialCollection;
+  privatekeys: PrivateKeyColletion;
+  verifiablecredentials: CredentialCollection;
 };
 export type PlutoDatabase = RxDatabase<PlutoCollections>;
 
@@ -95,11 +97,24 @@ export class Database implements Domain.Pluto {
   }
 
   async storeMessage(message: Domain.Message): Promise<void> {
-    await this.db.messages.insert({
-      ...message,
-      to: message.to?.toString(),
-      from: message.from?.toString(),
-    });
+    const existing = await this.db.messages
+      .findOne()
+      .where({ id: message.id })
+      .exec();
+
+    if (existing) {
+      await existing.patch({
+        ...message,
+        to: message.to?.toString(),
+        from: message.from?.toString(),
+      });
+    } else {
+      await this.db.messages.insert({
+        ...message,
+        to: message.to?.toString(),
+        from: message.from?.toString(),
+      });
+    }
   }
 
   async storeMessages(messages: Domain.Message[]): Promise<void> {
@@ -130,11 +145,11 @@ export class Database implements Domain.Pluto {
           schema: MediatorSchema,
           methods: MediatorMethods,
         },
-        privateKeys: {
+        privatekeys: {
           schema: PrivateKeySchema,
           methods: PrivateKeyMethods,
         },
-        verifiableCredentials: {
+        verifiablecredentials: {
           schema: CredentialSchema,
           methods: CredentialMethods,
         },
@@ -184,7 +199,7 @@ export class Database implements Domain.Pluto {
 
     await Promise.all(
       privateKeys.map((prv) =>
-        this.db.privateKeys.insert({
+        this.db.privatekeys.insert({
           id: uuidv4(),
           did: did.toString(),
           type: prv.type,
@@ -228,7 +243,7 @@ export class Database implements Domain.Pluto {
     keyPathIndex: number,
     metaId?: string | null
   ): Promise<void> {
-    await this.db.privateKeys.insert({
+    await this.db.privatekeys.insert({
       id: uuidv4(),
       did: did.toString(),
       type: privateKey.type,
@@ -320,7 +335,7 @@ export class Database implements Domain.Pluto {
   }
 
   async getDIDPrivateKeysByDID(did: Domain.DID): Promise<Domain.PrivateKey[]> {
-    const privateKeys = await this.db.privateKeys
+    const privateKeys = await this.db.privatekeys
       .find()
       .where({ did: did.toString() })
       .exec();
@@ -328,7 +343,7 @@ export class Database implements Domain.Pluto {
   }
 
   async getDIDPrivateKeyByID(id: string): Promise<Domain.PrivateKey | null> {
-    const privateKey = await this.db.privateKeys.findOne().where({ id }).exec();
+    const privateKey = await this.db.privatekeys.findOne().where({ id }).exec();
     return privateKey ? this.getPrivateKeyFromDB(privateKey) : null;
   }
 
@@ -577,7 +592,9 @@ export class Database implements Domain.Pluto {
         new Domain.PeerDID(
           peerDID,
           keys.map((key) => ({
-            keyCurve: key.curve as any,
+            keyCurve: {
+              curve: key.curve as any,
+            },
             value: key.raw,
           }))
         )
@@ -606,7 +623,7 @@ export class Database implements Domain.Pluto {
   async storeCredential(
     credential: Domain.VerifiableCredential
   ): Promise<void> {
-    await this.db.verifiableCredentials.insert({
+    await this.db.verifiablecredentials.insert({
       id: credential.id,
       credentialType: credential.credentialType,
       context: credential.context,
@@ -637,7 +654,7 @@ export class Database implements Domain.Pluto {
   }
 
   async getAllCredentials(): Promise<Domain.VerifiableCredential[]> {
-    return (await this.db.verifiableCredentials.find().exec()).map(
+    return (await this.db.verifiablecredentials.find().exec()).map(
       (verifiableCredential) => verifiableCredential.toDomainCredential()
     );
   }
