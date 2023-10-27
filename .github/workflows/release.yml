@@ -33,7 +33,7 @@ jobs:
           GH_TOKEN: ${{ secrets.PLUTO_GITHUB }}
           GITHUB_TOKEN: ${{ secrets.PLUTO_GITHUB }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-        run: npm --@input-output-hk:registry=https://npm.pkg.github.com ci  # or use "npm install" if you don't have a lock file
+        run: npm ci --registry=https://npm.pkg.github.com --@input-output-hk:registry=https://npm.pkg.github.com
 
       - name: Semantic Release
         env:
