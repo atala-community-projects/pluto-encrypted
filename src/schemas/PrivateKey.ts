@@ -155,23 +155,21 @@ export const PrivateKeyMethods: PrivateKeyMethodTypes = {
     }
 
     /* istanbul ignore else */
-    if (type === Domain.KeyTypes.Curve25519) {
-      /* istanbul ignore else */
-      if (curve.value === Domain.Curve.X25519) {
-        const privateKey = new X25519PrivateKey(Buffer.from(raw.value, "hex"));
+    if (curve.value === Domain.Curve.X25519) {
+      const privateKey = new X25519PrivateKey(Buffer.from(raw.value, "hex"));
 
-        privateKey.keySpecification.set(Domain.KeyProperties.rawKey, raw.value);
+      privateKey.keySpecification.set(Domain.KeyProperties.rawKey, raw.value);
 
-        privateKey.keySpecification.set(
-          Domain.KeyProperties.curve,
-          Domain.Curve.X25519
-        );
+      privateKey.keySpecification.set(
+        Domain.KeyProperties.curve,
+        Domain.Curve.X25519
+      );
 
-        return privateKey;
-      }
+      return privateKey;
     }
+
     /* istanbul ignore next */
-    throw new Error(`Invalid key${curve.value} ${type}`);
+    throw new Error(`Invalid key ${curve.value} ${type}`);
   },
 };
 
