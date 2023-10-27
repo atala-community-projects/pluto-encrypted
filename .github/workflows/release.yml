@@ -26,7 +26,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '18'  # adjust this to your project's Node.js version
+          node-version: '20'  # adjust this to your project's Node.js version
 
       - name: Install Dependencies
         env:
@@ -36,7 +36,8 @@ jobs:
         run: |
           echo "//npm.pkg.github.com/:_authToken=${{ secrets.PLUTO_GITHUB }}" > .npmrc
           echo "@input-output-hk:registry=https://npm.pkg.github.com" >> .npmrc
-          npm i
+          npm i && npm i @semantic-release/changelog @semantic-release/commit-analyzer @semantic-release/release-notes-generator @semantic-release/npm @semantic-release/git @semantic-release/github -D
+
       - name: Semantic Release
         env:
           GH_TOKEN: ${{ secrets.PLUTO_GITHUB }}
