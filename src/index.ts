@@ -8,7 +8,7 @@ import {
   RxDatabaseCreator,
   createRxDatabase,
 } from "rxdb";
-import { RxError } from "rxdb/dist/lib/rx-error";
+import { RxError } from "rxdb";
 import { addRxPlugin } from "rxdb";
 import { RxDBMigrationPlugin } from "rxdb/plugins/migration";
 import { RxDBQueryBuilderPlugin } from "rxdb/plugins/query-builder";
@@ -142,7 +142,7 @@ export class Database implements Domain.Pluto {
       this._db = database;
     } catch (err) {
       /* istanbul ignore else */
-      if (err instanceof RxError && (err as RxError).code === "DB1") {
+      if ((err as RxError).code === "DB1") {
         throw new Error("Invalid authentication");
         /* istanbul ignore next */
       } else throw err;
