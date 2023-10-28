@@ -1,3 +1,10 @@
+## [0.2.1](https://github.com/elribonazo/pluto-encrypted/compare/v0.2.0...v0.2.1) (2023-10-28)
+
+
+### Bug Fixes
+
+* backup improvement. ([#26](https://github.com/elribonazo/pluto-encrypted/issues/26)) ([205d93a](https://github.com/elribonazo/pluto-encrypted/commit/205d93a1efc0df82e6ea6aa56bb244556fed1dc8))
+
 # [0.2.0](https://github.com/elribonazo/pluto-encrypted/compare/v0.1.13...v0.2.0) (2023-10-28)
 
 

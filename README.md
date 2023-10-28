@@ -46,7 +46,6 @@ const db = await Database.createEncrypted(
     backup
 );
 
-
 ```
 
 If the database is later initialised with the wrong password the "createEncrypted" async function will throw an exception and will not let you decrypt any encrypted content.
