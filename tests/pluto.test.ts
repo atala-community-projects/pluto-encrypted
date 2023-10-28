@@ -425,11 +425,13 @@ describe("Pluto + Dexie encrypted integration for browsers", () => {
     it("Should get a did pair by its did", async () => {
       const host = Domain.DID.fromString("did:prism:123456");
       const receiver = Domain.DID.fromString("did:prism:654321");
-      const notfound = Domain.DID.fromString("did:prism:65432155555");
-
       const name = "example";
       await db.storeDIDPair(host, receiver, name);
       expect(await db.getPairByDID(host)).not.toBe(null);
+    });
+
+    it("Should return null when a pair is fetched by a non existing did", async () => {
+      const notfound = Domain.DID.fromString("did:prism:65432155555");
       expect(await db.getPairByDID(notfound)).toBe(null);
     });
 
@@ -439,7 +441,10 @@ describe("Pluto + Dexie encrypted integration for browsers", () => {
       const name = "example";
       await db.storeDIDPair(host, receiver, name);
       expect(await db.getPairByName(name)).not.toBe(null);
-      expect(await db.getPairByName(" ")).toBe(null);
+    });
+
+    it("Should return null when a pair by name is not found", async () => {
+      expect(await db.getPairByName("not found")).toBe(null);
     });
 
     it("Should store a mediator", async () => {
@@ -528,7 +533,6 @@ describe("Pluto + Dexie encrypted integration for browsers", () => {
         },
       });
       await db.storeCredential(result);
-      debugger;
       expect((await db.getAllCredentials()).length).toBe(1);
     });
 
@@ -536,7 +540,17 @@ describe("Pluto + Dexie encrypted integration for browsers", () => {
       const name = "test";
       const secret = "12345";
       await db.storeLinkSecret(secret, name);
+      expect(await db.getLinkSecret(name)).toBe(secret);
+    });
+
+    it("Should store and fetch a link secret without params", async () => {
+      const name = "test";
+      const secret = "12345";
+      await db.storeLinkSecret(secret, name);
       expect(await db.getLinkSecret()).toBe(secret);
+    });
+
+    it("Should return null when no link secret is found", async () => {
       expect(await db.getLinkSecret("notfound")).toBe(null);
     });
 
@@ -549,7 +563,9 @@ describe("Pluto + Dexie encrypted integration for browsers", () => {
       expect(
         (await db.fetchCredentialMetadata(linkSecretName))?.link_secret_name
       ).toBe(linkSecretName);
+    });
 
+    it("should return null when no credentialMetadata is found by the linkSecretName", async () => {
       expect(await db.fetchCredentialMetadata("notfound")).toBe(null);
     });
 
