@@ -38,6 +38,15 @@ const db = await Database.createEncrypted(
     password
 );
 const messages = await db.getAllMessages();
+
+const backup = await db.backup();
+const db = await Database.createEncrypted(
+    databaseName + "restored",
+    password,
+    backup
+);
+
+
 ```
 
 If the database is later initialised with the wrong password the "createEncrypted" async function will throw an exception and will not let you decrypt any encrypted content.

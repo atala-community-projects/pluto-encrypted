@@ -47,20 +47,12 @@ describe("Pluto + Dexie encrypted integration for browsers", () => {
     sandbox = sinon.createSandbox();
   });
 
-  it("Should require to start pluto database before using it", async () => {
-    const db = await Database.createEncrypted(databaseName, defaultPassword);
-    expect(db.getAllMessages()).rejects.toThrowError(
-      new Error("Start Pluto first.")
-    );
-  });
-
   it("Should be able to instanciate an encrypted IndexDB Database and throw an error if started with wrong password", async () => {
     async function createAndLoad(password: Uint8Array) {
       const db = await Database.createEncrypted(
         databaseName,
         Buffer.from(password)
       );
-      await db.start();
       const messages = await db.getAllMessages();
       expect(messages.length).toEqual(0);
     }
@@ -84,7 +76,6 @@ describe("Pluto + Dexie encrypted integration for browsers", () => {
         `${databaseName}${randomUUID()}`,
         defaultPassword
       );
-      await db.start();
     });
 
     it("Should store a new Prism DID and its privateKeys", async () => {
@@ -443,10 +434,9 @@ describe("Pluto + Dexie encrypted integration for browsers", () => {
 
       const restored = await Database.createEncrypted(
         `${databaseName}${randomUUID()}`,
-        defaultPassword
+        defaultPassword,
+        backup
       );
-      await restored.start();
-      await restored.import(backup);
 
       expect((await restored.getAllMediators()).length).toBe(1);
     });
