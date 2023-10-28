@@ -429,7 +429,6 @@ describe("Pluto + Dexie encrypted integration for browsers", () => {
       const routing = Domain.DID.fromString("did:prism:555555");
       expect((await db.getAllMediators()).length).toBe(0);
       await db.storeMediator(mediator, host, routing);
-
       expect((await db.getAllMediators()).length).toBe(1);
       const backup = await db.backup();
 

@@ -1,3 +1,15 @@
+# [0.2.0](https://github.com/elribonazo/pluto-encrypted/compare/v0.1.13...v0.2.0) (2023-10-28)
+
+
+### Bug Fixes
+
+* update versioning [skip ci]" ([db61623](https://github.com/elribonazo/pluto-encrypted/commit/db6162395468d4350249c5fc956b8b81302f7aae))
+
+
+### Features
+
+* add pluto export and import database functionality ([#25](https://github.com/elribonazo/pluto-encrypted/issues/25)) ([2eb624d](https://github.com/elribonazo/pluto-encrypted/commit/2eb624de33e1685a54645f8958164a8dd0bd29d0))
+
 ## [0.1.13](https://github.com/elribonazo/pluto-encrypted/compare/v0.1.12...v0.1.13) (2023-10-27)
 
 
