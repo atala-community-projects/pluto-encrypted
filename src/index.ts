@@ -83,12 +83,12 @@ export class Database implements Domain.Pluto {
     return this.db.exportJSON();
   }
 
-  async import(importData: RxDumpDatabase<PlutoCollections>) {
-    await this.db.importJSON(importData);
-  }
-
-  static async createEncrypted(name: string, encryptionKey: Uint8Array) {
-    return new Database({
+  static async createEncrypted(
+    name: string,
+    encryptionKey: Uint8Array,
+    importData?: RxDumpDatabase<PlutoCollections>
+  ) {
+    const database = new Database({
       ignoreDuplicate: true,
       name: name,
       storage: wrappedKeyEncryptionCryptoJsStorage({
@@ -96,6 +96,14 @@ export class Database implements Domain.Pluto {
       }),
       password: Buffer.from(encryptionKey).toString("hex"),
     });
+
+    await database.start();
+
+    if (importData) {
+      await database.db.importJSON(importData);
+    }
+
+    return database;
   }
 
   async getMessage(id: string): Promise<Domain.Message | null> {
