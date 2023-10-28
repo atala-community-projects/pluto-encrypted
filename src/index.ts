@@ -6,6 +6,7 @@ import {
   RxCollection,
   RxDatabase,
   RxDatabaseCreator,
+  RxDumpDatabase,
   createRxDatabase,
 } from "rxdb";
 import { RxError } from "rxdb";
@@ -13,7 +14,7 @@ import { addRxPlugin } from "rxdb";
 import { RxDBMigrationPlugin } from "rxdb/plugins/migration";
 import { RxDBQueryBuilderPlugin } from "rxdb/plugins/query-builder";
 import { v4 as uuidv4 } from "uuid";
-
+import { RxDBJsonDumpPlugin } from "rxdb/plugins/json-dump";
 import MessageSchema, {
   MessageColletion,
   MessageMethods,
@@ -42,6 +43,7 @@ import { RxDBDevModePlugin } from "rxdb/plugins/dev-mode";
 addRxPlugin(RxDBMigrationPlugin);
 addRxPlugin(RxDBQueryBuilderPlugin);
 //addRxPlugin(RxDBDevModePlugin);
+addRxPlugin(RxDBJsonDumpPlugin);
 
 export * from "./schemas/Message";
 export * from "./schemas/DID";
@@ -76,6 +78,14 @@ export class Database implements Domain.Pluto {
   }
 
   constructor(private dbOptions: RxDatabaseCreator) {}
+
+  async backup() {
+    return this.db.exportJSON();
+  }
+
+  async import(importData: RxDumpDatabase<PlutoCollections>) {
+    await this.db.importJSON(importData);
+  }
 
   static async createEncrypted(name: string, encryptionKey: Uint8Array) {
     return new Database({
