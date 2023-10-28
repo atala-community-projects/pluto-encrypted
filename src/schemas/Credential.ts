@@ -8,7 +8,6 @@ import {
 } from "@input-output-hk/atala-prism-wallet-sdk";
 import type { Schema } from "../types";
 import { RxCollection, RxDocument } from "rxdb";
-import { Anoncreds } from "@input-output-hk/atala-prism-wallet-sdk/build/typings/domain";
 
 export type CredentialSubjectType = {
   type: string;
@@ -34,7 +33,7 @@ export type CredentialSchemaType = {
  * CredentialSchema
  */
 const CredentialSchema: Schema<CredentialSchemaType> = {
-  version: 1,
+  version: 0,
   primaryKey: "id",
   type: "object",
   properties: {
@@ -105,8 +104,9 @@ export const CredentialMethods: CredentialMethodTypes = {
             AnonCredsCredentialProperties.signatureCorrectnessProof
           ],
       });
+    } else {
+      throw new Error("Unsupported key type from db storage");
     }
-    throw new Error("Unsupported key type from db storage");
   },
 };
 

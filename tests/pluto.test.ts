@@ -329,6 +329,15 @@ describe("Pluto + Dexie encrypted integration for browsers", () => {
       expect(dbMesaage!.id).toBe(message.id);
     });
 
+    it("Should store a Message and update it", async () => {
+      const message = createMessage();
+      await db.storeMessage(message);
+      await db.storeMessage(message);
+      const dbMesaage = await db.getMessage(message.id);
+      expect(dbMesaage).not.toBe(null);
+      expect(dbMesaage!.id).toBe(message.id);
+    });
+
     it("Should get all the messages", async () => {
       const allMessages = await db.getAllMessages();
       expect(allMessages.length).toBe(0);
@@ -507,7 +516,7 @@ describe("Pluto + Dexie encrypted integration for browsers", () => {
       expect((await db.getAllCredentials()).length).toBe(1);
     });
 
-    it("Should store and fetch a JWT Credential", async () => {
+    it("Should store and fetch a Anoncreds Credential", async () => {
       expect((await db.getAllCredentials()).length).toBe(0);
       const payload = Fixtures.createAnonCredsPayload();
       const result = new AnonCredsCredential({
@@ -519,6 +528,7 @@ describe("Pluto + Dexie encrypted integration for browsers", () => {
         },
       });
       await db.storeCredential(result);
+      debugger;
       expect((await db.getAllCredentials()).length).toBe(1);
     });
 
@@ -528,6 +538,42 @@ describe("Pluto + Dexie encrypted integration for browsers", () => {
       await db.storeLinkSecret(secret, name);
       expect(await db.getLinkSecret()).toBe(secret);
       expect(await db.getLinkSecret("notfound")).toBe(null);
+    });
+
+    it("Should store and fetch credential metadata by link secret name", async () => {
+      const linkSecretName = "test";
+      await db.storeCredentialMetadata(
+        Fixtures.credRequestMeta,
+        linkSecretName
+      );
+      expect(
+        (await db.fetchCredentialMetadata(linkSecretName))?.link_secret_name
+      ).toBe(linkSecretName);
+
+      expect(await db.fetchCredentialMetadata("notfound")).toBe(null);
+    });
+
+    it("Should throw an error if a non storable credential is stored", async () => {
+      expect(db.storeCredential({ fail: true } as any)).rejects.toThrowError(
+        new Error("Credential is not storable")
+      );
+    });
+
+    it("Should throw an error if an unrecoverable key is loaded from DB", async () => {
+      const payload = Fixtures.createAnonCredsPayload();
+      const result = new AnonCredsCredential({
+        ...payload,
+        values: {
+          ...(payload.values.map(([varname, val]) => ({
+            [varname]: val,
+          })) as any),
+        },
+      });
+      result.recoveryId = "demo";
+      await db.storeCredential(result);
+      expect(db.getAllCredentials()).rejects.toThrowError(
+        new Error("Unsupported key type from db storage")
+      );
     });
   });
 });
