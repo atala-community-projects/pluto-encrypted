@@ -1,4 +1,4 @@
-# pluto-encrypted - v0.2.0
+# pluto-encrypted - v0.2.1
 
 ## Classes
 
@@ -12,7 +12,7 @@
 
 #### Defined in
 
-[schemas/Credential.ts:212](https://github.com/elribonazo/pluto-encrypted/blob/205d93a/src/schemas/Credential.ts#L212)
+[schemas/Credential.ts:113](https://github.com/elribonazo/pluto-encrypted/blob/fbe46b5/src/schemas/Credential.ts#L113)
 
 ___
 
@@ -22,7 +22,7 @@ ___
 
 #### Defined in
 
-[schemas/Credential.ts:191](https://github.com/elribonazo/pluto-encrypted/blob/205d93a/src/schemas/Credential.ts#L191)
+[schemas/Credential.ts:82](https://github.com/elribonazo/pluto-encrypted/blob/fbe46b5/src/schemas/Credential.ts#L82)
 
 ___
 
@@ -34,11 +34,11 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `toDomainCredential` | (`this`: [`CredentialSchemaType`](modules.md#credentialschematype)) => `Domain.VerifiableCredential` |
+| `toDomainCredential` | (`this`: [`CredentialSchemaType`](modules.md#credentialschematype)) => `Domain.Credential` |
 
 #### Defined in
 
-[schemas/Credential.ts:192](https://github.com/elribonazo/pluto-encrypted/blob/205d93a/src/schemas/Credential.ts#L192)
+[schemas/Credential.ts:83](https://github.com/elribonazo/pluto-encrypted/blob/fbe46b5/src/schemas/Credential.ts#L83)
 
 ___
 
@@ -50,28 +50,21 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `aud` | `string`[] |
-| `context` | `string`[] |
-| `credentialSchema?` | `Domain.VerifiableCredentialTypeContainer` |
-| `credentialStatus?` | `Domain.VerifiableCredentialTypeContainer` |
-| `credentialSubject` | [`CredentialSubjectType`](modules.md#credentialsubjecttype)[] |
-| `credentialType` | `Domain.CredentialType` |
-| `evidence` | `Domain.VerifiableCredentialTypeContainer` |
-| `expirationDate?` | `string` |
-| `id?` | `string` |
-| `issuanceDate` | `string` |
-| `issuer` | `string` |
-| `proof?` | `string` |
-| `refreshService` | `Domain.VerifiableCredentialTypeContainer` |
+| `availableClaims?` | `string`[] |
+| `credentialCreated?` | `string` |
+| `credentialData` | `string` |
+| `credentialSchema?` | `string` |
+| `credentialUpdated?` | `string` |
+| `id` | `string` |
+| `issuer?` | `string` |
+| `recoveryId` | `string` |
+| `revoked?` | `boolean` |
 | `subject?` | `string` |
-| `termsOfUse` | `Domain.VerifiableCredentialTypeContainer` |
-| `type` | `string`[] |
-| `validFrom?` | `Domain.VerifiableCredentialTypeContainer` |
-| `validUntil?` | `Domain.VerifiableCredentialTypeContainer` |
+| `validUntil?` | `string` |
 
 #### Defined in
 
-[schemas/Credential.ts:11](https://github.com/elribonazo/pluto-encrypted/blob/205d93a/src/schemas/Credential.ts#L11)
+[schemas/Credential.ts:18](https://github.com/elribonazo/pluto-encrypted/blob/fbe46b5/src/schemas/Credential.ts#L18)
 
 ___
 
@@ -89,7 +82,7 @@ ___
 
 #### Defined in
 
-[schemas/Credential.ts:5](https://github.com/elribonazo/pluto-encrypted/blob/205d93a/src/schemas/Credential.ts#L5)
+[schemas/Credential.ts:12](https://github.com/elribonazo/pluto-encrypted/blob/fbe46b5/src/schemas/Credential.ts#L12)
 
 ___
 
@@ -107,7 +100,7 @@ ___
 
 #### Defined in
 
-[schemas/DIDPair.ts:3](https://github.com/elribonazo/pluto-encrypted/blob/205d93a/src/schemas/DIDPair.ts#L3)
+[schemas/DIDPair.ts:3](https://github.com/elribonazo/pluto-encrypted/blob/fbe46b5/src/schemas/DIDPair.ts#L3)
 
 ___
 
@@ -127,7 +120,7 @@ ___
 
 #### Defined in
 
-[schemas/DID.ts:3](https://github.com/elribonazo/pluto-encrypted/blob/205d93a/src/schemas/DID.ts#L3)
+[schemas/DID.ts:3](https://github.com/elribonazo/pluto-encrypted/blob/fbe46b5/src/schemas/DID.ts#L3)
 
 ___
 
@@ -146,7 +139,7 @@ ___
 
 #### Defined in
 
-[schemas/PrivateKey.ts:19](https://github.com/elribonazo/pluto-encrypted/blob/205d93a/src/schemas/PrivateKey.ts#L19)
+[schemas/PrivateKey.ts:19](https://github.com/elribonazo/pluto-encrypted/blob/fbe46b5/src/schemas/PrivateKey.ts#L19)
 
 ___
 
@@ -166,7 +159,7 @@ PrivateKeySchema
 
 #### Defined in
 
-[schemas/PrivateKey.ts:14](https://github.com/elribonazo/pluto-encrypted/blob/205d93a/src/schemas/PrivateKey.ts#L14)
+[schemas/PrivateKey.ts:14](https://github.com/elribonazo/pluto-encrypted/blob/fbe46b5/src/schemas/PrivateKey.ts#L14)
 
 ___
 
@@ -176,7 +169,7 @@ ___
 
 #### Defined in
 
-[schemas/Mediator.ts:41](https://github.com/elribonazo/pluto-encrypted/blob/205d93a/src/schemas/Mediator.ts#L41)
+[schemas/Mediator.ts:41](https://github.com/elribonazo/pluto-encrypted/blob/fbe46b5/src/schemas/Mediator.ts#L41)
 
 ___
 
@@ -186,7 +179,7 @@ ___
 
 #### Defined in
 
-[schemas/Mediator.ts:37](https://github.com/elribonazo/pluto-encrypted/blob/205d93a/src/schemas/Mediator.ts#L37)
+[schemas/Mediator.ts:37](https://github.com/elribonazo/pluto-encrypted/blob/fbe46b5/src/schemas/Mediator.ts#L37)
 
 ___
 
@@ -202,7 +195,7 @@ ___
 
 #### Defined in
 
-[schemas/Mediator.ts:38](https://github.com/elribonazo/pluto-encrypted/blob/205d93a/src/schemas/Mediator.ts#L38)
+[schemas/Mediator.ts:38](https://github.com/elribonazo/pluto-encrypted/blob/fbe46b5/src/schemas/Mediator.ts#L38)
 
 ___
 
@@ -221,7 +214,7 @@ ___
 
 #### Defined in
 
-[schemas/Mediator.ts:5](https://github.com/elribonazo/pluto-encrypted/blob/205d93a/src/schemas/Mediator.ts#L5)
+[schemas/Mediator.ts:5](https://github.com/elribonazo/pluto-encrypted/blob/fbe46b5/src/schemas/Mediator.ts#L5)
 
 ___
 
@@ -231,7 +224,7 @@ ___
 
 #### Defined in
 
-[schemas/Message.ts:116](https://github.com/elribonazo/pluto-encrypted/blob/205d93a/src/schemas/Message.ts#L116)
+[schemas/Message.ts:116](https://github.com/elribonazo/pluto-encrypted/blob/fbe46b5/src/schemas/Message.ts#L116)
 
 ___
 
@@ -241,7 +234,7 @@ ___
 
 #### Defined in
 
-[schemas/Message.ts:110](https://github.com/elribonazo/pluto-encrypted/blob/205d93a/src/schemas/Message.ts#L110)
+[schemas/Message.ts:110](https://github.com/elribonazo/pluto-encrypted/blob/fbe46b5/src/schemas/Message.ts#L110)
 
 ___
 
@@ -257,7 +250,7 @@ ___
 
 #### Defined in
 
-[schemas/Message.ts:112](https://github.com/elribonazo/pluto-encrypted/blob/205d93a/src/schemas/Message.ts#L112)
+[schemas/Message.ts:112](https://github.com/elribonazo/pluto-encrypted/blob/fbe46b5/src/schemas/Message.ts#L112)
 
 ___
 
@@ -286,7 +279,7 @@ ___
 
 #### Defined in
 
-[schemas/Message.ts:5](https://github.com/elribonazo/pluto-encrypted/blob/205d93a/src/schemas/Message.ts#L5)
+[schemas/Message.ts:5](https://github.com/elribonazo/pluto-encrypted/blob/fbe46b5/src/schemas/Message.ts#L5)
 
 ___
 
@@ -298,16 +291,18 @@ ___
 
 | Name | Type |
 | :------ | :------ |
+| `credentialrequestmetadatas` | `CredentialRequestMetadataCollection` |
+| `credentials` | [`CredentialCollection`](modules.md#credentialcollection) |
 | `didpairs` | `RxCollection`<[`DIDPairSchemaType`](modules.md#didpairschematype)\> |
 | `dids` | `RxCollection`<[`DIDSchemaType`](modules.md#didschematype)\> |
+| `linksecrets` | `LinkSecretColletion` |
 | `mediators` | [`MediatorCollection`](modules.md#mediatorcollection) |
 | `messages` | [`MessageColletion`](modules.md#messagecolletion) |
 | `privatekeys` | [`PrivateKeyColletion`](modules.md#privatekeycolletion) |
-| `verifiablecredentials` | [`CredentialCollection`](modules.md#credentialcollection) |
 
 #### Defined in
 
-[index.ts:55](https://github.com/elribonazo/pluto-encrypted/blob/205d93a/src/index.ts#L55)
+[index.ts:61](https://github.com/elribonazo/pluto-encrypted/blob/fbe46b5/src/index.ts#L61)
 
 ___
 
@@ -317,7 +312,7 @@ ___
 
 #### Defined in
 
-[index.ts:63](https://github.com/elribonazo/pluto-encrypted/blob/205d93a/src/index.ts#L63)
+[index.ts:71](https://github.com/elribonazo/pluto-encrypted/blob/fbe46b5/src/index.ts#L71)
 
 ___
 
@@ -327,7 +322,7 @@ ___
 
 #### Defined in
 
-[schemas/PrivateKey.ts:66](https://github.com/elribonazo/pluto-encrypted/blob/205d93a/src/schemas/PrivateKey.ts#L66)
+[schemas/PrivateKey.ts:66](https://github.com/elribonazo/pluto-encrypted/blob/fbe46b5/src/schemas/PrivateKey.ts#L66)
 
 ___
 
@@ -337,7 +332,7 @@ ___
 
 #### Defined in
 
-[schemas/PrivateKey.ts:70](https://github.com/elribonazo/pluto-encrypted/blob/205d93a/src/schemas/PrivateKey.ts#L70)
+[schemas/PrivateKey.ts:70](https://github.com/elribonazo/pluto-encrypted/blob/fbe46b5/src/schemas/PrivateKey.ts#L70)
 
 ___
 
@@ -353,7 +348,7 @@ ___
 
 #### Defined in
 
-[schemas/PrivateKey.ts:63](https://github.com/elribonazo/pluto-encrypted/blob/205d93a/src/schemas/PrivateKey.ts#L63)
+[schemas/PrivateKey.ts:63](https://github.com/elribonazo/pluto-encrypted/blob/fbe46b5/src/schemas/PrivateKey.ts#L63)
 
 ## Variables
 
@@ -363,7 +358,7 @@ ___
 
 #### Defined in
 
-[schemas/Credential.ts:198](https://github.com/elribonazo/pluto-encrypted/blob/205d93a/src/schemas/Credential.ts#L198)
+[schemas/Credential.ts:87](https://github.com/elribonazo/pluto-encrypted/blob/fbe46b5/src/schemas/Credential.ts#L87)
 
 ___
 
@@ -373,7 +368,7 @@ ___
 
 #### Defined in
 
-[schemas/Mediator.ts:46](https://github.com/elribonazo/pluto-encrypted/blob/205d93a/src/schemas/Mediator.ts#L46)
+[schemas/Mediator.ts:46](https://github.com/elribonazo/pluto-encrypted/blob/fbe46b5/src/schemas/Mediator.ts#L46)
 
 ___
 
@@ -383,7 +378,7 @@ ___
 
 #### Defined in
 
-[schemas/Message.ts:121](https://github.com/elribonazo/pluto-encrypted/blob/205d93a/src/schemas/Message.ts#L121)
+[schemas/Message.ts:121](https://github.com/elribonazo/pluto-encrypted/blob/fbe46b5/src/schemas/Message.ts#L121)
 
 ___
 
@@ -393,4 +388,4 @@ ___
 
 #### Defined in
 
-[schemas/PrivateKey.ts:75](https://github.com/elribonazo/pluto-encrypted/blob/205d93a/src/schemas/PrivateKey.ts#L75)
+[schemas/PrivateKey.ts:75](https://github.com/elribonazo/pluto-encrypted/blob/fbe46b5/src/schemas/PrivateKey.ts#L75)

@@ -1,3 +1,10 @@
+# [0.3.0](https://github.com/elribonazo/pluto-encrypted/compare/v0.2.1...v0.3.0) (2023-11-02)
+
+
+### Features
+
+* Integrate Typescript SDK 2.5.0 ([#27](https://github.com/elribonazo/pluto-encrypted/issues/27)) ([fbe46b5](https://github.com/elribonazo/pluto-encrypted/commit/fbe46b544750b206b84d6d280f869d142fec1922))
+
 ## [0.2.1](https://github.com/elribonazo/pluto-encrypted/compare/v0.2.0...v0.2.1) (2023-10-28)
 
 
