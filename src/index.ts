@@ -24,7 +24,6 @@ import DIDSchema, { DIDSchemaType } from "./schemas/DID";
 import CredentialSchema, {
   CredentialCollection,
   CredentialMethods,
-  CredentialSchemaType,
   CredentialSubjectType,
 } from "./schemas/Credential";
 import DIDPairSchema, { DIDPairSchemaType } from "./schemas/DIDPair";
@@ -38,7 +37,14 @@ import PrivateKeySchema, {
   PrivateKeyDocument,
   PrivateKeyMethods,
 } from "./schemas/PrivateKey";
-import { RxDBDevModePlugin } from "rxdb/plugins/dev-mode";
+import LinkSecretSchema, {
+  LinkSecretColletion,
+  LinkSecretMethods,
+} from "./schemas/LinkSecret";
+import CredentialRequestMetadataSchema, {
+  CredentialRequestMetadataCollection,
+  CredentialRequestMetadataMethods,
+} from "./schemas/CredentialRequestMetadata";
 
 addRxPlugin(RxDBMigrationPlugin);
 addRxPlugin(RxDBQueryBuilderPlugin);
@@ -58,7 +64,9 @@ export type PlutoCollections = {
   didpairs: RxCollection<DIDPairSchemaType>;
   mediators: MediatorCollection;
   privatekeys: PrivateKeyColletion;
-  verifiablecredentials: CredentialCollection;
+  credentials: CredentialCollection;
+  credentialrequestmetadatas: CredentialRequestMetadataCollection;
+  linksecrets: LinkSecretColletion;
 };
 export type PlutoDatabase = RxDatabase<PlutoCollections>;
 
@@ -167,9 +175,17 @@ export class Database implements Domain.Pluto {
           schema: PrivateKeySchema,
           methods: PrivateKeyMethods,
         },
-        verifiablecredentials: {
+        credentials: {
           schema: CredentialSchema,
           methods: CredentialMethods,
+        },
+        credentialrequestmetadatas: {
+          schema: CredentialRequestMetadataSchema,
+          methods: CredentialRequestMetadataMethods,
+        },
+        linksecrets: {
+          schema: LinkSecretSchema,
+          methods: LinkSecretMethods,
         },
       });
       this._db = database;
@@ -621,48 +637,14 @@ export class Database implements Domain.Pluto {
     return peerDIDs;
   }
 
-  private parseCredentialSubject(credentialSubject: {
-    [name: string]: any;
-  }): CredentialSubjectType[] {
-    return Object.keys(credentialSubject).reduce<CredentialSubjectType[]>(
-      (all, key) => {
-        const value = credentialSubject[key];
-        all.push({
-          type: "string",
-          value: value,
-          name: key,
-        });
-        return all;
-      },
-      []
-    );
-  }
+  async storeCredential(credential: Domain.Credential): Promise<void> {
+    if (!credential.isStorable || !credential.isStorable()) {
+      throw new Error("Credential is not storable");
+    }
+    const storable = credential.toStorable();
+    if (!storable.id) storable.id = uuidv4();
 
-  async storeCredential(
-    credential: Domain.VerifiableCredential
-  ): Promise<void> {
-    await this.db.verifiablecredentials.insert({
-      id: credential.id,
-      credentialType: credential.credentialType,
-      context: credential.context,
-      type: credential.type,
-      credentialSchema: credential.credentialSchema,
-      credentialSubject: this.parseCredentialSubject(
-        credential.credentialSubject
-      ),
-      credentialStatus: credential.credentialStatus,
-      refreshService: credential.refreshService,
-      evidence: credential.evidence,
-      subject: credential.subject ? credential.subject.toString() : undefined,
-      termsOfUse: credential.termsOfUse,
-      issuer: credential.issuer.toString(),
-      issuanceDate: credential.issuanceDate,
-      expirationDate: credential.expirationDate,
-      validFrom: credential.validFrom,
-      validUntil: credential.validUntil,
-      proof: credential.proof,
-      aud: credential.aud,
-    });
+    await this.db.credentials.insert(storable);
   }
 
   async getAllMediators(): Promise<Domain.Mediator[]> {
@@ -671,9 +653,59 @@ export class Database implements Domain.Pluto {
     );
   }
 
-  async getAllCredentials(): Promise<Domain.VerifiableCredential[]> {
-    return (await this.db.verifiablecredentials.find().exec()).map(
+  async getAllCredentials(): Promise<Domain.Credential[]> {
+    return (await this.db.credentials.find().exec()).map(
       (verifiableCredential) => verifiableCredential.toDomainCredential()
     );
+  }
+
+  async getLinkSecret(
+    linkSecretName?: string | undefined
+  ): Promise<string | null> {
+    const linkSecret = await this.db.linksecrets
+      .findOne()
+      .where({ name: linkSecretName })
+      .exec();
+
+    if (linkSecret) {
+      return linkSecret.toDomainLinkSecret();
+    }
+
+    return null;
+  }
+
+  async storeLinkSecret(
+    linkSecret: string,
+    linkSecretName: string
+  ): Promise<void> {
+    await this.db.linksecrets.insert({
+      name: linkSecretName,
+      secret: linkSecret,
+    });
+  }
+
+  async storeCredentialMetadata(
+    metadata: Domain.Anoncreds.CredentialRequestMeta,
+    linkSecret: string
+  ): Promise<void> {
+    await this.db.credentialrequestmetadatas.insert({
+      ...metadata,
+      id: uuidv4(),
+      link_secret_name: linkSecret,
+    });
+  }
+
+  async fetchCredentialMetadata(
+    linkSecretName: string
+  ): Promise<Domain.Anoncreds.CredentialRequestMeta | null> {
+    const credentialRequestMetadata = await this.db.credentialrequestmetadatas
+      .findOne()
+      .where({ link_secret_name: linkSecretName })
+      .exec();
+
+    if (credentialRequestMetadata) {
+      return credentialRequestMetadata.toDomainCredentialRequestMetadata();
+    }
+    return null;
   }
 }

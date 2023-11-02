@@ -3,13 +3,24 @@ import "./setup";
 import expect from "expect";
 import { Database, PrivateKeyMethods } from "../src";
 import { randomUUID } from "crypto";
-import { Domain } from "@input-output-hk/atala-prism-wallet-sdk";
+import {
+  AnonCredsCredential,
+  Apollo,
+  Castor,
+  Domain,
+  JWTCredential,
+  Pollux,
+} from "@input-output-hk/atala-prism-wallet-sdk";
 import * as Fixtures from "./fixtures";
 import * as sinon from "sinon";
 
 const databaseName = "prism-db";
 const keyData = new Uint8Array(32);
-
+const jwtParts = [
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9",
+  "eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwidHlwZSI6Imp3dCJ9",
+  "18bn-r7uRWAG4FCFBjxemKvFYPCAoJTOHaHthuXh5nM",
+];
 const messageType = "https://didcomm.org/basicmessage/2.0/message";
 const createMessage = (
   from?: Domain.DID,
@@ -309,6 +320,15 @@ describe("Pluto + Dexie encrypted integration for browsers", () => {
       expect(dbMesaage!.id).toBe(message.id);
     });
 
+    it("Should store a Message and update it", async () => {
+      const message = createMessage();
+      await db.storeMessage(message);
+      await db.storeMessage(message);
+      const dbMesaage = await db.getMessage(message.id);
+      expect(dbMesaage).not.toBe(null);
+      expect(dbMesaage!.id).toBe(message.id);
+    });
+
     it("Should get all the messages", async () => {
       const allMessages = await db.getAllMessages();
       expect(allMessages.length).toBe(0);
@@ -396,11 +416,13 @@ describe("Pluto + Dexie encrypted integration for browsers", () => {
     it("Should get a did pair by its did", async () => {
       const host = Domain.DID.fromString("did:prism:123456");
       const receiver = Domain.DID.fromString("did:prism:654321");
-      const notfound = Domain.DID.fromString("did:prism:65432155555");
-
       const name = "example";
       await db.storeDIDPair(host, receiver, name);
       expect(await db.getPairByDID(host)).not.toBe(null);
+    });
+
+    it("Should return null when a pair is fetched by a non existing did", async () => {
+      const notfound = Domain.DID.fromString("did:prism:65432155555");
       expect(await db.getPairByDID(notfound)).toBe(null);
     });
 
@@ -410,7 +432,10 @@ describe("Pluto + Dexie encrypted integration for browsers", () => {
       const name = "example";
       await db.storeDIDPair(host, receiver, name);
       expect(await db.getPairByName(name)).not.toBe(null);
-      expect(await db.getPairByName(" ")).toBe(null);
+    });
+
+    it("Should return null when a pair by name is not found", async () => {
+      expect(await db.getPairByName("not found")).toBe(null);
     });
 
     it("Should store a mediator", async () => {
@@ -483,99 +508,97 @@ describe("Pluto + Dexie encrypted integration for browsers", () => {
       expect(await db.getDIDPrivateKeyByID("123")).toHaveProperty("type");
     });
 
-    it("Should store a verifiable credential", async () => {
+    const encodeJWTCredential = (cred: object): string => {
+      const json = JSON.stringify(cred);
+      const encoded = Buffer.from(json).toString("base64");
+      return `${jwtParts[0]}.${encoded}.${jwtParts[2]}`;
+    };
+
+    it("Should store and fetch a JWT Credential", async () => {
       expect((await db.getAllCredentials()).length).toBe(0);
-      await db.storeCredential({
-        id: "",
-        credentialType: Domain.CredentialType.JWT,
-        context: ["test0", "test1"],
-        type: ["auth"],
-        credentialSchema: {
-          id: randomUUID(),
-          type: "decode_jwt",
-        },
-        credentialSubject: {
-          test: "yes",
-        },
-        credentialStatus: {
-          id: randomUUID(),
-          type: "test",
-        },
-        refreshService: {
-          id: randomUUID(),
-          type: "test",
-        },
-        evidence: {
-          id: randomUUID(),
-          type: "test",
-        },
-        termsOfUse: {
-          id: randomUUID(),
-          type: "test",
-        },
-        issuer: Domain.DID.fromString("did:prism:123"),
-        subject: Domain.DID.fromString("did:prism:123"),
-        issuanceDate: "2023-04-04T13:40:08.435Z",
-        expirationDate: "2023-04-04T13:40:08.435Z",
-        validFrom: {
-          id: randomUUID(),
-          type: "test",
-        },
-        validUntil: {
-          id: randomUUID(),
-          type: "test",
-        },
-        proof: "",
-        aud: ["test0", "test1"],
+      const jwtPayload = Fixtures.createJWTPayload(
+        "jwtid",
+        "proof",
+        Domain.CredentialType.JWT
+      );
+      const encoded = encodeJWTCredential(jwtPayload);
+      const pollux = new Pollux(new Castor(new Apollo()));
+      const result = await pollux.parseCredential(Buffer.from(encoded), {
+        type: Domain.CredentialType.JWT,
       });
+      await db.storeCredential(result);
       expect((await db.getAllCredentials()).length).toBe(1);
     });
 
-    it("Should store a verifiable credential with empty subject", async () => {
+    it("Should store and fetch a Anoncreds Credential", async () => {
       expect((await db.getAllCredentials()).length).toBe(0);
-      await db.storeCredential({
-        id: "",
-        credentialType: Domain.CredentialType.JWT,
-        context: ["test0", "test1"],
-        type: ["auth"],
-        credentialSchema: {
-          id: randomUUID(),
-          type: "decode_jwt",
+      const payload = Fixtures.createAnonCredsPayload();
+      const result = new AnonCredsCredential({
+        ...payload,
+        values: {
+          ...(payload.values.map(([varname, val]) => ({
+            [varname]: val,
+          })) as any),
         },
-        credentialSubject: {
-          test: "yes",
-        },
-        credentialStatus: {
-          id: randomUUID(),
-          type: "test",
-        },
-        refreshService: {
-          id: randomUUID(),
-          type: "test",
-        },
-        evidence: {
-          id: randomUUID(),
-          type: "test",
-        },
-        termsOfUse: {
-          id: randomUUID(),
-          type: "test",
-        },
-        issuer: Domain.DID.fromString("did:prism:123"),
-        issuanceDate: "2023-04-04T13:40:08.435Z",
-        expirationDate: "2023-04-04T13:40:08.435Z",
-        validFrom: {
-          id: randomUUID(),
-          type: "test",
-        },
-        validUntil: {
-          id: randomUUID(),
-          type: "test",
-        },
-        proof: "",
-        aud: ["test0", "test1"],
       });
+      await db.storeCredential(result);
       expect((await db.getAllCredentials()).length).toBe(1);
+    });
+
+    it("Should store and fetch a link secret by its name", async () => {
+      const name = "test";
+      const secret = "12345";
+      await db.storeLinkSecret(secret, name);
+      expect(await db.getLinkSecret(name)).toBe(secret);
+    });
+
+    it("Should store and fetch a link secret without params", async () => {
+      const name = "test";
+      const secret = "12345";
+      await db.storeLinkSecret(secret, name);
+      expect(await db.getLinkSecret()).toBe(secret);
+    });
+
+    it("Should return null when no link secret is found", async () => {
+      expect(await db.getLinkSecret("notfound")).toBe(null);
+    });
+
+    it("Should store and fetch credential metadata by link secret name", async () => {
+      const linkSecretName = "test";
+      await db.storeCredentialMetadata(
+        Fixtures.credRequestMeta,
+        linkSecretName
+      );
+      expect(
+        (await db.fetchCredentialMetadata(linkSecretName))?.link_secret_name
+      ).toBe(linkSecretName);
+    });
+
+    it("should return null when no credentialMetadata is found by the linkSecretName", async () => {
+      expect(await db.fetchCredentialMetadata("notfound")).toBe(null);
+    });
+
+    it("Should throw an error if a non storable credential is stored", async () => {
+      expect(db.storeCredential({ fail: true } as any)).rejects.toThrowError(
+        new Error("Credential is not storable")
+      );
+    });
+
+    it("Should throw an error if an unrecoverable key is loaded from DB", async () => {
+      const payload = Fixtures.createAnonCredsPayload();
+      const result = new AnonCredsCredential({
+        ...payload,
+        values: {
+          ...(payload.values.map(([varname, val]) => ({
+            [varname]: val,
+          })) as any),
+        },
+      });
+      result.recoveryId = "demo";
+      await db.storeCredential(result);
+      expect(db.getAllCredentials()).rejects.toThrowError(
+        new Error("Unsupported key type from db storage")
+      );
     });
   });
 });

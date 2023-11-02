@@ -1,4 +1,11 @@
-import { Domain } from "@input-output-hk/atala-prism-wallet-sdk";
+import {
+  AnonCredsCredential,
+  AnonCredsCredentialProperties,
+  AnonCredsRecoveryId,
+  Domain,
+  JWTCredential,
+  JWTVerifiableCredentialRecoveryId,
+} from "@input-output-hk/atala-prism-wallet-sdk";
 import type { Schema } from "../types";
 import { RxCollection, RxDocument } from "rxdb";
 
@@ -9,24 +16,17 @@ export type CredentialSubjectType = {
 };
 
 export type CredentialSchemaType = {
-  id?: string;
-  credentialType: Domain.CredentialType;
-  context: string[];
-  type: string[];
-  credentialSchema?: Domain.VerifiableCredentialTypeContainer;
-  credentialSubject: CredentialSubjectType[];
-  credentialStatus?: Domain.VerifiableCredentialTypeContainer;
-  refreshService: Domain.VerifiableCredentialTypeContainer;
-  evidence: Domain.VerifiableCredentialTypeContainer;
+  id: string;
+  recoveryId: string;
+  credentialData: string;
+  issuer?: string;
   subject?: string;
-  termsOfUse: Domain.VerifiableCredentialTypeContainer;
-  issuer: string;
-  issuanceDate: string;
-  expirationDate?: string;
-  validFrom?: Domain.VerifiableCredentialTypeContainer;
-  validUntil?: Domain.VerifiableCredentialTypeContainer;
-  proof?: string;
-  aud: string[];
+  credentialCreated?: string;
+  credentialUpdated?: string;
+  credentialSchema?: string;
+  validUntil?: string;
+  revoked?: boolean;
+  availableClaims?: string[];
 };
 
 /**
@@ -41,171 +41,72 @@ const CredentialSchema: Schema<CredentialSchemaType> = {
       type: "string",
       maxLength: 60,
     },
-    credentialType: {
+    recoveryId: {
       type: "string",
     },
-    context: {
-      type: "array",
-      items: {
-        type: "string",
-      },
-    },
-    type: {
-      type: "array",
-      items: {
-        type: "string",
-      },
-    },
-    credentialSchema: {
-      type: "object",
-      properties: {
-        id: {
-          type: "string",
-        },
-        type: {
-          type: "string",
-        },
-      },
-    },
-    credentialSubject: {
-      type: "array",
-      items: {
-        type: "object",
-        properties: {
-          name: {
-            type: "string",
-          },
-          value: {
-            type: "string",
-          },
-          type: {
-            type: "string",
-          },
-        },
-      },
-    },
-    credentialStatus: {
-      type: "object",
-      properties: {
-        id: {
-          type: "string",
-        },
-        type: {
-          type: "string",
-        },
-      },
-    },
-    refreshService: {
-      type: "object",
-      properties: {
-        id: {
-          type: "string",
-        },
-        type: {
-          type: "string",
-        },
-      },
-    },
-    evidence: {
-      type: "object",
-      properties: {
-        id: {
-          type: "string",
-        },
-        type: {
-          type: "string",
-        },
-      },
-    },
-    subject: {
+    credentialData: {
       type: "string",
-    },
-
-    termsOfUse: {
-      type: "object",
-      properties: {
-        id: {
-          type: "string",
-        },
-        type: {
-          type: "string",
-        },
-      },
     },
     issuer: {
       type: "string",
     },
-    issuanceDate: {
+    subject: {
       type: "string",
     },
-    expirationDate: {
+    credentialCreated: {
       type: "string",
     },
-    validFrom: {
-      type: "object",
-      properties: {
-        id: {
-          type: "string",
-        },
-        type: {
-          type: "string",
-        },
-      },
+    credentialUpdated: {
+      type: "string",
+    },
+    credentialSchema: {
+      type: "string",
     },
     validUntil: {
-      type: "object",
-      properties: {
-        id: {
-          type: "string",
-        },
-        type: {
-          type: "string",
-        },
-      },
-    },
-    proof: {
       type: "string",
     },
-    aud: {
+    revoked: {
+      type: "boolean",
+    },
+    availableClaims: {
       type: "array",
       items: {
         type: "string",
       },
     },
   },
-  encrypted: [],
-  required: [
-    "credentialType",
-    "context",
-    "type",
-    "credentialSubject",
-    "refreshService",
-    "evidence",
-    "termsOfUse",
-    "issuer",
-    "issuanceDate",
-    "aud",
-  ],
+  encrypted: ["credentialData"],
+  required: ["id", "recoveryId", "credentialData"],
 };
 
 export type CredentialDocument = RxDocument<CredentialSchemaType>;
 export type CredentialMethodTypes = {
-  toDomainCredential: (
-    this: CredentialSchemaType
-  ) => Domain.VerifiableCredential;
+  toDomainCredential: (this: CredentialSchemaType) => Domain.Credential;
 };
 
 export const CredentialMethods: CredentialMethodTypes = {
   toDomainCredential: function toDomainCredential(this: CredentialSchemaType) {
-    return {
-      ...this,
-      subject: this.subject ? Domain.DID.fromString(this.subject) : undefined,
-      issuer: Domain.DID.fromString(this.issuer),
-      credentialSubject: this.credentialSubject.reduce((all, current) => {
-        all[current.name] = current.value;
-        return all;
-      }, {}),
-    };
+    if (this.recoveryId === JWTVerifiableCredentialRecoveryId) {
+      const jwtString = Buffer.from(this.credentialData).toString();
+      const jwtObj = JSON.parse(jwtString);
+      return JWTCredential.fromJWT(jwtObj, jwtString);
+    } else if (this.recoveryId === AnonCredsRecoveryId) {
+      const credentialData = Buffer.from(this.credentialData).toString();
+      const credentialJson = JSON.parse(credentialData);
+      return new AnonCredsCredential({
+        schema_id: credentialJson[AnonCredsCredentialProperties.schemaId],
+        cred_def_id:
+          credentialJson[AnonCredsCredentialProperties.credentialDefinitionId],
+        values: credentialJson[AnonCredsCredentialProperties.values],
+        signature: credentialJson[AnonCredsCredentialProperties.signasture],
+        signature_correctness_proof:
+          credentialJson[
+            AnonCredsCredentialProperties.signatureCorrectnessProof
+          ],
+      });
+    } else {
+      throw new Error("Unsupported key type from db storage");
+    }
   },
 };
 
