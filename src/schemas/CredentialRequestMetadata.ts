@@ -5,7 +5,7 @@ import {
   Domain,
   JWTCredential,
   JWTVerifiableCredentialRecoveryId,
-} from "@input-output-hk/atala-prism-wallet-sdk";
+} from "@atala/prism-wallet-sdk";
 import type { Schema } from "../types";
 import { RxCollection, RxDocument } from "rxdb";
 

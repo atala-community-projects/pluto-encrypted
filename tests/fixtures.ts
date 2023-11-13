@@ -6,7 +6,7 @@ import {
   X25519KeyPair,
   X25519PrivateKey,
   Domain,
-} from "@input-output-hk/atala-prism-wallet-sdk";
+} from "@atala/prism-wallet-sdk";
 const secpPrivateKey = new Secp256k1PrivateKey(
   new Uint8Array([
     45, 182, 188, 189, 107, 229, 136, 180, 199, 177, 110, 84, 98, 140, 121, 84,

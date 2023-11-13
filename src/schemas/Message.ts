@@ -1,4 +1,4 @@
-import { Domain } from "@input-output-hk/atala-prism-wallet-sdk";
+import { Domain } from "@atala/prism-wallet-sdk";
 import type { Schema } from "../types";
 import { RxCollection, RxDocument } from "rxdb";
 

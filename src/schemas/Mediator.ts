@@ -1,6 +1,6 @@
 import { RxCollection, RxDocument } from "rxdb";
 import type { Schema } from "../types";
-import { Domain } from "@input-output-hk/atala-prism-wallet-sdk";
+import { Domain } from "@atala/prism-wallet-sdk";
 
 export type MediatorSchemaType = {
   id: string;

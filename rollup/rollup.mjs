@@ -6,11 +6,7 @@ import ignore from "rollup-plugin-ignore";
 import json from "@rollup/plugin-json";
 import commonjs from "@rollup/plugin-commonjs";
 
-const externals = [
-  "@input-output-hk/atala-prism-wallet-sdk",
-  "dexie",
-  "dexie-encrypted",
-];
+const externals = ["@atala/prism-wallet-sdk", "dexie", "dexie-encrypted"];
 
 function CreateConfig(buildPath, plugins = [], extraInputs = []) {
   return {
