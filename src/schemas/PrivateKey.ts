@@ -4,7 +4,7 @@ import {
   Secp256k1PrivateKey,
   X25519PrivateKey,
   Domain,
-} from "@input-output-hk/atala-prism-wallet-sdk";
+} from "@atala/prism-wallet-sdk";
 import type { Schema } from "../types";
 import { RxCollection, RxDocument } from "rxdb";
 

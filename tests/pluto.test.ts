@@ -10,7 +10,7 @@ import {
   Domain,
   JWTCredential,
   Pollux,
-} from "@input-output-hk/atala-prism-wallet-sdk";
+} from "@atala/prism-wallet-sdk";
 import * as Fixtures from "./fixtures";
 import * as sinon from "sinon";
 
