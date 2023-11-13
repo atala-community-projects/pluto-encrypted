@@ -1,3 +1,13 @@
+# [1.0.0](https://github.com/elribonazo/pluto-encrypted/compare/v0.3.0...v1.0.0) (2023-11-13)
+
+
+* feat!: Change npm repo (#32) ([d0807c5](https://github.com/elribonazo/pluto-encrypted/commit/d0807c5b7256caba00218444a50dbef1158ceee3)), closes [#32](https://github.com/elribonazo/pluto-encrypted/issues/32)
+
+
+### BREAKING CHANGES
+
+* Updates to the new package
+
 # [0.3.0](https://github.com/elribonazo/pluto-encrypted/compare/v0.2.1...v0.3.0) (2023-11-02)
 
 
