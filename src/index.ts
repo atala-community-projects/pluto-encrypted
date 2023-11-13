@@ -24,7 +24,6 @@ import DIDSchema, { DIDSchemaType } from "./schemas/DID";
 import CredentialSchema, {
   CredentialCollection,
   CredentialMethods,
-  CredentialSubjectType,
 } from "./schemas/Credential";
 import DIDPairSchema, { DIDPairSchemaType } from "./schemas/DIDPair";
 import MediatorSchema, {
