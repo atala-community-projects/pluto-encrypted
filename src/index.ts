@@ -249,7 +249,7 @@ export class Database implements Domain.Pluto {
               {
                 type: "string",
                 name: "raw",
-                value: Buffer.from(prv.getEncoded()).toString("hex"),
+                value: Buffer.from(prv.raw).toString("hex"),
               },
             ] as KeySpec[]
           ),
