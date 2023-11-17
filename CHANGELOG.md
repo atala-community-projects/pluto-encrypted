@@ -1,3 +1,10 @@
+## [1.0.1](https://github.com/elribonazo/pluto-encrypted/compare/v1.0.0...v1.0.1) (2023-11-17)
+
+
+### Bug Fixes
+
+* Store raw key values not the base64Url representation used in JWK ([cd65769](https://github.com/elribonazo/pluto-encrypted/commit/cd657696ddf435aa841665a34d5b3562c238ff00))
+
 # [1.0.0](https://github.com/elribonazo/pluto-encrypted/compare/v0.3.0...v1.0.0) (2023-11-13)
 
 
