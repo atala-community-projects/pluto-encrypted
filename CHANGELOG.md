@@ -1,3 +1,10 @@
+## [1.0.2](https://github.com/elribonazo/pluto-encrypted/compare/v1.0.1...v1.0.2) (2023-11-17)
+
+
+### Bug Fixes
+
+* store peerdid keys also as raw ([631c445](https://github.com/elribonazo/pluto-encrypted/commit/631c445b39426ec13b437ead4777446a3e1d0464))
+
 ## [1.0.1](https://github.com/elribonazo/pluto-encrypted/compare/v1.0.0...v1.0.1) (2023-11-17)
 
 
