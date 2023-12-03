@@ -6,11 +6,19 @@
       "request": "launch",
       "name": "TEST",
       "program": "${workspaceRoot}/node_modules/jest/bin/jest.js",
-      "args": ["--colors", "--workerThreads", "--maxWorkers", "1"],
+      "args": [
+        "--colors",
+        "--workerThreads",
+        "--maxWorkers",
+        "1"
+      ],
       "skipFiles": [
         "${workspaceRoot}/../../node_modules/**/*",
         "<node_internals>/**/*"
-      ]
+      ],
+      "env": {
+        "NODE_ENV": "debug"
+      }
     }
   ]
 }

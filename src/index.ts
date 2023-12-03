@@ -1,12 +1,11 @@
 import { Domain } from "@atala/prism-wallet-sdk";
-import { getRxStorageDexie } from "rxdb/plugins/storage-dexie";
-import { wrappedKeyEncryptionCryptoJsStorage } from "rxdb/plugins/encryption-crypto-js";
 import {
   MangoQuerySelector,
   RxCollection,
   RxDatabase,
   RxDatabaseCreator,
   RxDumpDatabase,
+  RxStorage,
   createRxDatabase,
 } from "rxdb";
 import { RxError } from "rxdb";
@@ -84,23 +83,29 @@ export class Database implements Domain.Pluto {
     return this._db;
   }
 
-  constructor(private dbOptions: RxDatabaseCreator) {}
+  constructor(private dbOptions: RxDatabaseCreator) { }
 
   async backup() {
     return this.db.exportJSON();
   }
 
   static async createEncrypted(
-    name: string,
-    encryptionKey: Uint8Array,
-    importData?: RxDumpDatabase<PlutoCollections>
+    options: {
+      name: string,
+      encryptionKey: Uint8Array,
+      importData?: RxDumpDatabase<PlutoCollections>,
+      storageResolver: () => Promise<RxStorage<any, any>>
+    }
   ) {
+    const { name, storageResolver, encryptionKey, importData } = options;
+    if (!storageResolver) {
+      throw new Error("Please provide a valid storage resolver fn");
+    }
+    const storage = await storageResolver()
     const database = new Database({
       ignoreDuplicate: true,
       name: name,
-      storage: wrappedKeyEncryptionCryptoJsStorage({
-        storage: getRxStorageDexie(),
-      }),
+      storage: storage,
       password: Buffer.from(encryptionKey).toString("hex"),
     });
 
@@ -332,10 +337,10 @@ export class Database implements Domain.Pluto {
 
     return didPair
       ? new DIDPair(
-          DID.fromString(didPair.hostDID),
-          DID.fromString(didPair.receiverDID),
-          didPair.name
-        )
+        DID.fromString(didPair.hostDID),
+        DID.fromString(didPair.receiverDID),
+        didPair.name
+      )
       : null;
   }
 
@@ -354,10 +359,10 @@ export class Database implements Domain.Pluto {
 
     return didPair
       ? new DIDPair(
-          DID.fromString(didPair.hostDID),
-          DID.fromString(didPair.receiverDID),
-          didPair.name
-        )
+        DID.fromString(didPair.hostDID),
+        DID.fromString(didPair.receiverDID),
+        didPair.name
+      )
       : null;
   }
 

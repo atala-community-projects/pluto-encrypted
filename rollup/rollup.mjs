@@ -35,4 +35,7 @@ function CreateConfig(buildPath, plugins = [], extraInputs = []) {
   };
 }
 
-export default CreateConfig(undefined, [nodePolyfills()]);
+export default CreateConfig(undefined, [nodePolyfills()], [
+  "src/storage/IndexDB.ts"
+
+]);

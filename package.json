@@ -5,11 +5,15 @@
   "main": "./build/index.js",
   "types": "./build/index.d.ts",
   "type": "module",
+  "exports": {
+    "./indexdb": "./build/IndexDB.js",
+    "./inmemory": "./build/InMemory.js"
+  },
   "scripts": {
     "clean": "rm -rf build",
     "build": "npx rollup -c rollup/rollup.mjs",
     "prepublishOnly": "npm run build",
-    "test": "jest tests/*.test.ts",
+    "test": "NODE_ENV=debug jest tests/*.test.ts",
     "coverage": "npm run test -- --coverage",
     "docs": "npx typedoc --options typedoc.json --hideGenerator"
   },
