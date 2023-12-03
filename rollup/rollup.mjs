@@ -6,7 +6,18 @@ import ignore from "rollup-plugin-ignore";
 import json from "@rollup/plugin-json";
 import commonjs from "@rollup/plugin-commonjs";
 
-const externals = ["@atala/prism-wallet-sdk", "dexie", "dexie-encrypted"];
+const externals = [
+  "@atala/prism-wallet-sdk",
+  "dexie",
+  "dexie-encrypted",
+  "rxdb/plugins/storage-dexie",
+  "rxdb/plugins/encryption-crypto-js",
+  "rxdb",
+  "rxdb/plugins/migration",
+  "rxdb/plugins/query-builder",
+  "uuid",
+  "rxdb/plugins/json-dump"
+];
 
 function CreateConfig(buildPath, plugins = [], extraInputs = []) {
   return {
@@ -36,6 +47,6 @@ function CreateConfig(buildPath, plugins = [], extraInputs = []) {
 }
 
 export default CreateConfig(undefined, [nodePolyfills()], [
-  "src/storage/IndexDB.ts"
-
+  "src/storage/IndexDB.ts",
+  "src/storage/InMemory.ts"
 ]);
