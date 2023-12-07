@@ -9,7 +9,7 @@
     "coverage": "lerna run coverage",
     "test": "lerna run test",
     "docs": "lerna run docs",
-    "release": "node versioning.cjs && npx lerna publish --message 'chore: release' --no-private && npm run docs"
+    "release": "npx lerna publish --message 'chore: release' --no-private && npm run docs && node versioning.cjs"
   },
   "author": "",
   "license": "ISC",
