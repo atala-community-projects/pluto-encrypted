@@ -1,6 +1,6 @@
 {
   "name": "@pluto-encrypted/indexdb",
-  "version": "0.1.1",
+  "version": "0.0.0",
   "description": "A \"secure\" IndexDB Wrapper for AtalaPrism -> Pluto storage",
   "main": "./build/index.js",
   "types": "./build/index.d.ts",
@@ -76,5 +76,5 @@
     },
     "coverageDirectory": "coverage"
   },
-  "gitHead": "ae9d9c0ddc5909c5470fb60780cba1a4a2f37ab0"
+  "gitHead": "6aa4ce8bbb9938fc4c4e790efffa5b902631362c"
 }
