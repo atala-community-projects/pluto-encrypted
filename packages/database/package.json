@@ -5,6 +5,9 @@
   "main": "./build/index.js",
   "types": "./build/index.d.ts",
   "type": "module",
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
     "test": "NODE_ENV=debug jest tests/*.test.ts",
     "build": "npx rollup -c rollup/rollup.mjs",
@@ -32,5 +35,6 @@
   "devDependencies": {
     "@pluto-encrypted/indexdb": "^0.0.1",
     "@pluto-encrypted/inmemory": "^0.0.1"
-  }
+  },
+  "gitHead": "134cb60d4a9af1c42e05158c8a3847e4ee1dfbb9"
 }

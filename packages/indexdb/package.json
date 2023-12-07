@@ -4,6 +4,9 @@
   "description": "A \"secure\" IndexDB Wrapper for AtalaPrism -> Pluto storage",
   "main": "./build/index.js",
   "types": "./build/index.d.ts",
+  "publishConfig": {
+    "access": "public"
+  },
   "type": "module",
   "scripts": {
     "build": "npx rollup -c rollup/rollup.mjs"
@@ -72,5 +75,6 @@
       }
     },
     "coverageDirectory": "coverage"
-  }
+  },
+  "gitHead": "134cb60d4a9af1c42e05158c8a3847e4ee1dfbb9"
 }
