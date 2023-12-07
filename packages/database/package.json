@@ -8,7 +8,8 @@
   "scripts": {
     "test": "NODE_ENV=debug jest tests/*.test.ts",
     "build": "npx rollup -c rollup/rollup.mjs",
-    "coverage": "npm run test -- --coverage"
+    "coverage": "npm run test -- --coverage",
+    "docs": "npx typedoc --options typedoc.json --hideGenerator"
   },
   "repository": {
     "type": "git",

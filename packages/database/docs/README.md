@@ -1,16 +1,7 @@
+pluto-encrypted / [Exports](modules.md)
+
 # Pluto-encrypted
 Pluto Encrypted is a secure storage wrapper for IndexDB and [AtalaPrism ](https://input-output-hk.github.io/atala-prism-wallet-sdk-ts/)([Pluto](https://input-output-hk.github.io/atala-prism-wallet-sdk-ts/interfaces/Domain.Pluto.html))
-
-This package is compatible with Atala Prism Wallet SDK Version 2.4.1
-
-### Coverage
-| Statements                  | Branches                | Functions                 | Lines             |
-| --------------------------- | ----------------------- | ------------------------- | ----------------- |
-| ![Statements](https://raw.githubusercontent.com/elribonazo/pluto-encrypted/master/coverage/badge-statements.svg) | ![Branches](https://raw.githubusercontent.com/elribonazo/pluto-encrypted/master/coverage/badge-branches.svg) | ![Functions](https://raw.githubusercontent.com/elribonazo/pluto-encrypted/master/coverage/badge-functions.svg) | ![Lines](https://raw.githubusercontent.com/elribonazo/pluto-encrypted/master/coverage/badge-lines.svg) |
-
-### Documentation
-
-[SDK Reference](https://github.com/elribonazo/pluto-encrypted/blob/master/modules.md)
 
 ## USAGE
 To install simply run
@@ -38,6 +29,14 @@ const db = await Database.createEncrypted(
     password
 );
 const messages = await db.getAllMessages();
+
+const backup = await db.backup();
+const db = await Database.createEncrypted(
+    databaseName + "restored",
+    password,
+    backup
+);
+
 ```
 
 If the database is later initialised with the wrong password the "createEncrypted" async function will throw an exception and will not let you decrypt any encrypted content.
