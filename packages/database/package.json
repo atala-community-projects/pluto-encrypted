@@ -1,6 +1,6 @@
 {
   "name": "@pluto-encrypted/database",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "A \"secure\" DB Agnostic Wrapper for AtalaPrism -> Pluto storage",
   "main": "./build/index.js",
   "types": "./build/index.d.ts",
@@ -33,8 +33,8 @@
     "build/*"
   ],
   "devDependencies": {
-    "@pluto-encrypted/indexdb": "^0.0.0",
-    "@pluto-encrypted/inmemory": "^0.0.0"
+    "@pluto-encrypted/indexdb": "^0.0.1",
+    "@pluto-encrypted/inmemory": "^0.0.1"
   },
   "gitHead": "6aa4ce8bbb9938fc4c4e790efffa5b902631362c"
 }
