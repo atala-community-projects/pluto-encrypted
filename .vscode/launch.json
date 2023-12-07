@@ -10,11 +10,8 @@
         "--colors",
         "--workerThreads",
         "--maxWorkers",
-        "1"
-      ],
-      "skipFiles": [
-        "${workspaceRoot}/../../node_modules/**/*",
-        "<node_internals>/**/*"
+        "1",
+        "${workspaceRoot}/packages/database/tests/*.test.ts"
       ],
       "env": {
         "NODE_ENV": "debug"

@@ -14,6 +14,7 @@ import * as sinon from "sinon";
 import { Database, PrivateKeyMethods } from "../src";
 import InMemory from "@pluto-encrypted/inmemory";
 import IndexDb from "@pluto-encrypted/indexdb";
+import { createLevelDBStorage } from '@pluto-encrypted/leveldb'
 
 import * as Fixtures from "./fixtures";
 import { RxStorage } from "rxdb";
@@ -52,9 +53,9 @@ const defaultPassword = Buffer.from(keyData);
 let sandbox: sinon.SinonSandbox;
 
 const storages: RxStorage<any, any>[] = [
-
-  InMemory,
-  IndexDb,
+  createLevelDBStorage({ path: "./database" })
+  // InMemory,
+  // IndexDb,
 ]
 
 describe("Pluto encrypted testing with different storages", () => {

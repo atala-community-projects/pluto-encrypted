@@ -8,6 +8,8 @@ This package is compatible with Atala Prism Wallet SDK v3.1.0
 | --------------------------- | ----------------------- | ------------------------- | ----------------- |
 | ![Statements](https://raw.githubusercontent.com/elribonazo/pluto-encrypted/master/packages/database/coverage/badge-statements.svg) | ![Branches](https://raw.githubusercontent.com/elribonazo/pluto-encrypted/master/packages/database/coverage/badge-branches.svg) | ![Functions](https://raw.githubusercontent.com/elribonazo/pluto-encrypted/master/packages/database/coverage/badge-functions.svg) | ![Lines](https://raw.githubusercontent.com/elribonazo/pluto-encrypted/master/packages/database/coverage/badge-lines.svg) |
 
+Has decent amount of test coverage but use with caution ad its has not been extensively tested outside test environments yet!!
+
 ### Documentation
 
 [SDK Reference](https://github.com/elribonazo/pluto-encrypted/blob/master/packages/database/modules.md)
