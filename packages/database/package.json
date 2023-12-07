@@ -7,7 +7,8 @@
   "type": "module",
   "scripts": {
     "test": "NODE_ENV=debug jest tests/*.test.ts",
-    "build": "npx rollup -c rollup/rollup.mjs"
+    "build": "npx rollup -c rollup/rollup.mjs",
+    "coverage": "npm run test -- --coverage"
   },
   "repository": {
     "type": "git",

@@ -6,6 +6,7 @@
     "clean": "npm run clean --workspaces && npm run clean-install && rm -rf node_modules",
     "clean-install": "lerna clean -y",
     "build": "lerna run build --include-dependencies",
+    "coverage": "lerna run coverage",
     "test": "lerna run test",
     "release": "node versioning.cjs && npx lerna publish --message 'chore: release' --no-private"
   },
@@ -63,7 +64,7 @@
         "statements": 71
       }
     },
-    "coverageDirectory": "coverage"
+    "coverageDirectory": "<rootDir>/coverage"
   },
   "devDependencies": {
     "@atala/prism-wallet-sdk": "^3.1.0",
