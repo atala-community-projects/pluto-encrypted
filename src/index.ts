@@ -7,6 +7,7 @@ import {
   RxDumpDatabase,
   RxStorage,
   createRxDatabase,
+  removeRxDatabase
 } from "rxdb";
 import { RxError } from "rxdb";
 import { addRxPlugin } from "rxdb";
@@ -75,8 +76,8 @@ export type PlutoDatabase = RxDatabase<PlutoCollections>;
  *
  */
 export class Database implements Domain.Pluto {
-  private _db!: PlutoDatabase;
-  private get db() {
+  _db!: PlutoDatabase;
+  get db() {
     if (!this._db) {
       throw new Error("Start Pluto first.");
     }
@@ -89,24 +90,31 @@ export class Database implements Domain.Pluto {
     return this.db.exportJSON();
   }
 
+  async clear() {
+    const storages = Array.from(this.db.storageInstances.values())
+    for (let storage of storages) {
+      await storage.cleanup(1)
+    }
+    await removeRxDatabase(this.dbOptions.name, this.db.storage);
+  }
+
   static async createEncrypted(
     options: {
       name: string,
       encryptionKey: Uint8Array,
       importData?: RxDumpDatabase<PlutoCollections>,
-      storageResolver: () => Promise<RxStorage<any, any>>
+      storage: RxStorage<any, any>
     }
   ) {
-    const { name, storageResolver, encryptionKey, importData } = options;
-    if (!storageResolver) {
-      throw new Error("Please provide a valid storage resolver fn");
+    const { name, storage, encryptionKey, importData } = options;
+    if (!storage) {
+      throw new Error("Please provide a valid storage.");
     }
-    const storage = await storageResolver()
     const database = new Database({
       ignoreDuplicate: true,
       name: name,
       storage: storage,
-      password: Buffer.from(encryptionKey).toString("hex"),
+      password: Buffer.from(encryptionKey).toString(),
     });
 
     await database.start();
@@ -425,6 +433,7 @@ export class Database implements Domain.Pluto {
   }
 
   async getDIDInfoByDID(did: Domain.DID): Promise<Domain.PrismDIDInfo | null> {
+
     const didDB = await this.db.dids
       .findOne()
       .where({ did: did.toString() })

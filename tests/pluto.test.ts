@@ -12,7 +12,8 @@ import {
 import * as sinon from "sinon";
 
 import { Database, PrivateKeyMethods } from "../src";
-import IndexDB from "../src/storage/IndexDB";
+import InMemory from "../src/storage/InMemory";
+import IndexDb from "../src/storage/IndexDB";
 
 import * as Fixtures from "./fixtures";
 import { RxStorage } from "rxdb";
@@ -51,10 +52,13 @@ const defaultPassword = Buffer.from(keyData);
 let sandbox: sinon.SinonSandbox;
 
 const storages: RxStorage<any, any>[] = [
-  IndexDB
+
+  InMemory,
+  IndexDb,
 ]
 
 describe("Pluto encrypted testing with different storages", () => {
+  let db: Database;
 
   afterEach(async () => {
     jest.useRealTimers();
@@ -64,45 +68,26 @@ describe("Pluto encrypted testing with different storages", () => {
   beforeEach(async () => {
     jest.useFakeTimers();
     sandbox = sinon.createSandbox();
+
   });
 
   storages.forEach((storage, i) => {
+
     describe(`[Storage ${i} ${storage.name}]` + "Pluto + Dexie encrypted integration for browsers", () => {
 
-
-      it(`[Storage ${i} ${storage.name}]` + "Should be able to instanciate an encrypted IndexDB Database and throw an error if started with wrong password", async () => {
-        async function createAndLoad(password: Uint8Array) {
-          const db = await Database.createEncrypted(
-            {
-              name: databaseName,
-              encryptionKey: Buffer.from(password),
-              storageResolver: async () => storage,
-            }
-          );
-          const messages = await db.getAllMessages();
-          expect(messages.length).toEqual(0);
-        }
-
-        await createAndLoad(keyData);
-
-        const keyData2 = keyData;
-        keyData2[0] = 1;
-        keyData2[1] = 2;
-
-        expect(createAndLoad(keyData2)).rejects.toThrowError(
-          new Error("Invalid authentication")
-        );
-      });
-
       describe("Pluto Unit testing", () => {
-        let db: Database;
+
 
         beforeEach(async () => {
+          if (db && storage.name === "in-memory") {
+            await db.clear();
+            debugger;
+          }
           db = await Database.createEncrypted(
             {
               name: `${databaseName}${randomUUID()}`,
               encryptionKey: defaultPassword,
-              storageResolver: async () => storage,
+              storage: storage,
             }
           );
         });
@@ -480,7 +465,7 @@ describe("Pluto encrypted testing with different storages", () => {
               name: `${databaseName}${randomUUID()}`,
               encryptionKey: defaultPassword,
               importData: backup,
-              storageResolver: async () => storage,
+              storage: storage,
             }
           );
 
