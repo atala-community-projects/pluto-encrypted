@@ -11,3 +11,26 @@ This package is compatible with Atala Prism Wallet SDK v3.1.0
 ### Documentation
 
 [SDK Reference](https://github.com/elribonazo/pluto-encrypted/blob/master/packages/database/modules.md)
+
+### How to use
+We currently provide 2 database storages, one IndexDB and one InMemory storage.
+In order to use this package, you must first install the database and pass a storage engine.
+
+```bash
+npm i @pluto-encrypted/database --save
+npm i @pluto-encrypted/inmemory --save
+```
+
+```typescript
+import InMemory from "@pluto-encrypted/inmemory";
+import { Database } from "@pluto-encrypted/database";
+//default password must be 32 bytes long
+const defaultPassword = new Uint8Array(32).fill(1);
+const database = db = await Database.createEncrypted(
+    {
+        name: `my-db`,
+        encryptionKey: defaultPassword,
+        storage: InMemory,
+    }
+);
+```
