@@ -1,43 +1,43 @@
-import { BulkWriteRow, ById, DefaultPreparedQuery, EventBulk, RxConflictResultionTask, RxDocumentData, RxDocumentDataById, RxDocumentWriteData, RxJsonSchema, RxStorage, RxStorageBulkWriteResponse, RxStorageChangeEvent, RxStorageDefaultCheckpoint } from "rxdb";
-import { BulkWriteRowProcessed } from "rxdb/dist/types/types";
+import { DefaultPreparedQuery, RxDocumentData, RxDocumentDataById, RxJsonSchema, RxStorage, } from "rxdb";
 
-export type IndexType = any;
-
-
+/**
+ * Index of a table can be a string or a number
+ */
+export type IndexType = string | number;
+/**
+ * InMemory internal data structure is a Map with an index
+ * and RxDocumentData from RXDB
+ */
 export type InMemoryDataStructure<RxDocType> = Map<IndexType, RxDocumentData<RxDocType>>;
-
-
-
+/**
+ * Data type for index keystorage
+ * I used this to get faster searches based on what RXDB indexes we were
+ * informed
+ */
 export type InMemoryDataIndex = Map<IndexType, IndexType[]>;
+/**
+ * Query type for InMemory
+ */
 export type InMemoryPreparedQuery<DocType> = DefaultPreparedQuery<DocType>;
-
+/**
+ * Main storage interface for InMemoryStorage
+ */
 export type InMemoryStorageInternals<RxDocType> = {
-    /**
-     * InMemoryStorageVariables
-     */
     data: InMemoryDataStructure<RxDocType>;
     index: InMemoryDataIndex;
-
     documents: InMemoryDataStructure<RxDocType>;
-
     removed: boolean;
     refCount: number;
-
     bulkPut(
         items: any,
         collectionName: string,
         schema: Readonly<RxJsonSchema<RxDocumentData<RxDocType>>>): any;
     bulkGet(docIds: string[], withDeleted: boolean): RxDocumentDataById<RxDocType>;
     clear(): void;
-
 }
 
 export type RxStorageInMemoryType<RxDocType> = RxStorage<RxDocType, InMemorySettings>
 
 
-export type InMemorySettings = {
-    /**
-     * Concrete options for this storage
-     */
-}
+export type InMemorySettings = {}
 

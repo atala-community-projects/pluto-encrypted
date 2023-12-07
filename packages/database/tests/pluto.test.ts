@@ -12,8 +12,8 @@ import {
 import * as sinon from "sinon";
 
 import { Database, PrivateKeyMethods } from "../src";
-import InMemory from "../src/storage/InMemory";
-import IndexDb from "../src/storage/IndexDB";
+import InMemory from "@pluto-encrypted/inmemory";
+import IndexDb from "@pluto-encrypted/indexdb";
 
 import * as Fixtures from "./fixtures";
 import { RxStorage } from "rxdb";

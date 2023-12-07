@@ -2,10 +2,14 @@
   "compilerOptions": {
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "rootDir": "./src",
-    "lib": ["dom", "dom.iterable", "esnext", "ES2020", "ES2021.WeakRef"],
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext",
+      "ES2020",
+      "ES2021.WeakRef"
+    ],
     "module": "ES2020",
-    "declarationDir": "./build",
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "removeComments": true,
@@ -34,8 +38,12 @@
     "incremental": true,
     "composite": true,
     "noEmit": true,
-    "types": ["jest", "node"]
+    "types": [
+      "jest",
+      "node"
+    ]
   },
-  "exclude": ["node_modules"],
-  "include": ["src"]
+  "exclude": [
+    "node_modules"
+  ],
 }

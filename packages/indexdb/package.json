@@ -1,0 +1,76 @@
+{
+  "name": "@pluto-encrypted/indexdb",
+  "version": "0.0.0",
+  "description": "A \"secure\" IndexDB Wrapper for AtalaPrism -> Pluto storage",
+  "main": "./build/index.js",
+  "types": "./build/index.d.ts",
+  "type": "module",
+  "scripts": {
+    "build": "npx rollup -c rollup/rollup.mjs"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/elribonazo/pluto-encrypted.git"
+  },
+  "author": "elribonazo@gmail.com",
+  "license": "Apache-2.0",
+  "peerDependencies": {
+    "@atala/prism-wallet-sdk": "^3.1.0"
+  },
+  "dependencies": {
+    "rxdb": "^14.17.0",
+    "uuid": "^9.0.1"
+  },
+  "jest-junit": {
+    "outputDirectory": "coverage",
+    "outputName": "junit.xml"
+  },
+  "files": [
+    "build/*"
+  ],
+  "jest": {
+    "collectCoverage": true,
+    "testEnvironment": "jsdom",
+    "setupFilesAfterEnv": [],
+    "workerThreads": true,
+    "maxWorkers": 1,
+    "transformIgnorePatterns": [
+      "node_modules/(?!@noble)",
+      "node_modules/(?!sinon)"
+    ],
+    "collectCoverageFrom": [
+      "src/**/*.{js,ts}"
+    ],
+    "moduleNameMapper": {
+      "^sinon$": "<rootDir>/node_modules/sinon/pkg/sinon.js",
+      "^uint8arrays$": "<rootDir>/node_modules/uint8arrays/cjs/src",
+      "^uint8arrays/(.*)$": "<rootDir>/node_modules/uint8arrays/cjs/src/$1",
+      "^multiformats/(.*)$": "<rootDir>/node_modules/multiformats/cjs/src/$1",
+      "^rxdb/(.*)$": "<rootDir>/node_modules/rxdb/$1",
+      "^dexie$": "<rootDir>/node_modules/dexie",
+      "^core-js/modules/(.*)$": "<rootDir>/node_modules/core-js/modules/$1"
+    },
+    "moduleFileExtensions": [
+      "js",
+      "ts"
+    ],
+    "coverageReporters": [
+      "json-summary",
+      "lcov",
+      "text"
+    ],
+    "reporters": [
+      "default",
+      "jest-junit"
+    ],
+    "coverageThreshold": {
+      "global": {
+        "branches": 58,
+        "functions": 64,
+        "lines": 74,
+        "statements": 71
+      }
+    },
+    "coverageDirectory": "coverage"
+  }
+}

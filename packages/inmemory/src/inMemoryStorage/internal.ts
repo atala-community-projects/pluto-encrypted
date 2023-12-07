@@ -1,6 +1,5 @@
-import { BulkWriteRow, RxDocumentData, RxDocumentDataById, RxJsonSchema, RxStorageBulkWriteResponse, RxStorageChangeEvent, RxStorageDefaultCheckpoint } from "rxdb";
+import { RxDocumentData, RxDocumentDataById, RxJsonSchema } from "rxdb";
 import { InMemoryDataIndex, InMemoryDataStructure, InMemoryStorageInternals, IndexType } from "./types";
-import { Subject } from "rxjs";
 
 
 
