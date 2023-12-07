@@ -3,7 +3,7 @@ const fs = require("fs");
 function findPackageVersion(packageName) {
   try {
     // Read the package.json file
-    const packageJson = JSON.parse(fs.readFileSync("./package.json", "utf-8"));
+    const packageJson = JSON.parse(fs.readFileSync("./packages/database/package.json", "utf-8"));
 
     // Check if the package is in the dependencies
     if (
