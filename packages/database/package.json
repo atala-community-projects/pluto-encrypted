@@ -36,5 +36,5 @@
     "@pluto-encrypted/indexdb": "^0.1.0",
     "@pluto-encrypted/inmemory": "^0.1.0"
   },
-  "gitHead": "134cb60d4a9af1c42e05158c8a3847e4ee1dfbb9"
+  "gitHead": "ae9d9c0ddc5909c5470fb60780cba1a4a2f37ab0"
 }
