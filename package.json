@@ -7,7 +7,7 @@
     "clean-install": "lerna clean -y",
     "build": "lerna run build --include-dependencies",
     "test": "lerna run test",
-    "release": "npx lerna publish --message 'chore: release' --no-private"
+    "release": "node versioning.cjs && npx lerna publish --message 'chore: release' --no-private"
   },
   "author": "",
   "license": "ISC",
