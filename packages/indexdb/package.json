@@ -1,6 +1,6 @@
 {
   "name": "@pluto-encrypted/indexdb",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "A \"secure\" IndexDB Wrapper for AtalaPrism -> Pluto storage",
   "main": "./build/index.js",
   "types": "./build/index.d.ts",
