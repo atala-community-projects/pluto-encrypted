@@ -2,6 +2,7 @@
   "version": "0.2.0",
   "configurations": [
     {
+      "cwd": "${workspaceFolder}/packages/database",
       "type": "node",
       "request": "launch",
       "name": "TEST",
@@ -10,8 +11,11 @@
         "--colors",
         "--workerThreads",
         "--maxWorkers",
-        "1",
-        "${workspaceRoot}/packages/database/tests/*.test.ts"
+        "1"
+      ],
+      "skipFiles": [
+        "${workspaceRoot}/../../node_modules/**/*",
+        "<node_internals>/**/*"
       ],
       "env": {
         "NODE_ENV": "debug"

@@ -21,6 +21,9 @@
     "outputName": "junit.xml"
   },
   "jest": {
+    "modulePaths": [
+      "<rootDir>"
+    ],
     "collectCoverage": true,
     "testEnvironment": "jsdom",
     "setupFilesAfterEnv": [],

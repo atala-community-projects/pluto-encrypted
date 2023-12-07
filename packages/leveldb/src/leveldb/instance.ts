@@ -83,7 +83,14 @@ export class RxStorageIntanceLevelDB<RxDocType> implements RxStorageInstance<
     }
 
     async findDocumentsById(ids: string[], withDeleted: boolean): Promise<RxDocumentDataById<RxDocType>> {
-        return this.internals.bulkGet(ids, withDeleted)
+        const docs: RxDocumentDataById<RxDocType> = {};
+        for (let docId of ids) {
+            const document = await this.internals.get(docId);
+            if (document) {
+                docs[docId] = document;
+            }
+        }
+        return docs
     }
 
     private conditionMatches(selector: MangoQuerySelector<RxDocType>, key: string, document: RxDocumentData<RxDocType>) {
@@ -105,12 +112,9 @@ export class RxStorageIntanceLevelDB<RxDocType> implements RxStorageInstance<
 
                 return false;
             })
-
             if (conditionMatches) {
                 return true
             }
-
-
         } else if (key === "$or") {
             const matchingSelector = Object.keys(selector)
             const atLeastOneMatching = matchingSelector.find((conditionKey) => {
@@ -120,11 +124,9 @@ export class RxStorageIntanceLevelDB<RxDocType> implements RxStorageInstance<
                         const [orKeyValue] = Object.values(orKey)
                         return document[orKeyName!] === orKeyValue
                     })
-
                     if (matchingOrKey) {
                         return true;
                     }
-
                 } else if (conditionKey === "$and") {
                     const matchingAndKey = selector[conditionKey]?.find((andKey) => {
                         const [andKeyName] = Object.keys(andKey)
@@ -147,7 +149,6 @@ export class RxStorageIntanceLevelDB<RxDocType> implements RxStorageInstance<
             if (atLeastOneMatching) {
                 return true
             }
-
         } else {
             const selectorValue = selector[key]
             if (typeof selectorValue === "object") {
@@ -162,8 +163,6 @@ export class RxStorageIntanceLevelDB<RxDocType> implements RxStorageInstance<
                     }
                 }
             }
-
-
         }
         return false
     }
@@ -174,27 +173,30 @@ export class RxStorageIntanceLevelDB<RxDocType> implements RxStorageInstance<
         const selectorKeys = Object.keys(selector);
 
         const collectionIndex = `[${this.collectionName}+${preparedQuery.queryPlan.index.join("+")}]`
-        const documentIds = this.internals.getIndex(collectionIndex);
+        const documentIds = await this.internals.getIndex(collectionIndex);
 
         if (!documentIds) {
             return { documents: [] }
         }
 
-        const documents = documentIds.reduce<RxDocumentData<RxDocType>[]>((allDocuments, id) => {
-            const document = this.internals.get(id);
+        const documents: RxDocumentData<RxDocType>[] = [];
+        debugger;
+        for (let documentId of documentIds) {
+            debugger;
+            const document = await this.internals.get(documentId);
+            debugger;
             if (document) {
                 if (selectorKeys.length <= 0) {
-                    return [...allDocuments, document]
+                    documents.push(document)
                 }
                 for (let key of selectorKeys) {
                     const conditionMatches = this.conditionMatches(selector, key, document)
                     if (conditionMatches) {
-                        return [...allDocuments, document]
+                        documents.push(document)
                     }
                 }
             }
-            return allDocuments
-        }, [])
+        }
 
         return { documents }
     }

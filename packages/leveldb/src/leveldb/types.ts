@@ -29,12 +29,20 @@ export type LevelDBStorageInternals<RxDocType> = {
     bulkPut(
         items: any,
         collectionName: string,
-        schema: Readonly<RxJsonSchema<RxDocumentData<RxDocType>>>): any;
-    bulkGet(docIds: string[], withDeleted: boolean): RxDocumentDataById<RxDocType>;
+        schema: Readonly<RxJsonSchema<RxDocumentData<RxDocType>>>): Promise<any>;
+
     clear(): void;
 
-    get(key: string): RxDocumentData<RxDocType> | null;
-    getIndex(key: string): string[]
+    get(key: string): Promise<RxDocumentData<RxDocType> | null>;
+    getIndex(key: string): Promise<string[]>;
+
+
+
+    set(key: string, data: RxDocumentData<RxDocType>): Promise<void>
+
+    setIndex(key: string, ids: string[]): Promise<void>
+
+    updateIndex(key: string, id: string): Promise<void>
 }
 
 export type RxStorageLevelDBType<RxDocType> = RxStorage<RxDocType, LevelDBSettings>
