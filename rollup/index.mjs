@@ -4,7 +4,6 @@ import cleanup from "rollup-plugin-cleanup";
 import ignore from "rollup-plugin-ignore";
 import json from "@rollup/plugin-json";
 import commonjs from "@rollup/plugin-commonjs";
-import nodeResolve from "@rollup/plugin-node-resolve";
 
 const externals = [
     "dexie",
@@ -28,6 +27,7 @@ export default function CreateConfig(buildPath, plugins = [], extraInputs = []) 
                 dir: buildPath ? `build/${buildPath}` : `build/cjs`,
                 //file: `${buildPath ? `build/${buildPath}` : `build/cjs`}/index.cjs`,
                 format: "cjs",
+                entryFileNames: "[name].cjs"
             },
             plugins: [
                 ignore(externals),
@@ -53,6 +53,7 @@ export default function CreateConfig(buildPath, plugins = [], extraInputs = []) 
                 dir: buildPath ? `build/${buildPath}` : `build/esm`,
                 //file: `${buildPath ? `build/${buildPath}` : `build/esm`}/index.mjs`,
                 format: "es",
+                entryFileNames: "[name].mjs"
             },
             plugins: [
                 ignore(externals),

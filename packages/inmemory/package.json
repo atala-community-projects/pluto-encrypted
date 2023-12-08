@@ -2,13 +2,13 @@
   "name": "@pluto-encrypted/inmemory",
   "version": "0.0.15",
   "description": "A \"secure\" Inmemory Wrapper for -> AtalaPrismSdk  Pluto storage.",
-  "main": "./build/cjs/index.js",
-  "module": "./build/esm/index.js",
+  "main": "./build/cjs/index.cjs",
+  "module": "./build/esm/index.mjs",
   "types": "./build/index.d.ts",
   "exports": {
     ".": {
-      "import": "./build/esm/index.js",
-      "require": "./build/cjs/index.js"
+      "import": "./build/esm/index.mjs",
+      "require": "./build/cjs/index.cjs"
     }
   },
   "publishConfig": {
