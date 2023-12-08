@@ -69,7 +69,7 @@
     "coverageDirectory": "<rootDir>/coverage"
   },
   "devDependencies": {
-    "@atala/prism-wallet-sdk": "^3.1.0",
+    "@atala/prism-wallet-sdk": "file:./atala-prism-wallet-sdk-3.1.0.tgz",
     "@babel/preset-env": "^7.22.20",
     "@babel/preset-typescript": "^7.22.15",
     "@rollup/plugin-commonjs": "^25.0.0",

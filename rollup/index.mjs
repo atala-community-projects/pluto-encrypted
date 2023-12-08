@@ -4,9 +4,9 @@ import cleanup from "rollup-plugin-cleanup";
 import ignore from "rollup-plugin-ignore";
 import json from "@rollup/plugin-json";
 import commonjs from "@rollup/plugin-commonjs";
+import nodeResolve from "@rollup/plugin-node-resolve";
 
 const externals = [
-    "@atala/prism-wallet-sdk",
     "dexie",
     "rxjs",
     "dexie-encrypted",
@@ -25,11 +25,12 @@ export default function CreateConfig(buildPath, plugins = [], extraInputs = []) 
             input: [`src/index.ts`, ...extraInputs],
             output: {
                 sourcemap: true,
-                //dir: buildPath ? `build/${buildPath}` : `build/cjs`,
-                file: `${buildPath ? `build/${buildPath}` : `build/cjs`}/index.cjs`,
+                dir: buildPath ? `build/${buildPath}` : `build/cjs`,
+                //file: `${buildPath ? `build/${buildPath}` : `build/cjs`}/index.cjs`,
                 format: "cjs",
             },
             plugins: [
+                nodeResolve({ resolveOnly: ['@atala/prism-wallet-sdk'], allowExportsFolderMapping: true }),
                 ignore(externals),
                 json(),
                 typescript({
@@ -41,7 +42,7 @@ export default function CreateConfig(buildPath, plugins = [], extraInputs = []) 
                     },
                 }),
                 ...plugins,
-                commonjs(),
+                commonjs({ transformMixedEsModules: true }),
                 cleanup(),
             ],
             external: externals,
@@ -50,11 +51,12 @@ export default function CreateConfig(buildPath, plugins = [], extraInputs = []) 
             input: [`src/index.ts`, ...extraInputs],
             output: {
                 sourcemap: true,
-                //dir: buildPath ? `build/${buildPath}` : `build/esm`,
-                file: `${buildPath ? `build/${buildPath}` : `build/esm`}/index.mjs`,
+                dir: buildPath ? `build/${buildPath}` : `build/esm`,
+                //file: `${buildPath ? `build/${buildPath}` : `build/esm`}/index.mjs`,
                 format: "es",
             },
             plugins: [
+                nodeResolve({ resolveOnly: ['@atala/prism-wallet-sdk'], allowExportsFolderMapping: true }),
                 ignore(externals),
                 json(),
                 typescript({
@@ -66,7 +68,7 @@ export default function CreateConfig(buildPath, plugins = [], extraInputs = []) 
                     },
                 }),
                 ...plugins,
-                commonjs(),
+                commonjs({ transformMixedEsModules: true }),
                 cleanup(),
             ],
             external: externals,

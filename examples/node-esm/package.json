@@ -1,0 +1,17 @@
+{
+  "name": "esm",
+  "version": "1.0.0",
+  "description": "",
+  "type": "module",
+  "scripts": {
+    "start": "node ./src/index.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@atala/prism-wallet-sdk": "file:../../atala-prism-wallet-sdk-3.1.0.tgz",
+    "@pluto-encrypted/database": "^0.0.8",
+    "@pluto-encrypted/inmemory": "^0.0.7",
+    "@pluto-encrypted/leveldb": "^0.0.6"
+  }
+}
