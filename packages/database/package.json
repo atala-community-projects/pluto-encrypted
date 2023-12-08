@@ -15,6 +15,7 @@
     "access": "public"
   },
   "scripts": {
+    "prepublishOnly": "npm run build",
     "test": "NODE_ENV=debug jest tests/*.test.ts",
     "build": "rm -rf build && npx rollup -c rollup/rollup.mjs",
     "coverage": "npm run test -- --coverage",
