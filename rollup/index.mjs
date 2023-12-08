@@ -25,7 +25,8 @@ export default function CreateConfig(buildPath, plugins = [], extraInputs = []) 
             input: [`src/index.ts`, ...extraInputs],
             output: {
                 sourcemap: true,
-                dir: buildPath ? `build/${buildPath}` : `build/cjs`,
+                //dir: buildPath ? `build/${buildPath}` : `build/cjs`,
+                file: `${buildPath ? `build/${buildPath}` : `build/cjs`}/index.cjs`,
                 format: "cjs",
             },
             plugins: [
@@ -49,7 +50,8 @@ export default function CreateConfig(buildPath, plugins = [], extraInputs = []) 
             input: [`src/index.ts`, ...extraInputs],
             output: {
                 sourcemap: true,
-                dir: buildPath ? `build/${buildPath}` : `build/esm`,
+                //dir: buildPath ? `build/${buildPath}` : `build/esm`,
+                file: `${buildPath ? `build/${buildPath}` : `build/esm`}/index.mjs`,
                 format: "es",
             },
             plugins: [

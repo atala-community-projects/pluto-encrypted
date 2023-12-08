@@ -2,20 +2,20 @@
   "name": "@pluto-encrypted/inmemory",
   "version": "0.0.6",
   "description": "A \"secure\" Inmemory Wrapper for AtalaPrism -> Pluto storage",
-  "main": "./build/cjs/index.js",
-  "module": "./build/esm/index.js",
+  "main": "./build/cjs/index.cjs",
+  "module": "./build/esm/index.mjs",
   "types": "./build/index.d.ts",
   "exports": {
     ".": {
-      "import": "./build/esm/index.js",
-      "require": "./build/cjs/index.js"
+      "import": "./build/esm/index.mjs",
+      "require": "./build/cjs/index.cjs"
     }
   },
   "publishConfig": {
     "access": "public"
   },
   "scripts": {
-    "build": "npx rollup -c rollup/rollup.mjs"
+    "build": "rm -rf build && npx rollup -c rollup/rollup.mjs"
   },
   "repository": {
     "type": "git",

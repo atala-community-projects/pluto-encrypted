@@ -2,13 +2,13 @@
   "name": "@pluto-encrypted/database",
   "version": "0.0.7",
   "description": "A \"secure\" DB Agnostic Wrapper for AtalaPrism -> Pluto storage",
-  "main": "./build/cjs/index.js",
-  "module": "./build/esm/index.js",
+  "main": "./build/cjs/index.cjs",
+  "module": "./build/esm/index.mjs",
   "types": "./build/index.d.ts",
   "exports": {
     ".": {
-      "import": "./build/esm/index.js",
-      "require": "./build/cjs/index.js"
+      "import": "./build/esm/index.mjs",
+      "require": "./build/cjs/index.cjs"
     }
   },
   "publishConfig": {
@@ -16,7 +16,7 @@
   },
   "scripts": {
     "test": "NODE_ENV=debug jest tests/*.test.ts",
-    "build": "npx rollup -c rollup/rollup.mjs",
+    "build": "rm -rf build && npx rollup -c rollup/rollup.mjs",
     "coverage": "npm run test -- --coverage",
     "docs": "npx typedoc --options typedoc.json --hideGenerator"
   },
