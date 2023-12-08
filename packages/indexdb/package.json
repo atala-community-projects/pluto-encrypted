@@ -3,7 +3,7 @@
   "version": "0.0.3",
   "description": "A \"secure\" IndexDB Wrapper for AtalaPrism -> Pluto storage",
   "main": "./build/cjs/index.js",
-  "module": "./build/es/index.js",
+  "module": "./build/esm/index.js",
   "types": "./build/index.d.ts",
   "publishConfig": {
     "access": "public"
