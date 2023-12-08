@@ -27,12 +27,12 @@
   "author": "elribonazo@gmail.com",
   "license": "Apache-2.0",
   "peerDependencies": {
-    "@atala/prism-wallet-sdk": "file:../../atala-prism-wallet-sdk-3.1.0.tgz"
+    "@atala/prism-wallet-sdk": "^3.1.0"
   },
   "optionalDependencies": {
-    "@pluto-encrypted/indexdb": "^0.0.3",
-    "@pluto-encrypted/inmemory": "^0.0.3",
-    "@pluto-encrypted/leveldb": "^0.0.2"
+    "@pluto-encrypted/indexdb": "^0.0.8",
+    "@pluto-encrypted/inmemory": "^0.0.8",
+    "@pluto-encrypted/leveldb": "^0.0.7"
   },
   "dependencies": {
     "rxdb": "^14.17.0",
@@ -42,9 +42,9 @@
     "build/*"
   ],
   "devDependencies": {
-    "@pluto-encrypted/indexdb": "^0.0.2",
-    "@pluto-encrypted/inmemory": "^0.0.2",
-    "@pluto-encrypted/leveldb": "^0.0.1"
+    "@pluto-encrypted/indexdb": "^0.0.8",
+    "@pluto-encrypted/inmemory": "^0.0.8",
+    "@pluto-encrypted/leveldb": "^0.0.7"
   },
   "gitHead": "6aa4ce8bbb9938fc4c4e790efffa5b902631362c"
 }

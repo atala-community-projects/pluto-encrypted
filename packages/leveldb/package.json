@@ -23,9 +23,6 @@
   },
   "author": "elribonazo@gmail.com",
   "license": "Apache-2.0",
-  "peerDependencies": {
-    "@atala/prism-wallet-sdk": "file:../../atala-prism-wallet-sdk-3.1.0.tgz"
-  },
   "dependencies": {
     "level": "^8.0.0",
     "rxdb": "^14.17.0",
