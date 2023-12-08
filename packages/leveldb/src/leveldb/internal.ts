@@ -12,10 +12,10 @@ export class LevelDBInternal<RxDocType> implements LevelDBStorageInternals<RxDoc
 
     public removed = false;
 
-    private db: Level<string, string>;
+    private db: Level<string, RxDocumentData<RxDocType> | string[]>;
 
     constructor(public refCount: number, path: string) {
-        this.db = new Level(path, { valueEncoding: 'json', })
+        this.db = new Level<string, RxDocumentData<RxDocType> | string[]>(path, { valueEncoding: 'json', })
     }
 
     get documents() {
@@ -30,8 +30,11 @@ export class LevelDBInternal<RxDocType> implements LevelDBStorageInternals<RxDoc
     async getIndex(key: string): Promise<string[]> {
         try {
             const db = await this.getInstance()
-            const jsonString = await db.get(key);
-            return JSON.parse(jsonString)
+            const result = await db.get(key);
+            if (!result) {
+                return []
+            }
+            return result as string[]
         } catch (err) {
             if ((err as any).code && (err as any).code === 'LEVEL_NOT_FOUND') {
                 return []
@@ -46,7 +49,10 @@ export class LevelDBInternal<RxDocType> implements LevelDBStorageInternals<RxDoc
         try {
             const db = await this.getInstance()
             const jsonString = await db.get(key);
-            return JSON.parse(jsonString)
+            if (!jsonString) {
+                return null
+            }
+            return jsonString as RxDocumentData<RxDocType>
         } catch (err) {
             if ((err as any).code && (err as any).code === 'LEVEL_NOT_FOUND') {
                 return null
@@ -58,12 +64,12 @@ export class LevelDBInternal<RxDocType> implements LevelDBStorageInternals<RxDoc
 
     async set(key: string, data: RxDocumentData<RxDocType>) {
         const db = await this.getInstance()
-        await db.put(key, JSON.stringify(data))
+        await db.put(key, data)
     }
 
     async setIndex(key: string, ids: string[]) {
         const db = await this.getInstance()
-        await db.put(key, JSON.stringify(ids))
+        await db.put(key, ids)
     }
 
     async updateIndex(key: string, id: string) {
@@ -74,7 +80,7 @@ export class LevelDBInternal<RxDocType> implements LevelDBStorageInternals<RxDoc
 
     async clear() {
         const iterator = this.db.iterator()
-        let entries: [[string, string]];
+        let entries: [[string, RxDocumentData<RxDocType> | string[]]];
         while ((entries = await iterator.nextv(1)).length > 0) {
             for (const [key, value] of entries) {
                 await this.db.del(key);
