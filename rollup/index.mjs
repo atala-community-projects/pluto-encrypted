@@ -30,7 +30,7 @@ export default function CreateConfig(buildPath, plugins = [], extraInputs = []) 
                 format: "cjs",
             },
             plugins: [
-                nodeResolve({ resolveOnly: ['@atala/prism-wallet-sdk'], allowExportsFolderMapping: true }),
+                nodeResolve({ allowExportsFolderMapping: true }),
                 ignore(externals),
                 json(),
                 typescript({
@@ -56,7 +56,7 @@ export default function CreateConfig(buildPath, plugins = [], extraInputs = []) 
                 format: "es",
             },
             plugins: [
-                nodeResolve({ resolveOnly: ['@atala/prism-wallet-sdk'], allowExportsFolderMapping: true }),
+                nodeResolve({ allowExportsFolderMapping: true }),
                 ignore(externals),
                 json(),
                 typescript({
