@@ -2,9 +2,9 @@ import {
   Apollo, ApiImpl, DIDCommWrapper, Mercury, PublicMediatorStore, BasicMediatorHandler, ConnectionsManager, Agent, Domain
 } from '@atala/prism-wallet-sdk';
 import InMemory from "@pluto-encrypted/inmemory";
-import { Database } from "@pluto-encrypted/database";
+import Pluto from "@pluto-encrypted/database";
 
-
+const { Database } = Pluto;
 
 let database;
 
