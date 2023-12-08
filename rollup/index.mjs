@@ -30,7 +30,6 @@ export default function CreateConfig(buildPath, plugins = [], extraInputs = []) 
                 format: "cjs",
             },
             plugins: [
-                nodeResolve({ allowExportsFolderMapping: true }),
                 ignore(externals),
                 json(),
                 typescript({
@@ -56,7 +55,6 @@ export default function CreateConfig(buildPath, plugins = [], extraInputs = []) 
                 format: "es",
             },
             plugins: [
-                nodeResolve({ allowExportsFolderMapping: true }),
                 ignore(externals),
                 json(),
                 typescript({
