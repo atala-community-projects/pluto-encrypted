@@ -14,15 +14,16 @@
   "author": "",
   "license": "ISC",
   "workspaces": [
-    "packages/database",
-    "packages/indexdb",
-    "packages/inmemory"
+    "packages/*"
   ],
   "jest-junit": {
     "outputDirectory": "coverage",
     "outputName": "junit.xml"
   },
   "jest": {
+    "modulePaths": [
+      "<rootDir>"
+    ],
     "collectCoverage": true,
     "testEnvironment": "jsdom",
     "setupFilesAfterEnv": [],

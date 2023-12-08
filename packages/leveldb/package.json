@@ -1,13 +1,13 @@
 {
-  "name": "@pluto-encrypted/indexdb",
+  "name": "@pluto-encrypted/leveldb",
   "version": "0.0.1",
-  "description": "A \"secure\" IndexDB Wrapper for AtalaPrism -> Pluto storage",
+  "description": "A \"secure\" leveldb Wrapper for AtalaPrism -> Pluto storage",
   "main": "./build/index.js",
   "types": "./build/index.d.ts",
+  "type": "module",
   "publishConfig": {
     "access": "public"
   },
-  "type": "module",
   "scripts": {
     "build": "npx rollup -c rollup/rollup.mjs"
   },
@@ -21,6 +21,7 @@
     "@atala/prism-wallet-sdk": "^3.1.0"
   },
   "dependencies": {
+    "level": "^8.0.0",
     "rxdb": "^14.17.0",
     "uuid": "^9.0.1"
   },

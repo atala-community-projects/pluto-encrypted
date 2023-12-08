@@ -1,5 +1,7 @@
 import "./setup";
 
+import fs from 'fs';
+import path from 'path';
 import expect from "expect";
 import { randomUUID } from "crypto";
 import {
@@ -10,15 +12,15 @@ import {
   Pollux,
 } from "@atala/prism-wallet-sdk";
 import * as sinon from "sinon";
-
-import { Database, PrivateKeyMethods } from "../src";
+import { RxStorage } from "rxdb";
 import InMemory from "@pluto-encrypted/inmemory";
 import IndexDb from "@pluto-encrypted/indexdb";
+import { createLevelDBStorage } from '@pluto-encrypted/leveldb'
 
 import * as Fixtures from "./fixtures";
-import { RxStorage } from "rxdb";
+import { Database, PrivateKeyMethods } from "../src";
 
-const databaseName = "prism-db";
+
 const keyData = new Uint8Array(32);
 const jwtParts = [
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9",
@@ -51,14 +53,26 @@ const defaultPassword = Buffer.from(keyData);
 
 let sandbox: sinon.SinonSandbox;
 
-const storages: RxStorage<any, any>[] = [
+const databaseName = "prism-db";
+const databasePath = path.resolve(process.cwd(), databaseName);
 
+const storages: RxStorage<any, any>[] = [
+  createLevelDBStorage({ dbName: databaseName, path: databasePath }),
   InMemory,
   IndexDb,
 ]
 
+function getStorageDBName(storage: RxStorage<any, any>) {
+  if (storage.name === "in-memory" || storage.name === "leveldb") {
+    return databaseName
+  }
+  return `${databaseName}${randomUUID()}`
+}
+
+
 describe("Pluto encrypted testing with different storages", () => {
   let db: Database;
+  let currentDBName: string;
 
   afterEach(async () => {
     jest.useRealTimers();
@@ -73,24 +87,37 @@ describe("Pluto encrypted testing with different storages", () => {
 
   storages.forEach((storage, i) => {
 
+
+
+
     describe(`[Storage ${i} ${storage.name}]` + "Pluto + Dexie encrypted integration for browsers", () => {
 
       describe("Pluto Unit testing", () => {
 
 
         beforeEach(async () => {
-          if (db && storage.name === "in-memory") {
-            await db.clear();
-            debugger;
+          currentDBName = getStorageDBName(storage);
+          if (storage.name === "leveldb") {
+            if (fs.existsSync(databasePath)) {
+              console.log("removed1", databasePath)
+              fs.rmdirSync(databasePath, { recursive: true })
+            }
           }
+
+          if (db && (storage.name === "in-memory" || storage.name === "leveldb")) {
+            await db.clear();
+          }
+
           db = await Database.createEncrypted(
             {
-              name: `${databaseName}${randomUUID()}`,
+              name: currentDBName,
               encryptionKey: defaultPassword,
               storage: storage,
             }
           );
+
         });
+
 
         it(`[Storage ${i} ${storage.name}]` + "Should store a new Prism DID and its privateKeys", async () => {
           expect(await db.getPrismLastKeyPathIndex()).toBe(0);
@@ -459,10 +486,19 @@ describe("Pluto encrypted testing with different storages", () => {
           await db.storeMediator(mediator, host, routing);
           expect((await db.getAllMediators()).length).toBe(1);
           const backup = await db.backup();
+          if (storage.name === "leveldb") {
+            if (fs.existsSync(databasePath)) {
+              console.log("removed1", databasePath)
+              fs.rmdirSync(databasePath, { recursive: true })
+            }
+          }
+          if (db && (storage.name === "in-memory" || storage.name === "leveldb")) {
+            await db.clear();
+          }
 
           const restored = await Database.createEncrypted(
             {
-              name: `${databaseName}${randomUUID()}`,
+              name: currentDBName,
               encryptionKey: defaultPassword,
               importData: backup,
               storage: storage,
