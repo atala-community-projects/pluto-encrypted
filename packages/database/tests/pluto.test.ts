@@ -21,7 +21,6 @@ import * as Fixtures from "./fixtures";
 import { Database, PrivateKeyMethods } from "../src";
 
 
-const databaseName = "prism-db";
 const keyData = new Uint8Array(32);
 const jwtParts = [
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9",
@@ -51,8 +50,11 @@ const createMessage = (
   return message;
 };
 const defaultPassword = Buffer.from(keyData);
-const databasePath = path.resolve(process.cwd(), databaseName)
+
 let sandbox: sinon.SinonSandbox;
+
+const databaseName = "prism-db";
+const databasePath = path.resolve(process.cwd(), databaseName);
 
 const storages: RxStorage<any, any>[] = [
   createLevelDBStorage({ dbName: databaseName, path: databasePath }),
@@ -60,8 +62,17 @@ const storages: RxStorage<any, any>[] = [
   IndexDb,
 ]
 
+function getStorageDBName(storage: RxStorage<any, any>) {
+  if (storage.name === "in-memory" || storage.name === "leveldb") {
+    return databaseName
+  }
+  return `${databaseName}${randomUUID()}`
+}
+
+
 describe("Pluto encrypted testing with different storages", () => {
   let db: Database;
+  let currentDBName: string;
 
   afterEach(async () => {
     jest.useRealTimers();
@@ -75,6 +86,9 @@ describe("Pluto encrypted testing with different storages", () => {
   });
 
   storages.forEach((storage, i) => {
+    currentDBName = getStorageDBName(storage);
+
+
 
     describe(`[Storage ${i} ${storage.name}]` + "Pluto + Dexie encrypted integration for browsers", () => {
 
@@ -95,7 +109,7 @@ describe("Pluto encrypted testing with different storages", () => {
 
           db = await Database.createEncrypted(
             {
-              name: databaseName,
+              name: currentDBName,
               encryptionKey: defaultPassword,
               storage: storage,
             }
@@ -482,7 +496,7 @@ describe("Pluto encrypted testing with different storages", () => {
           }
           const restored = await Database.createEncrypted(
             {
-              name: databaseName,
+              name: currentDBName,
               encryptionKey: defaultPassword,
               importData: backup,
               storage: storage,
