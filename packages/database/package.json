@@ -1,7 +1,7 @@
 {
   "name": "@pluto-encrypted/database",
   "version": "0.0.14",
-  "description": "A \"secure\" DB Agnostic Wrapper for AtalaPrism -> Pluto storage",
+  "description": "A \"secure\" DB Agnostic Wrapper for -> AtalaPrismSdk  Pluto storage",
   "main": "./build/cjs/index.js",
   "module": "./build/esm/index.js",
   "types": "./build/index.d.ts",
