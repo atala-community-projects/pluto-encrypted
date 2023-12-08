@@ -86,7 +86,7 @@ describe("Pluto encrypted testing with different storages", () => {
   });
 
   storages.forEach((storage, i) => {
-    currentDBName = getStorageDBName(storage);
+
 
 
 
@@ -96,6 +96,7 @@ describe("Pluto encrypted testing with different storages", () => {
 
 
         beforeEach(async () => {
+          currentDBName = getStorageDBName(storage);
           if (storage.name === "leveldb") {
             if (fs.existsSync(databasePath)) {
               console.log("removed1", databasePath)
@@ -494,6 +495,7 @@ describe("Pluto encrypted testing with different storages", () => {
           if (db && (storage.name === "in-memory" || storage.name === "leveldb")) {
             await db.clear();
           }
+
           const restored = await Database.createEncrypted(
             {
               name: currentDBName,
