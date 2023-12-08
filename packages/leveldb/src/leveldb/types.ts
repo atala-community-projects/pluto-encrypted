@@ -31,7 +31,7 @@ export type LevelDBStorageInternals<RxDocType> = {
         collectionName: string,
         schema: Readonly<RxJsonSchema<RxDocumentData<RxDocType>>>): Promise<any>;
 
-    clear(): void;
+    clear(): Promise<void>;
 
     get(key: string): Promise<RxDocumentData<RxDocType> | null>;
     getIndex(key: string): Promise<string[]>;
@@ -49,6 +49,7 @@ export type RxStorageLevelDBType<RxDocType> = RxStorage<RxDocType, LevelDBSettin
 
 
 export type LevelDBSettings = {
-    path: string
+    path: string,
+    dbName: string,
 }
 

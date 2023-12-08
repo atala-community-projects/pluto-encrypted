@@ -13,7 +13,7 @@ function getRxStorageLevel<RxDocType>(settings: LevelDBSettings): RxStorageLevel
         statics: RxStorageDefaultStatics,
         async createStorageInstance<RxDocType>(params: RxStorageInstanceCreationParams<RxDocType, LevelDBSettings>): Promise<RxStorageInstance<RxDocType, LevelDBStorageInternals<RxDocType>, LevelDBSettings, any>> {
             if (!internalInstance) {
-                internalInstance = new LevelDBInternal<RxDocType>(0, settings.path)
+                internalInstance = new LevelDBInternal<RxDocType>(0, settings.dbName)
             } else {
                 internalInstance.refCount++
             }

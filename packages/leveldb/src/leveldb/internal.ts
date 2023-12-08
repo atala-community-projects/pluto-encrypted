@@ -15,7 +15,7 @@ export class LevelDBInternal<RxDocType> implements LevelDBStorageInternals<RxDoc
     private db: Level<string, string>;
 
     constructor(public refCount: number, path: string) {
-        this.db = new Level(path, { valueEncoding: 'json' })
+        this.db = new Level(path, { valueEncoding: 'json', })
     }
 
     get documents() {
@@ -23,9 +23,7 @@ export class LevelDBInternal<RxDocType> implements LevelDBStorageInternals<RxDoc
     }
 
     async getInstance() {
-        if (this.db.status === "closed") {
-            await this.db.open();
-        }
+
         return this.db
     }
 
@@ -71,11 +69,18 @@ export class LevelDBInternal<RxDocType> implements LevelDBStorageInternals<RxDoc
     async updateIndex(key: string, id: string) {
         const existingIndex = await this.getIndex(key);
         existingIndex.push(id)
-        await this.setIndex(key, existingIndex)
+        await this.setIndex(key, existingIndex);
     }
 
-    clear() {
-        this.db.clear();
+    async clear() {
+        const iterator = this.db.iterator()
+        let entries: [[string, string]];
+        while ((entries = await iterator.nextv(1)).length > 0) {
+            for (const [key, value] of entries) {
+                await this.db.del(key);
+
+            }
+        }
     }
 
     async bulkPut(items: RxDocumentData<RxDocType>[], collectionName: string, schema: Readonly<RxJsonSchema<RxDocumentData<RxDocType>>>) {

@@ -55,7 +55,7 @@ export class RxStorageIntanceLevelDB<RxDocType> implements RxStorageInstance<
         for (let i = 0; i < bulkInsertDocs.length; ++i) {
             const writeRow = bulkInsertDocs[i]!;
             const docId = writeRow.document[primaryPath];
-            this.internals.bulkPut([writeRow.document], this.collectionName, this.schema)
+            await this.internals.bulkPut([writeRow.document], this.collectionName, this.schema)
             ret.success[docId as any] = writeRow.document;
         }
 
@@ -63,7 +63,7 @@ export class RxStorageIntanceLevelDB<RxDocType> implements RxStorageInstance<
         for (let i = 0; i < bulkUpdateDocs.length; ++i) {
             const writeRow = bulkUpdateDocs[i]!;
             const docId = writeRow.document[primaryPath];
-            this.internals.bulkPut([writeRow.document], this.collectionName, this.schema)
+            await this.internals.bulkPut([writeRow.document], this.collectionName, this.schema)
             ret.success[docId as any] = writeRow.document;
         }
 
@@ -180,11 +180,11 @@ export class RxStorageIntanceLevelDB<RxDocType> implements RxStorageInstance<
         }
 
         const documents: RxDocumentData<RxDocType>[] = [];
-        debugger;
+
         for (let documentId of documentIds) {
-            debugger;
+
             const document = await this.internals.get(documentId);
-            debugger;
+
             if (document) {
                 if (selectorKeys.length <= 0) {
                     documents.push(document)
@@ -222,9 +222,8 @@ export class RxStorageIntanceLevelDB<RxDocType> implements RxStorageInstance<
     }
 
     async cleanup(): Promise<boolean> {
-        this.internals.clear()
-
-        return true;
+        await this.internals.clear()
+        return false;
     }
 
     /* istanbul ignore next */
