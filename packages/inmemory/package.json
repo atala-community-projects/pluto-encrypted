@@ -2,7 +2,8 @@
   "name": "@pluto-encrypted/inmemory",
   "version": "0.0.2",
   "description": "A \"secure\" Inmemory Wrapper for AtalaPrism -> Pluto storage",
-  "main": "./build/index.js",
+  "main": "./build/cjs/index.js",
+  "module": "./build/es/index.js",
   "types": "./build/index.d.ts",
   "type": "module",
   "publishConfig": {

@@ -20,28 +20,54 @@ const externals = [
 ];
 
 export default function CreateConfig(buildPath, plugins = [], extraInputs = []) {
-    return {
-        input: [`src/index.ts`, ...extraInputs],
-        output: {
-            sourcemap: true,
-            dir: buildPath ? `build/${buildPath}` : `build`,
-            format: "es",
-        },
-        plugins: [
-            ignore(externals),
-            json(),
-            typescript({
-                useTsconfigDeclarationDir: true,
-                tsconfigOverride: {
-                    compilerOptions: {
-                        emitDeclarationOnly: false,
+    return [
+        {
+            input: [`src/index.ts`, ...extraInputs],
+            output: {
+                sourcemap: true,
+                dir: buildPath ? `build/${buildPath}` : `build/cjs`,
+                format: "cjs",
+            },
+            plugins: [
+                ignore(externals),
+                json(),
+                typescript({
+                    useTsconfigDeclarationDir: true,
+                    tsconfigOverride: {
+                        compilerOptions: {
+                            emitDeclarationOnly: false,
+                        },
                     },
-                },
-            }),
-            ...plugins,
-            commonjs(),
-            cleanup(),
-        ],
-        external: externals,
-    };
+                }),
+                ...plugins,
+                commonjs(),
+                cleanup(),
+            ],
+            external: externals,
+        },
+        {
+            input: [`src/index.ts`, ...extraInputs],
+            output: {
+                sourcemap: true,
+                dir: buildPath ? `build/${buildPath}` : `build/esm`,
+                format: "es",
+            },
+            plugins: [
+                ignore(externals),
+                json(),
+                typescript({
+                    useTsconfigDeclarationDir: true,
+                    tsconfigOverride: {
+                        compilerOptions: {
+                            emitDeclarationOnly: false,
+                        },
+                    },
+                }),
+                ...plugins,
+                commonjs(),
+                cleanup(),
+            ],
+            external: externals,
+        }
+    ];
 }

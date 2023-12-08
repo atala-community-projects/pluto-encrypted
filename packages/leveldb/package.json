@@ -2,7 +2,8 @@
   "name": "@pluto-encrypted/leveldb",
   "version": "0.0.1",
   "description": "A \"secure\" leveldb Wrapper for AtalaPrism -> Pluto storage",
-  "main": "./build/index.js",
+  "main": "./build/cjs/index.js",
+  "module": "./build/es/index.js",
   "types": "./build/index.d.ts",
   "type": "module",
   "publishConfig": {
