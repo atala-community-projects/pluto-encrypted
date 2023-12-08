@@ -188,11 +188,12 @@ export class RxStorageIntanceLevelDB<RxDocType> implements RxStorageInstance<
             if (document) {
                 if (selectorKeys.length <= 0) {
                     documents.push(document)
-                }
-                for (let key of selectorKeys) {
-                    const conditionMatches = this.conditionMatches(selector, key, document)
-                    if (conditionMatches) {
-                        documents.push(document)
+                } else {
+                    for (let key of selectorKeys) {
+                        const conditionMatches = this.conditionMatches(selector, key, document)
+                        if (conditionMatches) {
+                            documents.push(document)
+                        }
                     }
                 }
             }

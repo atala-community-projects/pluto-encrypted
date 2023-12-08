@@ -93,7 +93,7 @@ export class Database implements Domain.Pluto {
   async clear() {
     const storages = Array.from(this.db.storageInstances.values())
     for (let storage of storages) {
-      await storage.cleanup(1)
+      await storage.cleanup(0)
     }
     await removeRxDatabase(this.dbOptions.name, this.db.storage);
   }
@@ -156,7 +156,9 @@ export class Database implements Domain.Pluto {
   }
 
   async storeMessages(messages: Domain.Message[]): Promise<void> {
-    await Promise.all(messages.map((message) => this.storeMessage(message)));
+    for (let message of messages) {
+      await this.storeMessage(message)
+    }
   }
 
   async getAllMessages(): Promise<Domain.Message[]> {
