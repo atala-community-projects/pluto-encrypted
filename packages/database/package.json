@@ -1,6 +1,6 @@
 {
   "name": "@pluto-encrypted/database",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "A \"secure\" DB Agnostic Wrapper for AtalaPrism -> Pluto storage",
   "main": "./build/cjs/index.js",
   "module": "./build/es/index.js",
@@ -25,9 +25,9 @@
     "@atala/prism-wallet-sdk": "^3.1.0"
   },
   "optionalDependencies": {
-    "@pluto-encrypted/indexdb": "^0.0.1",
-    "@pluto-encrypted/inmemory": "^0.0.1",
-    "@pluto-encrypted/leveldb": "^0.0.1"
+    "@pluto-encrypted/indexdb": "^0.0.3",
+    "@pluto-encrypted/inmemory": "^0.0.3",
+    "@pluto-encrypted/leveldb": "^0.0.2"
   },
   "dependencies": {
     "rxdb": "^14.17.0",
