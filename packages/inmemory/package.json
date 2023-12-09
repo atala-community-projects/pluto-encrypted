@@ -1,6 +1,6 @@
 {
   "name": "@pluto-encrypted/inmemory",
-  "version": "0.0.16",
+  "version": "0.1.0",
   "description": "A \"secure\" Inmemory Wrapper for -> AtalaPrismSdk  Pluto storage.",
   "main": "./build/cjs/index.cjs",
   "module": "./build/esm/index.mjs",
