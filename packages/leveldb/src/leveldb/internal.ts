@@ -13,17 +13,30 @@ export class LevelDBInternal<RxDocType> implements LevelDBStorageInternals<RxDoc
     public removed = false;
 
     private db: Level<string, RxDocumentData<RxDocType> | string[]>;
+    public documents: Map<string, RxDocumentData<RxDocType>> = new Map();
 
     constructor(public refCount: number, path: string) {
         this.db = new Level<string, RxDocumentData<RxDocType> | string[]>(path, { valueEncoding: 'json', })
     }
 
-    get documents() {
-        return new Map()
+    async getDocuments(): Promise<Map<string, RxDocumentData<RxDocType>>> {
+        if (this.documents.size > 0) {
+            return this.documents
+        }
+        const iterator = this.db.iterator()
+        let entries: [[string, RxDocumentData<RxDocType> | string[]]];
+        while ((entries = await iterator.nextv(1)).length > 0) {
+            for (const [key, value] of entries) {
+                if (!Array.isArray(value)) {
+                    this.documents.set(key, value)
+                }
+            }
+        }
+        return this.documents
     }
 
     async getInstance() {
-
+        await this.db.open()
         return this.db
     }
 
@@ -64,6 +77,7 @@ export class LevelDBInternal<RxDocType> implements LevelDBStorageInternals<RxDoc
 
     async set(key: string, data: RxDocumentData<RxDocType>) {
         const db = await this.getInstance()
+        this.documents.set(key, data)
         await db.put(key, data)
     }
 
@@ -74,8 +88,7 @@ export class LevelDBInternal<RxDocType> implements LevelDBStorageInternals<RxDoc
 
     async updateIndex(key: string, id: string) {
         const existingIndex = await this.getIndex(key);
-        existingIndex.push(id)
-        await this.setIndex(key, existingIndex);
+        await this.setIndex(key, Array.from(new Set([...existingIndex, id])));
     }
 
     async clear() {
@@ -84,7 +97,6 @@ export class LevelDBInternal<RxDocType> implements LevelDBStorageInternals<RxDoc
         while ((entries = await iterator.nextv(1)).length > 0) {
             for (const [key, value] of entries) {
                 await this.db.del(key);
-
             }
         }
     }
@@ -100,13 +112,14 @@ export class LevelDBInternal<RxDocType> implements LevelDBStorageInternals<RxDoc
                     throw new Error("Data must have a primaryKey defined of type string or number")
                 }
                 const id = item[primaryKeyKey] as string;
-                await this.set(id, item);
                 await this.updateIndex(indexName, id)
+                await this.updateIndex('[all]', id)
+                await this.set(id, item);
             } else {
                 const id = item.id as string;
-                await this.set(id, item)
                 await this.updateIndex(indexName, id)
-
+                await this.updateIndex('[all]', id)
+                await this.set(id, item)
             }
 
         }

@@ -18,6 +18,7 @@
     "prepublishOnly": "npm run build",
     "test": "NODE_ENV=debug jest tests/*.test.ts",
     "build": "rm -rf build && npx rollup -c rollup/rollup.mjs",
+    "dev": "rm -rf build && npx rollup -c rollup/rollup.mjs",
     "coverage": "npm run test -- --coverage",
     "docs": "npx typedoc --options typedoc.json --hideGenerator"
   },
@@ -31,6 +32,11 @@
     "@atala/prism-wallet-sdk": "^3.1.0"
   },
   "optionalDependencies": {
+    "@pluto-encrypted/indexdb": "*",
+    "@pluto-encrypted/inmemory": "*",
+    "@pluto-encrypted/leveldb": "*"
+  },
+  "devDependencies": {
     "@pluto-encrypted/indexdb": "^0.0.16",
     "@pluto-encrypted/inmemory": "^0.0.16",
     "@pluto-encrypted/leveldb": "^0.0.15"

@@ -6,3 +6,4 @@ lcov.info
 build
 .npmrc
 prism-db
+*.tgz

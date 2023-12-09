@@ -139,7 +139,6 @@ export class Database implements Domain.Pluto {
       .findOne()
       .where({ id: message.id })
       .exec();
-
     if (existing) {
       await existing.patch({
         ...message,
@@ -244,33 +243,30 @@ export class Database implements Domain.Pluto {
       methodId: did.methodId,
       schema: did.schema,
     });
-
-    await Promise.all(
-      privateKeys.map((prv) =>
-        this.db.privatekeys.insert({
-          id: uuidv4(),
-          did: did.toString(),
-          type: prv.type,
-          keySpecification: Array.from(prv.keySpecification).reduce(
-            (all, [key, value]) => [
-              ...all,
-              {
-                type: "string",
-                name: key,
-                value: `${value}`,
-              },
-            ],
-            [
-              {
-                type: "string",
-                name: "raw",
-                value: Buffer.from(prv.raw).toString("hex"),
-              },
-            ] as KeySpec[]
-          ),
-        })
-      )
-    );
+    for (let prv of privateKeys) {
+      await this.db.privatekeys.insert({
+        id: uuidv4(),
+        did: did.toString(),
+        type: prv.type,
+        keySpecification: Array.from(prv.keySpecification).reduce(
+          (all, [key, value]) => [
+            ...all,
+            {
+              type: "string",
+              name: key,
+              value: `${value}`,
+            },
+          ],
+          [
+            {
+              type: "string",
+              name: "raw",
+              value: Buffer.from(prv.raw).toString("hex"),
+            },
+          ] as KeySpec[]
+        ),
+      })
+    }
   }
 
   async storeDIDPair(
@@ -663,7 +659,8 @@ export class Database implements Domain.Pluto {
   }
 
   async getAllMediators(): Promise<Domain.Mediator[]> {
-    return (await this.db.mediators.find().exec()).map((mediator) =>
+    const mediators = await this.db.mediators.find().exec()
+    return mediators.map((mediator) =>
       mediator.toDomainMediator()
     );
   }

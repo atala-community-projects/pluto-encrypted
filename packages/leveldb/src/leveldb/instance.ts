@@ -39,10 +39,11 @@ export class RxStorageIntanceLevelDB<RxDocType> implements RxStorageInstance<
             error: {}
         };
 
+        const documents = await this.internals.getDocuments()
         const categorized = categorizeBulkWriteRows<RxDocType>(
             this,
             primaryPath as any,
-            this.internals.documents,
+            documents,
             documentWrites,
             context
         );
