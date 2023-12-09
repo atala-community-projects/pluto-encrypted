@@ -1,4 +1,4 @@
-import { ClassicLevel as Level } from "classic-level";
+import { Level } from "level";
 import { DefaultPreparedQuery, RxDocumentData, RxDocumentDataById, RxJsonSchema, RxStorage, } from "rxdb";
 
 /**

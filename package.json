@@ -3,8 +3,7 @@
   "version": "0.0.0",
   "private": "true",
   "scripts": {
-    "clean": "npm run clean --workspaces && npm run clean-install && rm -rf node_modules",
-    "clean-install": "npx lerna clean -y",
+    "clean": "npx lerna run clean && rm -rf node_modules",
     "dev": "npx lerna watch  -- lerna run build  --scope=\\$LERNA_PACKAGE_NAME",
     "build": "npx lerna run build --include-dependencies",
     "coverage": "npx lerna run coverage",

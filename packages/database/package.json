@@ -16,6 +16,7 @@
   },
   "scripts": {
     "prepublishOnly": "npm run build",
+    "clean": "rm -rf node_modules && rm -rf build",
     "test": "NODE_ENV=debug jest tests/*.test.ts",
     "build": "rm -rf build && npx rollup -c rollup/rollup.mjs",
     "dev": "rm -rf build && npx rollup -c rollup/rollup.mjs",

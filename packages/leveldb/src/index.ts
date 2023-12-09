@@ -1,5 +1,5 @@
 import { wrappedKeyEncryptionCryptoJsStorage } from "rxdb/plugins/encryption-crypto-js";
-import { RxStorage, RxStorageDefaultStatics, RxStorageInstance, RxStorageInstanceCreationParams, addRxStorageMultiInstanceSupport } from "rxdb";
+import { RxStorage, RxStorageDefaultStatics, RxStorageInstance, RxStorageInstanceCreationParams } from "rxdb";
 import { LevelDBInternalConstructor, LevelDBSettings, LevelDBStorageInternals, RxStorageLevelDBType } from "./leveldb/types";
 
 import { RxStorageIntanceLevelDB } from "./leveldb/instance";
@@ -23,18 +23,12 @@ function getRxStorageLevel<RxDocType>(settings: LevelDBSettings<any>): RxStorage
             name: RX_STORAGE_NAME_LEVELDB,
             statics: RxStorageDefaultStatics,
             async createStorageInstance<RxDocType>(params: RxStorageInstanceCreationParams<RxDocType, LevelDBSettings<RxDocType>>): Promise<RxStorageInstance<RxDocType, LevelDBStorageInternals<RxDocType>, LevelDBSettings<RxDocType>, any>> {
-                const levelDBConstructorProps: LevelDBInternalConstructor<RxDocType> = "level" in settings ?
-                    {
-                        level: settings.level,
-                        refCount: 1,
-                        schema: params.schema,
-                    }
-                    :
-                    {
-                        refCount: 1,
-                        path: settings.dbName,
-                        schema: params.schema,
-                    };
+
+                const levelDBConstructorProps: LevelDBInternalConstructor<RxDocType> = {
+                    ...settings,
+                    refCount: 1,
+                    schema: params.schema,
+                }
 
                 if (!internalInstance) {
                     internalInstance = await preloadData<RxDocType>(levelDBConstructorProps);

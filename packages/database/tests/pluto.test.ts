@@ -13,9 +13,9 @@ import {
 } from "@atala/prism-wallet-sdk";
 import * as sinon from "sinon";
 import { RxStorage } from "rxdb";
-import InMemory from "@pluto-encrypted/inmemory";
-import IndexDb from "@pluto-encrypted/indexdb";
-import { createLevelDBStorage } from '@pluto-encrypted/leveldb'
+import InMemory from "../../inmemory";
+import IndexDb from "../../indexdb";
+import { createLevelDBStorage } from '../../leveldb'
 
 import * as Fixtures from "./fixtures";
 import { Database, PrivateKeyMethods } from "../src";
@@ -53,7 +53,7 @@ const defaultPassword = Buffer.from(keyData);
 
 let sandbox: sinon.SinonSandbox;
 
-const databaseName = "prism-db";
+const databaseName = "db";
 const databasePath = path.resolve(process.cwd(), databaseName);
 
 const storages: RxStorage<any, any>[] = [
