@@ -62,83 +62,49 @@ export class LevelDBInternal<RxDocType> implements LevelDBStorageInternals<RxDoc
     }
 
     async getInstance() {
-        return new Promise<LevelDBType>(async (resolve, reject) => {
-            try {
-                this.db.open((err) => {
-                    if (err) {
-                        return reject(err);
-                    }
-                    return resolve(this.db)
-                })
-            } catch (err) {
-                return reject(err)
-            }
-        })
+        await this.db.open()
+        return this.db;
     }
 
     async getIndex(key: string): Promise<string[]> {
-        return new Promise(async (resolve, reject) => {
-            try {
-                const db = await this.getInstance()
-                db.get(key, (err, result) => {
-                    if (err) {
-                        if ((err as any).code && (err as any).code === 'LEVEL_NOT_FOUND') {
-                            return resolve([])
-                        } else {
-                            throw err
-                        }
-                    }
-                    if (!result) {
-                        return []
-                    }
-                    return resolve(JSON.parse(result) as string[])
-                })
-
-            } catch (err) {
-                return reject(err)
+        try {
+            const db = await this.getInstance()
+            const result = await db.get(key)
+            return JSON.parse(result) as string[]
+        } catch (err) {
+            if ((err as any).code && (err as any).code === 'LEVEL_NOT_FOUND') {
+                return []
+            } else {
+                throw err
             }
-        })
+        }
     }
 
     async bulkGet(keys: string[]): Promise<RxDocumentData<RxDocType>[]> {
         if (!keys || keys.length <= 0) {
             return []
         }
-        return new Promise(async (resolve, reject) => {
-            const db = await this.getInstance()
-            db.getMany(keys, {}, (err, values) => {
-                if (err) {
-                    return reject(err);
-                }
-                const docsInIndex = values?.filter((value) => value !== undefined)
-                    .map((value) => JSON.parse(value)) as RxDocumentData<RxDocType>[]
+        const db = await this.getInstance();
+        const values = await db.getMany(keys);
 
-                return resolve(docsInIndex)
-            })
-        })
+        return values
+            .filter((value) => value !== undefined)
+            .map((value) => JSON.parse(value)) as RxDocumentData<RxDocType>[]
+
     }
 
     async get(key: string): Promise<RxDocumentData<RxDocType> | null> {
-        return new Promise(async (resolve, reject) => {
-            try {
-                const db = await this.getInstance()
-                db.get(key, (err, result) => {
-                    if (err) {
-                        if ((err as any).code && (err as any).code === 'LEVEL_NOT_FOUND') {
-                            return resolve(null)
-                        } else {
-                            throw err
-                        }
-                    }
-                    if (!result) {
-                        return resolve(null)
-                    }
-                    return resolve(JSON.parse(result))
-                })
-            } catch (err) {
-                return reject(err)
+        try {
+            const db = await this.getInstance();
+            const result = await db.get(key)
+            return JSON.parse(result)
+        } catch (err) {
+            if ((err as any).code && (err as any).code === 'LEVEL_NOT_FOUND') {
+                return null
+            } else {
+                throw err
             }
-        })
+        }
     }
 
     async set(key: string, data: RxDocumentData<RxDocType>) {
@@ -152,26 +118,12 @@ export class LevelDBInternal<RxDocType> implements LevelDBStorageInternals<RxDoc
 
         const db = await this.getInstance()
 
-        return new Promise<void>((resolve, reject) => {
-            db.put(key, JSON.stringify(data), (err) => {
-                if (err) {
-                    return reject(err);
-                }
-                return resolve()
-            })
-        })
+        return db.put(key, JSON.stringify(data))
     }
 
     async setIndex(key: string, ids: string[]) {
         const db = await this.getInstance()
-        return new Promise<void>((resolve, reject) => {
-            db.put(key, JSON.stringify(ids), (err) => {
-                if (err) {
-                    return reject(err);
-                }
-                return resolve()
-            })
-        })
+        return db.put(key, JSON.stringify(ids))
     }
 
     async updateIndex(key: string, id: string) {
@@ -183,7 +135,6 @@ export class LevelDBInternal<RxDocType> implements LevelDBStorageInternals<RxDoc
         }
         const existingIndex = await this.getIndex(key);
         const newIndexes = Array.from(new Set([...existingIndex, id]));
-        console.log("NEW INDEXES", newIndexes)
         await this.setIndex(key, newIndexes);
     }
 
@@ -202,48 +153,27 @@ export class LevelDBInternal<RxDocType> implements LevelDBStorageInternals<RxDoc
     }
 
     async bulkPut(items: RxDocumentData<RxDocType>[], collectionName: string, schema: Readonly<RxJsonSchema<RxDocumentData<RxDocType>>>) {
-        try {
-            const primaryKeyKey = typeof schema.primaryKey === "string" ? schema.primaryKey : schema.primaryKey.key;
-            const indexName = `[${collectionName}+${primaryKeyKey}]`;
-            for (let item of items) {
-                let primaryKeyVal = item[primaryKeyKey];
-
-                if (!("id" in item) || !['string', 'number'].includes(typeof item.id)) {
-
-                    if (!primaryKeyKey || !primaryKeyVal) {
-                        throw new Error("Data must have a primaryKey defined of type string or number")
-                    }
-                    const id = item[primaryKeyKey] as string;
-
-
-                    await this.updateIndex(indexName, id)
-                    await this.updateIndex('[all]', id)
-                    await this.set(id, item);
-
-                    this.documents.set(id, item)
-                    if (!(primaryKeyVal as string).includes("collection") && !(primaryKeyVal as string).includes("storage-token")) {
-                        console.log("Adding ", primaryKeyVal, item)
-                    }
-                } else {
-                    const id = item.id as string;
-
-                    await this.updateIndex(indexName, id)
-                    await this.updateIndex('[all]', id)
-                    await this.set(id, item)
-
-                    this.documents.set(id, item)
-                    if (!(primaryKeyVal as string).includes("collection") && !(primaryKeyVal as string).includes("storage-token")) {
-                        console.log("Adding ", primaryKeyVal, item)
-                    }
+        const primaryKeyKey = typeof schema.primaryKey === "string" ? schema.primaryKey : schema.primaryKey.key;
+        const indexName = `[${collectionName}+${primaryKeyKey}]`;
+        for (let item of items) {
+            let primaryKeyVal = item[primaryKeyKey];
+            if (!("id" in item) || !['string', 'number'].includes(typeof item.id)) {
+                if (!primaryKeyKey || !primaryKeyVal) {
+                    throw new Error("Data must have a primaryKey defined of type string or number")
                 }
-
+                const id = item[primaryKeyKey] as string;
+                await this.updateIndex(indexName, id)
+                await this.updateIndex('[all]', id)
+                await this.set(id, item);
+                this.documents.set(id, item)
+            } else {
+                const id = item.id as string;
+                await this.updateIndex(indexName, id)
+                await this.updateIndex('[all]', id)
+                await this.set(id, item)
+                this.documents.set(id, item)
             }
-        } catch (err) {
-            console.log(err);
-            debugger;
-            throw err
         }
-
     }
 }
 

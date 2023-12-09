@@ -1,12 +1,4 @@
 {
   "$schema": "node_modules/lerna/schemas/lerna-schema.json",
-  "version": "independent",
-  "packages": [
-    "packages/*"
-  ],
-  "command": {
-    "publish": {
-      "registry": "https://registry.npmjs.org/"
-    }
-  }
+  "version": "0.0.0"
 }

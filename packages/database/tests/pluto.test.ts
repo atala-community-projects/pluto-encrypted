@@ -99,7 +99,6 @@ describe("Pluto encrypted testing with different storages", () => {
           currentDBName = getStorageDBName(storage);
           if (storage.name === "leveldb") {
             if (fs.existsSync(databasePath)) {
-              console.log("removed1", databasePath)
               fs.rmdirSync(databasePath, { recursive: true })
             }
           }
@@ -494,7 +493,6 @@ describe("Pluto encrypted testing with different storages", () => {
           const backup = await db.backup();
           if (storage.name === "leveldb") {
             if (fs.existsSync(databasePath)) {
-              console.log("removed1", databasePath)
               fs.rmdirSync(databasePath, { recursive: true })
             }
           }
@@ -648,6 +646,11 @@ describe("Pluto encrypted testing with different storages", () => {
             new Error("Unsupported key type from db storage")
           );
         });
+
+        it(`[Storage ${i} ${storage.name}] Should be able to count credentials`, async () => {
+          const credentials = await db.db.credentials.count().exec()
+          debugger;
+        })
       });
     });
   })

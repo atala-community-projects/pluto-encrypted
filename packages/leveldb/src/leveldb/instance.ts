@@ -181,10 +181,8 @@ export class RxStorageIntanceLevelDB<RxDocType> implements RxStorageInstance<
     }
 
     async query(preparedQuery: LevelDBPreparedQuery<RxDocType>): Promise<RxStorageQueryResult<RxDocType>> {
-
         const selector = preparedQuery.query.selector;
         const selectorKeys = Object.keys(selector);
-
         const collectionIndex = `[${this.collectionName}+${preparedQuery.queryPlan.index.join("+")}]`
         const documentIds = await this.internals.getIndex(collectionIndex);
         const documents: RxDocumentData<RxDocType>[] = await this.internals.bulkGet(documentIds);
@@ -201,15 +199,17 @@ export class RxStorageIntanceLevelDB<RxDocType> implements RxStorageInstance<
             }
             return false
         })
-        console.log("Filtered ", filteredDocuments.length, "from ", this.collectionName, "originally we had ", documents.length)
         return {
             documents: filteredDocuments
         }
     }
 
-    /* istanbul ignore next */
-    count(preparedQuery: any): Promise<RxStorageCountResult> {
-        throw new Error("Method not implemented.");
+    async count(preparedQuery: any): Promise<RxStorageCountResult> {
+        const result = await this.query(preparedQuery);
+        return {
+            count: result.documents.length,
+            mode: 'fast'
+        };
     }
 
     /* istanbul ignore next */
