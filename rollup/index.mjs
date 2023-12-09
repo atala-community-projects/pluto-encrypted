@@ -17,7 +17,8 @@ const externals = [
     "rxdb/plugins/query-builder",
     "uuid",
     "rxdb/plugins/json-dump",
-    "classic-level"
+    "classic-level",
+    "@atala/prism-wallet-sdk"
 ];
 
 export default function CreateConfig(buildPath, plugins = [], extraInputs = []) {
