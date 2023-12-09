@@ -6,11 +6,10 @@ import {
 
 import { LevelDBStorageInternals, LevelDBSettings, RxStorageLevelDBType, LevelDBPreparedQuery } from "./types";
 
-
 export class RxStorageIntanceLevelDB<RxDocType> implements RxStorageInstance<
     RxDocType,
     LevelDBStorageInternals<RxDocType>,
-    LevelDBSettings,
+    LevelDBSettings<RxDocType>,
     RxStorageDefaultCheckpoint>
 {
     public readonly primaryPath: StringKeys<RxDocumentData<RxDocType>>;
@@ -24,7 +23,7 @@ export class RxStorageIntanceLevelDB<RxDocType> implements RxStorageInstance<
         public readonly collectionName: string,
         public readonly schema: Readonly<RxJsonSchema<RxDocumentData<RxDocType>>>,
         public readonly internals: LevelDBStorageInternals<RxDocType>,
-        public readonly options: Readonly<LevelDBSettings>,
+        public readonly options: Readonly<LevelDBSettings<RxDocType>>,
     ) {
         this.primaryPath = getPrimaryFieldOfPrimaryKey(this.schema.primaryKey);
     }
@@ -38,20 +37,33 @@ export class RxStorageIntanceLevelDB<RxDocType> implements RxStorageInstance<
             success: {},
             error: {}
         };
+        const documentKeys: string[] = documentWrites.map(writeRow => writeRow.document[this.primaryPath] as any);
+        const documents = await this.internals.getDocuments(documentKeys)
 
-        const documents = await this.internals.getDocuments()
+        const fixed = documentWrites.map((writeDoc) => {
+            const currentId = writeDoc.document[this.primaryPath] as any;
+            const previousDocument = documents.get(currentId)
+            if (previousDocument) {
+                writeDoc.previous = previousDocument
+            }
+            return writeDoc
+        })
+
         const categorized = categorizeBulkWriteRows<RxDocType>(
             this,
             primaryPath as any,
             documents,
-            documentWrites,
+            fixed,
             context
         );
         ret.error = categorized.errors;
 
+        if (Object.keys(ret.error).length > 0) {
+            debugger;
+        }
         /**
-        * Do inserts/updates
-        */
+       * Do inserts/updates
+       */
         const bulkInsertDocs = categorized.bulkInsertDocs;
         for (let i = 0; i < bulkInsertDocs.length; ++i) {
             const writeRow = bulkInsertDocs[i]!;
@@ -68,7 +80,6 @@ export class RxStorageIntanceLevelDB<RxDocType> implements RxStorageInstance<
             ret.success[docId as any] = writeRow.document;
         }
 
-
         if (categorized.eventBulk.events.length > 0) {
             const lastState = ensureNotFalsy(categorized.newestRow).document;
             categorized.eventBulk.checkpoint = {
@@ -78,7 +89,10 @@ export class RxStorageIntanceLevelDB<RxDocType> implements RxStorageInstance<
             const endTime = now();
             categorized.eventBulk.events.forEach(event => (event as any).endTime = endTime);
             this.changes$.next(categorized.eventBulk);
+        } else {
+            debugger;
         }
+
 
         return Promise.resolve(ret);
     }
@@ -133,8 +147,7 @@ export class RxStorageIntanceLevelDB<RxDocType> implements RxStorageInstance<
                         const [andKeyName] = Object.keys(andKey)
                         const [andKeyValue] = Object.values(andKey)
                         return document[andKeyName!] === andKeyValue
-                    })
-
+                    });
                     if (matchingAndKey) {
                         return true;
                     }
@@ -143,7 +156,6 @@ export class RxStorageIntanceLevelDB<RxDocType> implements RxStorageInstance<
                     if (document[conditionKey!] === conditionValue) {
                         return true;
                     }
-
                 }
                 return false;
             })
@@ -175,32 +187,24 @@ export class RxStorageIntanceLevelDB<RxDocType> implements RxStorageInstance<
 
         const collectionIndex = `[${this.collectionName}+${preparedQuery.queryPlan.index.join("+")}]`
         const documentIds = await this.internals.getIndex(collectionIndex);
-
-        if (!documentIds) {
-            return { documents: [] }
-        }
-
-        const documents: RxDocumentData<RxDocType>[] = [];
-
-        for (let documentId of documentIds) {
-
-            const document = await this.internals.get(documentId);
-
-            if (document) {
-                if (selectorKeys.length <= 0) {
-                    documents.push(document)
-                } else {
-                    for (let key of selectorKeys) {
-                        const conditionMatches = this.conditionMatches(selector, key, document)
-                        if (conditionMatches) {
-                            documents.push(document)
-                        }
+        const documents: RxDocumentData<RxDocType>[] = await this.internals.bulkGet(documentIds);
+        const filteredDocuments = documents.filter((document) => {
+            if (selectorKeys.length <= 0) {
+                return true
+            } else {
+                for (let key of selectorKeys) {
+                    const conditionMatches = this.conditionMatches(selector, key, document)
+                    if (conditionMatches) {
+                        return true;
                     }
                 }
             }
+            return false
+        })
+        console.log("Filtered ", filteredDocuments.length, "from ", this.collectionName, "originally we had ", documents.length)
+        return {
+            documents: filteredDocuments
         }
-
-        return { documents }
     }
 
     /* istanbul ignore next */
@@ -233,8 +237,9 @@ export class RxStorageIntanceLevelDB<RxDocType> implements RxStorageInstance<
         if (this.closed) {
             return Promise.reject(new Error('already closed'));
         }
+        await this.internals.close()
+        this.changes$.complete();
         this.closed = true;
-
         this.internals.refCount = this.internals.refCount - 1;
     }
 

@@ -1,29 +1,60 @@
 import { wrappedKeyEncryptionCryptoJsStorage } from "rxdb/plugins/encryption-crypto-js";
-import { RxStorage, RxStorageDefaultStatics, RxStorageInstance, RxStorageInstanceCreationParams } from "rxdb";
-import { LevelDBSettings, LevelDBStorageInternals, RxStorageLevelDBType } from "./leveldb/types";
+import { RxStorage, RxStorageDefaultStatics, RxStorageInstance, RxStorageInstanceCreationParams, addRxStorageMultiInstanceSupport } from "rxdb";
+import { LevelDBInternalConstructor, LevelDBSettings, LevelDBStorageInternals, RxStorageLevelDBType } from "./leveldb/types";
 
 import { RxStorageIntanceLevelDB } from "./leveldb/instance";
 import { LevelDBInternal } from "./leveldb/internal";
 
 let internalInstance: LevelDBInternal<any>
 
-function getRxStorageLevel<RxDocType>(settings: LevelDBSettings): RxStorageLevelDBType<RxDocType> {
-    const levelDBInstance: RxStorageLevelDBType<any> = {
-        name: "leveldb",
-        statics: RxStorageDefaultStatics,
-        async createStorageInstance<RxDocType>(params: RxStorageInstanceCreationParams<RxDocType, LevelDBSettings>): Promise<RxStorageInstance<RxDocType, LevelDBStorageInternals<RxDocType>, LevelDBSettings, any>> {
-            if (!internalInstance) {
-                internalInstance = new LevelDBInternal<RxDocType>(0, settings.dbName)
-                await internalInstance.getDocuments();
+export const RX_STORAGE_NAME_LEVELDB = 'leveldb';
+let levelDBInstance: RxStorageLevelDBType<any>;
+
+async function preloadData<RxDocType>(constructorProps: LevelDBInternalConstructor<RxDocType>) {
+    const internalStorage = new LevelDBInternal<RxDocType>(constructorProps);
+    const documents = await internalStorage.getDocuments([]);
+    await internalStorage.close()
+    return new LevelDBInternal<RxDocType>({ ...constructorProps, refCount: internalStorage.refCount++, documents: documents })
+}
+
+function getRxStorageLevel<RxDocType>(settings: LevelDBSettings<any>): RxStorageLevelDBType<RxDocType> {
+    if (!levelDBInstance) {
+        levelDBInstance = {
+            name: RX_STORAGE_NAME_LEVELDB,
+            statics: RxStorageDefaultStatics,
+            async createStorageInstance<RxDocType>(params: RxStorageInstanceCreationParams<RxDocType, LevelDBSettings<RxDocType>>): Promise<RxStorageInstance<RxDocType, LevelDBStorageInternals<RxDocType>, LevelDBSettings<RxDocType>, any>> {
+                const levelDBConstructorProps: LevelDBInternalConstructor<RxDocType> = "level" in settings ?
+                    {
+                        level: settings.level,
+                        refCount: 1,
+                        schema: params.schema,
+                    }
+                    :
+                    {
+                        refCount: 1,
+                        path: settings.dbName,
+                        schema: params.schema,
+                    };
+
+                if (!internalInstance) {
+                    internalInstance = await preloadData<RxDocType>(levelDBConstructorProps);
+                } else {
+                    internalInstance.refCount++
+                }
+
+                await internalInstance.getInstance()
+
+                const rxStorageInstance = new RxStorageIntanceLevelDB<RxDocType>(
+                    this,
+                    params.databaseName,
+                    params.collectionName,
+                    params.schema,
+                    internalInstance,
+                    settings
+                )
+
+                return rxStorageInstance
             }
-            return new RxStorageIntanceLevelDB(
-                this,
-                params.databaseName,
-                params.collectionName,
-                params.schema,
-                internalInstance,
-                settings
-            )
         }
     }
 
@@ -31,7 +62,7 @@ function getRxStorageLevel<RxDocType>(settings: LevelDBSettings): RxStorageLevel
 }
 
 
-export function createLevelDBStorage(settings: LevelDBSettings) {
+export function createLevelDBStorage<RxDocType>(settings: LevelDBSettings<RxDocType>) {
     const storage: RxStorage<any, any> = wrappedKeyEncryptionCryptoJsStorage({
         storage: getRxStorageLevel(settings)
     })

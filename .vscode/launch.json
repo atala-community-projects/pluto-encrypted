@@ -2,6 +2,22 @@
   "version": "0.2.0",
   "configurations": [
     {
+      "name": "LEVEL DB Electron",
+      "type": "node",
+      "request": "launch",
+      "program": "${workspaceFolder}/examples/electron/main.js",
+      "stopOnEntry": false,
+      "args": [],
+      "cwd": "${workspaceRoot}/examples/electron",
+      "runtimeExecutable": "${workspaceRoot}/examples/electron/node_modules/.bin/electron",
+      "runtimeArgs": [
+        ".",
+        "--enable-logging"
+      ],
+      "env": {},
+      "sourceMaps": false,
+    },
+    {
       "name": "INDEX DB",
       "cwd": "${workspaceFolder}/examples/node",
       "program": "${workspaceFolder}/examples/node/src/indexdb.js",

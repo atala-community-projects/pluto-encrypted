@@ -1,3 +1,4 @@
+import { ClassicLevel as Level } from "classic-level";
 import { DefaultPreparedQuery, RxDocumentData, RxDocumentDataById, RxJsonSchema, RxStorage, } from "rxdb";
 
 /**
@@ -18,39 +19,50 @@ export type LevelDBDataIndex = Map<IndexType, IndexType[]>;
 /**
  * Query type for LevelDB
  */
+export type LevelDBType = Level<string, string>
 export type LevelDBPreparedQuery<DocType> = DefaultPreparedQuery<DocType>;
+export type LevelDBInternalConstructor<RxDocType> = {
+    refCount: number,
+    path: string,
+    schema: RxJsonSchema<RxDocumentData<RxDocType>>;
+    documents?: Map<string, RxDocumentData<RxDocType>>
+} | {
+    level: LevelDBType,
+    refCount: number,
+    schema: RxJsonSchema<RxDocumentData<RxDocType>>;
+
+    documents?: Map<string, RxDocumentData<RxDocType>>
+}
 /**
  * Main storage interface for LevelDBStorage
  */
 export type LevelDBStorageInternals<RxDocType> = {
-    getDocuments(): Promise<Map<string, RxDocumentData<RxDocType>>>;
+    getDocuments(query: string[]): Promise<Map<string, RxDocumentData<RxDocType>>>;
     documents: Map<string, RxDocumentData<RxDocType>>;
     removed: boolean;
     refCount: number;
+    schema: RxJsonSchema<RxDocumentData<RxDocType>>;
     bulkPut(
         items: any,
         collectionName: string,
         schema: Readonly<RxJsonSchema<RxDocumentData<RxDocType>>>): Promise<any>;
-
+    close(): Promise<void>;
     clear(): Promise<void>;
-
     get(key: string): Promise<RxDocumentData<RxDocType> | null>;
     getIndex(key: string): Promise<string[]>;
-
-
-
+    bulkGet(keys: string[]): Promise<RxDocumentData<RxDocType>[]>;
     set(key: string, data: RxDocumentData<RxDocType>): Promise<void>
-
     setIndex(key: string, ids: string[]): Promise<void>
-
     updateIndex(key: string, id: string): Promise<void>
 }
 
-export type RxStorageLevelDBType<RxDocType> = RxStorage<RxDocType, LevelDBSettings>
+export type RxStorageLevelDBType<RxDocType> = RxStorage<RxDocType, LevelDBSettings<RxDocType>>
 
 
-export type LevelDBSettings = {
+export type LevelDBSettings<RxDocType> = {
     path: string,
     dbName: string,
+} | {
+    level: LevelDBType
 }
 

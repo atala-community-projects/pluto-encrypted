@@ -168,7 +168,10 @@ export class Database implements Domain.Pluto {
   async start(): Promise<void> {
     const { dbOptions } = this;
     try {
-      const database = await createRxDatabase<PlutoDatabase>(dbOptions);
+      const database = await createRxDatabase<PlutoDatabase>({
+        ...dbOptions,
+        multiInstance: false
+      });
       await database.addCollections<PlutoCollections>({
         messages: {
           schema: MessageSchema,
@@ -396,6 +399,7 @@ export class Database implements Domain.Pluto {
     host: Domain.DID,
     routing: Domain.DID
   ): Promise<void> {
+    console.log("Adding mediator")
     await this.db.mediators.insert({
       id: uuidv4(),
       mediatorDID: mediator.toString(),
@@ -660,9 +664,7 @@ export class Database implements Domain.Pluto {
 
   async getAllMediators(): Promise<Domain.Mediator[]> {
     const mediators = await this.db.mediators.find().exec()
-    return mediators.map((mediator) =>
-      mediator.toDomainMediator()
-    );
+    return mediators.map((mediator) => mediator.toDomainMediator());
   }
 
   async getAllCredentials(): Promise<Domain.Credential[]> {

@@ -1,99 +1,195 @@
-import { RxDocumentData, RxDocumentDataById, RxJsonSchema } from "rxdb";
-import { Level } from 'level';
+import { RxDocumentData, RxJsonSchema, getPrimaryFieldOfPrimaryKey } from "rxdb";
+import { ClassicLevel as Level } from 'classic-level';
 
 import {
-    LevelDBDataIndex,
-    LevelDBDataStructure,
     LevelDBStorageInternals,
-    IndexType
+    LevelDBInternalConstructor,
+    LevelDBType
 } from "./types";
+
+
 
 export class LevelDBInternal<RxDocType> implements LevelDBStorageInternals<RxDocType> {
 
     public removed = false;
+    public refCount: number;
+    private db: LevelDBType;
+    public documents: Map<string, RxDocumentData<RxDocType>>
+    public schema: RxJsonSchema<RxDocumentData<RxDocType>>;
 
-    private db: Level<string, RxDocumentData<RxDocType> | string[]>;
-    public documents: Map<string, RxDocumentData<RxDocType>> = new Map();
-
-    constructor(public refCount: number, path: string) {
-        this.db = new Level<string, RxDocumentData<RxDocType> | string[]>(path, { valueEncoding: 'json', })
+    get options() {
+        return this._options
+    }
+    static isLevelDBConstructor<RxDocType>(_options: LevelDBInternalConstructor<RxDocType>): _options is {
+        level: LevelDBType,
+        refCount: number,
+        schema: RxJsonSchema<RxDocumentData<RxDocType>>;
+        documents?: Map<string, RxDocumentData<RxDocType>>
+    } {
+        return "level" in _options && _options.level !== undefined
     }
 
-    async getDocuments(): Promise<Map<string, RxDocumentData<RxDocType>>> {
-        if (this.documents.size > 0) {
-            return this.documents
+    constructor(private _options: LevelDBInternalConstructor<RxDocType>) {
+        this.refCount = this._options.refCount;
+        this.schema = this._options.schema;
+        this.documents = this._options.documents || new Map();
+        if (LevelDBInternal.isLevelDBConstructor(this._options)) {
+            this.db = this._options.level
+        } else {
+            this.db = new Level(this._options.path, { valueEncoding: 'json', })
         }
-        const iterator = this.db.iterator()
-        let entries: [[string, RxDocumentData<RxDocType> | string[]]];
-        while ((entries = await iterator.nextv(1)).length > 0) {
-            for (const [key, value] of entries) {
-                if (!Array.isArray(value)) {
-                    this.documents.set(key, value)
+    }
+
+    async getDocuments(query: string[]): Promise<Map<string, RxDocumentData<RxDocType>>> {
+        const docsInDbMap = new Map<string, RxDocumentData<RxDocType>>();
+        if (query.length <= 0) {
+            const db = await this.getInstance()
+            for await (const key of db.keys()) {
+                const value = await this.get(key);
+                if (value) {
+                    docsInDbMap.set(key, value)
                 }
             }
+            return docsInDbMap
         }
-        return this.documents
+        const documents = await this.bulkGet(query)
+        const primaryPath = getPrimaryFieldOfPrimaryKey(this.schema.primaryKey);
+        documents.forEach((document) => {
+            docsInDbMap.set(document[primaryPath] as any, document)
+            this.documents.set(document[primaryPath] as any, document)
+        })
+        return docsInDbMap
     }
 
     async getInstance() {
-        await this.db.open()
-        return this.db
+        return new Promise<LevelDBType>(async (resolve, reject) => {
+            try {
+                this.db.open((err) => {
+                    if (err) {
+                        return reject(err);
+                    }
+                    return resolve(this.db)
+                })
+            } catch (err) {
+                return reject(err)
+            }
+        })
     }
 
     async getIndex(key: string): Promise<string[]> {
-        try {
-            const db = await this.getInstance()
-            const result = await db.get(key);
-            if (!result) {
-                return []
+        return new Promise(async (resolve, reject) => {
+            try {
+                const db = await this.getInstance()
+                db.get(key, (err, result) => {
+                    if (err) {
+                        if ((err as any).code && (err as any).code === 'LEVEL_NOT_FOUND') {
+                            return resolve([])
+                        } else {
+                            throw err
+                        }
+                    }
+                    if (!result) {
+                        return []
+                    }
+                    return resolve(JSON.parse(result) as string[])
+                })
+
+            } catch (err) {
+                return reject(err)
             }
-            return result as string[]
-        } catch (err) {
-            if ((err as any).code && (err as any).code === 'LEVEL_NOT_FOUND') {
-                return []
-            } else {
-                console.log(err)
-                throw err
-            }
+        })
+    }
+
+    async bulkGet(keys: string[]): Promise<RxDocumentData<RxDocType>[]> {
+        if (!keys || keys.length <= 0) {
+            return []
         }
+        return new Promise(async (resolve, reject) => {
+            const db = await this.getInstance()
+            db.getMany(keys, {}, (err, values) => {
+                if (err) {
+                    return reject(err);
+                }
+                const docsInIndex = values?.filter((value) => value !== undefined)
+                    .map((value) => JSON.parse(value)) as RxDocumentData<RxDocType>[]
+
+                return resolve(docsInIndex)
+            })
+        })
     }
 
     async get(key: string): Promise<RxDocumentData<RxDocType> | null> {
-        try {
-            const db = await this.getInstance()
-            const jsonString = await db.get(key);
-            if (!jsonString) {
-                return null
+        return new Promise(async (resolve, reject) => {
+            try {
+                const db = await this.getInstance()
+                db.get(key, (err, result) => {
+                    if (err) {
+                        if ((err as any).code && (err as any).code === 'LEVEL_NOT_FOUND') {
+                            return resolve(null)
+                        } else {
+                            throw err
+                        }
+                    }
+                    if (!result) {
+                        return resolve(null)
+                    }
+                    return resolve(JSON.parse(result))
+                })
+            } catch (err) {
+                return reject(err)
             }
-            return jsonString as RxDocumentData<RxDocType>
-        } catch (err) {
-            if ((err as any).code && (err as any).code === 'LEVEL_NOT_FOUND') {
-                return null
-            } else {
-                throw err
-            }
-        }
+        })
     }
 
     async set(key: string, data: RxDocumentData<RxDocType>) {
+        if (!data) {
+            throw new Error("Undefined value")
+        }
+
+        if (!key) {
+            throw new Error("Undefined key")
+        }
+
         const db = await this.getInstance()
-        this.documents.set(key, data)
-        await db.put(key, data)
+
+        return new Promise<void>((resolve, reject) => {
+            db.put(key, JSON.stringify(data), (err) => {
+                if (err) {
+                    return reject(err);
+                }
+                return resolve()
+            })
+        })
     }
 
     async setIndex(key: string, ids: string[]) {
         const db = await this.getInstance()
-        await db.put(key, ids)
+        return new Promise<void>((resolve, reject) => {
+            db.put(key, JSON.stringify(ids), (err) => {
+                if (err) {
+                    return reject(err);
+                }
+                return resolve()
+            })
+        })
     }
 
     async updateIndex(key: string, id: string) {
+        if (!id) {
+            throw new Error("Undefined id")
+        }
+        if (!key) {
+            throw new Error("Undefined key")
+        }
         const existingIndex = await this.getIndex(key);
-        await this.setIndex(key, Array.from(new Set([...existingIndex, id])));
+        const newIndexes = Array.from(new Set([...existingIndex, id]));
+        console.log("NEW INDEXES", newIndexes)
+        await this.setIndex(key, newIndexes);
     }
 
     async clear() {
         const iterator = this.db.iterator()
-        let entries: [[string, RxDocumentData<RxDocType> | string[]]];
+        let entries: [[string, string]];
         while ((entries = await iterator.nextv(1)).length > 0) {
             for (const [key, value] of entries) {
                 await this.db.del(key);
@@ -101,27 +197,51 @@ export class LevelDBInternal<RxDocType> implements LevelDBStorageInternals<RxDoc
         }
     }
 
+    async close() {
+        await this.db.close()
+    }
+
     async bulkPut(items: RxDocumentData<RxDocType>[], collectionName: string, schema: Readonly<RxJsonSchema<RxDocumentData<RxDocType>>>) {
-        const primaryKeyKey = typeof schema.primaryKey === "string" ? schema.primaryKey : schema.primaryKey.key;
-        const indexName = `[${collectionName}+${primaryKeyKey}]`;
+        try {
+            const primaryKeyKey = typeof schema.primaryKey === "string" ? schema.primaryKey : schema.primaryKey.key;
+            const indexName = `[${collectionName}+${primaryKeyKey}]`;
+            for (let item of items) {
+                let primaryKeyVal = item[primaryKeyKey];
 
-        for (let item of items) {
-            let primaryKeyVal = item[primaryKeyKey];
-            if (!("id" in item) || !['string', 'number'].includes(typeof item.id)) {
-                if (!primaryKeyKey || !primaryKeyVal) {
-                    throw new Error("Data must have a primaryKey defined of type string or number")
+                if (!("id" in item) || !['string', 'number'].includes(typeof item.id)) {
+
+                    if (!primaryKeyKey || !primaryKeyVal) {
+                        throw new Error("Data must have a primaryKey defined of type string or number")
+                    }
+                    const id = item[primaryKeyKey] as string;
+
+
+                    await this.updateIndex(indexName, id)
+                    await this.updateIndex('[all]', id)
+                    await this.set(id, item);
+
+                    this.documents.set(id, item)
+                    if (!(primaryKeyVal as string).includes("collection") && !(primaryKeyVal as string).includes("storage-token")) {
+                        console.log("Adding ", primaryKeyVal, item)
+                    }
+                } else {
+                    const id = item.id as string;
+
+                    await this.updateIndex(indexName, id)
+                    await this.updateIndex('[all]', id)
+                    await this.set(id, item)
+
+                    this.documents.set(id, item)
+                    if (!(primaryKeyVal as string).includes("collection") && !(primaryKeyVal as string).includes("storage-token")) {
+                        console.log("Adding ", primaryKeyVal, item)
+                    }
                 }
-                const id = item[primaryKeyKey] as string;
-                await this.updateIndex(indexName, id)
-                await this.updateIndex('[all]', id)
-                await this.set(id, item);
-            } else {
-                const id = item.id as string;
-                await this.updateIndex(indexName, id)
-                await this.updateIndex('[all]', id)
-                await this.set(id, item)
-            }
 
+            }
+        } catch (err) {
+            console.log(err);
+            debugger;
+            throw err
         }
 
     }

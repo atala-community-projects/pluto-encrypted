@@ -7,6 +7,7 @@ import commonjs from "@rollup/plugin-commonjs";
 
 const externals = [
     "dexie",
+    "leveldown",
     "rxjs",
     "dexie-encrypted",
     "rxdb/plugins/storage-dexie",

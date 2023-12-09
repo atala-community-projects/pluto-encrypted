@@ -1,0 +1,31 @@
+{
+  "name": "electron-demo",
+  "private": true,
+  "main": "main.js",
+  "scripts": {
+    "build": "browserify -x electron renderer.js > renderer-bundle.js",
+    "start": "npm run build && electron .",
+    "test": "standard && hallmark"
+  },
+  "dependencies": {
+    "@atala/prism-wallet-sdk": "file:atala-prism-wallet-sdk-3.1.0.tgz",
+    "@pluto-encrypted/database": "../../packages/database/",
+    "@pluto-encrypted/leveldb": "../../packages/leveldb/",
+    "classic-level": "^1.3.0",
+    "electron": "^21.0.1",
+    "level": "^8.0.0",
+    "many-level": "^2.0.0",
+    "readable-stream": "^4.0.0"
+  },
+  "devDependencies": {
+    "browserify": "^17.0.0",
+    "hallmark": "^4.0.0",
+    "standard": "^17.0.0"
+  },
+  "repository": "Level/electron-demo",
+  "homepage": "https://github.com/Level/electron-demo",
+  "keywords": [
+    "level",
+    "electron"
+  ]
+}
