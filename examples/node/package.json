@@ -15,6 +15,7 @@
     "@pluto-encrypted/database": "../../packages/database/",
     "@pluto-encrypted/inmemory": "../../packages/inmemory/",
     "@pluto-encrypted/leveldb": "../../packages/leveldb/",
+    "fake-indexeddb": "^5.0.1",
     "prettier": "^3.0.2"
   },
   "devDependencies": {

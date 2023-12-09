@@ -2,6 +2,16 @@
   "version": "0.2.0",
   "configurations": [
     {
+      "name": "INDEX DB",
+      "cwd": "${workspaceFolder}/examples/node",
+      "program": "${workspaceFolder}/examples/node/src/indexdb.js",
+      "request": "launch",
+      "skipFiles": [
+        "<node_internals>/**"
+      ],
+      "type": "node"
+    },
+    {
       "name": "LEVEL DB",
       "cwd": "${workspaceFolder}/examples/node",
       "program": "${workspaceFolder}/examples/node/src/leveldb.js",
