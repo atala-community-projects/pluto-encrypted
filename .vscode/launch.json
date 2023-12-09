@@ -2,6 +2,25 @@
   "version": "0.2.0",
   "configurations": [
     {
+      "name": "LEVEL DB",
+      "cwd": "${workspaceFolder}/examples/node",
+      "program": "${workspaceFolder}/examples/node/src/leveldb.js",
+      "request": "launch",
+      "skipFiles": [
+        "<node_internals>/**"
+      ],
+      "type": "node"
+    },
+    {
+      "name": "INMEMORY",
+      "program": "${workspaceFolder}/examples/node/src/inmemory.js",
+      "request": "launch",
+      "skipFiles": [
+        "<node_internals>/**"
+      ],
+      "type": "node"
+    },
+    {
       "cwd": "${workspaceFolder}/packages/database",
       "type": "node",
       "request": "launch",

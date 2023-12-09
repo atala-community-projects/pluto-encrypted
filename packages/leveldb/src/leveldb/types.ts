@@ -23,6 +23,7 @@ export type LevelDBPreparedQuery<DocType> = DefaultPreparedQuery<DocType>;
  * Main storage interface for LevelDBStorage
  */
 export type LevelDBStorageInternals<RxDocType> = {
+    getDocuments(): Promise<Map<string, RxDocumentData<RxDocType>>>;
     documents: Map<string, RxDocumentData<RxDocType>>;
     removed: boolean;
     refCount: number;

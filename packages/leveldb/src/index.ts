@@ -14,8 +14,7 @@ function getRxStorageLevel<RxDocType>(settings: LevelDBSettings): RxStorageLevel
         async createStorageInstance<RxDocType>(params: RxStorageInstanceCreationParams<RxDocType, LevelDBSettings>): Promise<RxStorageInstance<RxDocType, LevelDBStorageInternals<RxDocType>, LevelDBSettings, any>> {
             if (!internalInstance) {
                 internalInstance = new LevelDBInternal<RxDocType>(0, settings.dbName)
-            } else {
-                internalInstance.refCount++
+                await internalInstance.getDocuments();
             }
             return new RxStorageIntanceLevelDB(
                 this,

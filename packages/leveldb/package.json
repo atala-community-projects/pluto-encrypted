@@ -1,17 +1,16 @@
 {
   "name": "@pluto-encrypted/leveldb",
-  "version": "0.0.11",
-  "description": "A \"secure\" leveldb Wrapper for AtalaPrism -> Pluto storage",
-  "main": "./build/cjs/index.js",
-  "module": "./build/esm/index.js",
+  "version": "0.0.15",
+  "description": "A \"secure\" leveldb Wrapper for -> AtalaPrismSdk  Pluto storage.",
+  "main": "./build/cjs/index.cjs",
+  "module": "./build/esm/index.mjs",
   "types": "./build/index.d.ts",
   "exports": {
     ".": {
-      "import": "./build/esm/index.js",
-      "require": "./build/cjs/index.js"
+      "import": "./build/esm/index.mjs",
+      "require": "./build/cjs/index.cjs"
     }
   },
-  "type": "module",
   "publishConfig": {
     "access": "public"
   },

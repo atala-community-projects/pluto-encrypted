@@ -101,58 +101,56 @@ export const PrivateKeyMethods: PrivateKeyMethodTypes = {
     }
 
     /* istanbul ignore else */
-    if (type === Domain.KeyTypes.EC) {
-      /* istanbul ignore else */
-      if (curve.value === Domain.Curve.SECP256K1) {
-        const index = keySpecification.find(
-          (item) => item.name === KeyProperties.index
-        );
-        const seed = keySpecification.find(
-          (item) => item.name === KeyProperties.seed
-        );
+    if (curve.value === Domain.Curve.SECP256K1) {
+      const index = keySpecification.find(
+        (item) => item.name === KeyProperties.index
+      );
+      const seed = keySpecification.find(
+        (item) => item.name === KeyProperties.seed
+      );
 
-        const privateKey = new Secp256k1PrivateKey(
-          Buffer.from(raw.value, "hex")
-        );
+      const privateKey = new Secp256k1PrivateKey(
+        Buffer.from(raw.value, "hex")
+      );
 
-        privateKey.keySpecification.set(Domain.KeyProperties.rawKey, raw.value);
+      privateKey.keySpecification.set(Domain.KeyProperties.rawKey, raw.value);
 
+      privateKey.keySpecification.set(
+        Domain.KeyProperties.curve,
+        Domain.Curve.SECP256K1
+      );
+
+      if (index) {
         privateKey.keySpecification.set(
-          Domain.KeyProperties.curve,
-          Domain.Curve.SECP256K1
+          Domain.KeyProperties.index,
+          index.value
         );
-
-        if (index) {
-          privateKey.keySpecification.set(
-            Domain.KeyProperties.index,
-            index.value
-          );
-        }
-
-        if (seed) {
-          privateKey.keySpecification.set(
-            Domain.KeyProperties.seed,
-            seed.value
-          );
-        }
-
-        return privateKey;
       }
 
-      /* istanbul ignore else */
-      if (curve.value === Domain.Curve.ED25519) {
-        const privateKey = new Ed25519PrivateKey(Buffer.from(raw.value, "hex"));
-
-        privateKey.keySpecification.set(Domain.KeyProperties.rawKey, raw.value);
-
+      if (seed) {
         privateKey.keySpecification.set(
-          Domain.KeyProperties.curve,
-          Domain.Curve.ED25519
+          Domain.KeyProperties.seed,
+          seed.value
         );
-
-        return privateKey;
       }
+
+      return privateKey;
     }
+
+    /* istanbul ignore else */
+    if (curve.value === Domain.Curve.ED25519) {
+      const privateKey = new Ed25519PrivateKey(Buffer.from(raw.value, "hex"));
+
+      privateKey.keySpecification.set(Domain.KeyProperties.rawKey, raw.value);
+
+      privateKey.keySpecification.set(
+        Domain.KeyProperties.curve,
+        Domain.Curve.ED25519
+      );
+
+      return privateKey;
+    }
+
 
     /* istanbul ignore else */
     if (curve.value === Domain.Curve.X25519) {

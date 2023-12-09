@@ -1,0 +1,27 @@
+{
+  "name": "test-with-pluto",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start:inmemory": "node src/inmemory.js",
+    "start:leveldb": "node src/leveldb.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "dependencies": {
+    "@atala/prism-wallet-sdk": "file:atala-prism-wallet-sdk-3.1.0.tgz",
+    "@pluto-encrypted/database": "../../packages/database/",
+    "@pluto-encrypted/inmemory": "../../packages/inmemory/",
+    "@pluto-encrypted/leveldb": "../../packages/leveldb/",
+    "prettier": "^3.0.2"
+  },
+  "devDependencies": {
+    "@swc/core": "^1.3.100",
+    "@types/node": "^20.5.6",
+    "ts-node": "^10.9.1",
+    "tsx": "^4.6.2",
+    "typescript": "^5.2.2"
+  }
+}

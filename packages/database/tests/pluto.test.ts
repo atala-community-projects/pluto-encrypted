@@ -342,6 +342,12 @@ describe("Pluto encrypted testing with different storages", () => {
           expect((await db.getDIDInfoByAlias(alias)).length).toBe(1);
         });
 
+        it(`[Storage ${i} ${storage.name}]` + "Should store a Message duplicate message", async () => {
+          const message = createMessage();
+          await db.storeMessage(message);
+          await db.storeMessage(message);
+        });
+
         it(`[Storage ${i} ${storage.name}]` + "Should store a Message and fetch it", async () => {
           const message = createMessage();
           await db.storeMessage(message);

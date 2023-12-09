@@ -1,17 +1,16 @@
 {
   "name": "@pluto-encrypted/database",
-  "version": "0.0.13",
-  "description": "A \"secure\" DB Agnostic Wrapper for AtalaPrism -> Pluto storage",
-  "main": "./build/cjs/index.js",
-  "module": "./build/esm/index.js",
+  "version": "0.0.17",
+  "description": "A \"secure\" DB Agnostic Wrapper for -> AtalaPrismSdk  Pluto storage.",
+  "main": "./build/cjs/index.cjs",
+  "module": "./build/esm/index.mjs",
   "types": "./build/index.d.ts",
   "exports": {
     ".": {
-      "import": "./build/esm/index.js",
-      "require": "./build/cjs/index.js"
+      "import": "./build/esm/index.mjs",
+      "require": "./build/cjs/index.cjs"
     }
   },
-  "type": "module",
   "publishConfig": {
     "access": "public"
   },
@@ -19,6 +18,7 @@
     "prepublishOnly": "npm run build",
     "test": "NODE_ENV=debug jest tests/*.test.ts",
     "build": "rm -rf build && npx rollup -c rollup/rollup.mjs",
+    "dev": "rm -rf build && npx rollup -c rollup/rollup.mjs",
     "coverage": "npm run test -- --coverage",
     "docs": "npx typedoc --options typedoc.json --hideGenerator"
   },
@@ -32,9 +32,14 @@
     "@atala/prism-wallet-sdk": "^3.1.0"
   },
   "optionalDependencies": {
-    "@pluto-encrypted/indexdb": "^0.0.12",
-    "@pluto-encrypted/inmemory": "^0.0.12",
-    "@pluto-encrypted/leveldb": "^0.0.11"
+    "@pluto-encrypted/indexdb": "*",
+    "@pluto-encrypted/inmemory": "*",
+    "@pluto-encrypted/leveldb": "*"
+  },
+  "devDependencies": {
+    "@pluto-encrypted/indexdb": "^0.0.16",
+    "@pluto-encrypted/inmemory": "^0.0.16",
+    "@pluto-encrypted/leveldb": "^0.0.15"
   },
   "dependencies": {
     "rxdb": "^14.17.0",

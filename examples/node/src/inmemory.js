@@ -1,22 +1,25 @@
-import * as SDK from "@atala/prism-wallet-sdk";
-import InMemory from "@pluto-encrypted/inmemory";
-import { Database } from "@pluto-encrypted/database";
-const defaultPassword = new Uint8Array(32).fill(1);
 
-let database!: Database;
+async function createTestScenario() {
 
-async function createTestScenario(mediatorDID: SDK.Domain.DID) {
-  database = await Database.createEncrypted(
+  const PlutoEncrypted = await import('@pluto-encrypted/database')
+  const { default: InMemory } = await import("@pluto-encrypted/inmemory")
+  const SDK = await import("@atala/prism-wallet-sdk");
+
+  const { Database } = PlutoEncrypted;
+  const defaultPassword = new Uint8Array(32).fill(1);
+  const mediatorDID = SDK.Domain.DID.fromString(
+    "did:peer:2.Ez6LSghwSE437wnDE1pt3X6hVDUQzSjsHzinpX3XFvMjRAm7y.Vz6Mkhh1e5CEYYq6JBUcTZ6Cp2ranCWRrv7Yax3Le4N59R6dd.SeyJ0IjoiZG0iLCJzIjoiaHR0cHM6Ly9iZXRhLW1lZGlhdG9yLmF0YWxhcHJpc20uaW8iLCJyIjpbXSwiYSI6WyJkaWRjb21tL3YyIl19"
+  );
+  const apollo = new SDK.Apollo();
+  const api = new SDK.ApiImpl();
+  const castor = new SDK.Castor(apollo);
+  const pluto = await Database.createEncrypted(
     {
       name: `my-db`,
       encryptionKey: defaultPassword,
       storage: InMemory,
     }
   );
-  const apollo = new SDK.Apollo();
-  const api = new SDK.ApiImpl();
-  const castor = new SDK.Castor(apollo);
-  const pluto = database;
   const didcomm = new SDK.DIDCommWrapper(apollo, castor, pluto);
   const mercury = new SDK.Mercury(castor, didcomm, api);
   const store = new SDK.PublicMediatorStore(pluto);
@@ -33,6 +36,7 @@ async function createTestScenario(mediatorDID: SDK.Domain.DID) {
     seed.seed,
   );
   return {
+    SDK,
     apollo,
     seed,
     agent,
@@ -43,18 +47,12 @@ async function createTestScenario(mediatorDID: SDK.Domain.DID) {
 }
 
 (async () => {
-  const mediatorDID = SDK.Domain.DID.fromString(
-    "did:peer:2.Ez6LSghwSE437wnDE1pt3X6hVDUQzSjsHzinpX3XFvMjRAm7y.Vz6Mkhh1e5CEYYq6JBUcTZ6Cp2ranCWRrv7Yax3Le4N59R6dd.SeyJ0IjoiZG0iLCJzIjoiaHR0cHM6Ly9iZXRhLW1lZGlhdG9yLmF0YWxhcHJpc20uaW8iLCJyIjpbXSwiYSI6WyJkaWRjb21tL3YyIl19"
-  );
 
-  const { seed, agent } = await createTestScenario(mediatorDID);
 
-  agent.addListener(SDK.ListenerKey.MESSAGE, async (message) => {
+  const { seed, agent, SDK } = await createTestScenario();
+
+  agent.addListener(SDK.ListenerKey.MESSAGE, (message) => {
     console.log("Got new message", message);
-    if (database) {
-      const content = await database.backup();
-      console.log(content);
-    }
   });
 
   await agent.start();
@@ -74,8 +72,6 @@ async function createTestScenario(mediatorDID: SDK.Domain.DID) {
     await agent.sendMessage(message.makeMessage());
     await agent.sendMessage(message.makeMessage());
     console.log("Sent");
-
-
   } catch (err) {
     console.log(
       "Safe to ignore, mediator returns null on successfully receiving the message, unpack fails.",
