@@ -16,7 +16,8 @@ const externals = [
     "rxdb/plugins/migration",
     "rxdb/plugins/query-builder",
     "uuid",
-    "rxdb/plugins/json-dump"
+    "rxdb/plugins/json-dump",
+    "classic-level"
 ];
 
 export default function CreateConfig(buildPath, plugins = [], extraInputs = []) {
