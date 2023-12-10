@@ -9,7 +9,7 @@ import { LevelDBStorageInternals, LevelDBSettings, RxStorageLevelDBType, LevelDB
 export class RxStorageIntanceLevelDB<RxDocType> implements RxStorageInstance<
     RxDocType,
     LevelDBStorageInternals<RxDocType>,
-    LevelDBSettings<RxDocType>,
+    LevelDBSettings,
     RxStorageDefaultCheckpoint>
 {
     public readonly primaryPath: StringKeys<RxDocumentData<RxDocType>>;
@@ -23,7 +23,7 @@ export class RxStorageIntanceLevelDB<RxDocType> implements RxStorageInstance<
         public readonly collectionName: string,
         public readonly schema: Readonly<RxJsonSchema<RxDocumentData<RxDocType>>>,
         public readonly internals: LevelDBStorageInternals<RxDocType>,
-        public readonly options: Readonly<LevelDBSettings<RxDocType>>,
+        public readonly options: Readonly<LevelDBSettings>,
     ) {
         this.primaryPath = getPrimaryFieldOfPrimaryKey(this.schema.primaryKey);
     }
@@ -89,10 +89,7 @@ export class RxStorageIntanceLevelDB<RxDocType> implements RxStorageInstance<
             const endTime = now();
             categorized.eventBulk.events.forEach(event => (event as any).endTime = endTime);
             this.changes$.next(categorized.eventBulk);
-        } else {
-            debugger;
         }
-
 
         return Promise.resolve(ret);
     }

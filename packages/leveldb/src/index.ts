@@ -11,32 +11,41 @@ export const RX_STORAGE_NAME_LEVELDB = 'leveldb';
 let levelDBInstance: RxStorageLevelDBType<any>;
 
 async function preloadData<RxDocType>(constructorProps: LevelDBInternalConstructor<RxDocType>) {
-    const internalStorage = new LevelDBInternal<RxDocType>(constructorProps);
-    const documents = await internalStorage.getDocuments([]);
-    await internalStorage.close()
-    return new LevelDBInternal<RxDocType>({ ...constructorProps, refCount: internalStorage.refCount++, documents: documents })
+    try {
+        const internalStorage = new LevelDBInternal<RxDocType>(constructorProps);
+        await internalStorage.getDocuments([]);
+        return internalStorage
+    } catch (err) {
+        console.log(err);
+        debugger;
+        throw err
+    }
 }
 
-function getRxStorageLevel<RxDocType>(settings: LevelDBSettings<any>): RxStorageLevelDBType<RxDocType> {
+function getRxStorageLevel<RxDocType>(settings: LevelDBSettings): RxStorageLevelDBType<RxDocType> {
     if (!levelDBInstance) {
         levelDBInstance = {
             name: RX_STORAGE_NAME_LEVELDB,
             statics: RxStorageDefaultStatics,
-            async createStorageInstance<RxDocType>(params: RxStorageInstanceCreationParams<RxDocType, LevelDBSettings<RxDocType>>): Promise<RxStorageInstance<RxDocType, LevelDBStorageInternals<RxDocType>, LevelDBSettings<RxDocType>, any>> {
-
-                const levelDBConstructorProps: LevelDBInternalConstructor<RxDocType> = {
-                    ...settings,
-                    refCount: 1,
-                    schema: params.schema,
-                }
+            async createStorageInstance<RxDocType>(params: RxStorageInstanceCreationParams<RxDocType, LevelDBSettings>): Promise<RxStorageInstance<RxDocType, LevelDBStorageInternals<RxDocType>, LevelDBSettings, any>> {
+                const levelDBConstructorProps: LevelDBInternalConstructor<RxDocType> = "level" in settings ?
+                    {
+                        level: settings.level,
+                        refCount: 1,
+                        schema: params.schema,
+                    }
+                    :
+                    {
+                        refCount: 1,
+                        dbName: settings.dbName,
+                        schema: params.schema,
+                    };
 
                 if (!internalInstance) {
                     internalInstance = await preloadData<RxDocType>(levelDBConstructorProps);
                 } else {
                     internalInstance.refCount++
                 }
-
-                await internalInstance.getInstance()
 
                 const rxStorageInstance = new RxStorageIntanceLevelDB<RxDocType>(
                     this,
@@ -56,7 +65,7 @@ function getRxStorageLevel<RxDocType>(settings: LevelDBSettings<any>): RxStorage
 }
 
 
-export function createLevelDBStorage<RxDocType>(settings: LevelDBSettings<RxDocType>) {
+export function createLevelDBStorage(settings: LevelDBSettings) {
     const storage: RxStorage<any, any> = wrappedKeyEncryptionCryptoJsStorage({
         storage: getRxStorageLevel(settings)
     })

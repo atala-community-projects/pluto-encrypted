@@ -5,7 +5,8 @@
     "main": "index.js",
     "scripts": {
         "start:inmemory": "node src/inmemory.js",
-        "start:leveldb": "node src/leveldb.js"
+        "start:leveldb": "node src/leveldb.js",
+        "start:indexdb": "node src/leveldb.js"
     },
     "author": "",
     "license": "ISC",

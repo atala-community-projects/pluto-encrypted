@@ -16,7 +16,7 @@ async function createTestScenario() {
     {
       name: `my-db`,
       encryptionKey: defaultPassword,
-      storage: createLevelDBStorage({ dbName: "db" }),
+      storage: createLevelDBStorage({ dbName: "./db" }),
     }
   );
   const didcomm = new SDK.DIDCommWrapper(apollo, castor, pluto);
@@ -54,14 +54,7 @@ async function createTestScenario() {
     console.log("Got new message", message);
   });
 
-  process.on('unhandledRejection', (reason, promise) => {
-    // Handle unhandled promise rejections
-    console.error('Unhandled Rejection:', reason);
-  });
-  process.on('uncaughtException', (error) => {
-    // Handle unhandled exceptions
-    console.error('Uncaught Exception:', error.message);
-  });
+
   await agent.start();
   console.log(
     `Welcome to PrismEdge Agent, state ${agent.state
