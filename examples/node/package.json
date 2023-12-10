@@ -12,7 +12,7 @@
     "license": "ISC",
     "type": "module",
     "dependencies": {
-        "@atala/prism-wallet-sdk": "file:atala-prism-wallet-sdk-3.1.0.tgz",
+        "@atala/prism-wallet-sdk": "file:../../atala-prism-wallet-sdk-3.1.0.tgz",
         "@pluto-encrypted/database": "../../packages/database/",
         "@pluto-encrypted/inmemory": "../../packages/inmemory/",
         "@pluto-encrypted/leveldb": "../../packages/leveldb/",

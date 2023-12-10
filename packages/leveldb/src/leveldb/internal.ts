@@ -46,7 +46,7 @@ export class LevelDBInternal<RxDocType> implements LevelDBStorageInternals<RxDoc
             const db = await this.getInstance()
             for await (const key of db.keys()) {
                 const value = await this.get(key);
-                if (value) {
+                if (value && !Array.isArray(value)) {
                     docsInDbMap.set(key, value)
                 }
             }
