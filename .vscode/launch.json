@@ -50,21 +50,17 @@
       "cwd": "${workspaceFolder}/packages/database",
       "type": "node",
       "request": "launch",
+      "console": "integratedTerminal",
       "name": "TEST",
       "program": "${workspaceRoot}/node_modules/jest/bin/jest.js",
       "args": [
         "--colors",
-        "--workerThreads",
-        "--maxWorkers",
-        "1"
+        "-i"
       ],
       "skipFiles": [
         "${workspaceRoot}/../../node_modules/**/*",
         "<node_internals>/**/*"
-      ],
-      "env": {
-        "NODE_ENV": "debug"
-      }
+      ]
     }
   ]
 }

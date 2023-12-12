@@ -1,5 +1,5 @@
-import { ClassicLevel as Level } from "classic-level";
-import { DefaultPreparedQuery, RxDocumentData, RxDocumentDataById, RxJsonSchema, RxStorage, } from "rxdb";
+import { Level } from "level";
+import { DefaultPreparedQuery, RxDocumentData, RxJsonSchema, RxStorage, } from "rxdb";
 
 /**
  * Index of a table can be a string or a number
@@ -23,14 +23,13 @@ export type LevelDBType = Level<string, string>
 export type LevelDBPreparedQuery<DocType> = DefaultPreparedQuery<DocType>;
 export type LevelDBInternalConstructor<RxDocType> = {
     refCount: number,
-    path: string,
+    dbName: string,
     schema: RxJsonSchema<RxDocumentData<RxDocType>>;
     documents?: Map<string, RxDocumentData<RxDocType>>
 } | {
     level: LevelDBType,
     refCount: number,
     schema: RxJsonSchema<RxDocumentData<RxDocType>>;
-
     documents?: Map<string, RxDocumentData<RxDocType>>
 }
 /**
@@ -56,11 +55,10 @@ export type LevelDBStorageInternals<RxDocType> = {
     updateIndex(key: string, id: string): Promise<void>
 }
 
-export type RxStorageLevelDBType<RxDocType> = RxStorage<RxDocType, LevelDBSettings<RxDocType>>
+export type RxStorageLevelDBType<RxDocType> = RxStorage<RxDocType, LevelDBSettings>
 
 
-export type LevelDBSettings<RxDocType> = {
-    path: string,
+export type LevelDBSettings = {
     dbName: string,
 } | {
     level: LevelDBType

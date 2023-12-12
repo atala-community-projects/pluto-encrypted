@@ -1,5 +1,5 @@
 import { RxDocumentData, RxJsonSchema, getPrimaryFieldOfPrimaryKey } from "rxdb";
-import { ClassicLevel as Level } from 'classic-level';
+import { Level } from 'level';
 
 import {
     LevelDBStorageInternals,
@@ -36,7 +36,7 @@ export class LevelDBInternal<RxDocType> implements LevelDBStorageInternals<RxDoc
         if (LevelDBInternal.isLevelDBConstructor(this._options)) {
             this.db = this._options.level
         } else {
-            this.db = new Level(this._options.path, { valueEncoding: 'json', })
+            this.db = new Level(this._options.dbName, { valueEncoding: 'json' })
         }
     }
 
@@ -46,7 +46,7 @@ export class LevelDBInternal<RxDocType> implements LevelDBStorageInternals<RxDoc
             const db = await this.getInstance()
             for await (const key of db.keys()) {
                 const value = await this.get(key);
-                if (value) {
+                if (value && !Array.isArray(value)) {
                     docsInDbMap.set(key, value)
                 }
             }
@@ -64,7 +64,7 @@ export class LevelDBInternal<RxDocType> implements LevelDBStorageInternals<RxDoc
     async getInstance() {
         return new Promise<LevelDBType>(async (resolve, reject) => {
             try {
-                this.db.open((err) => {
+                this.db.open({ multithreading: true } as any, (err) => {
                     if (err) {
                         return reject(err);
                     }
@@ -153,6 +153,8 @@ export class LevelDBInternal<RxDocType> implements LevelDBStorageInternals<RxDoc
         const db = await this.getInstance()
 
         return new Promise<void>((resolve, reject) => {
+            console.log(`[+index]${key} ${JSON.stringify(data)}`)
+
             db.put(key, JSON.stringify(data), (err) => {
                 if (err) {
                     return reject(err);
@@ -165,6 +167,7 @@ export class LevelDBInternal<RxDocType> implements LevelDBStorageInternals<RxDoc
     async setIndex(key: string, ids: string[]) {
         const db = await this.getInstance()
         return new Promise<void>((resolve, reject) => {
+            console.log(`[+index]${key} ${JSON.stringify(ids)}`)
             db.put(key, JSON.stringify(ids), (err) => {
                 if (err) {
                     return reject(err);
@@ -188,17 +191,23 @@ export class LevelDBInternal<RxDocType> implements LevelDBStorageInternals<RxDoc
     }
 
     async clear() {
-        const iterator = this.db.iterator()
-        let entries: [[string, string]];
-        while ((entries = await iterator.nextv(1)).length > 0) {
-            for (const [key, value] of entries) {
-                await this.db.del(key);
-            }
+        console.log("Clearing")
+        const db = await this.getInstance()
+        for await (const key of db.keys()) {
+            await this.db.del(key);
         }
+        console.log("Cleared")
     }
 
     async close() {
-        await this.db.close()
+        return new Promise<void>((resolve, reject) => {
+            this.db.close((err) => {
+                if (err) {
+                    return reject(err)
+                }
+                return resolve()
+            })
+        })
     }
 
     async bulkPut(items: RxDocumentData<RxDocType>[], collectionName: string, schema: Readonly<RxJsonSchema<RxDocumentData<RxDocType>>>) {

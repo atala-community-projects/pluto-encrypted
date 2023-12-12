@@ -3,8 +3,7 @@
   "version": "0.0.0",
   "private": "true",
   "scripts": {
-    "clean": "npm run clean --workspaces && npm run clean-install && rm -rf node_modules",
-    "clean-install": "npx lerna clean -y",
+    "clean": "npx lerna run clean && rm -rf node_modules",
     "dev": "npx lerna watch  -- lerna run build  --scope=\\$LERNA_PACKAGE_NAME",
     "build": "npx lerna run build --include-dependencies",
     "coverage": "npx lerna run coverage",
@@ -22,14 +21,14 @@
     "outputName": "junit.xml"
   },
   "jest": {
+    "testEnvironment": "node",
+    "workerThreads": false,
+    "runInBand": true,
     "modulePaths": [
       "<rootDir>"
     ],
     "collectCoverage": true,
-    "testEnvironment": "jsdom",
     "setupFilesAfterEnv": [],
-    "workerThreads": true,
-    "maxWorkers": 1,
     "transformIgnorePatterns": [
       "node_modules/(?!@noble)",
       "node_modules/(?!sinon)"
@@ -87,7 +86,7 @@
     "@semantic-release/github": "^9.2.4",
     "@semantic-release/npm": "^11.0.1",
     "@semantic-release/release-notes-generator": "^10.0.3",
-    "@types/jest": "^29.5.5",
+    "@types/jest": "^29.5.11",
     "@types/node": "^20.5.0",
     "@types/uuid": "^9.0.2",
     "@typescript-eslint/eslint-plugin": "^5.62.0",
@@ -105,9 +104,10 @@
     "husky": "^7.0.4",
     "istanbul-badges-readme": "^1.8.5",
     "jasmine": "^5.1.0",
-    "jest": "^29.5.0",
+    "jest": "^29.7.0",
     "jest-coverage-badges": "^1.0.0",
     "jest-environment-jsdom": "^29.7.0",
+    "jest-environment-node": "^29.7.0",
     "jest-junit": "^16.0.0",
     "jest-mock": "^29.7.0",
     "lerna": "^8.0.0",

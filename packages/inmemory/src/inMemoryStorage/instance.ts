@@ -199,9 +199,12 @@ export class RxStorageIntanceInMemory<RxDocType> implements RxStorageInstance<
         return { documents }
     }
 
-    /* istanbul ignore next */
-    count(preparedQuery: any): Promise<RxStorageCountResult> {
-        throw new Error("Method not implemented.");
+    async count(preparedQuery: any): Promise<RxStorageCountResult> {
+        const result = await this.query(preparedQuery);
+        return {
+            count: result.documents.length,
+            mode: 'fast'
+        };
     }
 
     /* istanbul ignore next */

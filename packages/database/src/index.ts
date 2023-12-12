@@ -76,7 +76,8 @@ export type PlutoDatabase = RxDatabase<PlutoCollections>;
  *
  */
 export class Database implements Domain.Pluto {
-  _db!: PlutoDatabase;
+  private _db!: PlutoDatabase;
+
   get db() {
     if (!this._db) {
       throw new Error("Start Pluto first.");
