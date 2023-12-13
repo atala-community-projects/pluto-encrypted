@@ -57,14 +57,17 @@ const databaseName = "prism-db";
 const databasePath = path.resolve(process.cwd(), databaseName);
 
 const storages: RxStorage<any, any>[] = [
-  createLevelDBStorage({ dbName: databaseName }),
-  InMemory,
-  IndexDb,
+  createLevelDBStorage({
+    dbName: databaseName,
+    dbPath: databasePath
+  }),
+  // InMemory,
+  // IndexDb,
 ]
 
 function getStorageDBName(storage: RxStorage<any, any>) {
   if (storage.name === "leveldb") {
-    return databaseName
+    return `${databaseName}${randomUUID()}`
   }
   if (storage.name === "in-memory") {
     return databaseName

@@ -102,7 +102,8 @@ const database = db = await Database.createEncrypted(
         name: `my-db`,
         encryptionKey: defaultPassword,
         storage: createLevelDBStorage({ 
-            dbName: "demo", path: "./demo" 
+            dbName: "demo",
+            dbPath: "/tmp/demo" 
         }),
     }
 );
