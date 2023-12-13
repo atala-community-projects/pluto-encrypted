@@ -1,5 +1,7 @@
 import { RxDocumentData, RxJsonSchema, getPrimaryFieldOfPrimaryKey } from "rxdb";
-import { Level } from 'level';
+import Level from 'level';
+import pull from 'pull-stream';
+import pullLevel from 'pull-level';
 
 import {
     LevelDBStorageInternals,
@@ -7,7 +9,9 @@ import {
     LevelDBType
 } from "./types";
 
-
+function isArray (arr) {
+  return Array.isArray(arr)
+}
 
 export class LevelDBInternal<RxDocType> implements LevelDBStorageInternals<RxDocType> {
 
@@ -36,7 +40,7 @@ export class LevelDBInternal<RxDocType> implements LevelDBStorageInternals<RxDoc
         if (LevelDBInternal.isLevelDBConstructor(this._options)) {
             this.db = this._options.level
         } else {
-            this.db = new Level(this._options.dbName, { valueEncoding: 'json' })
+            this.db = Level(this._options.dbName, { valueEncoding: 'json' })
         }
     }
 
@@ -44,12 +48,18 @@ export class LevelDBInternal<RxDocType> implements LevelDBStorageInternals<RxDoc
         const docsInDbMap = new Map<string, RxDocumentData<RxDocType>>();
         if (query.length <= 0) {
             const db = await this.getInstance()
-            for await (const key of db.keys()) {
-                const value = await this.get(key);
-                if (value && !Array.isArray(value)) {
-                    docsInDbMap.set(key, value)
-                }
-            }
+              .catch(err => console.error('cant get db', err))
+            await pull(
+              pullLevel.read(db),
+              pull.filter(row => !isArray(row.value)),
+              pull.map(row => {
+                docsInDbMap.set(row.key, row.value)
+                return
+                // don't return anything - we don't care about collecting
+              }),
+              pull.collectAsPromise()
+            )
+            // WIP - not reaching here?
             return docsInDbMap
         }
         const documents = await this.bulkGet(query)
@@ -64,7 +74,7 @@ export class LevelDBInternal<RxDocType> implements LevelDBStorageInternals<RxDoc
     async getInstance() {
         return new Promise<LevelDBType>(async (resolve, reject) => {
             try {
-                this.db.open({ multithreading: true } as any, (err) => {
+                this.db.open((err) => {
                     if (err) {
                         return reject(err);
                     }
