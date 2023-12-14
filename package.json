@@ -11,8 +11,8 @@
     "docs": "npx lerna run docs",
     "release": "npx lerna publish --message 'chore: release' --no-private && npm run docs && node versioning.cjs"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "elribonazo@gmail.com",
+  "license": "Apache-2.0",
   "workspaces": [
     "packages/*"
   ],

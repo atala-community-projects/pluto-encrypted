@@ -47,7 +47,8 @@ Running this from visual studio will let us debug and to straight to the root ca
 [SDK Reference](https://github.com/elribonazo/pluto-encrypted/blob/master/packages/database/modules.md)
 
 ### How to use
-We currently provide 2 database storages, one IndexDB and one InMemory storage.
+
+We currently provide 3 database storages - InMemory, IndexDB, and LevelDB.
 In order to use this package, you must first install the database and pass a storage engine.
 
 ```bash
