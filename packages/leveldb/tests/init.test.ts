@@ -2,11 +2,9 @@ import "./setup";
 
 import { describe, it, beforeEach, afterEach } from 'vitest';
 import path from 'path';
-// import { randomUUID } from "crypto";
 
-import { createLevelDBStorage } from '../'
+import { createLevelDBStorage } from '../src'
 
-// import * as Fixtures from "./fixtures";
 import { Database } from "../../database/src";
 
 const keyData = new Uint8Array(32);
