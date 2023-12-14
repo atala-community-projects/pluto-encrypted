@@ -16,58 +16,6 @@
   "workspaces": [
     "packages/*"
   ],
-  "jest-junit": {
-    "outputDirectory": "coverage",
-    "outputName": "junit.xml"
-  },
-  "jest": {
-    "testEnvironment": "node",
-    "workerThreads": false,
-    "runInBand": true,
-    "modulePaths": [
-      "<rootDir>"
-    ],
-    "collectCoverage": true,
-    "setupFilesAfterEnv": [],
-    "transformIgnorePatterns": [
-      "node_modules/(?!@noble)",
-      "node_modules/(?!sinon)"
-    ],
-    "collectCoverageFrom": [
-      "src/**/*.{js,ts}"
-    ],
-    "moduleNameMapper": {
-      "^sinon$": "<rootDir>/node_modules/sinon/pkg/sinon.js",
-      "^uint8arrays$": "<rootDir>/node_modules/uint8arrays/cjs/src",
-      "^uint8arrays/(.*)$": "<rootDir>/node_modules/uint8arrays/cjs/src/$1",
-      "^multiformats/(.*)$": "<rootDir>/node_modules/multiformats/cjs/src/$1",
-      "^rxdb/(.*)$": "<rootDir>/node_modules/rxdb/$1",
-      "^dexie$": "<rootDir>/node_modules/dexie",
-      "^core-js/modules/(.*)$": "<rootDir>/node_modules/core-js/modules/$1"
-    },
-    "moduleFileExtensions": [
-      "js",
-      "ts"
-    ],
-    "coverageReporters": [
-      "json-summary",
-      "lcov",
-      "text"
-    ],
-    "reporters": [
-      "default",
-      "jest-junit"
-    ],
-    "coverageThreshold": {
-      "global": {
-        "branches": 58,
-        "functions": 64,
-        "lines": 74,
-        "statements": 71
-      }
-    },
-    "coverageDirectory": "<rootDir>/coverage"
-  },
   "devDependencies": {
     "@babel/preset-env": "^7.22.20",
     "@babel/preset-typescript": "^7.22.15",
@@ -86,11 +34,11 @@
     "@semantic-release/github": "^9.2.4",
     "@semantic-release/npm": "^11.0.1",
     "@semantic-release/release-notes-generator": "^10.0.3",
-    "@types/jest": "^29.5.11",
     "@types/node": "^20.5.0",
     "@types/uuid": "^9.0.2",
     "@typescript-eslint/eslint-plugin": "^5.62.0",
     "@typescript-eslint/parser": "^5.55.0",
+    "@vitest/coverage-istanbul": "^1.0.4",
     "concurrently": "^8.2.0",
     "eslint": "^8.47.0",
     "eslint-config-next": "^12.0.0",
@@ -98,18 +46,11 @@
     "eslint-plugin-import": "^2.27.5",
     "eslint-plugin-n": "^15.6.1",
     "eslint-plugin-promise": "^6.1.1",
-    "expect": "^29.7.0",
     "fake-indexeddb": "^4.0.2",
     "file-loader": "^6.2.0",
     "husky": "^7.0.4",
     "istanbul-badges-readme": "^1.8.5",
     "jasmine": "^5.1.0",
-    "jest": "^29.7.0",
-    "jest-coverage-badges": "^1.0.0",
-    "jest-environment-jsdom": "^29.7.0",
-    "jest-environment-node": "^29.7.0",
-    "jest-junit": "^16.0.0",
-    "jest-mock": "^29.7.0",
     "lerna": "^8.0.0",
     "mock-aws-s3": "^4.0.2",
     "nx": "16.8.1",
@@ -136,6 +77,7 @@
     "typedoc-plugin-rename-defaults": "^0.6.5",
     "typedoc-plugin-superstruct": "^1.0.0",
     "typedoc-theme-hierarchy": "^4.0.0",
-    "typescript": "^5.1.6"
+    "typescript": "^5.1.6",
+    "vitest": "^1.0.4"
   }
 }

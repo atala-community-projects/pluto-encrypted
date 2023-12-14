@@ -1,8 +1,8 @@
 import "./setup";
 
+import { describe, expect, it, beforeEach, afterEach } from 'vitest';
 import fs from 'fs';
 import path from 'path';
-import expect from "expect";
 import { randomUUID } from "crypto";
 import {
   AnonCredsCredential,
@@ -13,9 +13,9 @@ import {
 } from "@atala/prism-wallet-sdk";
 import * as sinon from "sinon";
 import { RxStorage } from "rxdb";
-import InMemory from "../../inmemory";
-import IndexDb from "../../indexdb";
-import { createLevelDBStorage } from '../../leveldb'
+import InMemory from "../../inmemory/src";
+import IndexDb from "../../indexdb/src";
+import { createLevelDBStorage } from '../../leveldb/src'
 
 import * as Fixtures from "./fixtures";
 import { Database, PrivateKeyMethods } from "../src";
@@ -78,14 +78,13 @@ describe("Pluto encrypted testing with different storages", () => {
   let currentDBName: string;
 
   afterEach(async () => {
-    jest.useRealTimers();
+    // jest.useRealTimers();
     sandbox.restore();
   });
 
   beforeEach(async () => {
-    jest.useFakeTimers();
+    // jest.useFakeTimers();
     sandbox = sinon.createSandbox();
-
   });
 
   storages.forEach((storage, i) => {
@@ -94,8 +93,6 @@ describe("Pluto encrypted testing with different storages", () => {
 
 
     describe(`[Storage ${i} ${storage.name}]` + "Pluto + Dexie encrypted integration for browsers", () => {
-
-
 
       beforeEach(async () => {
         currentDBName = getStorageDBName(storage);

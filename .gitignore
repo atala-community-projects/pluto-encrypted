@@ -1,6 +1,12 @@
 node_modules
-./packages/database/coverage/lcov-report/**
-./packages/database/coverage/coverage-summary.json
+packages/database/coverage/lcov-report/**
+packages/database/coverage/coverage-summary.json
+packages/database/coverage/src/**
+packages/database/coverage/*.html
+packages/database/coverage/*.png
+packages/database/coverage/*.css
+packages/database/coverage/*.js
+packages/database/coverage/*.png
 junit.xml
 lcov.info
 build
