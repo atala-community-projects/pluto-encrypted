@@ -17,7 +17,9 @@
   "scripts": {
     "prepublishOnly": "npm run build",
     "clean": "rm -rf node_modules && rm -rf build",
-    "build": "rm -rf build && npx rollup -c rollup/rollup.mjs"
+    "build": "rm -rf build && npx rollup -c rollup/rollup.mjs",
+    "test": "NODE_ENV=debug vitest tests/*.test.ts",
+    "test:debug": "NODE_ENV=debug vitest tests/*.test.ts --inspect-brk --pool threads --poolOptions.threads.singleThread"
   },
   "repository": {
     "type": "git",

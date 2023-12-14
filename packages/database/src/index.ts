@@ -118,7 +118,7 @@ export class Database implements Domain.Pluto {
       password: Buffer.from(encryptionKey).toString(),
     });
 
-    await database.start();
+    await database.start()
 
     if (importData) {
       await database.db.importJSON(importData);
@@ -207,6 +207,7 @@ export class Database implements Domain.Pluto {
       });
       this._db = database;
     } catch (err) {
+      debugger
       /* istanbul ignore else */
       if ((err as RxError).code === "DB1") {
         throw new Error("Invalid authentication");
