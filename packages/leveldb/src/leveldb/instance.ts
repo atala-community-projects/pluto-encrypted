@@ -25,14 +25,12 @@ export class RxStorageIntanceLevelDB<RxDocType> implements RxStorageInstance<
         public readonly internals: LevelDBStorageInternals<RxDocType>,
         public readonly options: Readonly<LevelDBSettings>,
     ) {
-        debugger
         this.primaryPath = getPrimaryFieldOfPrimaryKey(this.schema.primaryKey);
     }
 
     async bulkWrite(
         documentWrites: BulkWriteRow<RxDocType>[],
         context: string): Promise<RxStorageBulkWriteResponse<RxDocType>> {
-        debugger
 
         const primaryPath = this.primaryPath;
         const ret: RxStorageBulkWriteResponse<RxDocType> = {
