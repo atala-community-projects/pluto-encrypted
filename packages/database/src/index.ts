@@ -185,27 +185,194 @@ export class Database implements Domain.Pluto {
     return this._db.collections.linksecrets
   }
 
+  /**
+   * DIDPairs 
+   * Stores groups of dids, also known as connections + exposes orm functions
+   * 
+   * #### Count all DIDPairs with optional query
+   * ```ts
+   * await db.didpairs.count({selector: {id: {$eq: 1}}}) //Query is optional
+   * ```
+   * 
+   * #### Find all DIDPairs matching the query
+   * ```ts
+   * await db.didpairs.find({selector: {id: {$eq: 1}}}) //Query is optional
+   * ```
+   * 
+   * #### Find all DIDPairs by id
+   * ```ts
+   * await db.didpairs.findByIds([id])
+   * ```
+   * #### Find one DIDPairs matching the query
+   * ```ts
+   * await db.didpairs.findOne({selector: {id: {$eq: 1}}}) //Query is optional
+   * ```
+   * 
+   * #### Remove any DIDPairs matching the query
+   * ```ts
+   * await db.didpairs.remove({selector: {id: {$eq: 1}}})
+   * ```
+   */
   get didpairs() {
     return this._db.collections.didpairs
   }
 
+  /**
+   * Credentials 
+   * Stores credentials, both anoncreda and prism/jwt + exposes orm functions
+   * 
+   * #### Count all Credentials with optional query
+   * ```ts
+   * await db.credentials.count({selector: {id: {$eq: 1}}}) //Query is optional
+   * ```
+   * 
+   * #### Find all Credentials matching the query
+   * ```ts
+   * await db.credentials.find({selector: {id: {$eq: 1}}}) //Query is optional
+   * ```
+   * 
+   * #### Find all Credentials by id
+   * ```ts
+   * await db.credentials.findByIds([id])
+   * ```
+   * #### Find one Credentials matching the query
+   * ```ts
+   * await db.credentials.findOne({selector: {id: {$eq: 1}}}) //Query is optional
+   * ```
+   * 
+   * #### Remove any Credentials matching the query
+   * ```ts
+   * await db.credentials.remove({selector: {id: {$eq: 1}}})
+   * ```
+   */
   get credentials() {
     return this._db.collections.credentials
   }
 
+  /**
+   * Mediators 
+   * Stores mediators + exposes orm functions
+   * 
+   * #### Count all Mediators with optional query
+   * ```ts
+   * await db.mediators.count({selector: {id: {$eq: 1}}}) //Query is optional
+   * ```
+   * 
+   * #### Find all Mediators matching the query
+   * ```ts
+   * await db.mediators.find({selector: {id: {$eq: 1}}}) //Query is optional
+   * ```
+   * 
+   * #### Find all Mediators by id
+   * ```ts
+   * await db.mediators.findByIds([id])
+   * ```
+   * #### Find one Mediators matching the query
+   * ```ts
+   * await db.mediators.findOne({selector: {id: {$eq: 1}}}) //Query is optional
+   * ```
+   * 
+   * #### Remove any Mediators matching the query
+   * ```ts
+   * await db.mediators.remove({selector: {id: {$eq: 1}}})
+   * ```
+   */
   get mediators() {
     return this._db.collections.mediators
   }
 
-
+  /**
+    * DIDs 
+    * Stores dids + exposes orm functions
+    * 
+    * #### Count all DIDS with optional query
+    * ```ts
+    * await db.dids.count({selector: {id: {$eq: 1}}}) //Query is optional
+    * ```
+    * 
+    * #### Find all DIDS matching the query
+    * ```ts
+    * await db.dids.find({selector: {id: {$eq: 1}}}) //Query is optional
+    * ```
+    * 
+    * #### Find all DIDS by id
+    * ```ts
+    * await db.dids.findByIds([id])
+    * ```
+    * #### Find one DIDS matching the query
+    * ```ts
+    * await db.dids.findOne({selector: {id: {$eq: 1}}}) //Query is optional
+    * ```
+    * 
+    * #### Remove any DIDS matching the query
+    * ```ts
+    * await db.dids.remove({selector: {id: {$eq: 1}}})
+    * ```
+    */
   get dids() {
     return this._db.collections.dids
   }
 
+  /**
+    * PrivateKeys 
+    * Stores privateKeys + exposes orm functions
+    * 
+    * #### Count all PrivateKeys with optional query
+    * ```ts
+    * await db.privatekeys.count({selector: {id: {$eq: 1}}}) //Query is optional
+    * ```
+    * 
+    * #### Find all PrivateKeys matching the query
+    * ```ts
+    * await db.privatekeys.find({selector: {id: {$eq: 1}}}) //Query is optional
+    * ```
+    * 
+    * #### Find all PrivateKeys by id
+    * ```ts
+    * await db.privatekeys.findByIds([id])
+    * ```
+    * #### Find one PrivateKeys matching the query
+    * ```ts
+    * await db.privatekeys.findOne({selector: {id: {$eq: 1}}}) //Query is optional
+    * ```
+    * 
+    * #### Remove any PrivateKeys matching the query
+    * ```ts
+    * await db.privatekeys.remove({selector: {id: {$eq: 1}}})
+    * ```
+    */
   get privatekeys() {
     return this._db.collections.privatekeys
   }
 
+  /**
+    * Messages 
+    * Stores Messages + exposes orm functions
+    * 
+    * #### Count all Messages with optional query
+    * ```ts
+    * await db.messages.count({selector: {id: {$eq: 1}}}) //Query is optional
+    * ```
+    * 
+    * #### Find all Messages matching the query
+    * ```ts
+    * await db.messages.find({selector: {id: {$eq: 1}}}) //Query is optional
+    * ```
+    * 
+    * #### Find all Messages by id
+    * ```ts
+    * await db.messages.findByIds([id])
+    * ```
+    * #### Find one Messages matching the query
+    * ```ts
+    * await db.messages.findOne({selector: {id: {$eq: 1}}}) //Query is optional
+    * ```
+    * 
+    * #### Remove any Messages matching the query
+    * ```ts
+    * await db.messages.remove({selector: {id: {$eq: 1}}})
+    * ```
+    */
   get messages() {
     return this._db.collections.messages
   }

@@ -34,34 +34,6 @@ export type LinkSecretMethodTypes = {
   toDomainLinkSecret: (this: LinkSecretDocument) => Domain.Anoncreds.LinkSecret;
 };
 
-/**
- * LinkSecrets 
- * Stores anoncreds link secrets + exposes orm functions
- * 
- * #### Count all LinkSecrets with optional query
- * ```ts
- * await db.linksecrets.count({selector: {id: {$eq: 1}}}) //Query is optional
- * ```
- * 
- * #### Find all LinkSecrets matching the query
- * ```ts
- * await db.linksecrets.find({selector: {id: {$eq: 1}}}) //Query is optional
- * ```
- * 
- * #### Find all LinkSecrets by id
- * ```ts
- * await db.linksecrets.findByIds([id])
- * ```
- * #### Find one LinkSecrets matching the query
- * ```ts
- * await db.linksecrets.findOne({selector: {id: {$eq: 1}}}) //Query is optional
- * ```
- * 
- * #### Remove any LinkSecrets matching the query
- * ```ts
- * await db.linksecrets.remove({selector: {id: {$eq: 1}}})
- * ```
- */
 export type LinkSecretColletion = RxCollection<
   LinkSecretSchemaType,
   LinkSecretMethodTypes,

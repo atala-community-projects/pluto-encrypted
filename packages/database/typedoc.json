@@ -15,7 +15,8 @@
     "excludeInternal": true,
     "excludeNotDocumented": true,
     "excludeNotDocumentedKinds": [
-        "TypeAlias"
+        "TypeAlias",
+        "Variable"
     ],
     "includeVersion": true,
     "theme": "default",
