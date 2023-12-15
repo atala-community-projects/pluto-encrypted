@@ -89,10 +89,9 @@ describe("Pluto encrypted testing with different storages", () => {
 
   storages.forEach((storage, i) => {
 
+    const storageName = `[${storage.name}] `
 
-
-
-    describe(`[Storage ${i} ${storage.name}]` + "Pluto + Dexie encrypted integration for browsers", () => {
+    describe(storageName, () => {
 
       beforeEach(async () => {
         currentDBName = getStorageDBName(storage);
@@ -114,7 +113,7 @@ describe("Pluto encrypted testing with different storages", () => {
       })
 
 
-      it(`[Storage ${i} ${storage.name}]` + "Should store a new Prism DID and its privateKeys", async ({ expect }) => {
+      it(storageName + "Should store a new Prism DID and its privateKeys", async ({ expect }) => {
         expect(await db.getPrismLastKeyPathIndex()).toBe(0);
         const did = Domain.DID.fromString(
           "did:prism:733e594871d7700d35e6116011a08fc11e88ff9d366d8b5571ffc1aa18d249ea:Ct8BCtwBEnQKH2F1dGhlbnRpY2F0aW9uYXV0aGVudGljYXRpb25LZXkQBEJPCglzZWNwMjU2azESIDS5zeYUkLCSAJLI6aLXRTPRxstCLPUEI6TgBrAVCHkwGiDk-ffklrHIFW7pKkT8i-YksXi-XXi5h31czUMaVClcpxJkCg9tYXN0ZXJtYXN0ZXJLZXkQAUJPCglzZWNwMjU2azESIDS5zeYUkLCSAJLI6aLXRTPRxstCLPUEI6TgBrAVCHkwGiDk-ffklrHIFW7pKkT8i-YksXi-XXi5h31czUMaVClcpw"
@@ -137,7 +136,7 @@ describe("Pluto encrypted testing with different storages", () => {
         expect(await db.getPrismDIDKeyPathIndex(did3)).toBe(null);
       });
 
-      it(`[Storage ${i} ${storage.name}]` + "Should throw an exception if a wrong key object from Database is loaded", async ({ expect }) => {
+      it(storageName + "Should throw an exception if a wrong key object from Database is loaded", async ({ expect }) => {
         const wrongKey: any = {
           keySpecification: [],
           toDomainPrivateKey: PrivateKeyMethods.toDomainPrivateKey,
@@ -285,25 +284,25 @@ describe("Pluto encrypted testing with different storages", () => {
         correctX25519Key.toDomainPrivateKey();
       });
 
-      it(`[Storage ${i} ${storage.name}]` + "Should return null when no privateKey is found by its id", async ({ expect }) => {
+      it(storageName + "Should return null when no privateKey is found by its id", async ({ expect }) => {
         const did = Domain.DID.fromString(
           "did:prism:733e594871d7700d35e6116011a08fc11e88ff9d366d8b5571ffc1aa18d249ea:Ct8BCtwBEnQKH2F1dGhlbnRpY2F0aW9uYXV0aGVudGljYXRpb25LZXkQBEJPCglzZWNwMjU2azESIDS5zeYUkLCSAJLI6aLXRTPRxstCLPUEI6TgBrAVCHkwGiDk-ffklrHIFW7pKkT8i-YksXi-XXi5h31czUMaVClcpxJkCg9tYXN0ZXJtYXN0ZXJLZXkQAUJPCglzZWNwMjU2azESIDS5zeYUkLCSAJLI6aLXRTPRxstCLPUEI6TgBrAVCHkwGiDk-ffklrHIFW7pKkT8i-YksXi-XXi5h31czUMaVClcpw"
         );
         expect(await db.getDIDInfoByDID(did)).toBe(null);
       });
 
-      it(`[Storage ${i} ${storage.name}]` + "Should return null when no privateKey is found by its id", async ({ expect }) => {
+      it(storageName + "Should return null when no privateKey is found by its id", async ({ expect }) => {
         expect(await db.getDIDPrivateKeyByID("not fund")).toBe(null);
       });
 
-      it(`[Storage ${i} ${storage.name}]` + "Should return null when no privateKey is found by its did", async ({ expect }) => {
+      it(storageName + "Should return null when no privateKey is found by its did", async ({ expect }) => {
         const did = Domain.DID.fromString(
           "did:prism::t8BCtwBEnQKH2F1dGhlbnRpY2F0aW9uYXV0aGVudGljYXRpb25LZXkQBEJPCglzZWNwMjU2azESIDS5zeYUkLCSAJLI6aLXRTPRxstCLPUEI6TgBrAVCHkwGiDk-ffklrHIFW7pKkT8i-YksXi-XXi5h31czUMaVClcpxJkCg9tYXN0ZXJtYXN0ZXJLZXkQAUJPCglzZWNwMjU2azESIDS5zeYUkLCSAJLI6aLXRTPRxstCLPUEI6TgBrAVCHkwGiDk-ffklrHIFW7pKkT8i-YksXi-XXi5h31czUMaVClcpw"
         );
         expect((await db.getDIDPrivateKeysByDID(did)).length).toBe(0);
       });
 
-      it(`[Storage ${i} ${storage.name}]` + "Should store a new Prism DID and its privateKeys with privateKeyMetadataId", async ({ expect }) => {
+      it(storageName + "Should store a new Prism DID and its privateKeys with privateKeyMetadataId", async ({ expect }) => {
         const did = Domain.DID.fromString(
           "did:prism:733e594871d7700d35e6116011a08fc11e88ff9d366d8b5571ffc1aa18d249ea:Ct8BCtwBEnQKH2F1dGhlbnRpY2F0aW9uYXV0aGVudGljYXRpb25LZXkQBEJPCglzZWNwMjU2azESIDS5zeYUkLCSAJLI6aLXRTPRxstCLPUEI6TgBrAVCHkwGiDk-ffklrHIFW7pKkT8i-YksXi-XXi5h31czUMaVClcpxJkCg9tYXN0ZXJtYXN0ZXJLZXkQAUJPCglzZWNwMjU2azESIDS5zeYUkLCSAJLI6aLXRTPRxstCLPUEI6TgBrAVCHkwGiDk-ffklrHIFW7pKkT8i-YksXi-XXi5h31czUMaVClcpw"
         );
@@ -312,7 +311,7 @@ describe("Pluto encrypted testing with different storages", () => {
         expect((await db.getAllPrismDIDs()).length).toBe(1);
       });
 
-      it(`[Storage ${i} ${storage.name}]` + "Should store a new Prism DID and its privateKeys with privateKeyMetadataId and alias", async ({ expect }) => {
+      it(storageName + "Should store a new Prism DID and its privateKeys with privateKeyMetadataId and alias", async ({ expect }) => {
         const did = Domain.DID.fromString(
           "did:prism:733e594871d7700d35e6116011a08fc11e88ff9d366d8b5571ffc1aa18d249ea:Ct8BCtwBEnQKH2F1dGhlbnRpY2F0aW9uYXV0aGVudGljYXRpb25LZXkQBEJPCglzZWNwMjU2azESIDS5zeYUkLCSAJLI6aLXRTPRxstCLPUEI6TgBrAVCHkwGiDk-ffklrHIFW7pKkT8i-YksXi-XXi5h31czUMaVClcpxJkCg9tYXN0ZXJtYXN0ZXJLZXkQAUJPCglzZWNwMjU2azESIDS5zeYUkLCSAJLI6aLXRTPRxstCLPUEI6TgBrAVCHkwGiDk-ffklrHIFW7pKkT8i-YksXi-XXi5h31czUMaVClcpw"
         );
@@ -327,7 +326,7 @@ describe("Pluto encrypted testing with different storages", () => {
         expect((await db.getAllPrismDIDs()).length).toBe(1);
       });
 
-      it(`[Storage ${i} ${storage.name}]` + "Should store a new Prism DID and its privateKeys and fetch it by its alias", async ({ expect }) => {
+      it(storageName + "Should store a new Prism DID and its privateKeys and fetch it by its alias", async ({ expect }) => {
         const did = Domain.DID.fromString(
           "did:prism:733e594871d7700d35e6116011a08fc11e88ff9d366d8b5571ffc1aa18d249ea:Ct8BCtwBEnQKH2F1dGhlbnRpY2F0aW9uYXV0aGVudGljYXRpb25LZXkQBEJPCglzZWNwMjU2azESIDS5zeYUkLCSAJLI6aLXRTPRxstCLPUEI6TgBrAVCHkwGiDk-ffklrHIFW7pKkT8i-YksXi-XXi5h31czUMaVClcpxJkCg9tYXN0ZXJtYXN0ZXJLZXkQAUJPCglzZWNwMjU2azESIDS5zeYUkLCSAJLI6aLXRTPRxstCLPUEI6TgBrAVCHkwGiDk-ffklrHIFW7pKkT8i-YksXi-XXi5h31czUMaVClcpw"
         );
@@ -337,13 +336,13 @@ describe("Pluto encrypted testing with different storages", () => {
         expect((await db.getDIDInfoByAlias(alias)).length).toBe(1);
       });
 
-      it(`[Storage ${i} ${storage.name}]` + "Should store a Message duplicate message", async ({ expect }) => {
+      it(storageName + "Should store a Message duplicate message", async ({ expect }) => {
         const message = createMessage();
         await db.storeMessage(message);
         await db.storeMessage(message);
       });
 
-      it(`[Storage ${i} ${storage.name}]` + "Should store a Message and fetch it", async ({ expect }) => {
+      it(storageName + "Should store a Message and fetch it", async ({ expect }) => {
         const message = createMessage();
         await db.storeMessage(message);
         const dbMesaage = await db.getMessage(message.id);
@@ -351,7 +350,7 @@ describe("Pluto encrypted testing with different storages", () => {
         expect(dbMesaage!.id).toBe(message.id);
       });
 
-      it(`[Storage ${i} ${storage.name}]` + "Should store a Message and update it", async ({ expect }) => {
+      it(storageName + "Should store a Message and update it", async ({ expect }) => {
         const message = createMessage();
         await db.storeMessage(message);
         await db.storeMessage(message);
@@ -360,12 +359,12 @@ describe("Pluto encrypted testing with different storages", () => {
         expect(dbMesaage!.id).toBe(message.id);
       });
 
-      it(`[Storage ${i} ${storage.name}]` + "Should get all the messages", async ({ expect }) => {
+      it(storageName + "Should get all the messages", async ({ expect }) => {
         const allMessages = await db.getAllMessages();
         expect(allMessages.length).toBe(0);
       });
 
-      it(`[Storage ${i} ${storage.name}]` + "Should fetch stored messages either by type or by did", async ({ expect }) => {
+      it(storageName + "Should fetch stored messages either by type or by did", async ({ expect }) => {
         const from = Domain.DID.fromString("did:prism:123456");
         const to = Domain.DID.fromString("did:prism:654321");
         const from2 = Domain.DID.fromString("did:prism:12345644");
@@ -404,16 +403,16 @@ describe("Pluto encrypted testing with different storages", () => {
         expect(byType10.length).toBe(2);
       });
 
-      it(`[Storage ${i} ${storage.name}]` + "Should return null if message is not found by id ", async ({ expect }) => {
+      it(storageName + "Should return null if message is not found by id ", async ({ expect }) => {
         const dbMesaage = await db.getMessage("notfound");
         expect(dbMesaage).toBe(null);
       });
 
-      it(`[Storage ${i} ${storage.name}]` + "Should store multiple messages", async ({ expect }) => {
+      it(storageName + "Should store multiple messages", async ({ expect }) => {
         await db.storeMessages([createMessage(), createMessage()]);
       });
 
-      it(`[Storage ${i} ${storage.name}]` + "Should store a peerDID", async ({ expect }) => {
+      it(storageName + "Should store a peerDID", async ({ expect }) => {
         const did = new Domain.DID(
           "did",
           "peer",
@@ -428,14 +427,14 @@ describe("Pluto encrypted testing with different storages", () => {
         await db.getDIDInfoByDID(did);
       });
 
-      it(`[Storage ${i} ${storage.name}]` + "Should store a didPair", async ({ expect }) => {
+      it(storageName + "Should store a didPair", async ({ expect }) => {
         const host = Domain.DID.fromString("did:prism:123456");
         const receiver = Domain.DID.fromString("did:prism:654321");
         const name = "example";
         await db.storeDIDPair(host, receiver, name);
       });
 
-      it(`[Storage ${i} ${storage.name}]` + "Should get all the didPairs", async ({ expect }) => {
+      it(storageName + "Should get all the didPairs", async ({ expect }) => {
         const host = Domain.DID.fromString("did:prism:123456");
         const receiver = Domain.DID.fromString("did:prism:654321");
         const name = "example";
@@ -444,7 +443,7 @@ describe("Pluto encrypted testing with different storages", () => {
         expect((await db.getAllDidPairs()).length).toBe(1);
       });
 
-      it(`[Storage ${i} ${storage.name}]` + "Should get a did pair by its did", async ({ expect }) => {
+      it(storageName + "Should get a did pair by its did", async ({ expect }) => {
         const host = Domain.DID.fromString("did:prism:123456");
         const receiver = Domain.DID.fromString("did:prism:654321");
         const name = "example";
@@ -452,12 +451,12 @@ describe("Pluto encrypted testing with different storages", () => {
         expect(await db.getPairByDID(host)).not.toBe(null);
       });
 
-      it(`[Storage ${i} ${storage.name}]` + "Should return null when a pair is fetched by a non existing did", async ({ expect }) => {
+      it(storageName + "Should return null when a pair is fetched by a non existing did", async ({ expect }) => {
         const notfound = Domain.DID.fromString("did:prism:65432155555");
         expect(await db.getPairByDID(notfound)).toBe(null);
       });
 
-      it(`[Storage ${i} ${storage.name}]` + "Should get a did pair by its name", async ({ expect }) => {
+      it(storageName + "Should get a did pair by its name", async ({ expect }) => {
         const host = Domain.DID.fromString("did:prism:123456");
         const receiver = Domain.DID.fromString("did:prism:654321");
         const name = "example";
@@ -465,11 +464,11 @@ describe("Pluto encrypted testing with different storages", () => {
         expect(await db.getPairByName(name)).not.toBe(null);
       });
 
-      it(`[Storage ${i} ${storage.name}]` + "Should return null when a pair by name is not found", async ({ expect }) => {
+      it(storageName + "Should return null when a pair by name is not found", async ({ expect }) => {
         expect(await db.getPairByName("not found")).toBe(null);
       });
 
-      it(`[Storage ${i} ${storage.name}]` + "Should store a mediator", async ({ expect }) => {
+      it(storageName + "Should store a mediator", async ({ expect }) => {
         const host = Domain.DID.fromString("did:prism:333333");
         const mediator = Domain.DID.fromString("did:prism:444444");
         const routing = Domain.DID.fromString("did:prism:555555");
@@ -479,7 +478,7 @@ describe("Pluto encrypted testing with different storages", () => {
         expect((await db.getAllMediators()).length).toBe(1);
       });
 
-      it(`[Storage ${i} ${storage.name}]` + "Should go a backup of all the database and restore it", async ({ expect }) => {
+      it(storageName + "Should go a backup of all the database and restore it", async ({ expect }) => {
         const host = Domain.DID.fromString("did:prism:333333");
         const mediator = Domain.DID.fromString("did:prism:444444");
         const routing = Domain.DID.fromString("did:prism:555555");
@@ -510,7 +509,7 @@ describe("Pluto encrypted testing with different storages", () => {
         expect((await restored.getAllMediators()).length).toBe(1);
       });
 
-      it(`[Storage ${i} ${storage.name}]` + "Should throw an error when an incomplete did is loaded from db", async ({ expect }) => {
+      it(storageName + "Should throw an error when an incomplete did is loaded from db", async ({ expect }) => {
         const did = Domain.DID.fromString("did:prism:65432133");
 
         await (db as any).db.dids.insert({
@@ -524,7 +523,7 @@ describe("Pluto encrypted testing with different storages", () => {
         );
       });
 
-      it(`[Storage ${i} ${storage.name}]` + "Should get a privateKey by its ID", async ({ expect }) => {
+      it(storageName + "Should get a privateKey by its ID", async ({ expect }) => {
         const did = Domain.DID.fromString("did:prism:65432133");
 
         await (db as any).db.privatekeys.insert({
@@ -558,7 +557,7 @@ describe("Pluto encrypted testing with different storages", () => {
         return `${jwtParts[0]}.${encoded}.${jwtParts[2]}`;
       };
 
-      it(`[Storage ${i} ${storage.name}]` + "Should store and fetch a JWT Credential", async ({ expect }) => {
+      it(storageName + "Should store and fetch a JWT Credential", async ({ expect }) => {
         expect((await db.getAllCredentials()).length).toBe(0);
         const jwtPayload = Fixtures.createJWTPayload(
           "jwtid",
@@ -574,7 +573,7 @@ describe("Pluto encrypted testing with different storages", () => {
         expect((await db.getAllCredentials()).length).toBe(1);
       });
 
-      it(`[Storage ${i} ${storage.name}]` + "Should store and fetch a Anoncreds Credential", async ({ expect }) => {
+      it(storageName + "Should store and fetch a Anoncreds Credential", async ({ expect }) => {
         expect((await db.getAllCredentials()).length).toBe(0);
         const payload = Fixtures.createAnonCredsPayload();
         const result = new AnonCredsCredential({
@@ -589,25 +588,25 @@ describe("Pluto encrypted testing with different storages", () => {
         expect((await db.getAllCredentials()).length).toBe(1);
       });
 
-      it(`[Storage ${i} ${storage.name}]` + "Should store and fetch a link secret by its name", async ({ expect }) => {
+      it(storageName + "Should store and fetch a link secret by its name", async ({ expect }) => {
         const name = "test";
         const secret = "12345";
         await db.storeLinkSecret(secret, name);
         expect(await db.getLinkSecret(name)).toBe(secret);
       });
 
-      it(`[Storage ${i} ${storage.name}]` + "Should store and fetch a link secret without params", async ({ expect }) => {
+      it(storageName + "Should store and fetch a link secret without params", async ({ expect }) => {
         const name = "test";
         const secret = "12345";
         await db.storeLinkSecret(secret, name);
         expect(await db.getLinkSecret()).toBe(secret);
       });
 
-      it(`[Storage ${i} ${storage.name}]` + "Should return null when no link secret is found", async ({ expect }) => {
+      it(storageName + "Should return null when no link secret is found", async ({ expect }) => {
         expect(await db.getLinkSecret("notfound")).toBe(null);
       });
 
-      it(`[Storage ${i} ${storage.name}]` + "Should store and fetch credential metadata by link secret name", async ({ expect }) => {
+      it(storageName + "Should store and fetch credential metadata by link secret name", async ({ expect }) => {
         const linkSecretName = "test";
         await db.storeCredentialMetadata(
           Fixtures.credRequestMeta,
@@ -618,17 +617,17 @@ describe("Pluto encrypted testing with different storages", () => {
         ).toBe(linkSecretName);
       });
 
-      it(`[Storage ${i} ${storage.name}]` + "should return null when no credentialMetadata is found by the linkSecretName", async ({ expect }) => {
+      it(storageName + "should return null when no credentialMetadata is found by the linkSecretName", async ({ expect }) => {
         expect(await db.fetchCredentialMetadata("notfound")).toBe(null);
       });
 
-      it(`[Storage ${i} ${storage.name}]` + "Should throw an error if a non storable credential is stored", async ({ expect }) => {
+      it(storageName + "Should throw an error if a non storable credential is stored", async ({ expect }) => {
         expect(db.storeCredential({ fail: true } as any)).rejects.toThrowError(
           new Error("Credential is not storable")
         );
       });
 
-      it(`[Storage ${i} ${storage.name}]` + "Should throw an error if an unrecoverable key is loaded from DB", async ({ expect} ) => {
+      it(storageName + "Should throw an error if an unrecoverable key is loaded from DB", async ({ expect }) => {
         const payload = Fixtures.createAnonCredsPayload();
         const result = new AnonCredsCredential({
           ...payload,
