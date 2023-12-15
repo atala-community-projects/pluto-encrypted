@@ -42,13 +42,9 @@ jobs:
           GIT_COMMITTER_NAME: ${{ steps.import_gpg.outputs.name }}
         run: |
           npm run release
-
-      - name: Build Docs
-        run: npm run docs
-
-      - name: Commit Docs
-        run: |
-          git config user.name "elribonazo"
-          git config user.email "elribonazo@gmail.com"
+          npm run docs
+          git config user.name ${{ steps.import_gpg.outputs.name }}
+          git config user.email  ${{ steps.import_gpg.outputs.email }}
           git add -A
           git commit -m "feat(docs): Commit changes [skip ci]" -S
+        
