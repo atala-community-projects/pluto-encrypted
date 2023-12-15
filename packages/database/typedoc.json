@@ -3,7 +3,7 @@
     "entryPoints": [
         "./src/index.ts"
     ],
-    "out": "./docs",
+    "out": "../../docs",
     "tsconfig": "tsconfig.json",
     "name": "pluto-encrypted",
     "useTsLinkResolution": true,
@@ -14,6 +14,9 @@
     "excludeProtected": true,
     "excludeInternal": true,
     "excludeNotDocumented": true,
+    "excludeNotDocumentedKinds": [
+        "TypeAlias"
+    ],
     "includeVersion": true,
     "theme": "default",
     "plugin": [
