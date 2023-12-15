@@ -6,9 +6,7 @@ export type DIDPairSchemaType = {
   receiverDID: string;
   name: string;
 };
-/**
- * DIDPairSchema
- */
+
 const DIDPairSchema: Schema<DIDPairSchemaType> = {
   version: 0,
   primaryKey: "name",

@@ -7,9 +7,7 @@ export type LinkSecretSchemaType = {
   readonly secret: string;
 };
 
-/**
- * LinkSecretSchema
- */
+
 const LinkSecretSchema: Schema<LinkSecretSchemaType> = {
   version: 0,
   primaryKey: "name",

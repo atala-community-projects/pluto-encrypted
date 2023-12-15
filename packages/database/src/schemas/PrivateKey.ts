@@ -170,7 +170,4 @@ export const PrivateKeyMethods: PrivateKeyMethodTypes = {
   },
 };
 
-/**
- * @class PrivateKeySchema
- */
 export default PrivateKeySchema;

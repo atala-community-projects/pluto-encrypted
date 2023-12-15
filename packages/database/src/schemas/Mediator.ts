@@ -8,9 +8,7 @@ export type MediatorSchemaType = {
   hostDID: string;
   routingDID: string;
 };
-/**
- * MediatorSchema
- */
+
 const MediatorSchema: Schema<MediatorSchemaType> = {
   version: 0,
   primaryKey: "id",

@@ -29,9 +29,6 @@ export type CredentialSchemaType = {
   availableClaims?: string[];
 };
 
-/**
- * CredentialSchema
- */
 const CredentialSchema: Schema<CredentialSchemaType> = {
   version: 0,
   primaryKey: "id",

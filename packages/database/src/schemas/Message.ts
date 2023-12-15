@@ -19,9 +19,7 @@ export type MessageSchemaType = {
   readonly pthid?: string | undefined;
 };
 
-/**
- * MessageSchema
- */
+
 const MessageSchema: Schema<MessageSchemaType> = {
   version: 0,
   primaryKey: "id",

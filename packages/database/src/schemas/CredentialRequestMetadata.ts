@@ -18,9 +18,7 @@ export type CredentialRequestMetadataSchemaType = {
   nonce: string;
 };
 
-/**
- * CredentialRequestMetadataSchema
- */
+
 const CredentialRequestMetadataSchema: Schema<CredentialRequestMetadataSchemaType> =
 {
   version: 0,

@@ -8,9 +8,7 @@ export type DIDSchemaType = {
   alias?: string;
   did: string;
 };
-/**
- * DIDSchema
- */
+
 const DIDSchema: Schema<DIDSchemaType> = {
   version: 0,
   primaryKey: "did",
