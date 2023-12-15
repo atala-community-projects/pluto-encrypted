@@ -70,7 +70,8 @@
     "rollup-plugin-polyfill-node": "^0.12.0",
     "rollup-plugin-typescript": "^1.0.1",
     "rollup-plugin-typescript2": "^0.34.1",
-    "semantic-release": "^22.0.8",
+    "semantic-release": "^22.0.12",
+    "semantic-release-monorepo": "^7.0.5",
     "sinon": "^16.0.0",
     "typedoc": "^0.24.8",
     "typedoc-plugin-markdown": "^3.15.3",
@@ -79,6 +80,5 @@
     "typedoc-theme-hierarchy": "^4.0.0",
     "typescript": "^5.1.6",
     "vitest": "^1.0.4"
-  },
-  "dependencies": {}
+  }
 }
