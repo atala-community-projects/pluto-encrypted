@@ -34,7 +34,6 @@ jobs:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: |
           npm ci
-          npm run build
           npm run release
           npm run docs
           git config user.name "Francisco Javier Ribó Labrador"
