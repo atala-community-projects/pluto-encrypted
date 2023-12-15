@@ -15,8 +15,6 @@
     "excludeInternal": true,
     "excludeNotDocumented": true,
     "excludeNotDocumentedKinds": [
-        "Property",
-        "Interface",
         "TypeAlias"
     ],
     "includeVersion": true,
