@@ -16,7 +16,7 @@
   },
   "scripts": {
     "prepublishOnly": "npm run build",
-    "clean": "rm -rf node_modules && rm -rf build",
+    "clean-packages": "rm -rf node_modules && rm -rf build",
     "build": "rm -rf build && npx rollup -c rollup/rollup.mjs"
   },
   "repository": {

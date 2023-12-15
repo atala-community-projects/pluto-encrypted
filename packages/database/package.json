@@ -16,7 +16,7 @@
   },
   "scripts": {
     "prepublishOnly": "npm run build",
-    "clean": "rm -rf node_modules && rm -rf build",
+    "clean-packages": "rm -rf node_modules && rm -rf build",
     "test": "NODE_ENV=debug npx vitest run tests/*.test.ts",
     "test:watch": "NODE_ENV=debug vitest tests/*.test.ts",
     "test:debug": "NODE_ENV=debug vitest tests/*.test.ts --inspect-brk --pool threads --poolOptions.threads.singleThread",

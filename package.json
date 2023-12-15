@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": "true",
   "scripts": {
-    "clean": "npx lerna run clean && rm -rf node_modules",
+    "clean-packages": "npx lerna run clean && rm -rf node_modules",
     "build": "npx lerna run build --stream --include-dependencies",
     "coverage": "npx lerna run --stream coverage",
     "test": "npx lerna run --stream test",
