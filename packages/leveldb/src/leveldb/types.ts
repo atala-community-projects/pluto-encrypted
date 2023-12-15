@@ -22,8 +22,8 @@ export type LevelDBDataIndex = Map<IndexType, IndexType[]>;
 export type LevelDBType = Level<string, string>
 export type LevelDBPreparedQuery<DocType> = DefaultPreparedQuery<DocType>;
 export type LevelDBInternalConstructor<RxDocType> = {
+    dbPath: string,
     refCount: number,
-    dbName: string,
     schema: RxJsonSchema<RxDocumentData<RxDocType>>;
     documents?: Map<string, RxDocumentData<RxDocType>>
 } | {
@@ -59,7 +59,7 @@ export type RxStorageLevelDBType<RxDocType> = RxStorage<RxDocType, LevelDBSettin
 
 
 export type LevelDBSettings = {
-    dbName: string,
+    dbPath: string,
 } | {
     level: LevelDBType
 }

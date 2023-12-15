@@ -16,8 +16,6 @@ async function preloadData<RxDocType>(constructorProps: LevelDBInternalConstruct
         await internalStorage.getDocuments([]);
         return internalStorage
     } catch (err) {
-        console.log(err);
-        debugger;
         throw err
     }
 }
@@ -36,8 +34,8 @@ function getRxStorageLevel<RxDocType>(settings: LevelDBSettings): RxStorageLevel
                     }
                     :
                     {
+                        dbPath: settings.dbPath,
                         refCount: 1,
-                        dbName: settings.dbName,
                         schema: params.schema,
                     };
 
@@ -59,6 +57,9 @@ function getRxStorageLevel<RxDocType>(settings: LevelDBSettings): RxStorageLevel
                 return rxStorageInstance
             }
         }
+    }
+    else {
+        console.warn('already got an instance')
     }
 
     return levelDBInstance

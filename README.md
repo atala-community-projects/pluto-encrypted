@@ -102,8 +102,14 @@ const database = db = await Database.createEncrypted(
         name: `my-db`,
         encryptionKey: defaultPassword,
         storage: createLevelDBStorage({ 
-            dbName: "demo", path: "./demo" 
+            dbName: "demo",
+            dbPath: "/tmp/demo" 
         }),
     }
 );
 ```
+
+## QA
+| Statements                  | Branches                | Functions                 | Lines             |
+| --------------------------- | ----------------------- | ------------------------- | ----------------- |
+| ![Statements](https://img.shields.io/badge/statements-96.32%25-brightgreen.svg?style=flat) | ![Branches](https://img.shields.io/badge/branches-90.42%25-brightgreen.svg?style=flat) | ![Functions](https://img.shields.io/badge/functions-60.5%25-red.svg?style=flat) | ![Lines](https://img.shields.io/badge/lines-96.63%25-brightgreen.svg?style=flat) |

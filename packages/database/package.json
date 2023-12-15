@@ -17,12 +17,12 @@
   "scripts": {
     "prepublishOnly": "npm run build",
     "clean": "rm -rf node_modules && rm -rf build",
-    "test": "NODE_ENV=debug vitest --run tests/*.test.ts",
+    "test": "NODE_ENV=debug npx vitest run tests/*.test.ts",
     "test:watch": "NODE_ENV=debug vitest tests/*.test.ts",
     "test:debug": "NODE_ENV=debug vitest tests/*.test.ts --inspect-brk --pool threads --poolOptions.threads.singleThread",
     "build": "rm -rf build && npx rollup -c rollup/rollup.mjs",
     "dev": "rm -rf build && npx rollup -c rollup/rollup.mjs",
-    "coverage": "npm run test -- --coverage",
+    "coverage": "npx vitest run --coverage.enabled --coverage.reporter='json-summary' && npx istanbul-badges-readme --readmeDir=\"../../\"",
     "docs": "npx typedoc --options typedoc.json --hideGenerator"
   },
   "repository": {
@@ -43,7 +43,7 @@
     "@pluto-encrypted/indexdb": "../indexdb/",
     "@pluto-encrypted/inmemory": "../inmemory/",
     "@pluto-encrypted/leveldb": "../leveldb/",
-    "level": "^8.0.0"
+    "level": "^6.0.1"
   },
   "dependencies": {
     "rxdb": "^14.17.0",

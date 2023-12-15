@@ -118,7 +118,7 @@ export class Database implements Domain.Pluto {
       password: Buffer.from(encryptionKey).toString(),
     });
 
-    await database.start();
+    await database.start()
 
     if (importData) {
       await database.db.importJSON(importData);
@@ -625,7 +625,7 @@ export class Database implements Domain.Pluto {
 
   async getPrismLastKeyPathIndex(): Promise<number> {
     const results = await this.getAllPrismDIDs();
-    if (results.length === 0) {
+    if (!results || results.length === 0) {
       return 0;
     }
     return Math.max(...results.map((result) => result.keyPathIndex));

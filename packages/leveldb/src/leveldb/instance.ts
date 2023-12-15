@@ -58,9 +58,6 @@ export class RxStorageIntanceLevelDB<RxDocType> implements RxStorageInstance<
         );
         ret.error = categorized.errors;
 
-        if (Object.keys(ret.error).length > 0) {
-            debugger;
-        }
         /**
        * Do inserts/updates
        */

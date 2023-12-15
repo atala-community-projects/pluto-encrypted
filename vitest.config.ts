@@ -5,7 +5,8 @@ export default defineConfig({
   test: {
     reporters: ['default'], // or 'verbose'
     coverage: {
-      provider: 'istanbul' // or 'v8'
+      provider: 'istanbul',
+      reporter: ['json-summary']
     }
   }
 })
