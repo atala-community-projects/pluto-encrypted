@@ -58,7 +58,6 @@ const databasePath = path.resolve(process.cwd(), databaseName);
 
 const storages: RxStorage<any, any>[] = [
   createLevelDBStorage({
-    dbName: databaseName,
     dbPath: databasePath
   }),
   InMemory,

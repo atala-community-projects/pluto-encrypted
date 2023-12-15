@@ -59,7 +59,6 @@ export type RxStorageLevelDBType<RxDocType> = RxStorage<RxDocType, LevelDBSettin
 
 
 export type LevelDBSettings = {
-    dbName: string,
     dbPath: string,
 } | {
     level: LevelDBType
