@@ -422,6 +422,11 @@ export class Database implements Domain.Pluto {
     return null;
   }
 
+  /**
+   * Stores a message
+   * @param [Message](https://input-output-hk.github.io/atala-prism-wallet-sdk-ts/classes/Domain.Message.html) 
+   * @returns void
+   */
   async storeMessage(message: Domain.Message): Promise<void> {
     const existing = await this.db.messages
       .findOne({
@@ -446,12 +451,21 @@ export class Database implements Domain.Pluto {
     }
   }
 
+  /**
+   * Stores multiple messages in 1 call
+   * @param [Message[]](https://input-output-hk.github.io/atala-prism-wallet-sdk-ts/classes/Domain.Message.html) 
+   * @returns void
+   */
   async storeMessages(messages: Domain.Message[]): Promise<void> {
     for (let message of messages) {
       await this.storeMessage(message)
     }
   }
 
+  /**
+  * Get all the stored messages
+  * @returns [Message[]](https://input-output-hk.github.io/atala-prism-wallet-sdk-ts/classes/Domain.Message.html) 
+  */
   async getAllMessages(): Promise<Domain.Message[]> {
     const messages = await this.db.messages.find();
     return messages.map((message) => message.toDomainMessage());
@@ -461,7 +475,9 @@ export class Database implements Domain.Pluto {
     return collectionObj
   }
 
-
+  /**
+   * Start the database and build collections
+   */
   async start(): Promise<void> {
     const { dbOptions } = this;
     try {
@@ -597,6 +613,14 @@ export class Database implements Domain.Pluto {
     }
   }
 
+  /**
+   * Stores a prismDID and its privateKey
+   * @param did 
+   * @param keyPathIndex 
+   * @param privateKey 
+   * @param privateKeyMetaId 
+   * @param alias 
+   */
   async storePrismDID(
     did: Domain.DID,
     keyPathIndex: number,
@@ -619,6 +643,11 @@ export class Database implements Domain.Pluto {
     );
   }
 
+  /**
+   * Stores a peerdid with its privateKeys
+   * @param did 
+   * @param privateKeys 
+   */
   async storePeerDID(
     did: Domain.DID,
     privateKeys: Domain.PrivateKey[]
@@ -655,6 +684,12 @@ export class Database implements Domain.Pluto {
     }
   }
 
+  /**
+   * Stores a didpair
+   * @param host 
+   * @param receiver 
+   * @param name 
+   */
   async storeDIDPair(
     host: Domain.DID,
     receiver: Domain.DID,
@@ -667,6 +702,13 @@ export class Database implements Domain.Pluto {
     });
   }
 
+  /**
+   * Stores privateKeys references to an existing DID
+   * @param privateKey 
+   * @param did 
+   * @param keyPathIndex 
+   * @param metaId 
+   */
   async storePrivateKeys(
     privateKey: Domain.PrivateKey,
     did: Domain.DID,
@@ -702,6 +744,10 @@ export class Database implements Domain.Pluto {
     });
   }
 
+  /**
+   * Gets all the stores didPairs
+   * @returns [Domain.DIDPair[]](https://input-output-hk.github.io/atala-prism-wallet-sdk-ts/classes/Domain.DIDPair.html)
+   */
   async getAllDidPairs(): Promise<Domain.DIDPair[]> {
     const { DID, DIDPair } = Domain;
     const results = await this.db.didpairs.find()
@@ -711,6 +757,11 @@ export class Database implements Domain.Pluto {
     );
   }
 
+  /**
+   * Get a did pair (connection) by one of its dids
+   * @param did 
+   * @returns [Domain.DIDPair](https://input-output-hk.github.io/atala-prism-wallet-sdk-ts/classes/Domain.DIDPair.html)
+   */
   async getPairByDID(did: Domain.DID): Promise<Domain.DIDPair | null> {
     const { DID, DIDPair } = Domain;
     const didPair = await this.db.didpairs
