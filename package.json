@@ -8,7 +8,7 @@
     "coverage": "npx lerna run --stream coverage",
     "test": "npx lerna run --stream test",
     "docs": "npx lerna run --stream docs",
-    "release": "npx lerna publish --message 'chore: release' --no-private && npm run docs && node versioning.cjs"
+    "release": "npx lerna exec --concurrency 1 -- npx --no-install semantic-release -e semantic-release-monorepo"
   },
   "author": "elribonazo@gmail.com",
   "license": "Apache-2.0",
