@@ -30,4 +30,4 @@ PrivateKeySchema
 
 #### Defined in
 
-[schemas/PrivateKey.ts:14](https://github.com/elribonazo/pluto-encrypted/blob/c6d4f2a/packages/database/src/schemas/PrivateKey.ts#L14)
+[schemas/PrivateKey.ts:14](https://github.com/elribonazo/pluto-encrypted/blob/edacd9d/packages/database/src/schemas/PrivateKey.ts#L14)
