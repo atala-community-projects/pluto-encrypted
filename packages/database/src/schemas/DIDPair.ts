@@ -1,13 +1,12 @@
-import type { Schema } from "../types";
+import { RxCollection, RxDocument } from "rxdb";
+import type { GenericORMType, Schema } from "../types";
 
 export type DIDPairSchemaType = {
   hostDID: string;
   receiverDID: string;
   name: string;
 };
-/**
- * DIDPairSchema
- */
+
 const DIDPairSchema: Schema<DIDPairSchemaType> = {
   version: 0,
   primaryKey: "name",
@@ -27,5 +26,8 @@ const DIDPairSchema: Schema<DIDPairSchemaType> = {
   encrypted: [],
   required: ["name", "hostDID", "receiverDID"],
 };
+
+export type DIDPairDocument = RxDocument<DIDPairSchemaType>;
+export type DIDPairCollection = RxCollection<DIDPairSchemaType, any, GenericORMType<DIDPairDocument>>
 
 export default DIDPairSchema;

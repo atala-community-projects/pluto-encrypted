@@ -6,7 +6,7 @@ import {
   JWTCredential,
   JWTVerifiableCredentialRecoveryId,
 } from "@atala/prism-wallet-sdk";
-import type { Schema } from "../types";
+import type { GenericORMType, Schema } from "../types";
 import { RxCollection, RxDocument } from "rxdb";
 
 export type CredentialSubjectType = {
@@ -29,9 +29,6 @@ export type CredentialSchemaType = {
   availableClaims?: string[];
 };
 
-/**
- * CredentialSchema
- */
 const CredentialSchema: Schema<CredentialSchemaType> = {
   version: 0,
   primaryKey: "id",
@@ -101,7 +98,7 @@ export const CredentialMethods: CredentialMethodTypes = {
         signature: credentialJson[AnonCredsCredentialProperties.signasture],
         signature_correctness_proof:
           credentialJson[
-            AnonCredsCredentialProperties.signatureCorrectnessProof
+          AnonCredsCredentialProperties.signatureCorrectnessProof
           ],
       });
     } else {
@@ -112,7 +109,8 @@ export const CredentialMethods: CredentialMethodTypes = {
 
 export type CredentialCollection = RxCollection<
   CredentialSchemaType,
-  CredentialMethodTypes
+  CredentialMethodTypes,
+  GenericORMType<CredentialDocument>
 >;
 
 export default CredentialSchema;

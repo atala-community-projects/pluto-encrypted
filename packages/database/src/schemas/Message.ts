@@ -1,6 +1,6 @@
 import { Domain } from "@atala/prism-wallet-sdk";
-import type { Schema } from "../types";
-import { RxCollection, RxDocument } from "rxdb";
+import type { GenericORMType, Schema } from "../types";
+import { RxCollection, RxCollectionCreator, RxDocument } from "rxdb";
 
 export type MessageSchemaType = {
   readonly body: string;
@@ -19,9 +19,7 @@ export type MessageSchemaType = {
   readonly pthid?: string | undefined;
 };
 
-/**
- * MessageSchema
- */
+
 const MessageSchema: Schema<MessageSchemaType> = {
   version: 0,
   primaryKey: "id",
@@ -115,12 +113,16 @@ export type MessageMethodTypes = {
 
 export type MessageColletion = RxCollection<
   MessageSchemaType,
-  MessageMethodTypes
+  MessageMethodTypes,
+  GenericORMType<MessageDocument>
 >;
+
+
 
 export const MessageMethods: MessageMethodTypes = {
   toDomainMessage: function toDomainMessage(this: MessageDocument) {
     return Domain.Message.fromJson(JSON.stringify(this));
   },
 };
+
 export default MessageSchema;

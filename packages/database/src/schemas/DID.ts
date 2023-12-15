@@ -1,4 +1,5 @@
-import type { Schema } from "../types";
+import { RxCollection, RxDocument } from "rxdb";
+import type { GenericORMType, Schema } from "../types";
 
 export type DIDSchemaType = {
   schema: string;
@@ -7,9 +8,7 @@ export type DIDSchemaType = {
   alias?: string;
   did: string;
 };
-/**
- * DIDSchema
- */
+
 const DIDSchema: Schema<DIDSchemaType> = {
   version: 0,
   primaryKey: "did",
@@ -39,5 +38,8 @@ const DIDSchema: Schema<DIDSchemaType> = {
   encrypted: [],
   required: ["method", "methodId", "did", "schema"],
 };
+export type DIDDocument = RxDocument<DIDSchemaType>;
+
+export type DIDCollection = RxCollection<DIDSchemaType, any, GenericORMType<DIDDocument>>
 
 export default DIDSchema;

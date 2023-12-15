@@ -1,23 +1,33 @@
 {
     "$schema": "https://typedoc.org/schema.json",
-    "entryPoints": ["./src/index.ts"],
-    "out": "./docs",
+    "entryPoints": [
+        "./src/index.ts"
+    ],
+    "out": "../../docs",
     "tsconfig": "tsconfig.json",
     "name": "pluto-encrypted",
     "useTsLinkResolution": true,
     "hideGenerator": true,
     "entryPointStrategy": "expand",
-    "excludePrivate": false,
-    "excludeReferences": false,
-    "excludeProtected": false,
-    "excludeInternal": false,
-    "excludeNotDocumented": false,
+    "excludePrivate": true,
+    "excludeReferences": true,
+    "excludeProtected": true,
+    "excludeInternal": true,
+    "excludeNotDocumented": true,
+    "readme": "none",
+    "excludeNotDocumentedKinds": [
+        "TypeAlias",
+        "Variable"
+    ],
     "includeVersion": true,
     "theme": "default",
-    "plugin": ["typedoc-plugin-superstruct", "typedoc-plugin-rename-defaults", "typedoc-plugin-markdown"],
+    "plugin": [
+        "typedoc-plugin-superstruct",
+        "typedoc-plugin-rename-defaults",
+        "typedoc-plugin-markdown"
+    ],
     "navigationLinks": {
         "Docs": "https://elribonazo.github.io/pluto-encrypted/",
         "GitHub": "https://github.com/elribonazo/pluto-encrypted"
     }
-  }
-  
+}

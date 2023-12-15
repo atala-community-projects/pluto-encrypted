@@ -646,6 +646,45 @@ describe("Pluto encrypted testing with different storages", () => {
         );
       });
 
+      it(storageName + "Should be able to request count orm method on all models", async ({ expect }) => {
+        const count = await db.privatekeys.count();
+        expect(count).toBe(0)
+      })
+
+      it(storageName + "Should be able to request findByIds orm method on all models", async ({ expect }) => {
+        const count = await db.privatekeys.findByIds([]);
+        expect(count.size).toBe(0)
+      })
+
+      it(storageName + "Should be able to request find orm method on all models", async ({ expect }) => {
+        const results = await db.privatekeys.find();
+        expect(results.length).toBe(0)
+      })
+
+      it(storageName + "Should be able to request remove orm method on all models", async ({ expect }) => {
+        const payload = Fixtures.createAnonCredsPayload();
+        const result = new AnonCredsCredential({
+          ...payload,
+          values: {
+            ...(payload.values.map(([varname, val]) => ({
+              [varname]: val,
+            })) as any),
+          },
+        });
+        result.recoveryId = "demo";
+        await db.storeCredential(result);
+        const removed = await db.credentials.remove({
+          selector: {
+            recoveryId: {
+              $eq: result.recoveryId
+            }
+          }
+        });
+        expect(removed.length).toBe(1)
+      });
+
+
+
     });
   })
 

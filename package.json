@@ -3,12 +3,11 @@
   "version": "0.0.0",
   "private": "true",
   "scripts": {
-    "clean": "npx lerna run clean && rm -rf node_modules",
-    "dev": "npx lerna watch  -- lerna run build  --scope=\\$LERNA_PACKAGE_NAME",
-    "build": "npx lerna run build --include-dependencies",
-    "coverage": "npx lerna run coverage",
-    "test": "npx lerna run test",
-    "docs": "npx lerna run docs",
+    "clean-packages": "npx lerna run clean && rm -rf node_modules",
+    "build": "npx lerna run build --stream --include-dependencies",
+    "coverage": "npx lerna run --stream coverage",
+    "test": "npx lerna run --stream test",
+    "docs": "npx lerna run --stream docs",
     "release": "npx lerna publish --message 'chore: release' --no-private && npm run docs && node versioning.cjs"
   },
   "author": "elribonazo@gmail.com",
@@ -52,7 +51,7 @@
     "husky": "^7.0.4",
     "istanbul-badges-readme": "^1.8.5",
     "jasmine": "^5.1.0",
-    "lerna": "^8.0.0",
+    "lerna": "^8.0.1",
     "mock-aws-s3": "^4.0.2",
     "nx": "16.8.1",
     "postcss": "^8.4.31",
@@ -80,5 +79,6 @@
     "typedoc-theme-hierarchy": "^4.0.0",
     "typescript": "^5.1.6",
     "vitest": "^1.0.4"
-  }
+  },
+  "dependencies": {}
 }
