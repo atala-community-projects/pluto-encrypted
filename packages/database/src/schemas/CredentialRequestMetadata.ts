@@ -67,6 +67,9 @@ export const CredentialRequestMetadataMethods: CredentialRequestMetadataMethodTy
     },
 };
 
+/**
+ * test content
+ */
 export type CredentialRequestMetadataCollection = RxCollection<
   CredentialRequestMetadataSchemaType,
   CredentialRequestMetadataMethodTypes,
