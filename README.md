@@ -1,7 +1,8 @@
 # Pluto Encrypted
 Is a community maintained project which aims to bring a scalable and future proof storage solution for Wallet SDK on typescript. By using this package you can ensure that this dependency will fit the AtalaPrism wallet SDK contract and provide the SDK with storage finally.
 
-### Security concerns and limitations
+This package is compatible with Atala Prism Wallet SDK v3.2.0
+
 We currently support database wrappers for IndexDB, InMemory and are working together to bring you level-db with electron compatibility.
 We are not going to stop here but ensure that our SDK can be used in any platform and language.
 
