@@ -80,5 +80,8 @@
     "typedoc-theme-hierarchy": "^4.0.0",
     "typescript": "^5.1.6",
     "vitest": "^1.0.4"
+  },
+  "optionalDependencies": {
+    "@nx/nx-linux-x64-gnu": "^17.2.5"
   }
 }
