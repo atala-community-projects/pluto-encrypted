@@ -35,6 +35,7 @@
     "@semantic-release/npm": "^11.0.1",
     "@semantic-release/release-notes-generator": "^10.0.3",
     "@types/node": "^20.5.0",
+    "@types/sinon": "^17.0.2",
     "@types/uuid": "^9.0.2",
     "@typescript-eslint/eslint-plugin": "^5.62.0",
     "@typescript-eslint/parser": "^5.55.0",

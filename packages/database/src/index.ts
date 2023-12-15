@@ -626,7 +626,7 @@ export class Database implements Domain.Pluto {
 
   async getPrismLastKeyPathIndex(): Promise<number> {
     const results = await this.getAllPrismDIDs();
-    if (results.length === 0) {
+    if (!results || results.length === 0) {
       return 0;
     }
     return Math.max(...results.map((result) => result.keyPathIndex));

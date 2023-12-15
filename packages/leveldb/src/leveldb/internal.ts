@@ -9,8 +9,8 @@ import {
     LevelDBType
 } from "./types";
 
-function isArray (arr) {
-  return Array.isArray(arr)
+function isArray(arr) {
+    return Array.isArray(arr)
 }
 
 export class LevelDBInternal<RxDocType> implements LevelDBStorageInternals<RxDocType> {
@@ -50,13 +50,13 @@ export class LevelDBInternal<RxDocType> implements LevelDBStorageInternals<RxDoc
             const db = await this.getInstance()
 
             await pull(
-              pullLevel.read(db),
-              pull.filter(row => !isArray(row.value)),
-              pull.map(row => {
-                docsInDbMap.set(row.key, row.value)
-                return
-              }),
-              pull.collectAsPromise()
+                pullLevel.read(db),
+                pull.filter(row => !isArray(row.value)),
+                pull.map(row => {
+                    docsInDbMap.set(row.key, row.value)
+                    return
+                }),
+                pull.collectAsPromise()
             )
 
             return docsInDbMap
@@ -73,25 +73,25 @@ export class LevelDBInternal<RxDocType> implements LevelDBStorageInternals<RxDoc
 
     async getInstance() {
         return this.db.open()
-          .then(() => this.db);
+            .then(() => this.db);
     }
 
     async getIndex(key: string): Promise<string[]> {
         const db = await this.getInstance()
         return db.get(key)
-           .then(result => result ? JSON.parse(result) : [])
-           .catch(err => {
-             if (err.message.startsWith('Key not found in database')) {
-               return []
-             } else {
-               throw err
-             }
-              // if ((err as any).code && (err as any).code === 'LEVEL_NOT_FOUND') {
-              //     throw err
-              // } else {
-              //     return []
-              // }
-           });
+            .then(result => result ? JSON.parse(result) : [])
+            .catch(err => {
+                if (err.message.startsWith('Key not found in database')) {
+                    return []
+                } else {
+                    throw err
+                }
+                // if ((err as any).code && (err as any).code === 'LEVEL_NOT_FOUND') {
+                //     throw err
+                // } else {
+                //     return []
+                // }
+            });
     }
 
     async bulkGet(keys: string[]): Promise<RxDocumentData<RxDocType>[]> {
@@ -102,32 +102,32 @@ export class LevelDBInternal<RxDocType> implements LevelDBStorageInternals<RxDoc
         const db = await this.getInstance()
         const keysSet = new Set(keys)
         return pull(
-          pullLevel.read(db),
-          pull.filter(row => (
-            keysSet.has(row.key) &&
-            row.value !== undefined
-          )),
-          pull.map(row => JSON.parse(row.value)),
-          pull.collectAsPromise()
+            pullLevel.read(db),
+            pull.filter(row => (
+                keysSet.has(row.key) &&
+                row.value !== undefined
+            )),
+            pull.map(row => JSON.parse(row.value)),
+            pull.collectAsPromise()
         )
     }
 
     async get(key: string): Promise<RxDocumentData<RxDocType> | null> {
         const db = await this.getInstance()
         return await db.get(key)
-          .then(result => result ? JSON.parse(result) : null)
-          .catch(err => {
-             if (err.message.startsWith('Key not found in database')) {
-               return null
-             } else {
-               throw err
-             }
-              // if ((err as any).code && (err as any).code === 'LEVEL_NOT_FOUND') {
-              //     return null
-              // } else {
-              //     throw err
-              // }
-          })
+            .then(result => result ? JSON.parse(result) : null)
+            .catch(err => {
+                if (err.message.startsWith('Key not found in database')) {
+                    return null
+                } else {
+                    throw err
+                }
+                // if ((err as any).code && (err as any).code === 'LEVEL_NOT_FOUND') {
+                //     return null
+                // } else {
+                //     throw err
+                // }
+            })
     }
 
     async set(key: string, data: RxDocumentData<RxDocType>) {
@@ -139,10 +139,15 @@ export class LevelDBInternal<RxDocType> implements LevelDBStorageInternals<RxDoc
         }
 
         const db = await this.getInstance()
-        const value = JSON.stringify(data)
-        // console.log(`[+index]${key} ${value}`)
-        
-        return db.put(key, value)
+
+        return new Promise<void>((resolve, reject) => {
+            db.put(key, JSON.stringify(data), (err) => {
+                if (err) {
+                    return reject(err);
+                }
+                return resolve()
+            })
+        })
     }
 
     async setIndex(key: string, ids: string[]) {
@@ -154,10 +159,14 @@ export class LevelDBInternal<RxDocType> implements LevelDBStorageInternals<RxDoc
         }
 
         const db = await this.getInstance()
-        const value = JSON.stringify(ids)
-        // console.log(`[+index]${key} ${value}`)
-
-        return db.put(key, value);
+        return new Promise<void>((resolve, reject) => {
+            db.put(key, JSON.stringify(ids), (err) => {
+                if (err) {
+                    return reject(err);
+                }
+                return resolve()
+            })
+        })
     }
 
     async updateIndex(key: string, id: string) {
@@ -169,7 +178,6 @@ export class LevelDBInternal<RxDocType> implements LevelDBStorageInternals<RxDoc
         }
         const existingIndex = await this.getIndex(key);
         const newIndexes = Array.from(new Set([...existingIndex, id]));
-
         await this.setIndex(key, newIndexes);
     }
 
@@ -202,9 +210,6 @@ export class LevelDBInternal<RxDocType> implements LevelDBStorageInternals<RxDoc
                     await this.set(id, item);
 
                     this.documents.set(id, item)
-                    if (!(primaryKeyVal as string).includes("collection") && !(primaryKeyVal as string).includes("storage-token")) {
-                        // console.log("Adding ", primaryKeyVal, item)
-                    }
                 } else {
                     const id = item.id as string;
 
@@ -213,9 +218,6 @@ export class LevelDBInternal<RxDocType> implements LevelDBStorageInternals<RxDoc
                     await this.set(id, item)
 
                     this.documents.set(id, item)
-                    if (!(primaryKeyVal as string).includes("collection") && !(primaryKeyVal as string).includes("storage-token")) {
-                        // console.log("Adding ", primaryKeyVal, item)
-                    }
                 }
 
             }
