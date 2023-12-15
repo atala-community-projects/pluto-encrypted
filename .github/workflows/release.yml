@@ -20,28 +20,18 @@ jobs:
           node-version: "lts/*"
           registry-url: 'https://registry.npmjs.org/'
 
-      - uses: crazy-max/ghaction-import-gpg@v5
-        id: import_gpg
-        with:
-          gpg_private_key: ${{ secrets.GPG_PRIVATE_KEY }}
-          git_user_signingkey: true
-          git_commit_gpgsign: true
           
       - name: Release
         env:
           GH_TOKEN: ${{ secrets.PLUTO_GITHUB }}
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-          GIT_AUTHOR_EMAIL: ${{ steps.import_gpg.outputs.email }}
-          GIT_COMMITTER_EMAIL: ${{ steps.import_gpg.outputs.email }}
-          GIT_AUTHOR_NAME: ${{ steps.import_gpg.outputs.name }}
-          GIT_COMMITTER_NAME: ${{ steps.import_gpg.outputs.name }}
         run: |
           npm ci
           npm run build
           npm run release
           npm run docs
-          git config user.name ${{ steps.import_gpg.outputs.name }}
-          git config user.email  ${{ steps.import_gpg.outputs.email }}
+          git config user.name "Francisco Javier Ribó Labrador"
+          git config user.email "elribonazo@gmail.com"
           git add -A
           git commit -m "feat(docs): Commit changes [skip ci]" -S
         
