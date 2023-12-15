@@ -37,7 +37,7 @@ PrivateKeySchema
 
 #### Defined in
 
-[schemas/PrivateKey.ts:14](https://github.com/elribonazo/pluto-encrypted/blob/211698f/packages/database/src/schemas/PrivateKey.ts#L14)
+[schemas/PrivateKey.ts:14](https://github.com/elribonazo/pluto-encrypted/blob/3641f0d/packages/database/src/schemas/PrivateKey.ts#L14)
 
 ## Variables
 
@@ -47,7 +47,7 @@ PrivateKeySchema
 
 #### Defined in
 
-[schemas/Credential.ts:87](https://github.com/elribonazo/pluto-encrypted/blob/211698f/packages/database/src/schemas/Credential.ts#L87)
+[schemas/Credential.ts:87](https://github.com/elribonazo/pluto-encrypted/blob/3641f0d/packages/database/src/schemas/Credential.ts#L87)
 
 ___
 
@@ -57,7 +57,7 @@ ___
 
 #### Defined in
 
-[schemas/Mediator.ts:47](https://github.com/elribonazo/pluto-encrypted/blob/211698f/packages/database/src/schemas/Mediator.ts#L47)
+[schemas/Mediator.ts:47](https://github.com/elribonazo/pluto-encrypted/blob/3641f0d/packages/database/src/schemas/Mediator.ts#L47)
 
 ___
 
@@ -67,7 +67,7 @@ ___
 
 #### Defined in
 
-[schemas/Message.ts:124](https://github.com/elribonazo/pluto-encrypted/blob/211698f/packages/database/src/schemas/Message.ts#L124)
+[schemas/Message.ts:124](https://github.com/elribonazo/pluto-encrypted/blob/3641f0d/packages/database/src/schemas/Message.ts#L124)
 
 ___
 
@@ -77,4 +77,4 @@ ___
 
 #### Defined in
 
-[schemas/PrivateKey.ts:76](https://github.com/elribonazo/pluto-encrypted/blob/211698f/packages/database/src/schemas/PrivateKey.ts#L76)
+[schemas/PrivateKey.ts:76](https://github.com/elribonazo/pluto-encrypted/blob/3641f0d/packages/database/src/schemas/PrivateKey.ts#L76)
