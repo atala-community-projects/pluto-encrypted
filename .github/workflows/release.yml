@@ -28,4 +28,4 @@ jobs:
 
       - name: Release
         run: |
-          npm run semantic-release -e semantic-release-monorepo
+          npx semantic-release -e semantic-release-monorepo
