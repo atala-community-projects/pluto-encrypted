@@ -122,7 +122,14 @@ export class Database implements Domain.Pluto {
   }
 
   /**
-   * test content
+   * CredentialRequestMetadatas
+   * Stores anoncreds credential metadata + exposes orm functions
+   * 
+   * examples:
+   * Count all Credential Metadatas
+   * ```ts
+   * await db.credentialmetadatas.count({selector: {id: {$eq: 1}}}) //Query is optional
+   * ```
    */
   get credentialrequestmetadatas() {
     return this._db.collections.credentialrequestmetadatas
