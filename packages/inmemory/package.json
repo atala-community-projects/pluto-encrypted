@@ -29,57 +29,8 @@
     "rxdb": "^14.17.0",
     "uuid": "^9.0.1"
   },
-  "jest-junit": {
-    "outputDirectory": "coverage",
-    "outputName": "junit.xml"
-  },
   "files": [
     "build/*"
   ],
-  "jest": {
-    "collectCoverage": true,
-    "testEnvironment": "jsdom",
-    "setupFilesAfterEnv": [],
-    "workerThreads": true,
-    "maxWorkers": 1,
-    "transformIgnorePatterns": [
-      "node_modules/(?!@noble)",
-      "node_modules/(?!sinon)"
-    ],
-    "collectCoverageFrom": [
-      "src/**/*.{js,ts}"
-    ],
-    "moduleNameMapper": {
-      "^sinon$": "<rootDir>/node_modules/sinon/pkg/sinon.js",
-      "^uint8arrays$": "<rootDir>/node_modules/uint8arrays/cjs/src",
-      "^uint8arrays/(.*)$": "<rootDir>/node_modules/uint8arrays/cjs/src/$1",
-      "^multiformats/(.*)$": "<rootDir>/node_modules/multiformats/cjs/src/$1",
-      "^rxdb/(.*)$": "<rootDir>/node_modules/rxdb/$1",
-      "^dexie$": "<rootDir>/node_modules/dexie",
-      "^core-js/modules/(.*)$": "<rootDir>/node_modules/core-js/modules/$1"
-    },
-    "moduleFileExtensions": [
-      "js",
-      "ts"
-    ],
-    "coverageReporters": [
-      "json-summary",
-      "lcov",
-      "text"
-    ],
-    "reporters": [
-      "default",
-      "jest-junit"
-    ],
-    "coverageThreshold": {
-      "global": {
-        "branches": 58,
-        "functions": 64,
-        "lines": 74,
-        "statements": 71
-      }
-    },
-    "coverageDirectory": "coverage"
-  },
   "gitHead": "adf50b6a30f1ca6fe207aac5b5bb74ad1aba6c47"
 }
