@@ -98,10 +98,6 @@ export class Database implements Domain.Pluto {
   private _db!: PlutoDatabase;
 
   public collections!: {
-    /**
-     *  @class
-     * 
-     */
     messages: RxCollection<MessageSchemaType, GenericORMType<MessageDocument>>;
     dids: RxCollection<DIDSchemaType, GenericORMType<DIDDocument>>;
     didpairs: RxCollection<DIDPairSchemaType, GenericORMType<DIDPairDocument>>;
@@ -111,6 +107,7 @@ export class Database implements Domain.Pluto {
     credentialrequestmetadatas: RxCollection<CredentialRequestMetadataSchemaType, GenericORMType<CredentialRequestMetadataDocument>>;
     linksecrets: RxCollection<LinkSecretSchemaType, GenericORMType<LinkSecretDocument>>;
   }
+
   get db() {
     if (!this._db) {
       throw new Error("Start Pluto first.");
@@ -124,6 +121,9 @@ export class Database implements Domain.Pluto {
     return this.db.exportJSON();
   }
 
+  /**
+   * test content
+   */
   get credentialrequestmetadatas() {
     return this._db.collections.credentialrequestmetadatas
   }
