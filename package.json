@@ -8,7 +8,7 @@
     "coverage": "npx lerna run --stream coverage",
     "test": "npx lerna run --stream test",
     "docs": "npx lerna run --stream docs",
-    "release": "npx lerna exec --concurrency 1 -- npx --no-install semantic-release -e semantic-release-monorepo"
+    "release": "npx lerna exec --concurrency 1 -- semantic-release -e semantic-release-monorepo --tag-format='${LERNA_PACKAGE_NAME}-v\\${version}'"
   },
   "author": "elribonazo@gmail.com",
   "license": "Apache-2.0",
