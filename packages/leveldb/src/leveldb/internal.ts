@@ -169,7 +169,6 @@ export class LevelDBInternal<RxDocType> implements LevelDBStorageInternals<RxDoc
         }
         const existingIndex = await this.getIndex(key);
         const newIndexes = Array.from(new Set([...existingIndex, id]));
-        // console.log("NEW INDEXES", newIndexes)
 
         await this.setIndex(key, newIndexes);
     }
