@@ -40,6 +40,6 @@ jobs:
           git config user.email "elribonazo@gmail.com"
           git add -A
           git commit -m "feat(docs): Commit changes [skip ci]" -S
-          git push
-          
+          git push --force
+
         
