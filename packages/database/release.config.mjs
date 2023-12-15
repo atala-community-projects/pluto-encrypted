@@ -14,13 +14,11 @@ export default {
       {
         assets: [
           "package.json",
-          "coverage/*.svg",
+          "packages/databasecoverage/**/*",
           "package-lock.json",
           "CHANGELOG.md",
           "README.md",
-          "modules.md",
-          ".nojekyll",
-          "classes/*.md"
+          "docs/*/*"
         ],
         message:
           "chore(release): ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}",
