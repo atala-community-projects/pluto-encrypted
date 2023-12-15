@@ -59,7 +59,7 @@ import CredentialRequestMetadataSchema, {
   CredentialRequestMetadataMethods,
   CredentialRequestMetadataSchemaType,
 } from "./schemas/CredentialRequestMetadata";
-import { GenericORMType } from "./types";
+import { GenericORMType, PlutoCollections } from "./types";
 import { BulkWriteRow, MangoQuerySelectorAndIndex, RxDocument, RxDocumentData } from "rxdb/dist/types/types";
 
 addRxPlugin(RxDBMigrationPlugin);
@@ -75,17 +75,6 @@ export * from "./schemas/Mediator";
 export * from "./schemas/PrivateKey";
 
 export type ValuesOf<T> = T[keyof T];
-
-export type PlutoCollections = {
-  messages: MessageColletion;
-  dids: DIDCollection;
-  didpairs: DIDPairCollection;
-  mediators: MediatorCollection;
-  privatekeys: PrivateKeyColletion;
-  credentials: CredentialCollection;
-  credentialrequestmetadatas: CredentialRequestMetadataCollection;
-  linksecrets: LinkSecretColletion;
-};
 export type PlutoDatabase = RxDatabase<PlutoCollections>;
 
 /**
@@ -95,20 +84,12 @@ export type PlutoDatabase = RxDatabase<PlutoCollections>;
  *
  */
 export class Database implements Domain.Pluto {
+  /**
+   * @internal
+   */
   private _db!: PlutoDatabase;
 
-  public collections!: {
-    messages: RxCollection<MessageSchemaType, GenericORMType<MessageDocument>>;
-    dids: RxCollection<DIDSchemaType, GenericORMType<DIDDocument>>;
-    didpairs: RxCollection<DIDPairSchemaType, GenericORMType<DIDPairDocument>>;
-    mediators: RxCollection<MediatorSchemaType, GenericORMType<MediatorDocument>>;
-    privatekeys: RxCollection<KeySchemaType, GenericORMType<PrivateKeyDocument>>;
-    credentials: RxCollection<CredentialSchemaType, GenericORMType<CredentialDocument>>;
-    credentialrequestmetadatas: RxCollection<CredentialRequestMetadataSchemaType, GenericORMType<CredentialRequestMetadataDocument>>;
-    linksecrets: RxCollection<LinkSecretSchemaType, GenericORMType<LinkSecretDocument>>;
-  }
-
-  get db() {
+  protected get db() {
     if (!this._db) {
       throw new Error("Start Pluto first.");
     }
@@ -377,6 +358,10 @@ export class Database implements Domain.Pluto {
     return this._db.collections.messages
   }
 
+  /**
+   * Use with caution, this will remove all entries from database
+   * and then destroy the database itself.
+   */
   async clear() {
     const storages = Array.from(this.db.storageInstances.values())
     for (let storage of storages) {
@@ -385,6 +370,11 @@ export class Database implements Domain.Pluto {
     await removeRxDatabase(this.dbOptions.name, this.db.storage);
   }
 
+  /**
+   * Creates a database instance.
+   * @param options 
+   * @returns Database
+   */
   static async createEncrypted(
     options: {
       name: string,
@@ -413,6 +403,11 @@ export class Database implements Domain.Pluto {
     return database;
   }
 
+  /**
+   * Get a Message by its id
+   * @param id 
+   * @returns [Message](https://input-output-hk.github.io/atala-prism-wallet-sdk-ts/classes/Domain.Message.html)
+   */
   async getMessage(id: string): Promise<Domain.Message | null> {
     const message = await this.db.messages.findOne({
       selector: {

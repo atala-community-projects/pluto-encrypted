@@ -4,11 +4,10 @@
   "private": "true",
   "scripts": {
     "clean": "npx lerna run clean && rm -rf node_modules",
-    "dev": "npx lerna watch  -- lerna run build  --scope=\\$LERNA_PACKAGE_NAME",
-    "build": "npx lerna run build --include-dependencies",
-    "coverage": "npx lerna run coverage",
-    "test": "npx lerna run test",
-    "docs": "npx lerna run docs",
+    "build": "npx lerna run build --stream --include-dependencies",
+    "coverage": "npx lerna run --stream coverage",
+    "test": "npx lerna run --stream test",
+    "docs": "npx lerna run --stream docs",
     "release": "npx lerna publish --message 'chore: release' --no-private && npm run docs && node versioning.cjs"
   },
   "author": "elribonazo@gmail.com",
