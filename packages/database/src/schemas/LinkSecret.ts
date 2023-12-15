@@ -1,5 +1,5 @@
 import { Domain } from "@atala/prism-wallet-sdk";
-import type { Schema } from "../types";
+import type { GenericORMType, Schema } from "../types";
 import { RxCollection, RxDocument } from "rxdb";
 
 export type LinkSecretSchemaType = {
@@ -38,7 +38,8 @@ export type LinkSecretMethodTypes = {
 
 export type LinkSecretColletion = RxCollection<
   LinkSecretSchemaType,
-  LinkSecretMethodTypes
+  LinkSecretMethodTypes,
+  GenericORMType<LinkSecretDocument>
 >;
 
 export const LinkSecretMethods: LinkSecretMethodTypes = {

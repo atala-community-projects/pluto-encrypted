@@ -1,5 +1,5 @@
 import { RxCollection, RxDocument, RxDocumentBase } from "rxdb";
-import type { Schema } from "../types";
+import type { GenericORMType, Schema } from "../types";
 import { Domain } from "@atala/prism-wallet-sdk";
 
 export type MediatorSchemaType = {
@@ -40,7 +40,8 @@ export type MediatorMethodTypes = {
 };
 export type MediatorCollection = RxCollection<
   MediatorSchemaType,
-  MediatorMethodTypes
+  MediatorMethodTypes,
+  GenericORMType<MediatorDocument>
 >;
 
 export const MediatorMethods: MediatorMethodTypes = {

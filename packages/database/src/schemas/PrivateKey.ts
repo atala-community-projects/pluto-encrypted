@@ -5,7 +5,7 @@ import {
   X25519PrivateKey,
   Domain,
 } from "@atala/prism-wallet-sdk";
-import type { Schema } from "../types";
+import type { GenericORMType, Schema } from "../types";
 import { RxCollection, RxDocument } from "rxdb";
 
 /**
@@ -65,7 +65,8 @@ export type PrivateKeyMethodTypes = {
 };
 export type PrivateKeyColletion = RxCollection<
   KeySchemaType,
-  PrivateKeyMethodTypes
+  PrivateKeyMethodTypes,
+  GenericORMType<PrivateKeyDocument>
 >;
 export type PrivateKeyDocument = RxDocument<
   KeySchemaType,
