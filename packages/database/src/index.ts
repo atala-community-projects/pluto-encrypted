@@ -125,16 +125,62 @@ export class Database implements Domain.Pluto {
    * CredentialRequestMetadatas
    * Stores anoncreds credential metadata + exposes orm functions
    * 
-   * examples:
-   * Count all Credential Metadatas
+   * #### Count all Credential Metadatas with optional query
    * ```ts
    * await db.credentialmetadatas.count({selector: {id: {$eq: 1}}}) //Query is optional
+   * ```
+   * 
+   * #### Find all credential metadatas matching the query
+   * ```ts
+   * await db.credentialmetadatas.find({selector: {id: {$eq: 1}}}) //Query is optional
+   * ```
+   * 
+   * #### Find all credential metadatas by id
+   * ```ts
+   * await db.credentialmetadatas.findByIds([id])
+   * ```
+   * #### Find one credential metadatas matching the query
+   * ```ts
+   * await db.credentialmetadatas.findOne({selector: {id: {$eq: 1}}}) //Query is optional
+   * ```
+   * 
+   * #### Remove any credential metadatas matching the query
+   * ```ts
+   * await db.credentialmetadatas.remove({selector: {id: {$eq: 1}}})
    * ```
    */
   get credentialrequestmetadatas() {
     return this._db.collections.credentialrequestmetadatas
   }
 
+  /**
+   * LinkSecrets 
+   * Stores anoncreds link secrets + exposes orm functions
+   * 
+   * #### Count all LinkSecrets with optional query
+   * ```ts
+   * await db.linksecrets.count({selector: {id: {$eq: 1}}}) //Query is optional
+   * ```
+   * 
+   * #### Find all LinkSecrets matching the query
+   * ```ts
+   * await db.linksecrets.find({selector: {id: {$eq: 1}}}) //Query is optional
+   * ```
+   * 
+   * #### Find all LinkSecrets by id
+   * ```ts
+   * await db.linksecrets.findByIds([id])
+   * ```
+   * #### Find one LinkSecrets matching the query
+   * ```ts
+   * await db.linksecrets.findOne({selector: {id: {$eq: 1}}}) //Query is optional
+   * ```
+   * 
+   * #### Remove any LinkSecrets matching the query
+   * ```ts
+   * await db.linksecrets.remove({selector: {id: {$eq: 1}}})
+   * ```
+   */
   get linksecrets() {
     return this._db.collections.linksecrets
   }
