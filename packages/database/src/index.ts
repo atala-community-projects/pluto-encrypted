@@ -31,14 +31,17 @@ import CredentialSchema, {
   CredentialCollection,
   CredentialDocument,
   CredentialMethods,
+  CredentialSchemaType,
 } from "./schemas/Credential";
 import DIDPairSchema, { DIDPairCollection, DIDPairDocument, DIDPairSchemaType } from "./schemas/DIDPair";
 import MediatorSchema, {
   MediatorCollection,
   MediatorDocument,
   MediatorMethods,
+  MediatorSchemaType,
 } from "./schemas/Mediator";
 import PrivateKeySchema, {
+  KeySchemaType,
   KeySpec,
   PrivateKeyColletion,
   PrivateKeyDocument,
@@ -48,11 +51,13 @@ import LinkSecretSchema, {
   LinkSecretColletion,
   LinkSecretDocument,
   LinkSecretMethods,
+  LinkSecretSchemaType,
 } from "./schemas/LinkSecret";
 import CredentialRequestMetadataSchema, {
   CredentialRequestMetadataCollection,
   CredentialRequestMetadataDocument,
   CredentialRequestMetadataMethods,
+  CredentialRequestMetadataSchemaType,
 } from "./schemas/CredentialRequestMetadata";
 import { GenericORMType } from "./types";
 import { BulkWriteRow, MangoQuerySelectorAndIndex, RxDocument, RxDocumentData } from "rxdb/dist/types/types";
@@ -91,15 +96,20 @@ export type PlutoDatabase = RxDatabase<PlutoCollections>;
  */
 export class Database implements Domain.Pluto {
   private _db!: PlutoDatabase;
+
   public collections!: {
-    messages: RxCollection<any, GenericORMType<MessageDocument>>;
-    dids: RxCollection<any, GenericORMType<DIDDocument>>;
-    didpairs: RxCollection<any, GenericORMType<DIDPairDocument>>;
-    mediators: RxCollection<any, GenericORMType<MediatorDocument>>;
-    privatekeys: RxCollection<any, GenericORMType<PrivateKeyDocument>>;
-    credentials: RxCollection<any, GenericORMType<CredentialDocument>>;
-    credentialrequestmetadatas: RxCollection<any, GenericORMType<CredentialRequestMetadataDocument>>;
-    linksecrets: RxCollection<any, GenericORMType<LinkSecretDocument>>;
+    /**
+     *  @class
+     * 
+     */
+    messages: RxCollection<MessageSchemaType, GenericORMType<MessageDocument>>;
+    dids: RxCollection<DIDSchemaType, GenericORMType<DIDDocument>>;
+    didpairs: RxCollection<DIDPairSchemaType, GenericORMType<DIDPairDocument>>;
+    mediators: RxCollection<MediatorSchemaType, GenericORMType<MediatorDocument>>;
+    privatekeys: RxCollection<KeySchemaType, GenericORMType<PrivateKeyDocument>>;
+    credentials: RxCollection<CredentialSchemaType, GenericORMType<CredentialDocument>>;
+    credentialrequestmetadatas: RxCollection<CredentialRequestMetadataSchemaType, GenericORMType<CredentialRequestMetadataDocument>>;
+    linksecrets: RxCollection<LinkSecretSchemaType, GenericORMType<LinkSecretDocument>>;
   }
   get db() {
     if (!this._db) {
