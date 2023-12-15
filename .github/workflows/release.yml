@@ -35,7 +35,7 @@ jobs:
           
       - name: Release
         env:
-          NPM_TOKEN: ${{ secrets.ATALA_NPM_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
           GIT_AUTHOR_EMAIL: ${{ steps.import_gpg.outputs.email }}
           GIT_COMMITTER_EMAIL: ${{ steps.import_gpg.outputs.email }}
           GIT_AUTHOR_NAME: ${{ steps.import_gpg.outputs.name }}
