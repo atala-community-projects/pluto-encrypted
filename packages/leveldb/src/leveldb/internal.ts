@@ -153,8 +153,6 @@ export class LevelDBInternal<RxDocType> implements LevelDBStorageInternals<RxDoc
         const db = await this.getInstance()
 
         return new Promise<void>((resolve, reject) => {
-            console.log(`[+index]${key} ${JSON.stringify(data)}`)
-
             db.put(key, JSON.stringify(data), (err) => {
                 if (err) {
                     return reject(err);
@@ -167,7 +165,6 @@ export class LevelDBInternal<RxDocType> implements LevelDBStorageInternals<RxDoc
     async setIndex(key: string, ids: string[]) {
         const db = await this.getInstance()
         return new Promise<void>((resolve, reject) => {
-            console.log(`[+index]${key} ${JSON.stringify(ids)}`)
             db.put(key, JSON.stringify(ids), (err) => {
                 if (err) {
                     return reject(err);
@@ -186,17 +183,14 @@ export class LevelDBInternal<RxDocType> implements LevelDBStorageInternals<RxDoc
         }
         const existingIndex = await this.getIndex(key);
         const newIndexes = Array.from(new Set([...existingIndex, id]));
-        console.log("NEW INDEXES", newIndexes)
         await this.setIndex(key, newIndexes);
     }
 
     async clear() {
-        console.log("Clearing")
         const db = await this.getInstance()
         for await (const key of db.keys()) {
             await this.db.del(key);
         }
-        console.log("Cleared")
     }
 
     async close() {
@@ -231,7 +225,8 @@ export class LevelDBInternal<RxDocType> implements LevelDBStorageInternals<RxDoc
 
                     this.documents.set(id, item)
                     if (!(primaryKeyVal as string).includes("collection") && !(primaryKeyVal as string).includes("storage-token")) {
-                        console.log("Adding ", primaryKeyVal, item)
+                        // console.log("Adding ", primaryKeyVal, item)
+                        // TODO
                     }
                 } else {
                     const id = item.id as string;
@@ -242,7 +237,8 @@ export class LevelDBInternal<RxDocType> implements LevelDBStorageInternals<RxDoc
 
                     this.documents.set(id, item)
                     if (!(primaryKeyVal as string).includes("collection") && !(primaryKeyVal as string).includes("storage-token")) {
-                        console.log("Adding ", primaryKeyVal, item)
+                        // console.log("Adding ", primaryKeyVal, item)
+                        // TODO
                     }
                 }
 
