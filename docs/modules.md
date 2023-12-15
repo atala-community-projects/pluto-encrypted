@@ -8,36 +8,12 @@
 
 - [Database](classes/Database.md)
 
-### Type Aliases
-
-- [KeySpec](modules.md#keyspec)
-
 ### Variables
 
 - [CredentialMethods](modules.md#credentialmethods)
 - [MediatorMethods](modules.md#mediatormethods)
 - [MessageMethods](modules.md#messagemethods)
 - [PrivateKeyMethods](modules.md#privatekeymethods)
-
-## Type Aliases
-
-### KeySpec
-
-Ƭ **KeySpec**: `Object`
-
-PrivateKeySchema
-
-#### Type declaration
-
-| Name | Type |
-| :------ | :------ |
-| `name` | `string` |
-| `type` | `string` |
-| `value` | `string` |
-
-#### Defined in
-
-[schemas/PrivateKey.ts:14](https://github.com/elribonazo/pluto-encrypted/blob/3641f0d/packages/database/src/schemas/PrivateKey.ts#L14)
 
 ## Variables
 
@@ -47,7 +23,7 @@ PrivateKeySchema
 
 #### Defined in
 
-[schemas/Credential.ts:87](https://github.com/elribonazo/pluto-encrypted/blob/3641f0d/packages/database/src/schemas/Credential.ts#L87)
+[schemas/Credential.ts:87](https://github.com/elribonazo/pluto-encrypted/blob/2a554a0/packages/database/src/schemas/Credential.ts#L87)
 
 ___
 
@@ -57,7 +33,7 @@ ___
 
 #### Defined in
 
-[schemas/Mediator.ts:47](https://github.com/elribonazo/pluto-encrypted/blob/3641f0d/packages/database/src/schemas/Mediator.ts#L47)
+[schemas/Mediator.ts:47](https://github.com/elribonazo/pluto-encrypted/blob/2a554a0/packages/database/src/schemas/Mediator.ts#L47)
 
 ___
 
@@ -67,7 +43,7 @@ ___
 
 #### Defined in
 
-[schemas/Message.ts:124](https://github.com/elribonazo/pluto-encrypted/blob/3641f0d/packages/database/src/schemas/Message.ts#L124)
+[schemas/Message.ts:124](https://github.com/elribonazo/pluto-encrypted/blob/2a554a0/packages/database/src/schemas/Message.ts#L124)
 
 ___
 
@@ -77,4 +53,4 @@ ___
 
 #### Defined in
 
-[schemas/PrivateKey.ts:76](https://github.com/elribonazo/pluto-encrypted/blob/3641f0d/packages/database/src/schemas/PrivateKey.ts#L76)
+[schemas/PrivateKey.ts:74](https://github.com/elribonazo/pluto-encrypted/blob/2a554a0/packages/database/src/schemas/PrivateKey.ts#L74)

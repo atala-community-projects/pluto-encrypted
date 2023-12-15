@@ -8,14 +8,12 @@ import {
 import type { GenericORMType, Schema } from "../types";
 import { RxCollection, RxDocument } from "rxdb";
 
-/**
- * PrivateKeySchema
- */
 export type KeySpec = {
   name: string;
   type: string;
   value: string;
 };
+
 export type KeySchemaType = {
   id: string;
   type: string;
@@ -172,4 +170,7 @@ export const PrivateKeyMethods: PrivateKeyMethodTypes = {
   },
 };
 
+/**
+ * @class PrivateKeySchema
+ */
 export default PrivateKeySchema;
