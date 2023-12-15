@@ -39,7 +39,7 @@ jobs:
           git config user.name "Francisco Javier Ribó Labrador"
           git config user.email "elribonazo@gmail.com"
           git add -A
-          git commit -m "feat(docs): Commit changes [skip ci]" 
-          git push --force
+          git commit -S -m "feat(docs): Commit changes [skip ci]" 
+          git push --no-sign --force
 
         
