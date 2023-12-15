@@ -1,4 +1,4 @@
-name: Release wallet-sdk-ts
+name: Release Pluto encrypted
 
 on:
   push:
