@@ -12,6 +12,7 @@ plugins:
       },
     ]
   - ["@semantic-release/exec", { prepareCmd: "npm publish --access public" }]
+  - [ '@semantic-release/npm']
   - [
       "@semantic-release/git",
       {
@@ -23,7 +24,6 @@ plugins:
             "docs/**/*"
           ],
         message: "chore(release): release ${nextRelease.version}
-
           ${nextRelease.notes}",
       },
     ]

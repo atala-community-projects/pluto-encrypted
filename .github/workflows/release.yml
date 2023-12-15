@@ -29,3 +29,13 @@ jobs:
       - name: Release
         run: |
           npm run release
+
+      - name: Build Docs
+        run: npm run docs
+
+      - name: Commit Docs
+        run: |
+          git config user.name "elribonazo"
+          git config user.email "elribonazo@gmail.com"
+          git add -A
+          git commit -m "feat(docs): Commit changes [skip ci]"
