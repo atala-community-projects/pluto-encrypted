@@ -54,7 +54,7 @@ jobs:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
         with:
           push_options: '--force'
-          commit_message: "chore(docs): Rebuild docs [skip ci]"
+          commit_message: "chore(docs): Rebuild docs + coverage [skip ci]"
           commit_author: Javier Ribó <elribonazo@gmail.com>
           commit_user_name: Javier Ribó
           commit_user_email: elribonazo@gmail.com

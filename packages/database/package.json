@@ -21,7 +21,7 @@
     "test:watch": "NODE_ENV=debug vitest tests/*.test.ts",
     "test:debug": "NODE_ENV=debug vitest tests/*.test.ts --inspect-brk --pool threads --poolOptions.threads.singleThread",
     "build": "rm -rf build && npx rollup -c rollup/rollup.mjs",
-    "coverage": "npx vitest run --coverage.enabled --coverage.reporter='json-summary' && npx istanbul-badges-readme --readmeDir=\"../../\"",
+    "coverage": "npx vitest run --coverage.enabled  && npx istanbul-badges-readme --readmeDir=\"../../\"",
     "docs": "npx typedoc --options typedoc.json --hideGenerator"
   },
   "repository": {
@@ -42,6 +42,7 @@
     "@pluto-encrypted/indexdb": "../indexdb/",
     "@pluto-encrypted/inmemory": "../inmemory/",
     "@pluto-encrypted/leveldb": "../leveldb/",
+    "@vitest/coverage-v8": "^1.0.4",
     "level": "^6.0.1"
   },
   "dependencies": {
