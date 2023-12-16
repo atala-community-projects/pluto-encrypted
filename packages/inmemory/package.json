@@ -1,7 +1,7 @@
 {
   "name": "@pluto-encrypted/inmemory",
   "version": "1.0.3",
-  "description": "Encrypted InMemory storage for @pluto-encrypted/database",
+  "description": "Encrypted InMemory storage for @pluto-encrypted/database.",
   "main": "./build/cjs/index.cjs",
   "module": "./build/esm/index.mjs",
   "types": "./build/index.d.ts",
