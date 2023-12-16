@@ -40,14 +40,6 @@ jobs:
         run: |
           npm ci
           npm run coverage
-          npm run docs
-          
-      - uses: stefanzweifel/git-auto-commit-action@v5
-        with:
-          commit_message: "chore(docs): Rebuild docs [skip ci]"
-          commit_author: "Javier Ribó"
-          commit_user_name: "Javier Ribó"
-          commit_user_email: "elribonazo@gmail.com"
 
       - name: Coverage Comment
         uses: MishaKav/jest-coverage-comment@v1.0.23
