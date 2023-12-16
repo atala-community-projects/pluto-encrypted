@@ -22,19 +22,42 @@ Password is a 32 bytes buffer.
 
 ```typescript
 import { Database } from 'pluto-encrypted';
+//You can use IndexDB any other storage that is compatible.
+import IndexDB from "@pluto-encrypted/indexdb"; 
+const defaultPassword = new Uint8Array(32).fill(1);
 const db = await Database.createEncrypted(
-    databaseName,
-    password
+   {
+        name: `my-db`,
+        encryptionKey: defaultPassword,
+        storage: IndexDB,
+    }
 );
 const messages = await db.getAllMessages();
+```
 
-const backup = await db.backup();
+Backup database into an unencrypted JSON string and restore from backup.
+```typescript
+import { Database } from 'pluto-encrypted';
+//You can use IndexDB any other storage that is compatible.
+import IndexDB from "@pluto-encrypted/indexdb"; 
+const defaultPassword = new Uint8Array(32).fill(1);
 const db = await Database.createEncrypted(
-    databaseName + "restored",
-    password,
-    backup
+   {
+        name: "my-db",
+        encryptionKey: defaultPassword,
+        storage: IndexDB,
+    }
 );
-
+const backup = await db.backup();
+const restoredDatabase = await Database.createEncrypted(
+       {
+        name: "my-db",
+        encryptionKey: defaultPassword,
+        storage: IndexDB,
+        importData: backup
+    }
+);
+const messages = await restoredDatabase.getAllMessages();
 ```
 
 If the database is later initialised with the wrong password the "createEncrypted" async function will throw an exception and will not let you decrypt any encrypted content.
