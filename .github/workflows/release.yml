@@ -41,7 +41,7 @@ jobs:
         with:
           push_options: '--force'
           commit_message: "chore(docs): Rebuild docs [skip ci]"
-          commit_author: "Javier Ribó"
-          commit_user_name: "Javier Ribó"
-          commit_user_email: "elribonazo@gmail.com"
+          commit_author: Javier Ribó <elribonazo@gmail.com>
+          commit_user_name: Javier Ribó
+          commit_user_email: elribonazo@gmail.com
         
