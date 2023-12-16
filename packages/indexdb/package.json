@@ -28,7 +28,7 @@
   "dependencies": {
     "rxdb": "^14.17.0",
     "uuid": "^9.0.1",
-    "@pluto-encrypted/encryption": "^0.0.0"
+    "@pluto-encrypted/encryption": "^1.0.1"
   },
   "devDependencies": {
     "@pluto-encrypted/encryption": "../encryption"
