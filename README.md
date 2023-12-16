@@ -6,10 +6,15 @@ This package is compatible with Atala Prism Wallet SDK v3.2.0
 We currently support database wrappers for IndexDB, InMemory and are working together to bring you level-db with electron compatibility.
 We are not going to stop here but ensure that our SDK can be used in any platform and language.
 
-## QA
+## QA & Documentation
 | Statements                  | Branches                | Functions                 | Lines             |
 | --------------------------- | ----------------------- | ------------------------- | ----------------- |
 | ![Statements](https://img.shields.io/badge/statements-94.5%25-brightgreen.svg?style=flat) | ![Branches](https://img.shields.io/badge/branches-88.88%25-yellow.svg?style=flat) | ![Functions](https://img.shields.io/badge/functions-92.85%25-brightgreen.svg?style=flat) | ![Lines](https://img.shields.io/badge/lines-94.23%25-brightgreen.svg?style=flat) |
+
+### Documentation
+
+[@Pluto-encrypted REFERENCE](https://github.com/elribonazo/pluto-encrypted/blob/master/docs/README.md)
+
 
 ### Open source contributions
 As we said, this is a community maintained project, a group of very powerful engineers that came together to improve something. 
@@ -45,11 +50,6 @@ npm run build
 
 Running this from visual studio will let us debug and to straight to the root causes triggering the issues.
 
-
-
-### Documentation
-
-[SDK Reference](https://github.com/elribonazo/pluto-encrypted/blob/master/packages/database/modules.md)
 
 ### How to use
 
