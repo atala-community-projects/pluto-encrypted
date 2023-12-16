@@ -5,7 +5,8 @@ export default defineConfig({
   test: {
     reporters: ['verbose'], // or 'verbose'
     coverage: {
-      provider: 'v8',
+      all: true,
+      provider: 'istanbul',
       reporter: ['json-summary'],
       thresholds: {
         branches: 90,
