@@ -48,7 +48,7 @@ jobs:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
           CI: true
         run: |
-          npm ci
+          npm install
           npm run build
           npm run release
           npm run docs

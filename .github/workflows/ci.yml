@@ -40,7 +40,7 @@ jobs:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
           CI: true
         run: |
-          npm ci
+          npm install
           chmod +x coverage.sh
           ./coverage.sh
           npm run build
