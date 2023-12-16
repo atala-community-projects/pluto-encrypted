@@ -11,45 +11,12 @@ We are not going to stop here but ensure that our SDK can be used in any platfor
 | --------------------------- | ----------------------- | ------------------------- | ----------------- |
 | ![Statements](https://img.shields.io/badge/statements-97.45%25-brightgreen.svg?style=flat) | ![Branches](https://img.shields.io/badge/branches-91.66%25-brightgreen.svg?style=flat) | ![Functions](https://img.shields.io/badge/functions-100%25-brightgreen.svg?style=flat) | ![Lines](https://img.shields.io/badge/lines-97.32%25-brightgreen.svg?style=flat) |
 
-### Documentation
+### Documentation & Contribution Guidelines
 The pluto encrypted documentation is always available on all branches [HERE](https://github.com/elribonazo/pluto-encrypted/blob/master/docs/README.md) but we have also deployed an online version of documentation.
 
 Go to documentation portal [here](https://elribonazo.github.io/pluto-encrypted/)
 
-
-### Open source contributions
-As we said, this is a community maintained project, a group of very powerful engineers that came together to improve something. 
-
-Since AtalaPrism removed pluto each developer is like rebuilding the wheele while not being able to work on other more important areas. We think that, it is important to first build a set of simple wrappers:
-
-1. InMemory
-2. IndexDB
-3. LevelDB
-
-@database is basically the code, where u wrote the queries, etc. The rest are package engines.
-
-In order to contribute, being a typescript mono-repo, its worth expoaining some keys things:
-
-1. Insdtalling with npm from the root is inevitable. If we need to add an esxtra npm package we would do as follows:
-npm i fly --save --workspace=@pluto-encrypted/data and that will install fly in workspace environment
-
-2. Running the DEMOS directly from visual studio in 1 click.
-From the root folder, without moving to any subdirectory we build the 3 packages.
-
-
-```
-npm i 
-npm run build
-```
-
-3. Open using debugger tool
-* LEVEL DB Electron
-* INDEX DB
-* LEVEL DB
-* INMEMORY
-* TEST
-
-Running this from visual studio will let us debug and to straight to the root causes triggering the issues.
+Pull requests are WELCOME!! please check the [Contribution guidelines](https://github.com/elribonazo/pluto-encrypted/blob/master/CONTRIBUTION-GUIDELINES.md) first
 
 
 ### How to use
