@@ -30,6 +30,9 @@
     "rxdb": "^14.17.0",
     "uuid": "^9.0.1"
   },
+  "devDependencies": {
+    "@pluto-encrypted/shared": "../shared"
+  },
   "files": [
     "build/*"
   ],
