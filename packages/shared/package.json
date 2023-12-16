@@ -1,6 +1,6 @@
 {
   "name": "@pluto-encrypted/shared",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "Shared depencencies for @pluto-encrypted and all its databases.",
   "main": "./build/cjs/index.cjs",
   "module": "./build/esm/index.mjs",
