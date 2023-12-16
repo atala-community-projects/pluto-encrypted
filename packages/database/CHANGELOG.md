@@ -1,3 +1,10 @@
+# [@pluto-encrypted/database-v1.0.11](https://github.com/elribonazo/pluto-encrypted/compare/@pluto-encrypted/database-v1.0.10...@pluto-encrypted/database-v1.0.11) (2023-12-16)
+
+
+### Bug Fixes
+
+* Introducing shared dependencies for db wrappers ([#57](https://github.com/elribonazo/pluto-encrypted/issues/57)) ([393b3bc](https://github.com/elribonazo/pluto-encrypted/commit/393b3bc2cbd811bf45fca7f67bb6704c617ed504))
+
 # [@pluto-encrypted/database-v1.0.7](https://github.com/elribonazo/pluto-encrypted/compare/@pluto-encrypted/database-v1.0.6...@pluto-encrypted/database-v1.0.7) (2023-12-16)
 
 
