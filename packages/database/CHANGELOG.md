@@ -1,3 +1,21 @@
+## @pluto-encrypted/database [1.0.13](https://github.com/elribonazo/pluto-encrypted/compare/@pluto-encrypted/database@1.0.12...@pluto-encrypted/database@1.0.13) (2023-12-16)
+
+
+### Bug Fixes
+
+* rollback pkg versions. ([738e4e9](https://github.com/elribonazo/pluto-encrypted/commit/738e4e9eb0cf6bf8712edf9f44011555b7513605))
+* trigger package update ([72c8d64](https://github.com/elribonazo/pluto-encrypted/commit/72c8d645db13000945b438cb223728c55f910433))
+
+
+
+
+
+### Dependencies
+
+* **@pluto-encrypted/indexdb:** upgraded to 1.1.3
+* **@pluto-encrypted/inmemory:** upgraded to 1.1.2
+* **@pluto-encrypted/leveldb:** upgraded to 1.1.2
+
 # [@pluto-encrypted/database-v1.0.11](https://github.com/elribonazo/pluto-encrypted/compare/@pluto-encrypted/database-v1.0.10...@pluto-encrypted/database-v1.0.11) (2023-12-16)
 
 

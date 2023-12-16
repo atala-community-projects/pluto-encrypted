@@ -1,3 +1,20 @@
+## @pluto-encrypted/inmemory [1.1.2](https://github.com/elribonazo/pluto-encrypted/compare/@pluto-encrypted/inmemory@1.1.1...@pluto-encrypted/inmemory@1.1.2) (2023-12-16)
+
+
+### Bug Fixes
+
+* package versions ([8c69dfd](https://github.com/elribonazo/pluto-encrypted/commit/8c69dfd143c5db3fd174557a4bc92394bd503b86))
+* package versions and tags. ([172b1cc](https://github.com/elribonazo/pluto-encrypted/commit/172b1cc803e18b4967571349db8728cb33bbb35c))
+* trigger package update ([72c8d64](https://github.com/elribonazo/pluto-encrypted/commit/72c8d645db13000945b438cb223728c55f910433))
+
+
+
+
+
+### Dependencies
+
+* **@pluto-encrypted/encryption:** upgraded to 1.0.2
+
 # [@pluto-encrypted/inmemory-v1.0.6](https://github.com/elribonazo/pluto-encrypted/compare/@pluto-encrypted/inmemory-v1.0.5...@pluto-encrypted/inmemory-v1.0.6) (2023-12-16)
 
 
