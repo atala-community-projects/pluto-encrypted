@@ -83,7 +83,7 @@ preferred underlying storage technology, most appropriate for your use case.
 
 #### Defined in
 
-[index.ts:99](https://github.com/elribonazo/pluto-encrypted/blob/a0fc85e/packages/database/src/index.ts#L99)
+[index.ts:99](https://github.com/elribonazo/pluto-encrypted/blob/e81ebba/packages/database/src/index.ts#L99)
 
 ## Accessors
 
@@ -97,7 +97,7 @@ preferred underlying storage technology, most appropriate for your use case.
 
 #### Defined in
 
-[index.ts:105](https://github.com/elribonazo/pluto-encrypted/blob/a0fc85e/packages/database/src/index.ts#L105)
+[index.ts:105](https://github.com/elribonazo/pluto-encrypted/blob/e81ebba/packages/database/src/index.ts#L105)
 
 ___
 
@@ -108,26 +108,26 @@ ___
 CredentialRequestMetadatas
 Stores anoncreds credential metadata + exposes orm functions
 
-#### Count all Credential Metadatas with optional query
+Count all Credential Metadatas with optional query
 ```ts
 await db.credentialmetadatas.count({selector: {id: {$eq: 1}}}) //Query is optional
 ```
 
-#### Find all credential metadatas matching the query
+Find all credential metadatas matching the query
 ```ts
 await db.credentialmetadatas.find({selector: {id: {$eq: 1}}}) //Query is optional
 ```
 
-#### Find all credential metadatas by id
+Find all credential metadatas by id
 ```ts
 await db.credentialmetadatas.findByIds([id])
 ```
-#### Find one credential metadatas matching the query
+Find one credential metadatas matching the query
 ```ts
 await db.credentialmetadatas.findOne({selector: {id: {$eq: 1}}}) //Query is optional
 ```
 
-#### Remove any credential metadatas matching the query
+Remove any credential metadatas matching the query
 ```ts
 await db.credentialmetadatas.remove({selector: {id: {$eq: 1}}})
 ```
@@ -138,7 +138,7 @@ await db.credentialmetadatas.remove({selector: {id: {$eq: 1}}})
 
 #### Defined in
 
-[index.ts:137](https://github.com/elribonazo/pluto-encrypted/blob/a0fc85e/packages/database/src/index.ts#L137)
+[index.ts:137](https://github.com/elribonazo/pluto-encrypted/blob/e81ebba/packages/database/src/index.ts#L137)
 
 ___
 
@@ -149,26 +149,26 @@ ___
 Credentials 
 Stores credentials, both anoncreda and prism/jwt + exposes orm functions
 
-#### Count all Credentials with optional query
+Count all Credentials with optional query
 ```ts
 await db.credentials.count({selector: {id: {$eq: 1}}}) //Query is optional
 ```
 
-#### Find all Credentials matching the query
+Find all Credentials matching the query
 ```ts
 await db.credentials.find({selector: {id: {$eq: 1}}}) //Query is optional
 ```
 
-#### Find all Credentials by id
+Find all Credentials by id
 ```ts
 await db.credentials.findByIds([id])
 ```
-#### Find one Credentials matching the query
+Find one Credentials matching the query
 ```ts
 await db.credentials.findOne({selector: {id: {$eq: 1}}}) //Query is optional
 ```
 
-#### Remove any Credentials matching the query
+Remove any Credentials matching the query
 ```ts
 await db.credentials.remove({selector: {id: {$eq: 1}}})
 ```
@@ -179,7 +179,7 @@ await db.credentials.remove({selector: {id: {$eq: 1}}})
 
 #### Defined in
 
-[index.ts:233](https://github.com/elribonazo/pluto-encrypted/blob/a0fc85e/packages/database/src/index.ts#L233)
+[index.ts:233](https://github.com/elribonazo/pluto-encrypted/blob/e81ebba/packages/database/src/index.ts#L233)
 
 ___
 
@@ -190,26 +190,26 @@ ___
 DIDPairs 
 Stores groups of dids, also known as connections + exposes orm functions
 
-#### Count all DIDPairs with optional query
+Count all DIDPairs with optional query
 ```ts
 await db.didpairs.count({selector: {id: {$eq: 1}}}) //Query is optional
 ```
 
-#### Find all DIDPairs matching the query
+Find all DIDPairs matching the query
 ```ts
 await db.didpairs.find({selector: {id: {$eq: 1}}}) //Query is optional
 ```
 
-#### Find all DIDPairs by id
+Find all DIDPairs by id
 ```ts
 await db.didpairs.findByIds([id])
 ```
-#### Find one DIDPairs matching the query
+Find one DIDPairs matching the query
 ```ts
 await db.didpairs.findOne({selector: {id: {$eq: 1}}}) //Query is optional
 ```
 
-#### Remove any DIDPairs matching the query
+Remove any DIDPairs matching the query
 ```ts
 await db.didpairs.remove({selector: {id: {$eq: 1}}})
 ```
@@ -220,7 +220,7 @@ await db.didpairs.remove({selector: {id: {$eq: 1}}})
 
 #### Defined in
 
-[index.ts:201](https://github.com/elribonazo/pluto-encrypted/blob/a0fc85e/packages/database/src/index.ts#L201)
+[index.ts:201](https://github.com/elribonazo/pluto-encrypted/blob/e81ebba/packages/database/src/index.ts#L201)
 
 ___
 
@@ -231,26 +231,26 @@ ___
 DIDs 
 Stores dids + exposes orm functions
 
-#### Count all DIDS with optional query
+Count all DIDS with optional query
 ```ts
 await db.dids.count({selector: {id: {$eq: 1}}}) //Query is optional
 ```
 
-#### Find all DIDS matching the query
+Find all DIDS matching the query
 ```ts
 await db.dids.find({selector: {id: {$eq: 1}}}) //Query is optional
 ```
 
-#### Find all DIDS by id
+Find all DIDS by id
 ```ts
 await db.dids.findByIds([id])
 ```
-#### Find one DIDS matching the query
+Find one DIDS matching the query
 ```ts
 await db.dids.findOne({selector: {id: {$eq: 1}}}) //Query is optional
 ```
 
-#### Remove any DIDS matching the query
+Remove any DIDS matching the query
 ```ts
 await db.dids.remove({selector: {id: {$eq: 1}}})
 ```
@@ -261,7 +261,7 @@ await db.dids.remove({selector: {id: {$eq: 1}}})
 
 #### Defined in
 
-[index.ts:297](https://github.com/elribonazo/pluto-encrypted/blob/a0fc85e/packages/database/src/index.ts#L297)
+[index.ts:297](https://github.com/elribonazo/pluto-encrypted/blob/e81ebba/packages/database/src/index.ts#L297)
 
 ___
 
@@ -272,26 +272,26 @@ ___
 LinkSecrets 
 Stores anoncreds link secrets + exposes orm functions
 
-#### Count all LinkSecrets with optional query
+Count all LinkSecrets with optional query
 ```ts
 await db.linksecrets.count({selector: {id: {$eq: 1}}}) //Query is optional
 ```
 
-#### Find all LinkSecrets matching the query
+Find all LinkSecrets matching the query
 ```ts
 await db.linksecrets.find({selector: {id: {$eq: 1}}}) //Query is optional
 ```
 
-#### Find all LinkSecrets by id
+Find all LinkSecrets by id
 ```ts
 await db.linksecrets.findByIds([id])
 ```
-#### Find one LinkSecrets matching the query
+Find one LinkSecrets matching the query
 ```ts
 await db.linksecrets.findOne({selector: {id: {$eq: 1}}}) //Query is optional
 ```
 
-#### Remove any LinkSecrets matching the query
+Remove any LinkSecrets matching the query
 ```ts
 await db.linksecrets.remove({selector: {id: {$eq: 1}}})
 ```
@@ -302,7 +302,7 @@ await db.linksecrets.remove({selector: {id: {$eq: 1}}})
 
 #### Defined in
 
-[index.ts:169](https://github.com/elribonazo/pluto-encrypted/blob/a0fc85e/packages/database/src/index.ts#L169)
+[index.ts:169](https://github.com/elribonazo/pluto-encrypted/blob/e81ebba/packages/database/src/index.ts#L169)
 
 ___
 
@@ -313,26 +313,26 @@ ___
 Mediators 
 Stores mediators + exposes orm functions
 
-#### Count all Mediators with optional query
+Count all Mediators with optional query
 ```ts
 await db.mediators.count({selector: {id: {$eq: 1}}}) //Query is optional
 ```
 
-#### Find all Mediators matching the query
+Find all Mediators matching the query
 ```ts
 await db.mediators.find({selector: {id: {$eq: 1}}}) //Query is optional
 ```
 
-#### Find all Mediators by id
+Find all Mediators by id
 ```ts
 await db.mediators.findByIds([id])
 ```
-#### Find one Mediators matching the query
+Find one Mediators matching the query
 ```ts
 await db.mediators.findOne({selector: {id: {$eq: 1}}}) //Query is optional
 ```
 
-#### Remove any Mediators matching the query
+Remove any Mediators matching the query
 ```ts
 await db.mediators.remove({selector: {id: {$eq: 1}}})
 ```
@@ -343,7 +343,7 @@ await db.mediators.remove({selector: {id: {$eq: 1}}})
 
 #### Defined in
 
-[index.ts:265](https://github.com/elribonazo/pluto-encrypted/blob/a0fc85e/packages/database/src/index.ts#L265)
+[index.ts:265](https://github.com/elribonazo/pluto-encrypted/blob/e81ebba/packages/database/src/index.ts#L265)
 
 ___
 
@@ -354,26 +354,26 @@ ___
 Messages 
 Stores Messages + exposes orm functions
 
-#### Count all Messages with optional query
+Count all Messages with optional query
 ```ts
 await db.messages.count({selector: {id: {$eq: 1}}}) //Query is optional
 ```
 
-#### Find all Messages matching the query
+Find all Messages matching the query
 ```ts
 await db.messages.find({selector: {id: {$eq: 1}}}) //Query is optional
 ```
 
-#### Find all Messages by id
+Find all Messages by id
 ```ts
 await db.messages.findByIds([id])
 ```
-#### Find one Messages matching the query
+Find one Messages matching the query
 ```ts
 await db.messages.findOne({selector: {id: {$eq: 1}}}) //Query is optional
 ```
 
-#### Remove any Messages matching the query
+Remove any Messages matching the query
 ```ts
 await db.messages.remove({selector: {id: {$eq: 1}}})
 ```
@@ -384,7 +384,7 @@ await db.messages.remove({selector: {id: {$eq: 1}}})
 
 #### Defined in
 
-[index.ts:361](https://github.com/elribonazo/pluto-encrypted/blob/a0fc85e/packages/database/src/index.ts#L361)
+[index.ts:361](https://github.com/elribonazo/pluto-encrypted/blob/e81ebba/packages/database/src/index.ts#L361)
 
 ___
 
@@ -395,26 +395,26 @@ ___
 PrivateKeys 
 Stores privateKeys + exposes orm functions
 
-#### Count all PrivateKeys with optional query
+Count all PrivateKeys with optional query
 ```ts
 await db.privatekeys.count({selector: {id: {$eq: 1}}}) //Query is optional
 ```
 
-#### Find all PrivateKeys matching the query
+Find all PrivateKeys matching the query
 ```ts
 await db.privatekeys.find({selector: {id: {$eq: 1}}}) //Query is optional
 ```
 
-#### Find all PrivateKeys by id
+Find all PrivateKeys by id
 ```ts
 await db.privatekeys.findByIds([id])
 ```
-#### Find one PrivateKeys matching the query
+Find one PrivateKeys matching the query
 ```ts
 await db.privatekeys.findOne({selector: {id: {$eq: 1}}}) //Query is optional
 ```
 
-#### Remove any PrivateKeys matching the query
+Remove any PrivateKeys matching the query
 ```ts
 await db.privatekeys.remove({selector: {id: {$eq: 1}}})
 ```
@@ -425,7 +425,7 @@ await db.privatekeys.remove({selector: {id: {$eq: 1}}})
 
 #### Defined in
 
-[index.ts:329](https://github.com/elribonazo/pluto-encrypted/blob/a0fc85e/packages/database/src/index.ts#L329)
+[index.ts:329](https://github.com/elribonazo/pluto-encrypted/blob/e81ebba/packages/database/src/index.ts#L329)
 
 ## Methods
 
@@ -439,7 +439,7 @@ await db.privatekeys.remove({selector: {id: {$eq: 1}}})
 
 #### Defined in
 
-[index.ts:101](https://github.com/elribonazo/pluto-encrypted/blob/a0fc85e/packages/database/src/index.ts#L101)
+[index.ts:101](https://github.com/elribonazo/pluto-encrypted/blob/e81ebba/packages/database/src/index.ts#L101)
 
 ___
 
@@ -456,7 +456,7 @@ and then destroy the database itself.
 
 #### Defined in
 
-[index.ts:369](https://github.com/elribonazo/pluto-encrypted/blob/a0fc85e/packages/database/src/index.ts#L369)
+[index.ts:369](https://github.com/elribonazo/pluto-encrypted/blob/e81ebba/packages/database/src/index.ts#L369)
 
 ___
 
@@ -480,7 +480,7 @@ Domain.Pluto.fetchCredentialMetadata
 
 #### Defined in
 
-[index.ts:1194](https://github.com/elribonazo/pluto-encrypted/blob/a0fc85e/packages/database/src/index.ts#L1194)
+[index.ts:1194](https://github.com/elribonazo/pluto-encrypted/blob/e81ebba/packages/database/src/index.ts#L1194)
 
 ___
 
@@ -498,7 +498,7 @@ Domain.Pluto.getAllCredentials
 
 #### Defined in
 
-[index.ts:1144](https://github.com/elribonazo/pluto-encrypted/blob/a0fc85e/packages/database/src/index.ts#L1144)
+[index.ts:1144](https://github.com/elribonazo/pluto-encrypted/blob/e81ebba/packages/database/src/index.ts#L1144)
 
 ___
 
@@ -520,7 +520,7 @@ Domain.Pluto.getAllDidPairs
 
 #### Defined in
 
-[index.ts:758](https://github.com/elribonazo/pluto-encrypted/blob/a0fc85e/packages/database/src/index.ts#L758)
+[index.ts:758](https://github.com/elribonazo/pluto-encrypted/blob/e81ebba/packages/database/src/index.ts#L758)
 
 ___
 
@@ -538,7 +538,7 @@ Domain.Pluto.getAllMediators
 
 #### Defined in
 
-[index.ts:1139](https://github.com/elribonazo/pluto-encrypted/blob/a0fc85e/packages/database/src/index.ts#L1139)
+[index.ts:1139](https://github.com/elribonazo/pluto-encrypted/blob/e81ebba/packages/database/src/index.ts#L1139)
 
 ___
 
@@ -560,7 +560,7 @@ Domain.Pluto.getAllMessages
 
 #### Defined in
 
-[index.ts:476](https://github.com/elribonazo/pluto-encrypted/blob/a0fc85e/packages/database/src/index.ts#L476)
+[index.ts:476](https://github.com/elribonazo/pluto-encrypted/blob/e81ebba/packages/database/src/index.ts#L476)
 
 ___
 
@@ -584,7 +584,7 @@ Domain.Pluto.getAllMessagesByDID
 
 #### Defined in
 
-[index.ts:952](https://github.com/elribonazo/pluto-encrypted/blob/a0fc85e/packages/database/src/index.ts#L952)
+[index.ts:952](https://github.com/elribonazo/pluto-encrypted/blob/e81ebba/packages/database/src/index.ts#L952)
 
 ___
 
@@ -609,7 +609,7 @@ Domain.Pluto.getAllMessagesByFromToDID
 
 #### Defined in
 
-[index.ts:1065](https://github.com/elribonazo/pluto-encrypted/blob/a0fc85e/packages/database/src/index.ts#L1065)
+[index.ts:1065](https://github.com/elribonazo/pluto-encrypted/blob/e81ebba/packages/database/src/index.ts#L1065)
 
 ___
 
@@ -634,7 +634,7 @@ Domain.Pluto.getAllMessagesOfType
 
 #### Defined in
 
-[index.ts:1034](https://github.com/elribonazo/pluto-encrypted/blob/a0fc85e/packages/database/src/index.ts#L1034)
+[index.ts:1034](https://github.com/elribonazo/pluto-encrypted/blob/e81ebba/packages/database/src/index.ts#L1034)
 
 ___
 
@@ -652,7 +652,7 @@ Domain.Pluto.getAllMessagesReceived
 
 #### Defined in
 
-[index.ts:985](https://github.com/elribonazo/pluto-encrypted/blob/a0fc85e/packages/database/src/index.ts#L985)
+[index.ts:985](https://github.com/elribonazo/pluto-encrypted/blob/e81ebba/packages/database/src/index.ts#L985)
 
 ___
 
@@ -676,7 +676,7 @@ Domain.Pluto.getAllMessagesReceivedFrom
 
 #### Defined in
 
-[index.ts:1017](https://github.com/elribonazo/pluto-encrypted/blob/a0fc85e/packages/database/src/index.ts#L1017)
+[index.ts:1017](https://github.com/elribonazo/pluto-encrypted/blob/e81ebba/packages/database/src/index.ts#L1017)
 
 ___
 
@@ -694,7 +694,7 @@ Domain.Pluto.getAllMessagesSent
 
 #### Defined in
 
-[index.ts:970](https://github.com/elribonazo/pluto-encrypted/blob/a0fc85e/packages/database/src/index.ts#L970)
+[index.ts:970](https://github.com/elribonazo/pluto-encrypted/blob/e81ebba/packages/database/src/index.ts#L970)
 
 ___
 
@@ -718,7 +718,7 @@ Domain.Pluto.getAllMessagesSentTo
 
 #### Defined in
 
-[index.ts:1000](https://github.com/elribonazo/pluto-encrypted/blob/a0fc85e/packages/database/src/index.ts#L1000)
+[index.ts:1000](https://github.com/elribonazo/pluto-encrypted/blob/e81ebba/packages/database/src/index.ts#L1000)
 
 ___
 
@@ -736,7 +736,7 @@ Domain.Pluto.getAllPeerDIDs
 
 #### Defined in
 
-[index.ts:1102](https://github.com/elribonazo/pluto-encrypted/blob/a0fc85e/packages/database/src/index.ts#L1102)
+[index.ts:1102](https://github.com/elribonazo/pluto-encrypted/blob/e81ebba/packages/database/src/index.ts#L1102)
 
 ___
 
@@ -754,7 +754,7 @@ Domain.Pluto.getAllPrismDIDs
 
 #### Defined in
 
-[index.ts:860](https://github.com/elribonazo/pluto-encrypted/blob/a0fc85e/packages/database/src/index.ts#L860)
+[index.ts:860](https://github.com/elribonazo/pluto-encrypted/blob/e81ebba/packages/database/src/index.ts#L860)
 
 ___
 
@@ -778,7 +778,7 @@ Domain.Pluto.getDIDInfoByAlias
 
 #### Defined in
 
-[index.ts:925](https://github.com/elribonazo/pluto-encrypted/blob/a0fc85e/packages/database/src/index.ts#L925)
+[index.ts:925](https://github.com/elribonazo/pluto-encrypted/blob/e81ebba/packages/database/src/index.ts#L925)
 
 ___
 
@@ -802,7 +802,7 @@ Domain.Pluto.getDIDInfoByDID
 
 #### Defined in
 
-[index.ts:892](https://github.com/elribonazo/pluto-encrypted/blob/a0fc85e/packages/database/src/index.ts#L892)
+[index.ts:892](https://github.com/elribonazo/pluto-encrypted/blob/e81ebba/packages/database/src/index.ts#L892)
 
 ___
 
@@ -826,7 +826,7 @@ Domain.Pluto.getDIDPrivateKeyByID
 
 #### Defined in
 
-[index.ts:836](https://github.com/elribonazo/pluto-encrypted/blob/a0fc85e/packages/database/src/index.ts#L836)
+[index.ts:836](https://github.com/elribonazo/pluto-encrypted/blob/e81ebba/packages/database/src/index.ts#L836)
 
 ___
 
@@ -850,7 +850,7 @@ Domain.Pluto.getDIDPrivateKeysByDID
 
 #### Defined in
 
-[index.ts:824](https://github.com/elribonazo/pluto-encrypted/blob/a0fc85e/packages/database/src/index.ts#L824)
+[index.ts:824](https://github.com/elribonazo/pluto-encrypted/blob/e81ebba/packages/database/src/index.ts#L824)
 
 ___
 
@@ -874,7 +874,7 @@ Domain.Pluto.getLinkSecret
 
 #### Defined in
 
-[index.ts:1151](https://github.com/elribonazo/pluto-encrypted/blob/a0fc85e/packages/database/src/index.ts#L1151)
+[index.ts:1151](https://github.com/elribonazo/pluto-encrypted/blob/e81ebba/packages/database/src/index.ts#L1151)
 
 ___
 
@@ -902,7 +902,7 @@ Domain.Pluto.getMessage
 
 #### Defined in
 
-[index.ts:418](https://github.com/elribonazo/pluto-encrypted/blob/a0fc85e/packages/database/src/index.ts#L418)
+[index.ts:418](https://github.com/elribonazo/pluto-encrypted/blob/e81ebba/packages/database/src/index.ts#L418)
 
 ___
 
@@ -930,7 +930,7 @@ Domain.Pluto.getPairByDID
 
 #### Defined in
 
-[index.ts:772](https://github.com/elribonazo/pluto-encrypted/blob/a0fc85e/packages/database/src/index.ts#L772)
+[index.ts:772](https://github.com/elribonazo/pluto-encrypted/blob/e81ebba/packages/database/src/index.ts#L772)
 
 ___
 
@@ -954,7 +954,7 @@ Domain.Pluto.getPairByName
 
 #### Defined in
 
-[index.ts:796](https://github.com/elribonazo/pluto-encrypted/blob/a0fc85e/packages/database/src/index.ts#L796)
+[index.ts:796](https://github.com/elribonazo/pluto-encrypted/blob/e81ebba/packages/database/src/index.ts#L796)
 
 ___
 
@@ -978,7 +978,7 @@ Domain.Pluto.getPrismDIDKeyPathIndex
 
 #### Defined in
 
-[index.ts:1086](https://github.com/elribonazo/pluto-encrypted/blob/a0fc85e/packages/database/src/index.ts#L1086)
+[index.ts:1086](https://github.com/elribonazo/pluto-encrypted/blob/e81ebba/packages/database/src/index.ts#L1086)
 
 ___
 
@@ -996,7 +996,7 @@ Domain.Pluto.getPrismLastKeyPathIndex
 
 #### Defined in
 
-[index.ts:1094](https://github.com/elribonazo/pluto-encrypted/blob/a0fc85e/packages/database/src/index.ts#L1094)
+[index.ts:1094](https://github.com/elribonazo/pluto-encrypted/blob/e81ebba/packages/database/src/index.ts#L1094)
 
 ___
 
@@ -1016,7 +1016,7 @@ Domain.Pluto.start
 
 #### Defined in
 
-[index.ts:488](https://github.com/elribonazo/pluto-encrypted/blob/a0fc85e/packages/database/src/index.ts#L488)
+[index.ts:488](https://github.com/elribonazo/pluto-encrypted/blob/e81ebba/packages/database/src/index.ts#L488)
 
 ___
 
@@ -1040,7 +1040,7 @@ Domain.Pluto.storeCredential
 
 #### Defined in
 
-[index.ts:1129](https://github.com/elribonazo/pluto-encrypted/blob/a0fc85e/packages/database/src/index.ts#L1129)
+[index.ts:1129](https://github.com/elribonazo/pluto-encrypted/blob/e81ebba/packages/database/src/index.ts#L1129)
 
 ___
 
@@ -1065,7 +1065,7 @@ Domain.Pluto.storeCredentialMetadata
 
 #### Defined in
 
-[index.ts:1183](https://github.com/elribonazo/pluto-encrypted/blob/a0fc85e/packages/database/src/index.ts#L1183)
+[index.ts:1183](https://github.com/elribonazo/pluto-encrypted/blob/e81ebba/packages/database/src/index.ts#L1183)
 
 ___
 
@@ -1093,7 +1093,7 @@ Domain.Pluto.storeDIDPair
 
 #### Defined in
 
-[index.ts:700](https://github.com/elribonazo/pluto-encrypted/blob/a0fc85e/packages/database/src/index.ts#L700)
+[index.ts:700](https://github.com/elribonazo/pluto-encrypted/blob/e81ebba/packages/database/src/index.ts#L700)
 
 ___
 
@@ -1118,7 +1118,7 @@ Domain.Pluto.storeLinkSecret
 
 #### Defined in
 
-[index.ts:1173](https://github.com/elribonazo/pluto-encrypted/blob/a0fc85e/packages/database/src/index.ts#L1173)
+[index.ts:1173](https://github.com/elribonazo/pluto-encrypted/blob/e81ebba/packages/database/src/index.ts#L1173)
 
 ___
 
@@ -1144,7 +1144,7 @@ Domain.Pluto.storeMediator
 
 #### Defined in
 
-[index.ts:847](https://github.com/elribonazo/pluto-encrypted/blob/a0fc85e/packages/database/src/index.ts#L847)
+[index.ts:847](https://github.com/elribonazo/pluto-encrypted/blob/e81ebba/packages/database/src/index.ts#L847)
 
 ___
 
@@ -1172,7 +1172,7 @@ Domain.Pluto.storeMessage
 
 #### Defined in
 
-[index.ts:437](https://github.com/elribonazo/pluto-encrypted/blob/a0fc85e/packages/database/src/index.ts#L437)
+[index.ts:437](https://github.com/elribonazo/pluto-encrypted/blob/e81ebba/packages/database/src/index.ts#L437)
 
 ___
 
@@ -1200,7 +1200,7 @@ Domain.Pluto.storeMessages
 
 #### Defined in
 
-[index.ts:466](https://github.com/elribonazo/pluto-encrypted/blob/a0fc85e/packages/database/src/index.ts#L466)
+[index.ts:466](https://github.com/elribonazo/pluto-encrypted/blob/e81ebba/packages/database/src/index.ts#L466)
 
 ___
 
@@ -1227,7 +1227,7 @@ Domain.Pluto.storePeerDID
 
 #### Defined in
 
-[index.ts:658](https://github.com/elribonazo/pluto-encrypted/blob/a0fc85e/packages/database/src/index.ts#L658)
+[index.ts:658](https://github.com/elribonazo/pluto-encrypted/blob/e81ebba/packages/database/src/index.ts#L658)
 
 ___
 
@@ -1257,7 +1257,7 @@ Domain.Pluto.storePrismDID
 
 #### Defined in
 
-[index.ts:631](https://github.com/elribonazo/pluto-encrypted/blob/a0fc85e/packages/database/src/index.ts#L631)
+[index.ts:631](https://github.com/elribonazo/pluto-encrypted/blob/e81ebba/packages/database/src/index.ts#L631)
 
 ___
 
@@ -1286,7 +1286,7 @@ Domain.Pluto.storePrivateKeys
 
 #### Defined in
 
-[index.ts:719](https://github.com/elribonazo/pluto-encrypted/blob/a0fc85e/packages/database/src/index.ts#L719)
+[index.ts:719](https://github.com/elribonazo/pluto-encrypted/blob/e81ebba/packages/database/src/index.ts#L719)
 
 ___
 
@@ -1315,4 +1315,4 @@ Database
 
 #### Defined in
 
-[index.ts:382](https://github.com/elribonazo/pluto-encrypted/blob/a0fc85e/packages/database/src/index.ts#L382)
+[index.ts:382](https://github.com/elribonazo/pluto-encrypted/blob/e81ebba/packages/database/src/index.ts#L382)
