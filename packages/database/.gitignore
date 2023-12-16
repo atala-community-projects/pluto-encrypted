@@ -3,4 +3,8 @@ junit.xml
 lcov.info
 build
 .npmrc
-coverage/*
+
+coverage/**/*.html
+coverage/**/*.css
+coverage/**/*.js
+coverage/**/*.png

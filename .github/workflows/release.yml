@@ -46,6 +46,7 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.PLUTO_GITHUB }}
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          CI: true
         run: |
           npm ci
           npm run release
