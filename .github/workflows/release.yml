@@ -50,7 +50,8 @@ jobs:
           npm ci
           npm run release
           npm run docs
-          sh coverage.sh
+          chmod +x coverage.sh
+          ./coverage.sh
       
       - uses: stefanzweifel/git-auto-commit-action@v5
         env:
