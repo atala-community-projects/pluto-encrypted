@@ -9,7 +9,7 @@
     "test": "npx lerna run --stream test",
     "docs": "npx lerna run --stream docs",
     "docs-html": "npx lerna run --stream docs-html",
-    "release": "npx multi-semantic-release "
+    "release": "npx multi-semantic-release --deps.bump=satisfy --deps.release=inherit"
   },
   "author": "elribonazo@gmail.com",
   "license": "Apache-2.0",
@@ -55,7 +55,6 @@
     "jasmine": "^5.1.0",
     "lerna": "^8.0.1",
     "mock-aws-s3": "^4.0.2",
-    "multi-semantic-release": "^3.0.2",
     "nx": "16.8.1",
     "postcss": "^8.4.31",
     "prettier": "^2.4.1",
