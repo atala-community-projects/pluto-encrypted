@@ -36,8 +36,8 @@ jobs:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: |
           npm ci
-          npm run release
           npm run coverage
           npm run docs
+          npm run release
       
         
