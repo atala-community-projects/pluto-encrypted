@@ -6,8 +6,20 @@ on:
       - master
   workflow_dispatch:
 
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
 jobs:
   release:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Code
@@ -49,4 +61,15 @@ jobs:
           commit_message: "chore(docs): Rebuild docs + coverage [skip ci]"
           commit_author: Javier Ribó <elribonazo@gmail.com>
           commit_user_name: Javier Ribó
-          commit_user_email: elribonazo@gmail.com      
+          commit_user_email: elribonazo@gmail.com
+          
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v2
+        with:
+          # Upload entire repository
+          path: './packages/database/coverage'
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v3
