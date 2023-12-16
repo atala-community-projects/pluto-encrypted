@@ -40,7 +40,7 @@ jobs:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: |
           npm ci
-          npm run coverage
+          sh coverage.sh
 
       - name: Coverage Comment
         uses: MishaKav/jest-coverage-comment@v1.0.23
