@@ -6,12 +6,12 @@ export default defineConfig({
     reporters: ['default'], // or 'verbose'
     coverage: {
       provider: 'v8',
-      reporter: ['json-summary', 'html'],
+      reporter: ['json-summary'],
       thresholds: {
-        branches: 58,
-        functions: 64,
-        lines: 74,
-        statements: 71
+        branches: 95,
+        functions: 95,
+        lines: 95,
+        statements: 95
       }
     },
   }

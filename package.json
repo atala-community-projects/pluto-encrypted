@@ -8,6 +8,7 @@
     "coverage": "npx lerna run --stream coverage",
     "test": "npx lerna run --stream test",
     "docs": "npx lerna run --stream docs",
+    "docs-html": "npx lerna run --stream docs-html",
     "release": "npx lerna exec --concurrency 1 -- semantic-release -e semantic-release-monorepo --tag-format='${LERNA_PACKAGE_NAME}-v\\${version}'"
   },
   "author": "elribonazo@gmail.com",
@@ -18,6 +19,7 @@
   "devDependencies": {
     "@babel/preset-env": "^7.22.20",
     "@babel/preset-typescript": "^7.22.15",
+    "@bndynet/typedoc-theme": "^0.0.1",
     "@rollup/plugin-commonjs": "^25.0.0",
     "@rollup/plugin-inject": "^5.0.3",
     "@rollup/plugin-json": "^6.0.0",
