@@ -38,6 +38,9 @@ jobs:
           npm run docs
        
       - uses: stefanzweifel/git-auto-commit-action@v5
+        env:
+          GH_TOKEN: ${{ secrets.PLUTO_GITHUB }}
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
         with:
           push_options: '--force'
           commit_message: "chore(docs): Rebuild docs [skip ci]"
