@@ -18,7 +18,7 @@ plugins:
           [
             "package.json",
             "package-lock.json",
-            "CHANGELOG.md",
+            "packages/*/CHANGELOG.md",
             "packages/*/package.json",
             "packages/*/package-lock.json",
             "packages/*/README.md",
@@ -27,3 +27,5 @@ plugins:
           ${nextRelease.notes}",
       },
     ]
+    - "@semantic-release/github"
+
