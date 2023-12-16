@@ -35,6 +35,12 @@ jobs:
         run: |
           npm ci
           npm run release
+          npm run docs
        
-
+      - uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "chore(docs): Rebuild docs [skip ci]"
+          commit_author: "Javier Ribó"
+          commit_user_name: "Javier Ribó"
+          commit_user_email: "elribonazo@gmail.com"
         
