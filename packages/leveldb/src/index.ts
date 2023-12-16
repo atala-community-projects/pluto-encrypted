@@ -1,9 +1,9 @@
-import { wrappedKeyEncryptionCryptoJsStorage } from "rxdb/plugins/encryption-crypto-js";
 import { RxStorage, RxStorageDefaultStatics, RxStorageInstance, RxStorageInstanceCreationParams } from "rxdb";
 import { LevelDBInternalConstructor, LevelDBSettings, LevelDBStorageInternals, RxStorageLevelDBType } from "./leveldb/types";
 
 import { RxStorageIntanceLevelDB } from "./leveldb/instance";
 import { LevelDBInternal } from "./leveldb/internal";
+import { wrappedKeyEncryptionStorage } from "@pluto-encrypted/encryption";
 
 let internalInstance: LevelDBInternal<any>
 
@@ -67,7 +67,7 @@ function getRxStorageLevel<RxDocType>(settings: LevelDBSettings): RxStorageLevel
 
 
 export function createLevelDBStorage(settings: LevelDBSettings) {
-    const storage: RxStorage<any, any> = wrappedKeyEncryptionCryptoJsStorage({
+    const storage: RxStorage<any, any> = wrappedKeyEncryptionStorage({
         storage: getRxStorageLevel(settings)
     })
     return storage

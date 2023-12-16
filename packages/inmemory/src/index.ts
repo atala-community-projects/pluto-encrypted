@@ -1,10 +1,10 @@
 
 
-import { wrappedKeyEncryptionCryptoJsStorage } from "rxdb/plugins/encryption-crypto-js";
 import { RxStorage, RxStorageDefaultStatics, RxStorageInstance, RxStorageInstanceCreationParams } from "rxdb";
 import { InMemorySettings, InMemoryStorageInternals, RxStorageInMemoryType } from "./inMemoryStorage/types";
 import { RxStorageIntanceInMemory } from "./inMemoryStorage/instance";
 import { InMemoryInternal } from "./inMemoryStorage/internal";
+import { wrappedKeyEncryptionStorage } from "@pluto-encrypted/encryption";
 
 let inMemoryInstance: RxStorageInMemoryType<any>;
 let internalInstance: InMemoryInternal<any>
@@ -36,7 +36,7 @@ function getRxStorageMemory<RxDocType>(settings: InMemorySettings = {}): RxStora
     return inMemoryInstance
 }
 
-const storage: RxStorage<any, any> = wrappedKeyEncryptionCryptoJsStorage({
+const storage: RxStorage<any, any> = wrappedKeyEncryptionStorage({
     storage: getRxStorageMemory()
 })
 
