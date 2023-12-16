@@ -42,6 +42,7 @@
     "@pluto-encrypted/indexdb": "../indexdb/",
     "@pluto-encrypted/inmemory": "../inmemory/",
     "@pluto-encrypted/leveldb": "../leveldb/",
+    "@vitest/coverage-v8": "^1.0.4",
     "level": "^6.0.1"
   },
   "dependencies": {
