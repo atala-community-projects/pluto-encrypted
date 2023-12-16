@@ -49,6 +49,7 @@ jobs:
           CI: true
         run: |
           npm ci
+          npm run build
           npm run release
           npm run docs
           chmod +x coverage.sh
