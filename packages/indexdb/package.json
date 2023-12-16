@@ -1,7 +1,7 @@
 {
   "name": "@pluto-encrypted/indexdb",
   "version": "1.1.2",
-  "description": "Encrypted IndexDB storage for @pluto-encrypted/database.",
+  "description": "Secure Encrypted IndexDB storage for @pluto-encrypted/database.",
   "main": "./build/cjs/index.cjs",
   "module": "./build/esm/index.mjs",
   "types": "./build/index.d.ts",
