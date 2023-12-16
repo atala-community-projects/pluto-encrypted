@@ -27,5 +27,5 @@ plugins:
           ${nextRelease.notes}",
       },
     ]
-    - "@semantic-release/github"
+  - "@semantic-release/github"
 
