@@ -9,7 +9,7 @@ We are not going to stop here but ensure that our SDK can be used in any platfor
 ## QA & Documentation
 | Statements                  | Branches                | Functions                 | Lines             |
 | --------------------------- | ----------------------- | ------------------------- | ----------------- |
-| ![Statements](https://img.shields.io/badge/statements-94.5%25-brightgreen.svg?style=flat) | ![Branches](https://img.shields.io/badge/branches-88.88%25-yellow.svg?style=flat) | ![Functions](https://img.shields.io/badge/functions-92.85%25-brightgreen.svg?style=flat) | ![Lines](https://img.shields.io/badge/lines-94.23%25-brightgreen.svg?style=flat) |
+| ![Statements](https://img.shields.io/badge/statements-94.58%25-brightgreen.svg?style=flat) | ![Branches](https://img.shields.io/badge/branches-92.05%25-brightgreen.svg?style=flat) | ![Functions](https://img.shields.io/badge/functions-85.24%25-yellow.svg?style=flat) | ![Lines](https://img.shields.io/badge/lines-94.58%25-brightgreen.svg?style=flat) |
 
 ### Documentation
 
