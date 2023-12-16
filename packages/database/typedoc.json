@@ -5,7 +5,7 @@
     ],
     "out": "../../docs",
     "tsconfig": "tsconfig.json",
-    "name": "pluto-encrypted",
+    "name": "@pluto-encrypted/database",
     "useTsLinkResolution": true,
     "hideGenerator": true,
     "entryPointStrategy": "expand",
@@ -19,7 +19,7 @@
         "TypeAlias",
         "Variable"
     ],
-    "includeVersion": true,
+    "includeVersion": false,
     "theme": "default",
     "plugin": [
         "typedoc-plugin-superstruct",
