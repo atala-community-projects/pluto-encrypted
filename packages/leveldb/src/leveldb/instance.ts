@@ -5,7 +5,7 @@ import {
 } from "rxjs";
 
 import { LevelDBStorageInternals, LevelDBSettings, RxStorageLevelDBType, LevelDBPreparedQuery } from "./types";
-
+import { conditionMatches } from '@pluto-encrypted/shared'
 export class RxStorageIntanceLevelDB<RxDocType> implements RxStorageInstance<
     RxDocType,
     LevelDBStorageInternals<RxDocType>,
@@ -102,78 +102,6 @@ export class RxStorageIntanceLevelDB<RxDocType> implements RxStorageInstance<
         return docs
     }
 
-    private conditionMatches(selector: MangoQuerySelector<RxDocType>, key: string, document: RxDocumentData<RxDocType>) {
-        if (key === "$and") {
-            const matchingSelector = selector[key]!
-            const conditionMatches = Object.values(matchingSelector).every((condition) => {
-                const [conditionKey] = Object.keys(condition);
-                const [conditionValue] = Object.values(condition);
-                if (conditionKey === "$or") {
-                    return conditionValue!.some((orSelector) => {
-
-                        return this.conditionMatches(orSelector, "$or", document)
-                    })
-                } else if (conditionKey === "$and") {
-                    return conditionValue!.every((orSelector) => this.conditionMatches(orSelector, "$or", document))
-                } else if (document[conditionKey!] === conditionValue) {
-                    return true;
-                }
-
-                return false;
-            })
-            if (conditionMatches) {
-                return true
-            }
-        } else if (key === "$or") {
-            const matchingSelector = Object.keys(selector)
-            const atLeastOneMatching = matchingSelector.find((conditionKey) => {
-                if (conditionKey === "$or") {
-                    const matchingOrKey = selector[conditionKey]?.find((orKey) => {
-                        const [orKeyName] = Object.keys(orKey)
-                        const [orKeyValue] = Object.values(orKey)
-                        return document[orKeyName!] === orKeyValue
-                    })
-                    if (matchingOrKey) {
-                        return true;
-                    }
-                } else if (conditionKey === "$and") {
-                    const matchingAndKey = selector[conditionKey]?.find((andKey) => {
-                        const [andKeyName] = Object.keys(andKey)
-                        const [andKeyValue] = Object.values(andKey)
-                        return document[andKeyName!] === andKeyValue
-                    });
-                    if (matchingAndKey) {
-                        return true;
-                    }
-                } else {
-                    const conditionValue = selector[conditionKey]
-                    if (document[conditionKey!] === conditionValue) {
-                        return true;
-                    }
-                }
-                return false;
-            })
-            if (atLeastOneMatching) {
-                return true
-            }
-        } else {
-            const selectorValue = selector[key]
-            if (typeof selectorValue === "object") {
-                const selectorQueries = Object.keys(selectorValue)
-                const [value] = Object.values(selector[key])
-                for (let selectorQuery of selectorQueries) {
-                    if (selectorQuery === "$eq") {
-                        if (document[key] === value) {
-                            return true
-
-                        }
-                    }
-                }
-            }
-        }
-        return false
-    }
-
     async query(preparedQuery: LevelDBPreparedQuery<RxDocType>): Promise<RxStorageQueryResult<RxDocType>> {
         const selector = preparedQuery.query.selector;
         const selectorKeys = Object.keys(selector);
@@ -185,8 +113,8 @@ export class RxStorageIntanceLevelDB<RxDocType> implements RxStorageInstance<
                 return true
             } else {
                 for (let key of selectorKeys) {
-                    const conditionMatches = this.conditionMatches(selector, key, document)
-                    if (conditionMatches) {
+                    const matches = conditionMatches(selector, key, document)
+                    if (matches) {
                         return true;
                     }
                 }

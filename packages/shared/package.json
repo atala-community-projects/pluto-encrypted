@@ -1,7 +1,7 @@
 {
-  "name": "@pluto-encrypted/leveldb",
-  "version": "1.0.5",
-  "description": "Encrypted LevelDB storage for @pluto-encrypted/database.",
+  "name": "@pluto-encrypted/shared",
+  "version": "0.0.0",
+  "description": "Shared depencencies for @pluto-encrypted and all its databases.",
   "main": "./build/cjs/index.cjs",
   "module": "./build/esm/index.mjs",
   "types": "./build/index.d.ts",
@@ -17,10 +17,7 @@
   "scripts": {
     "prepublishOnly": "npm run build",
     "clean-packages": "rm -rf node_modules && rm -rf build",
-    "build": "rm -rf build && npx rollup -c rollup/rollup.mjs",
-    "test": "NODE_ENV=debug vitest --run tests/*.test.ts",
-    "test:watch": "NODE_ENV=debug vitest tests/*.test.ts",
-    "test:debug": "NODE_ENV=debug vitest tests/*.test.ts --inspect-brk --pool threads --poolOptions.threads.singleThread"
+    "build": "rm -rf build && npx rollup -c rollup/rollup.mjs"
   },
   "repository": {
     "type": "git",
@@ -29,11 +26,6 @@
   "author": "elribonazo@gmail.com",
   "license": "Apache-2.0",
   "dependencies": {
-    "@pluto-encrypted/shared": "^0.0.0",
-    "level": "^6.0.1",
-    "module-error": "^1.0.2",
-    "pull-level": "^2.0.4",
-    "pull-stream": "^3.7.0",
     "rxdb": "^14.17.0",
     "uuid": "^9.0.1"
   },

@@ -38,10 +38,13 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.PLUTO_GITHUB }}
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          CI: true
         run: |
           npm ci
           chmod +x coverage.sh
           ./coverage.sh
+          npm run build
+          npm run coverage
 
       - name: Coverage Comment
         uses: MishaKav/jest-coverage-comment@v1.0.23
