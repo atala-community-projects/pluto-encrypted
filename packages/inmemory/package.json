@@ -17,8 +17,7 @@
   "scripts": {
     "prepublishOnly": "npm run build",
     "clean-packages": "rm -rf node_modules && rm -rf build",
-    "build": "rm -rf build && npx rollup -c rollup/rollup.mjs",
-    "coverage": "echo ''"
+    "build": "rm -rf build && npx rollup -c rollup/rollup.mjs"
   },
   "repository": {
     "type": "git",

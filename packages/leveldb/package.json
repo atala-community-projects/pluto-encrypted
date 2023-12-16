@@ -17,7 +17,6 @@
   "scripts": {
     "prepublishOnly": "npm run build",
     "clean-packages": "rm -rf node_modules && rm -rf build",
-    "coverage": "echo ''",
     "build": "rm -rf build && npx rollup -c rollup/rollup.mjs",
     "test": "NODE_ENV=debug vitest --run tests/*.test.ts",
     "test:watch": "NODE_ENV=debug vitest tests/*.test.ts",
