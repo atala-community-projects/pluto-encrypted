@@ -46,4 +46,4 @@ jobs:
       - name: Coverage Comment
         uses: MishaKav/jest-coverage-comment@v1.0.23
         with:
-          coverage-summary-path: ./packages/database/coverage/coverage-summary.json
+          coverage-summary-path: ../packages/database/coverage/coverage-summary.json
