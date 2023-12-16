@@ -22,6 +22,7 @@ plugins:
             "packages/*/package.json",
             "packages/*/package-lock.json",
             "packages/*/README.md",
+            "docs/**/*"
           ],
         message: "chore(release): release ${nextRelease.version}
           ${nextRelease.notes}",
