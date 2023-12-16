@@ -26,7 +26,7 @@ plugins:
             "docs/**/*"
           ],
         message: "chore(release): release ${nextRelease.version}
-          ${nextRelease.notes}",
+          ${nextRelease.notes} [skip ci]",
       },
     ]
   - "@semantic-release/github"
