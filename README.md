@@ -12,8 +12,9 @@ We are not going to stop here but ensure that our SDK can be used in any platfor
 | ![Statements](https://img.shields.io/badge/statements-97.45%25-brightgreen.svg?style=flat) | ![Branches](https://img.shields.io/badge/branches-91.66%25-brightgreen.svg?style=flat) | ![Functions](https://img.shields.io/badge/functions-100%25-brightgreen.svg?style=flat) | ![Lines](https://img.shields.io/badge/lines-97.32%25-brightgreen.svg?style=flat) |
 
 ### Documentation
+The pluto encrypted documentation is always available on all branches [HERE](https://github.com/elribonazo/pluto-encrypted/blob/master/docs/README.md) but we have also deployed an online version of documentation.
 
-[@Pluto-encrypted REFERENCE](https://github.com/elribonazo/pluto-encrypted/blob/master/docs/README.md)
+Go to documentation portal [here](https://elribonazo.github.io/pluto-encrypted/)
 
 
 ### Open source contributions
