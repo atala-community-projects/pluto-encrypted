@@ -18,7 +18,11 @@ const externals = [
     "uuid",
     "rxdb/plugins/json-dump",
     "classic-level",
-    "@atala/prism-wallet-sdk"
+    "@atala/prism-wallet-sdk",
+    "@pluto-encrypted/shared",
+    "level",
+    "pull-stream",
+    "pull-level"
 ];
 
 export default function CreateConfig(buildPath, plugins = [], extraInputs = []) {

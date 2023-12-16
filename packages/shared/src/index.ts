@@ -5,7 +5,7 @@ import { MangoQuerySelector, RxDocumentData } from "rxdb";
 export function conditionMatches<RxDocType>(selector: MangoQuerySelector<RxDocType>, key: string, document: RxDocumentData<RxDocType>) {
     if (key === "$and") {
         const matchingSelector = selector[key]!
-        const conditionMatches = Object.values(matchingSelector).every((condition) => {
+        const matches = Object.values(matchingSelector).every((condition) => {
             const [conditionKey] = Object.keys(condition);
             const [conditionValue] = Object.values(condition);
             if (conditionKey === "$or") {
@@ -21,7 +21,7 @@ export function conditionMatches<RxDocType>(selector: MangoQuerySelector<RxDocTy
 
             return false;
         })
-        if (conditionMatches) {
+        if (matches) {
             return true
         }
     } else if (key === "$or") {
