@@ -22,7 +22,11 @@ const externals = [
     "@pluto-encrypted/shared",
     "level",
     "pull-stream",
-    "pull-level"
+    "pull-level",
+    "@noble/hashes/sha256",
+    "@noble/ciphers/chacha",
+    "@noble/ciphers/webcrypto/utils",
+    "@pluto-encrypted/encryption"
 ];
 
 export default function CreateConfig(buildPath, plugins = [], extraInputs = []) {

@@ -1,8 +1,8 @@
+import { wrappedKeyEncryptionStorage } from "@pluto-encrypted/encryption";
 import { RxStorage } from "rxdb";
 import { getRxStorageDexie } from "rxdb/plugins/storage-dexie";
-import { wrappedKeyEncryptionCryptoJsStorage } from "rxdb/plugins/encryption-crypto-js";
 
-const storage: RxStorage<any, any> = wrappedKeyEncryptionCryptoJsStorage({
+const storage: RxStorage<any, any> = wrappedKeyEncryptionStorage({
     storage: getRxStorageDexie(),
 })
 
