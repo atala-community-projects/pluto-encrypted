@@ -35,9 +35,6 @@ jobs:
           git_commit_gpgsign: true
 
       - name: CI TASK     
-        uses: MishaKav/jest-coverage-comment@v1.0.23
-        with:
-          coverage-summary-path: packages/database/coverage/coverage-summary.json
         env:
           GH_TOKEN: ${{ secrets.PLUTO_GITHUB }}
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
@@ -46,3 +43,9 @@ jobs:
           npm ci
           chmod +x coverage.sh
           ./coverage.sh
+          npm run coverage
+
+      - name: Coverage Comment
+        uses: MishaKav/jest-coverage-comment@v1.0.23
+        with:
+          coverage-summary-path: packages/database/coverage/coverage-summary.json
