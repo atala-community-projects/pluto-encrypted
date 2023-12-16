@@ -1,6 +1,6 @@
-pluto-encrypted
+@pluto-encrypted/database
 
-# pluto-encrypted - v0.2.0
+# @pluto-encrypted/database
 
 ## Table of contents
 
