@@ -35,14 +35,14 @@
     "@atala/prism-wallet-sdk": "^3.2.0"
   },
   "optionalDependencies": {
-    "@pluto-encrypted/indexdb": "^1.0.1",
-    "@pluto-encrypted/inmemory": "^1.0.1",
-    "@pluto-encrypted/leveldb": "^1.0.1"
+    "@pluto-encrypted/indexdb": "1.1.2",
+    "@pluto-encrypted/inmemory": "1.1.2",
+    "@pluto-encrypted/leveldb": "1.1.2"
   },
   "devDependencies": {
-    "@pluto-encrypted/indexdb": "../indexdb/",
-    "@pluto-encrypted/inmemory": "../inmemory/",
-    "@pluto-encrypted/leveldb": "../leveldb/",
+    "@pluto-encrypted/indexdb": "1.1.2",
+    "@pluto-encrypted/inmemory": "1.1.2",
+    "@pluto-encrypted/leveldb": "1.1.2",
     "@vitest/coverage-v8": "^1.0.4",
     "level": "^6.0.1"
   },
