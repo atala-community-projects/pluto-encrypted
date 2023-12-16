@@ -5,7 +5,7 @@
   "scripts": {
     "clean-packages": "npx lerna run clean && rm -rf node_modules",
     "build": "npx lerna run build --stream --include-dependencies",
-    "coverage": "cd packages/database && npm run coverage",
+    "coverage": "sh coverage.sh",
     "test": "npx lerna run --stream test",
     "docs": "npx lerna run --stream docs",
     "docs-html": "npx lerna run --stream docs-html",
