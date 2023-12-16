@@ -5,19 +5,24 @@ export default {
     [
       "@semantic-release/changelog",
       {
-        changelogFile: "../../CHANGELOG.md",
+        changelogFile: "CHANGELOG.md",
       },
     ],
     "@semantic-release/npm",
     [
       "@semantic-release/git",
       {
-        assets: [
-          "**/*"
-        ],
-        message:
-          "chore(release): Released ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}",
-        signedCommit: true,
+        assets:
+          [
+            "package.json",
+            "package-lock.json",
+            "CHANGELOG.md",
+            "packages/*/package.json",
+            "packages/*/package-lock.json",
+            "packages/*/README.md",
+          ],
+        message: `chore(release): release ${nextRelease.version}
+          ${nextRelease.notes}`,
       },
     ],
     "@semantic-release/github",
