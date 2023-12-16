@@ -91,7 +91,8 @@ describe("Pluto encrypted testing with different storages", () => {
 
   storages.forEach((storage, i) => {
 
-    const storageName = `[${storage.name}] `
+    const storageName = `[${storage.name}]`;
+
 
     describe(storageName, () => {
 
@@ -109,11 +110,42 @@ describe("Pluto encrypted testing with different storages", () => {
       afterEach(async () => {
         if (db && (storage.name === "in-memory" || storage.name === "leveldb")) {
           await db.clear()
-          //await removeRxDatabase(currentDBName, storage)
-
         }
       })
 
+
+      it(storageName + "Should throw an error if pluto has not been started", async ({ expect }) => {
+        const createDatabase = async () => {
+          const restored = await Database.createEncrypted(
+            {
+              name: currentDBName,
+              encryptionKey: defaultPassword,
+              storage: storage,
+              autoStart: false
+            }
+          );
+          await restored.getAllMediators()
+        }
+
+        await expect(() => createDatabase()).rejects.toThrowError(new Error("Start Pluto first."));
+      })
+
+
+
+      it(storageName + "Should throw an error if pluto has been initialised with no storage.", async ({ expect }) => {
+        const createDatabase = async () => {
+          const restored = await Database.createEncrypted(
+            {
+              name: currentDBName,
+              encryptionKey: defaultPassword,
+              storage: undefined as any,
+              autoStart: false
+            }
+          );
+        }
+
+        await expect(() => createDatabase()).rejects.toThrowError(new Error("Please provide a valid storage."));
+      })
 
       it(storageName + "Should store a new Prism DID and its privateKeys", async ({ expect }) => {
         expect(await db.getPrismLastKeyPathIndex()).toBe(0);
@@ -646,6 +678,15 @@ describe("Pluto encrypted testing with different storages", () => {
         );
       });
 
+      it(storageName + "Should be able to request models from database", async ({ expect }) => {
+        const collectionNames = Object.keys(db.collections);
+        for (let collectionName of collectionNames) {
+          const collection = db[collectionName];
+          expect(collection).not.undefined
+        }
+
+      })
+
       it(storageName + "Should be able to request count orm method on all models", async ({ expect }) => {
         const count = await db.privatekeys.count();
         expect(count).toBe(0)
@@ -682,6 +723,8 @@ describe("Pluto encrypted testing with different storages", () => {
         });
         expect(removed.length).toBe(1)
       });
+
+
 
 
 

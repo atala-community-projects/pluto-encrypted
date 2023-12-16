@@ -102,6 +102,10 @@ export class Database implements Domain.Pluto {
     return this.db.exportJSON();
   }
 
+  get collections() {
+    return this.db.collections
+  }
+
   /**
    * CredentialRequestMetadatas
    * Stores anoncreds credential metadata + exposes orm functions
@@ -131,7 +135,7 @@ export class Database implements Domain.Pluto {
    * ```
    */
   get credentialrequestmetadatas() {
-    return this._db.collections.credentialrequestmetadatas
+    return this.db.collections.credentialrequestmetadatas
   }
 
   /**
@@ -163,7 +167,7 @@ export class Database implements Domain.Pluto {
    * ```
    */
   get linksecrets() {
-    return this._db.collections.linksecrets
+    return this.db.collections.linksecrets
   }
 
   /**
@@ -195,7 +199,7 @@ export class Database implements Domain.Pluto {
    * ```
    */
   get didpairs() {
-    return this._db.collections.didpairs
+    return this.db.collections.didpairs
   }
 
   /**
@@ -227,7 +231,7 @@ export class Database implements Domain.Pluto {
    * ```
    */
   get credentials() {
-    return this._db.collections.credentials
+    return this.db.collections.credentials
   }
 
   /**
@@ -259,7 +263,7 @@ export class Database implements Domain.Pluto {
    * ```
    */
   get mediators() {
-    return this._db.collections.mediators
+    return this.db.collections.mediators
   }
 
   /**
@@ -291,7 +295,7 @@ export class Database implements Domain.Pluto {
     * ```
     */
   get dids() {
-    return this._db.collections.dids
+    return this.db.collections.dids
   }
 
   /**
@@ -323,7 +327,7 @@ export class Database implements Domain.Pluto {
     * ```
     */
   get privatekeys() {
-    return this._db.collections.privatekeys
+    return this.db.collections.privatekeys
   }
 
   /**
@@ -355,7 +359,7 @@ export class Database implements Domain.Pluto {
     * ```
     */
   get messages() {
-    return this._db.collections.messages
+    return this.db.collections.messages
   }
 
   /**
@@ -380,10 +384,11 @@ export class Database implements Domain.Pluto {
       name: string,
       encryptionKey: Uint8Array,
       importData?: RxDumpDatabase<PlutoCollections>,
-      storage: RxStorage<any, any>
+      storage: RxStorage<any, any>,
+      autoStart?: boolean
     }
   ) {
-    const { name, storage, encryptionKey, importData } = options;
+    const { name, storage, encryptionKey, importData, autoStart = true } = options;
     if (!storage) {
       throw new Error("Please provide a valid storage.");
     }
@@ -394,7 +399,9 @@ export class Database implements Domain.Pluto {
       password: Buffer.from(encryptionKey).toString(),
     });
 
-    await database.start()
+    if (autoStart) {
+      await database.start()
+    }
 
     if (importData) {
       await database.db.importJSON(importData);

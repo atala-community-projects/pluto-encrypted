@@ -50,7 +50,8 @@ jobs:
           npm ci
           npm run release
           npm run docs
-          npm run coverage
+          chmod +x coverage.sh
+          ./coverage.sh
       
       - uses: stefanzweifel/git-auto-commit-action@v5
         env:
@@ -65,11 +66,19 @@ jobs:
           
       - name: Setup Pages
         uses: actions/configure-pages@v4
+
+      - name: Deploy html docs
+        env:
+          GH_TOKEN: ${{ secrets.PLUTO_GITHUB }}
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: |
+          npm run docs-html
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v2
         with:
-          # Upload entire repository
-          path: './packages/database/coverage'
+          path: './docs-html'
+
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v3
