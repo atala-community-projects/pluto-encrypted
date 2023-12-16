@@ -2,12 +2,12 @@
 name: Continuous integration
 
 concurrency:
-  group: ${{ github.head_ref }}${{ github.ref }}-wallet-sdk
+  group: ${{ github.head_ref }}${{ github.ref }}-pluto
   cancel-in-progress: true
 on:
   pull_request:
     branches:
-      - master
+      - '*'
 
 jobs:
   build-and-test:
@@ -25,14 +25,29 @@ jobs:
         with:
           node-version: "lts/*"
 
-      - name: Install
-        run: npm install
+      - uses: crazy-max/ghaction-import-gpg@v5
+        id: import_gpg
+        with:
+          gpg_private_key: ${{ secrets.GPG_PRIVATE_KEY }}
+          passphrase: ${{ secrets.GPG_PASSPHRASE }}
+          git_user_signingkey: true
+          git_commit_gpgsign: true
 
-      - name: Build
-        run: npm run build
-
-      - name: Run coverage test
-        run: npm run coverage
+      - name: CI TASK     
+        env:
+          GH_TOKEN: ${{ secrets.PLUTO_GITHUB }}
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: |
+          npm ci
+          npm run coverage
+          npm run docs
+          
+      - uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "chore(docs): Rebuild docs [skip ci]"
+          commit_author: "Javier Ribó"
+          commit_user_name: "Javier Ribó"
+          commit_user_email: "elribonazo@gmail.com"
 
       - name: Coverage Comment
         uses: MishaKav/jest-coverage-comment@v1.0.23
