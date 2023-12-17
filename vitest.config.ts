@@ -4,6 +4,10 @@ import { defineConfig } from 'vite'
 const isCI = process.env.CI === "true";
 
 export default defineConfig({
+  build: {
+    minify: 'terser',
+    terserOptions: { format: { comments: 'all' } },
+  },
   test: {
     reporters: ['verbose'], // or 'verbose'
     coverage: {

@@ -477,139 +477,131 @@ export class Database implements Domain.Pluto {
    */
   async start(): Promise<void> {
     const { dbOptions } = this;
-    try {
-      const database = await createRxDatabase<PlutoDatabase>({
-        ...dbOptions,
-        multiInstance: false
-      });
-      await database.addCollections<PlutoCollections>({
-        messages: this.applyORMStatics({
-          schema: MessageSchema,
-          methods: MessageMethods,
-        }),
-        dids: this.applyORMStatics({
-          schema: DIDSchema,
-        }),
-        didpairs: this.applyORMStatics({
-          schema: DIDPairSchema,
-        }),
-        mediators: this.applyORMStatics({
-          schema: MediatorSchema,
-          methods: MediatorMethods,
-        }),
-        privatekeys: this.applyORMStatics({
-          schema: PrivateKeySchema,
-          methods: PrivateKeyMethods,
-        }),
-        credentials: this.applyORMStatics({
-          schema: CredentialSchema,
-          methods: CredentialMethods,
-        }),
-        credentialrequestmetadatas: this.applyORMStatics({
-          schema: CredentialRequestMetadataSchema,
-          methods: CredentialRequestMetadataMethods,
-        }),
-        linksecrets: this.applyORMStatics({
-          schema: LinkSecretSchema,
-          methods: LinkSecretMethods,
-        }),
-      });
-      this._db = database;
 
-      const execOrmNames = ['count', 'findByIds', 'find', 'findOne', "remove"];
-      for (let ormNme of execOrmNames) {
-        for (let collectionName in this.db.collections) {
-          const collection: ValuesOf<PlutoCollections> = this.db.collections[collectionName]
-          const originalOrmMethod = collection[ormNme]
+    const database = await createRxDatabase<PlutoDatabase>({
+      ...dbOptions,
+      multiInstance: false
+    });
+    await database.addCollections<PlutoCollections>({
+      messages: this.applyORMStatics({
+        schema: MessageSchema,
+        methods: MessageMethods,
+      }),
+      dids: this.applyORMStatics({
+        schema: DIDSchema,
+      }),
+      didpairs: this.applyORMStatics({
+        schema: DIDPairSchema,
+      }),
+      mediators: this.applyORMStatics({
+        schema: MediatorSchema,
+        methods: MediatorMethods,
+      }),
+      privatekeys: this.applyORMStatics({
+        schema: PrivateKeySchema,
+        methods: PrivateKeyMethods,
+      }),
+      credentials: this.applyORMStatics({
+        schema: CredentialSchema,
+        methods: CredentialMethods,
+      }),
+      credentialrequestmetadatas: this.applyORMStatics({
+        schema: CredentialRequestMetadataSchema,
+        methods: CredentialRequestMetadataMethods,
+      }),
+      linksecrets: this.applyORMStatics({
+        schema: LinkSecretSchema,
+        methods: LinkSecretMethods,
+      }),
+    });
+    this._db = database;
 
-          collection[ormNme] = new Proxy(originalOrmMethod, {
-            async apply(target, thisArg, args) {
+    const execOrmNames = ['count', 'findByIds', 'find', 'findOne', "remove"];
+    for (let ormNme of execOrmNames) {
+      for (let collectionName in this.db.collections) {
+        const collection: ValuesOf<PlutoCollections> = this.db.collections[collectionName]
+        const originalOrmMethod = collection[ormNme]
 
-              if (target.name === ormNme) {
-                if (ormNme === "remove") {
-                  const rxDocumentArray = await collection.find(...args)
-                  const docsData: RxDocumentData<any>[] = [];
-                  const docsMap: Map<string, RxDocumentData<any>> = new Map();
-                  rxDocumentArray.forEach(rxDocument => {
-                    const data: RxDocumentData<any> = rxDocument.toMutableJSON(true) as any;
-                    docsData.push(data);
-                    docsMap.set(rxDocument.primary, data);
-                  });
+        collection[ormNme] = new Proxy(originalOrmMethod, {
+          async apply(target, thisArg, args) {
 
-                  await Promise.all(
-                    docsData.map(doc => {
-                      const primary = (doc as any)[collection.schema.primaryPath];
-                      const rxDocument = rxDocumentArray.find((doc) => doc[collection.schema.primaryPath] === primary)
-                      return collection._runHooks('pre', 'remove', doc, rxDocument);
-                    })
-                  );
+            if (target.name === ormNme) {
+              if (ormNme === "remove") {
+                const rxDocumentArray = await collection.find(...args)
+                const docsData: RxDocumentData<any>[] = [];
+                const docsMap: Map<string, RxDocumentData<any>> = new Map();
+                rxDocumentArray.forEach(rxDocument => {
+                  const data: RxDocumentData<any> = rxDocument.toMutableJSON(true) as any;
+                  docsData.push(data);
+                  docsMap.set(rxDocument.primary, data);
+                });
 
-                  const removeDocs: BulkWriteRow<any>[] = docsData.map(doc => {
-                    const writeDoc = flatClone(doc);
-                    writeDoc._deleted = true;
-                    return {
-                      previous: doc,
-                      document: writeDoc
-                    };
-                  });
-
-                  const results = await collection.storageInstance.bulkWrite(
-                    removeDocs,
-                    'rx-collection-bulk-remove'
-                  );
-
-                  const successIds: string[] = Object.keys(results.success);
-
-                  await Promise.all(
-                    successIds.map(id => {
-                      return collection._runHooks(
-                        'post',
-                        'remove',
-                        docsMap.get(id),
-                        rxDocumentArray.find((doc) => doc[collection.schema.primaryPath] === id)
-                      );
-                    })
-                  );
-
-                  const rxDocumentMap = rxDocumentArray.reduce((map, doc) => {
+                await Promise.all(
+                  docsData.map(doc => {
                     const primary = (doc as any)[collection.schema.primaryPath];
-                    map.set(primary, doc);
-                    return map
-                  }, new Map<string, RxDocument<any>>());
+                    const rxDocument = rxDocumentArray.find((doc) => doc[collection.schema.primaryPath] === primary)
+                    return collection._runHooks('pre', 'remove', doc, rxDocument);
+                  })
+                );
 
-                  const rxDocuments = successIds.map(id => getFromMapOrThrow(rxDocumentMap, id));
-                  const [error] = Object.values(results.error)
-                  if (error) {
-                    //TODO: Improve error handling
-                    throw new Error(`Could not remove ${JSON.stringify(error)}`)
-                  }
-                  return rxDocuments;
+                const removeDocs: BulkWriteRow<any>[] = docsData.map(doc => {
+                  const writeDoc = flatClone(doc);
+                  writeDoc._deleted = true;
+                  return {
+                    previous: doc,
+                    document: writeDoc
+                  };
+                });
+
+                const results = await collection.storageInstance.bulkWrite(
+                  removeDocs,
+                  'rx-collection-bulk-remove'
+                );
+
+                const successIds: string[] = Object.keys(results.success);
+
+                await Promise.all(
+                  successIds.map(id => {
+                    return collection._runHooks(
+                      'post',
+                      'remove',
+                      docsMap.get(id),
+                      rxDocumentArray.find((doc) => doc[collection.schema.primaryPath] === id)
+                    );
+                  })
+                );
+
+                const rxDocumentMap = rxDocumentArray.reduce((map, doc) => {
+                  const primary = (doc as any)[collection.schema.primaryPath];
+                  map.set(primary, doc);
+                  return map
+                }, new Map<string, RxDocument<any>>());
+
+                const rxDocuments = successIds.map(id => getFromMapOrThrow(rxDocumentMap, id));
+                const [error] = Object.values(results.error)
+                if (error) {
+                  //TODO: Improve error handling
+                  throw new Error(`Could not remove ${JSON.stringify(error)}`)
                 }
-
-                const query = Reflect.apply(target, thisArg, args) as RxQuery;
-
-                if (!query.exec) {
-                  throw new Error("Wrong ORM function does not return exec")
-                }
-                return query.exec()
+                return rxDocuments;
               }
-              return Reflect.apply(target, thisArg, args);
+
+              const query = Reflect.apply(target, thisArg, args) as RxQuery;
+
+              if (!query.exec) {
+                throw new Error("Wrong ORM function does not return exec")
+              }
+              return query.exec()
             }
-          })
+            return Reflect.apply(target, thisArg, args);
+          }
+        })
 
 
-        }
-      }
-
-    } catch (err) {
-      /* istanbul ignore else */
-      if ((err as RxError).code === "DB1") {
-        throw new Error("Invalid Authentication");
-      } else {
-        /* istanbul ignore next */
-        throw err;
       }
     }
+
+
   }
 
   /**
