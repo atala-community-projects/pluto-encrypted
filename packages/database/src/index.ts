@@ -1,77 +1,57 @@
 import { Domain } from "@atala/prism-wallet-sdk";
 import {
-  MangoQuerySelector,
-  RxCollection,
-  RxCollectionBase,
-  RxCollectionCreator,
+  MangoQuerySelector, RxCollectionCreator,
   RxDatabase,
   RxDatabaseCreator,
   RxDumpDatabase,
+  RxError,
   RxQuery,
   RxStorage,
+  addRxPlugin,
   createRxDatabase,
   flatClone,
   getFromMapOrThrow,
   removeRxDatabase
 } from "rxdb";
-import { RxError } from "rxdb";
-import { addRxPlugin } from "rxdb";
+import { BulkWriteRow, RxDocument, RxDocumentData } from "rxdb/dist/types/types";
+import { RxDBJsonDumpPlugin } from "rxdb/plugins/json-dump";
 import { RxDBMigrationPlugin } from "rxdb/plugins/migration";
 import { RxDBQueryBuilderPlugin } from "rxdb/plugins/query-builder";
 import { v4 as uuidv4 } from "uuid";
-import { RxDBJsonDumpPlugin } from "rxdb/plugins/json-dump";
-import MessageSchema, {
-  MessageColletion,
-  MessageDocument,
-  MessageMethods,
-  MessageSchemaType,
-} from "./schemas/Message";
-import DIDSchema, { DIDCollection, DIDDocument, DIDSchemaType } from "./schemas/DID";
 import CredentialSchema, {
-  CredentialCollection,
-  CredentialDocument,
-  CredentialMethods,
-  CredentialSchemaType,
+  CredentialMethods
 } from "./schemas/Credential";
-import DIDPairSchema, { DIDPairCollection, DIDPairDocument, DIDPairSchemaType } from "./schemas/DIDPair";
-import MediatorSchema, {
-  MediatorCollection,
-  MediatorDocument,
-  MediatorMethods,
-  MediatorSchemaType,
-} from "./schemas/Mediator";
-import PrivateKeySchema, {
-  KeySchemaType,
-  KeySpec,
-  PrivateKeyColletion,
-  PrivateKeyDocument,
-  PrivateKeyMethods,
-} from "./schemas/PrivateKey";
-import LinkSecretSchema, {
-  LinkSecretColletion,
-  LinkSecretDocument,
-  LinkSecretMethods,
-  LinkSecretSchemaType,
-} from "./schemas/LinkSecret";
 import CredentialRequestMetadataSchema, {
-  CredentialRequestMetadataCollection,
-  CredentialRequestMetadataDocument,
-  CredentialRequestMetadataMethods,
-  CredentialRequestMetadataSchemaType,
+  CredentialRequestMetadataMethods
 } from "./schemas/CredentialRequestMetadata";
-import { GenericORMType, PlutoCollections } from "./types";
-import { BulkWriteRow, MangoQuerySelectorAndIndex, RxDocument, RxDocumentData } from "rxdb/dist/types/types";
+import DIDSchema from "./schemas/DID";
+import DIDPairSchema from "./schemas/DIDPair";
+import LinkSecretSchema, {
+  LinkSecretMethods
+} from "./schemas/LinkSecret";
+import MediatorSchema, {
+  MediatorMethods
+} from "./schemas/Mediator";
+import MessageSchema, {
+  MessageMethods,
+  MessageSchemaType
+} from "./schemas/Message";
+import PrivateKeySchema, {
+  KeySpec, PrivateKeyDocument,
+  PrivateKeyMethods
+} from "./schemas/PrivateKey";
+import { PlutoCollections } from "./types";
 
 addRxPlugin(RxDBMigrationPlugin);
 addRxPlugin(RxDBQueryBuilderPlugin);
 //addRxPlugin(RxDBDevModePlugin);
 addRxPlugin(RxDBJsonDumpPlugin);
 
-export * from "./schemas/Message";
-export * from "./schemas/DID";
 export * from "./schemas/Credential";
+export * from "./schemas/DID";
 export * from "./schemas/DIDPair";
 export * from "./schemas/Mediator";
+export * from "./schemas/Message";
 export * from "./schemas/PrivateKey";
 
 export type ValuesOf<T> = T[keyof T];
@@ -388,26 +368,36 @@ export class Database implements Domain.Pluto {
       autoStart?: boolean
     }
   ) {
-    const { name, storage, encryptionKey, importData, autoStart = true } = options;
-    if (!storage) {
-      throw new Error("Please provide a valid storage.");
-    }
-    const database = new Database({
-      ignoreDuplicate: true,
-      name: name,
-      storage: storage,
-      password: Buffer.from(encryptionKey).toString(),
-    });
+    try {
+      const { name, storage, encryptionKey, importData, autoStart = true } = options;
+      if (!storage) {
+        throw new Error("Please provide a valid storage.");
+      }
+      const database = new Database({
+        ignoreDuplicate: true,
+        name: name,
+        storage: storage,
+        password: Buffer.from(encryptionKey).toString('hex'),
+      });
 
-    if (autoStart) {
-      await database.start()
-    }
+      if (autoStart) {
+        await database.start()
+      }
 
-    if (importData) {
-      await database.db.importJSON(importData);
-    }
+      if (importData) {
+        await database.db.importJSON(importData);
+      }
 
-    return database;
+      return database;
+    } catch (err) {
+      /* istanbul ignore else */
+      if ((err as RxError).code === "DB1") {
+        throw new Error("Invalid Authentication");
+      } else {
+        /* istanbul ignore next */
+        throw err;
+      }
+    }
   }
 
   /**
@@ -614,9 +604,11 @@ export class Database implements Domain.Pluto {
     } catch (err) {
       /* istanbul ignore else */
       if ((err as RxError).code === "DB1") {
-        throw new Error("Invalid authentication");
+        throw new Error("Invalid Authentication");
+      } else {
         /* istanbul ignore next */
-      } else throw err;
+        throw err;
+      }
     }
   }
 
@@ -714,13 +706,13 @@ export class Database implements Domain.Pluto {
    * @param privateKey 
    * @param did 
    * @param keyPathIndex 
-   * @param metaId 
+   * @param _metaId 
    */
   async storePrivateKeys(
     privateKey: Domain.PrivateKey,
     did: Domain.DID,
     keyPathIndex: number,
-    metaId?: string | null
+    _metaId?: string | null
   ): Promise<void> {
     await this.db.privatekeys.insert({
       id: uuidv4(),
