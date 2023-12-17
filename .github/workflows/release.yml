@@ -46,6 +46,10 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.PLUTO_GITHUB }}
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          GITHUB_AUTHOR_NAME: ${{ secrets.GITHUB_AUTHOR_NAME }}
+          GITHUB_AUTHOR_EMAIL: ${{ secrets.GITHUB_AUTHOR_EMAIL }}
+          GITHUB_COMMITER_NAME: ${{ secrets.GITHUB_COMMITER_NAME }}
+          GITHUB_COMMITER_EMAIL: ${{ secrets.GITHUB_COMMITER_EMAIL }}
           CI: true
         run: |
           npm install
@@ -59,6 +63,10 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.PLUTO_GITHUB }}
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          GITHUB_AUTHOR_NAME: ${{ secrets.GITHUB_AUTHOR_NAME }}
+          GITHUB_AUTHOR_EMAIL: ${{ secrets.GITHUB_AUTHOR_EMAIL }}
+          GITHUB_COMMITER_NAME: ${{ secrets.GITHUB_COMMITER_NAME }}
+          GITHUB_COMMITER_EMAIL: ${{ secrets.GITHUB_COMMITER_EMAIL }}
         with:
           push_options: '--force'
           commit_message: "chore(docs): Rebuild docs + coverage [skip ci]"
@@ -73,6 +81,10 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.PLUTO_GITHUB }}
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          GITHUB_AUTHOR_NAME: ${{ secrets.GITHUB_AUTHOR_NAME }}
+          GITHUB_AUTHOR_EMAIL: ${{ secrets.GITHUB_AUTHOR_EMAIL }}
+          GITHUB_COMMITER_NAME: ${{ secrets.GITHUB_COMMITER_NAME }}
+          GITHUB_COMMITER_EMAIL: ${{ secrets.GITHUB_COMMITER_EMAIL }}
         run: |
           npm run docs-html
 
