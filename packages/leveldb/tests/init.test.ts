@@ -28,7 +28,6 @@ describe("LevelDb init", () => {
 
   it('should start up fine', async () => {
     const storage = createLevelDBStorage({
-      dbName: databaseName,
       dbPath: databasePath
     })
 

@@ -1,3 +1,7 @@
+/**
+ * @packageDocumentation
+ * @module leveldb
+ */
 import { RxStorage, RxStorageDefaultStatics, RxStorageInstance, RxStorageInstanceCreationParams } from "rxdb";
 import { LevelDBInternalConstructor, LevelDBSettings, LevelDBStorageInternals, RxStorageLevelDBType } from "./leveldb/types";
 

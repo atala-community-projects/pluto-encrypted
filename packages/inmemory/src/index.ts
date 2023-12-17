@@ -1,4 +1,7 @@
-
+/**
+ * @packageDocumentation
+ * @module inmemory
+ */
 
 import { RxStorage, RxStorageDefaultStatics, RxStorageInstance, RxStorageInstanceCreationParams } from "rxdb";
 import { InMemorySettings, InMemoryStorageInternals, RxStorageInMemoryType } from "./inMemoryStorage/types";

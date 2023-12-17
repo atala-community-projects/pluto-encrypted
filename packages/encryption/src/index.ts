@@ -1,3 +1,7 @@
+/**
+ * @packageDocumentation
+ * @module encryption
+ */
 import { InternalStoreDocType, RxAttachmentWriteData, RxDocumentData, RxDocumentWriteData, RxJsonSchema, RxStorage, RxStorageInstanceCreationParams, b64DecodeUnicode, b64EncodeUnicode, clone, ensureNotFalsy, flatClone, getProperty, hasEncryption, newRxError, newRxTypeError, setProperty, wrapRxStorageInstance } from "rxdb";
 
 import { sha256 } from '@noble/hashes/sha256';
@@ -45,6 +49,12 @@ export type InternalStorePasswordDocType = InternalStoreDocType<{
     hash: string;
 }>;
 
+
+/**
+ * Create encrypted storage for pluto-encrypted
+ * @param args {  storage: RxStorage<Internals, InstanceCreationOptions>;  }
+ * @returns RxStorage<Internals, InstanceCreationOptions>
+ */
 export function wrappedKeyEncryptionStorage<Internals, InstanceCreationOptions>(
     args: {
         storage: RxStorage<Internals, InstanceCreationOptions>;

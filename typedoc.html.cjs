@@ -3,11 +3,12 @@
 module.exports = {
     "$schema": "https://typedoc.org/schema.json",
     "entryPoints": [
-        "./src/index.ts"
+        "packages/*/src/index.ts",
     ],
-    "out": "../../docs-html",
+    "entryPointStrategy": "packages",
+    "out": "./docs-html",
     "tsconfig": "tsconfig.json",
-    "name": "@pluto-encrypted/database",
+    "name": "@pluto-encrypted",
     "useTsLinkResolution": true,
     "hideGenerator": true,
     "entryPointStrategy": "expand",
@@ -22,10 +23,12 @@ module.exports = {
         "Variable"
     ],
     "includeVersion": false,
+
     "theme": "default",
     "plugin": [
         "typedoc-plugin-superstruct",
         "typedoc-plugin-rename-defaults",
+        "typedoc-plugin-external-module-map",
         "@bndynet/typedoc-theme"
     ],
     "navigationLinks": {

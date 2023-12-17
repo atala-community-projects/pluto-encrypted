@@ -1,3 +1,7 @@
+/**
+ * @packageDocumentation
+ * @module database
+ */
 import { Domain } from "@atala/prism-wallet-sdk";
 import {
   MangoQuerySelector, RxCollectionCreator,

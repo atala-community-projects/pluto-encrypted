@@ -1,3 +1,7 @@
+/**
+ * @packageDocumentation
+ * @module shared
+ */
 import { MangoQuerySelector, RxDocumentData } from "rxdb";
 
 

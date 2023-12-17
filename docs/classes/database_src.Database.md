@@ -1,6 +1,8 @@
-[@pluto-encrypted/database](../README.md) / Database
+[@pluto-encrypted/database](../README.md) / [database/src](../modules/database_src.md) / Database
 
 # Class: Database
+
+[database/src](../modules/database_src.md).Database
 
 Pluto is a storage interface describing storage requirements of the edge agents
 which will be implemented using this SDK. Implement this interface using your
@@ -14,60 +16,60 @@ preferred underlying storage technology, most appropriate for your use case.
 
 ### Constructors
 
-- [constructor](Database.md#constructor)
+- [constructor](database_src.Database.md#constructor)
 
 ### Accessors
 
-- [collections](Database.md#collections)
-- [credentialrequestmetadatas](Database.md#credentialrequestmetadatas)
-- [credentials](Database.md#credentials)
-- [didpairs](Database.md#didpairs)
-- [dids](Database.md#dids)
-- [linksecrets](Database.md#linksecrets)
-- [mediators](Database.md#mediators)
-- [messages](Database.md#messages)
-- [privatekeys](Database.md#privatekeys)
+- [collections](database_src.Database.md#collections)
+- [credentialrequestmetadatas](database_src.Database.md#credentialrequestmetadatas)
+- [credentials](database_src.Database.md#credentials)
+- [didpairs](database_src.Database.md#didpairs)
+- [dids](database_src.Database.md#dids)
+- [linksecrets](database_src.Database.md#linksecrets)
+- [mediators](database_src.Database.md#mediators)
+- [messages](database_src.Database.md#messages)
+- [privatekeys](database_src.Database.md#privatekeys)
 
 ### Methods
 
-- [backup](Database.md#backup)
-- [clear](Database.md#clear)
-- [fetchCredentialMetadata](Database.md#fetchcredentialmetadata)
-- [getAllCredentials](Database.md#getallcredentials)
-- [getAllDidPairs](Database.md#getalldidpairs)
-- [getAllMediators](Database.md#getallmediators)
-- [getAllMessages](Database.md#getallmessages)
-- [getAllMessagesByDID](Database.md#getallmessagesbydid)
-- [getAllMessagesByFromToDID](Database.md#getallmessagesbyfromtodid)
-- [getAllMessagesOfType](Database.md#getallmessagesoftype)
-- [getAllMessagesReceived](Database.md#getallmessagesreceived)
-- [getAllMessagesReceivedFrom](Database.md#getallmessagesreceivedfrom)
-- [getAllMessagesSent](Database.md#getallmessagessent)
-- [getAllMessagesSentTo](Database.md#getallmessagessentto)
-- [getAllPeerDIDs](Database.md#getallpeerdids)
-- [getAllPrismDIDs](Database.md#getallprismdids)
-- [getDIDInfoByAlias](Database.md#getdidinfobyalias)
-- [getDIDInfoByDID](Database.md#getdidinfobydid)
-- [getDIDPrivateKeyByID](Database.md#getdidprivatekeybyid)
-- [getDIDPrivateKeysByDID](Database.md#getdidprivatekeysbydid)
-- [getLinkSecret](Database.md#getlinksecret)
-- [getMessage](Database.md#getmessage)
-- [getPairByDID](Database.md#getpairbydid)
-- [getPairByName](Database.md#getpairbyname)
-- [getPrismDIDKeyPathIndex](Database.md#getprismdidkeypathindex)
-- [getPrismLastKeyPathIndex](Database.md#getprismlastkeypathindex)
-- [start](Database.md#start)
-- [storeCredential](Database.md#storecredential)
-- [storeCredentialMetadata](Database.md#storecredentialmetadata)
-- [storeDIDPair](Database.md#storedidpair)
-- [storeLinkSecret](Database.md#storelinksecret)
-- [storeMediator](Database.md#storemediator)
-- [storeMessage](Database.md#storemessage)
-- [storeMessages](Database.md#storemessages)
-- [storePeerDID](Database.md#storepeerdid)
-- [storePrismDID](Database.md#storeprismdid)
-- [storePrivateKeys](Database.md#storeprivatekeys)
-- [createEncrypted](Database.md#createencrypted)
+- [backup](database_src.Database.md#backup)
+- [clear](database_src.Database.md#clear)
+- [fetchCredentialMetadata](database_src.Database.md#fetchcredentialmetadata)
+- [getAllCredentials](database_src.Database.md#getallcredentials)
+- [getAllDidPairs](database_src.Database.md#getalldidpairs)
+- [getAllMediators](database_src.Database.md#getallmediators)
+- [getAllMessages](database_src.Database.md#getallmessages)
+- [getAllMessagesByDID](database_src.Database.md#getallmessagesbydid)
+- [getAllMessagesByFromToDID](database_src.Database.md#getallmessagesbyfromtodid)
+- [getAllMessagesOfType](database_src.Database.md#getallmessagesoftype)
+- [getAllMessagesReceived](database_src.Database.md#getallmessagesreceived)
+- [getAllMessagesReceivedFrom](database_src.Database.md#getallmessagesreceivedfrom)
+- [getAllMessagesSent](database_src.Database.md#getallmessagessent)
+- [getAllMessagesSentTo](database_src.Database.md#getallmessagessentto)
+- [getAllPeerDIDs](database_src.Database.md#getallpeerdids)
+- [getAllPrismDIDs](database_src.Database.md#getallprismdids)
+- [getDIDInfoByAlias](database_src.Database.md#getdidinfobyalias)
+- [getDIDInfoByDID](database_src.Database.md#getdidinfobydid)
+- [getDIDPrivateKeyByID](database_src.Database.md#getdidprivatekeybyid)
+- [getDIDPrivateKeysByDID](database_src.Database.md#getdidprivatekeysbydid)
+- [getLinkSecret](database_src.Database.md#getlinksecret)
+- [getMessage](database_src.Database.md#getmessage)
+- [getPairByDID](database_src.Database.md#getpairbydid)
+- [getPairByName](database_src.Database.md#getpairbyname)
+- [getPrismDIDKeyPathIndex](database_src.Database.md#getprismdidkeypathindex)
+- [getPrismLastKeyPathIndex](database_src.Database.md#getprismlastkeypathindex)
+- [start](database_src.Database.md#start)
+- [storeCredential](database_src.Database.md#storecredential)
+- [storeCredentialMetadata](database_src.Database.md#storecredentialmetadata)
+- [storeDIDPair](database_src.Database.md#storedidpair)
+- [storeLinkSecret](database_src.Database.md#storelinksecret)
+- [storeMediator](database_src.Database.md#storemediator)
+- [storeMessage](database_src.Database.md#storemessage)
+- [storeMessages](database_src.Database.md#storemessages)
+- [storePeerDID](database_src.Database.md#storepeerdid)
+- [storePrismDID](database_src.Database.md#storeprismdid)
+- [storePrivateKeys](database_src.Database.md#storeprivatekeys)
+- [createEncrypted](database_src.Database.md#createencrypted)
 
 ## Constructors
 
@@ -83,7 +85,11 @@ preferred underlying storage technology, most appropriate for your use case.
 
 #### Defined in
 
+<<<<<<< HEAD:docs/classes/Database.md
 [index.ts:79](https://github.com/elribonazo/pluto-encrypted/blob/e61ee01/packages/database/src/index.ts#L79)
+=======
+[packages/database/src/index.ts:79](https://github.com/elribonazo/pluto-encrypted/blob/1443488/packages/database/src/index.ts#L79)
+>>>>>>> aa5718f (fix: generate documentation for all the packages in 1 shot.):docs/classes/database_src.Database.md
 
 ## Accessors
 
@@ -97,13 +103,17 @@ preferred underlying storage technology, most appropriate for your use case.
 
 #### Defined in
 
+<<<<<<< HEAD:docs/classes/Database.md
 [index.ts:85](https://github.com/elribonazo/pluto-encrypted/blob/e61ee01/packages/database/src/index.ts#L85)
+=======
+[packages/database/src/index.ts:85](https://github.com/elribonazo/pluto-encrypted/blob/1443488/packages/database/src/index.ts#L85)
+>>>>>>> aa5718f (fix: generate documentation for all the packages in 1 shot.):docs/classes/database_src.Database.md
 
 ___
 
 ### credentialrequestmetadatas
 
-• `get` **credentialrequestmetadatas**(): `CredentialRequestMetadataCollection`
+• `get` **credentialrequestmetadatas**(): [`CredentialRequestMetadataCollection`](../modules/database_src_schemas_CredentialRequestMetadata.md#credentialrequestmetadatacollection)
 
 CredentialRequestMetadatas
 Stores anoncreds credential metadata + exposes orm functions
@@ -134,11 +144,15 @@ await db.credentialmetadatas.remove({selector: {id: {$eq: 1}}})
 
 #### Returns
 
-`CredentialRequestMetadataCollection`
+[`CredentialRequestMetadataCollection`](../modules/database_src_schemas_CredentialRequestMetadata.md#credentialrequestmetadatacollection)
 
 #### Defined in
 
+<<<<<<< HEAD:docs/classes/Database.md
 [index.ts:117](https://github.com/elribonazo/pluto-encrypted/blob/e61ee01/packages/database/src/index.ts#L117)
+=======
+[packages/database/src/index.ts:117](https://github.com/elribonazo/pluto-encrypted/blob/1443488/packages/database/src/index.ts#L117)
+>>>>>>> aa5718f (fix: generate documentation for all the packages in 1 shot.):docs/classes/database_src.Database.md
 
 ___
 
@@ -179,7 +193,11 @@ await db.credentials.remove({selector: {id: {$eq: 1}}})
 
 #### Defined in
 
+<<<<<<< HEAD:docs/classes/Database.md
 [index.ts:213](https://github.com/elribonazo/pluto-encrypted/blob/e61ee01/packages/database/src/index.ts#L213)
+=======
+[packages/database/src/index.ts:213](https://github.com/elribonazo/pluto-encrypted/blob/1443488/packages/database/src/index.ts#L213)
+>>>>>>> aa5718f (fix: generate documentation for all the packages in 1 shot.):docs/classes/database_src.Database.md
 
 ___
 
@@ -220,7 +238,11 @@ await db.didpairs.remove({selector: {id: {$eq: 1}}})
 
 #### Defined in
 
+<<<<<<< HEAD:docs/classes/Database.md
 [index.ts:181](https://github.com/elribonazo/pluto-encrypted/blob/e61ee01/packages/database/src/index.ts#L181)
+=======
+[packages/database/src/index.ts:181](https://github.com/elribonazo/pluto-encrypted/blob/1443488/packages/database/src/index.ts#L181)
+>>>>>>> aa5718f (fix: generate documentation for all the packages in 1 shot.):docs/classes/database_src.Database.md
 
 ___
 
@@ -261,7 +283,11 @@ await db.dids.remove({selector: {id: {$eq: 1}}})
 
 #### Defined in
 
+<<<<<<< HEAD:docs/classes/Database.md
 [index.ts:277](https://github.com/elribonazo/pluto-encrypted/blob/e61ee01/packages/database/src/index.ts#L277)
+=======
+[packages/database/src/index.ts:277](https://github.com/elribonazo/pluto-encrypted/blob/1443488/packages/database/src/index.ts#L277)
+>>>>>>> aa5718f (fix: generate documentation for all the packages in 1 shot.):docs/classes/database_src.Database.md
 
 ___
 
@@ -302,7 +328,11 @@ await db.linksecrets.remove({selector: {id: {$eq: 1}}})
 
 #### Defined in
 
+<<<<<<< HEAD:docs/classes/Database.md
 [index.ts:149](https://github.com/elribonazo/pluto-encrypted/blob/e61ee01/packages/database/src/index.ts#L149)
+=======
+[packages/database/src/index.ts:149](https://github.com/elribonazo/pluto-encrypted/blob/1443488/packages/database/src/index.ts#L149)
+>>>>>>> aa5718f (fix: generate documentation for all the packages in 1 shot.):docs/classes/database_src.Database.md
 
 ___
 
@@ -343,7 +373,11 @@ await db.mediators.remove({selector: {id: {$eq: 1}}})
 
 #### Defined in
 
+<<<<<<< HEAD:docs/classes/Database.md
 [index.ts:245](https://github.com/elribonazo/pluto-encrypted/blob/e61ee01/packages/database/src/index.ts#L245)
+=======
+[packages/database/src/index.ts:245](https://github.com/elribonazo/pluto-encrypted/blob/1443488/packages/database/src/index.ts#L245)
+>>>>>>> aa5718f (fix: generate documentation for all the packages in 1 shot.):docs/classes/database_src.Database.md
 
 ___
 
@@ -384,7 +418,11 @@ await db.messages.remove({selector: {id: {$eq: 1}}})
 
 #### Defined in
 
+<<<<<<< HEAD:docs/classes/Database.md
 [index.ts:341](https://github.com/elribonazo/pluto-encrypted/blob/e61ee01/packages/database/src/index.ts#L341)
+=======
+[packages/database/src/index.ts:341](https://github.com/elribonazo/pluto-encrypted/blob/1443488/packages/database/src/index.ts#L341)
+>>>>>>> aa5718f (fix: generate documentation for all the packages in 1 shot.):docs/classes/database_src.Database.md
 
 ___
 
@@ -425,7 +463,11 @@ await db.privatekeys.remove({selector: {id: {$eq: 1}}})
 
 #### Defined in
 
+<<<<<<< HEAD:docs/classes/Database.md
 [index.ts:309](https://github.com/elribonazo/pluto-encrypted/blob/e61ee01/packages/database/src/index.ts#L309)
+=======
+[packages/database/src/index.ts:309](https://github.com/elribonazo/pluto-encrypted/blob/1443488/packages/database/src/index.ts#L309)
+>>>>>>> aa5718f (fix: generate documentation for all the packages in 1 shot.):docs/classes/database_src.Database.md
 
 ## Methods
 
@@ -439,7 +481,11 @@ await db.privatekeys.remove({selector: {id: {$eq: 1}}})
 
 #### Defined in
 
+<<<<<<< HEAD:docs/classes/Database.md
 [index.ts:81](https://github.com/elribonazo/pluto-encrypted/blob/e61ee01/packages/database/src/index.ts#L81)
+=======
+[packages/database/src/index.ts:81](https://github.com/elribonazo/pluto-encrypted/blob/1443488/packages/database/src/index.ts#L81)
+>>>>>>> aa5718f (fix: generate documentation for all the packages in 1 shot.):docs/classes/database_src.Database.md
 
 ___
 
@@ -456,7 +502,11 @@ and then destroy the database itself.
 
 #### Defined in
 
+<<<<<<< HEAD:docs/classes/Database.md
 [index.ts:349](https://github.com/elribonazo/pluto-encrypted/blob/e61ee01/packages/database/src/index.ts#L349)
+=======
+[packages/database/src/index.ts:349](https://github.com/elribonazo/pluto-encrypted/blob/1443488/packages/database/src/index.ts#L349)
+>>>>>>> aa5718f (fix: generate documentation for all the packages in 1 shot.):docs/classes/database_src.Database.md
 
 ___
 
@@ -480,7 +530,11 @@ Domain.Pluto.fetchCredentialMetadata
 
 #### Defined in
 
+<<<<<<< HEAD:docs/classes/Database.md
 [index.ts:1180](https://github.com/elribonazo/pluto-encrypted/blob/e61ee01/packages/database/src/index.ts#L1180)
+=======
+[packages/database/src/index.ts:1180](https://github.com/elribonazo/pluto-encrypted/blob/1443488/packages/database/src/index.ts#L1180)
+>>>>>>> aa5718f (fix: generate documentation for all the packages in 1 shot.):docs/classes/database_src.Database.md
 
 ___
 
@@ -498,7 +552,11 @@ Domain.Pluto.getAllCredentials
 
 #### Defined in
 
+<<<<<<< HEAD:docs/classes/Database.md
 [index.ts:1130](https://github.com/elribonazo/pluto-encrypted/blob/e61ee01/packages/database/src/index.ts#L1130)
+=======
+[packages/database/src/index.ts:1130](https://github.com/elribonazo/pluto-encrypted/blob/1443488/packages/database/src/index.ts#L1130)
+>>>>>>> aa5718f (fix: generate documentation for all the packages in 1 shot.):docs/classes/database_src.Database.md
 
 ___
 
@@ -520,7 +578,11 @@ Domain.Pluto.getAllDidPairs
 
 #### Defined in
 
+<<<<<<< HEAD:docs/classes/Database.md
 [index.ts:743](https://github.com/elribonazo/pluto-encrypted/blob/e61ee01/packages/database/src/index.ts#L743)
+=======
+[packages/database/src/index.ts:743](https://github.com/elribonazo/pluto-encrypted/blob/1443488/packages/database/src/index.ts#L743)
+>>>>>>> aa5718f (fix: generate documentation for all the packages in 1 shot.):docs/classes/database_src.Database.md
 
 ___
 
@@ -538,7 +600,11 @@ Domain.Pluto.getAllMediators
 
 #### Defined in
 
+<<<<<<< HEAD:docs/classes/Database.md
 [index.ts:1125](https://github.com/elribonazo/pluto-encrypted/blob/e61ee01/packages/database/src/index.ts#L1125)
+=======
+[packages/database/src/index.ts:1125](https://github.com/elribonazo/pluto-encrypted/blob/1443488/packages/database/src/index.ts#L1125)
+>>>>>>> aa5718f (fix: generate documentation for all the packages in 1 shot.):docs/classes/database_src.Database.md
 
 ___
 
@@ -560,7 +626,11 @@ Domain.Pluto.getAllMessages
 
 #### Defined in
 
+<<<<<<< HEAD:docs/classes/Database.md
 [index.ts:466](https://github.com/elribonazo/pluto-encrypted/blob/e61ee01/packages/database/src/index.ts#L466)
+=======
+[packages/database/src/index.ts:466](https://github.com/elribonazo/pluto-encrypted/blob/1443488/packages/database/src/index.ts#L466)
+>>>>>>> aa5718f (fix: generate documentation for all the packages in 1 shot.):docs/classes/database_src.Database.md
 
 ___
 
@@ -584,7 +654,11 @@ Domain.Pluto.getAllMessagesByDID
 
 #### Defined in
 
+<<<<<<< HEAD:docs/classes/Database.md
 [index.ts:937](https://github.com/elribonazo/pluto-encrypted/blob/e61ee01/packages/database/src/index.ts#L937)
+=======
+[packages/database/src/index.ts:937](https://github.com/elribonazo/pluto-encrypted/blob/1443488/packages/database/src/index.ts#L937)
+>>>>>>> aa5718f (fix: generate documentation for all the packages in 1 shot.):docs/classes/database_src.Database.md
 
 ___
 
@@ -609,7 +683,11 @@ Domain.Pluto.getAllMessagesByFromToDID
 
 #### Defined in
 
+<<<<<<< HEAD:docs/classes/Database.md
 [index.ts:1050](https://github.com/elribonazo/pluto-encrypted/blob/e61ee01/packages/database/src/index.ts#L1050)
+=======
+[packages/database/src/index.ts:1050](https://github.com/elribonazo/pluto-encrypted/blob/1443488/packages/database/src/index.ts#L1050)
+>>>>>>> aa5718f (fix: generate documentation for all the packages in 1 shot.):docs/classes/database_src.Database.md
 
 ___
 
@@ -634,7 +712,11 @@ Domain.Pluto.getAllMessagesOfType
 
 #### Defined in
 
+<<<<<<< HEAD:docs/classes/Database.md
 [index.ts:1019](https://github.com/elribonazo/pluto-encrypted/blob/e61ee01/packages/database/src/index.ts#L1019)
+=======
+[packages/database/src/index.ts:1019](https://github.com/elribonazo/pluto-encrypted/blob/1443488/packages/database/src/index.ts#L1019)
+>>>>>>> aa5718f (fix: generate documentation for all the packages in 1 shot.):docs/classes/database_src.Database.md
 
 ___
 
@@ -652,7 +734,11 @@ Domain.Pluto.getAllMessagesReceived
 
 #### Defined in
 
+<<<<<<< HEAD:docs/classes/Database.md
 [index.ts:970](https://github.com/elribonazo/pluto-encrypted/blob/e61ee01/packages/database/src/index.ts#L970)
+=======
+[packages/database/src/index.ts:970](https://github.com/elribonazo/pluto-encrypted/blob/1443488/packages/database/src/index.ts#L970)
+>>>>>>> aa5718f (fix: generate documentation for all the packages in 1 shot.):docs/classes/database_src.Database.md
 
 ___
 
@@ -676,7 +762,11 @@ Domain.Pluto.getAllMessagesReceivedFrom
 
 #### Defined in
 
+<<<<<<< HEAD:docs/classes/Database.md
 [index.ts:1002](https://github.com/elribonazo/pluto-encrypted/blob/e61ee01/packages/database/src/index.ts#L1002)
+=======
+[packages/database/src/index.ts:1002](https://github.com/elribonazo/pluto-encrypted/blob/1443488/packages/database/src/index.ts#L1002)
+>>>>>>> aa5718f (fix: generate documentation for all the packages in 1 shot.):docs/classes/database_src.Database.md
 
 ___
 
@@ -694,7 +784,11 @@ Domain.Pluto.getAllMessagesSent
 
 #### Defined in
 
+<<<<<<< HEAD:docs/classes/Database.md
 [index.ts:955](https://github.com/elribonazo/pluto-encrypted/blob/e61ee01/packages/database/src/index.ts#L955)
+=======
+[packages/database/src/index.ts:955](https://github.com/elribonazo/pluto-encrypted/blob/1443488/packages/database/src/index.ts#L955)
+>>>>>>> aa5718f (fix: generate documentation for all the packages in 1 shot.):docs/classes/database_src.Database.md
 
 ___
 
@@ -718,7 +812,11 @@ Domain.Pluto.getAllMessagesSentTo
 
 #### Defined in
 
+<<<<<<< HEAD:docs/classes/Database.md
 [index.ts:985](https://github.com/elribonazo/pluto-encrypted/blob/e61ee01/packages/database/src/index.ts#L985)
+=======
+[packages/database/src/index.ts:985](https://github.com/elribonazo/pluto-encrypted/blob/1443488/packages/database/src/index.ts#L985)
+>>>>>>> aa5718f (fix: generate documentation for all the packages in 1 shot.):docs/classes/database_src.Database.md
 
 ___
 
@@ -736,7 +834,11 @@ Domain.Pluto.getAllPeerDIDs
 
 #### Defined in
 
+<<<<<<< HEAD:docs/classes/Database.md
 [index.ts:1087](https://github.com/elribonazo/pluto-encrypted/blob/e61ee01/packages/database/src/index.ts#L1087)
+=======
+[packages/database/src/index.ts:1087](https://github.com/elribonazo/pluto-encrypted/blob/1443488/packages/database/src/index.ts#L1087)
+>>>>>>> aa5718f (fix: generate documentation for all the packages in 1 shot.):docs/classes/database_src.Database.md
 
 ___
 
@@ -754,7 +856,11 @@ Domain.Pluto.getAllPrismDIDs
 
 #### Defined in
 
+<<<<<<< HEAD:docs/classes/Database.md
 [index.ts:845](https://github.com/elribonazo/pluto-encrypted/blob/e61ee01/packages/database/src/index.ts#L845)
+=======
+[packages/database/src/index.ts:845](https://github.com/elribonazo/pluto-encrypted/blob/1443488/packages/database/src/index.ts#L845)
+>>>>>>> aa5718f (fix: generate documentation for all the packages in 1 shot.):docs/classes/database_src.Database.md
 
 ___
 
@@ -778,7 +884,11 @@ Domain.Pluto.getDIDInfoByAlias
 
 #### Defined in
 
+<<<<<<< HEAD:docs/classes/Database.md
 [index.ts:910](https://github.com/elribonazo/pluto-encrypted/blob/e61ee01/packages/database/src/index.ts#L910)
+=======
+[packages/database/src/index.ts:910](https://github.com/elribonazo/pluto-encrypted/blob/1443488/packages/database/src/index.ts#L910)
+>>>>>>> aa5718f (fix: generate documentation for all the packages in 1 shot.):docs/classes/database_src.Database.md
 
 ___
 
@@ -802,7 +912,11 @@ Domain.Pluto.getDIDInfoByDID
 
 #### Defined in
 
+<<<<<<< HEAD:docs/classes/Database.md
 [index.ts:877](https://github.com/elribonazo/pluto-encrypted/blob/e61ee01/packages/database/src/index.ts#L877)
+=======
+[packages/database/src/index.ts:877](https://github.com/elribonazo/pluto-encrypted/blob/1443488/packages/database/src/index.ts#L877)
+>>>>>>> aa5718f (fix: generate documentation for all the packages in 1 shot.):docs/classes/database_src.Database.md
 
 ___
 
@@ -826,7 +940,11 @@ Domain.Pluto.getDIDPrivateKeyByID
 
 #### Defined in
 
+<<<<<<< HEAD:docs/classes/Database.md
 [index.ts:821](https://github.com/elribonazo/pluto-encrypted/blob/e61ee01/packages/database/src/index.ts#L821)
+=======
+[packages/database/src/index.ts:821](https://github.com/elribonazo/pluto-encrypted/blob/1443488/packages/database/src/index.ts#L821)
+>>>>>>> aa5718f (fix: generate documentation for all the packages in 1 shot.):docs/classes/database_src.Database.md
 
 ___
 
@@ -850,7 +968,11 @@ Domain.Pluto.getDIDPrivateKeysByDID
 
 #### Defined in
 
+<<<<<<< HEAD:docs/classes/Database.md
 [index.ts:809](https://github.com/elribonazo/pluto-encrypted/blob/e61ee01/packages/database/src/index.ts#L809)
+=======
+[packages/database/src/index.ts:809](https://github.com/elribonazo/pluto-encrypted/blob/1443488/packages/database/src/index.ts#L809)
+>>>>>>> aa5718f (fix: generate documentation for all the packages in 1 shot.):docs/classes/database_src.Database.md
 
 ___
 
@@ -874,7 +996,11 @@ Domain.Pluto.getLinkSecret
 
 #### Defined in
 
+<<<<<<< HEAD:docs/classes/Database.md
 [index.ts:1137](https://github.com/elribonazo/pluto-encrypted/blob/e61ee01/packages/database/src/index.ts#L1137)
+=======
+[packages/database/src/index.ts:1137](https://github.com/elribonazo/pluto-encrypted/blob/1443488/packages/database/src/index.ts#L1137)
+>>>>>>> aa5718f (fix: generate documentation for all the packages in 1 shot.):docs/classes/database_src.Database.md
 
 ___
 
@@ -902,7 +1028,11 @@ Domain.Pluto.getMessage
 
 #### Defined in
 
+<<<<<<< HEAD:docs/classes/Database.md
 [index.ts:408](https://github.com/elribonazo/pluto-encrypted/blob/e61ee01/packages/database/src/index.ts#L408)
+=======
+[packages/database/src/index.ts:408](https://github.com/elribonazo/pluto-encrypted/blob/1443488/packages/database/src/index.ts#L408)
+>>>>>>> aa5718f (fix: generate documentation for all the packages in 1 shot.):docs/classes/database_src.Database.md
 
 ___
 
@@ -930,7 +1060,11 @@ Domain.Pluto.getPairByDID
 
 #### Defined in
 
+<<<<<<< HEAD:docs/classes/Database.md
 [index.ts:757](https://github.com/elribonazo/pluto-encrypted/blob/e61ee01/packages/database/src/index.ts#L757)
+=======
+[packages/database/src/index.ts:757](https://github.com/elribonazo/pluto-encrypted/blob/1443488/packages/database/src/index.ts#L757)
+>>>>>>> aa5718f (fix: generate documentation for all the packages in 1 shot.):docs/classes/database_src.Database.md
 
 ___
 
@@ -954,7 +1088,11 @@ Domain.Pluto.getPairByName
 
 #### Defined in
 
+<<<<<<< HEAD:docs/classes/Database.md
 [index.ts:781](https://github.com/elribonazo/pluto-encrypted/blob/e61ee01/packages/database/src/index.ts#L781)
+=======
+[packages/database/src/index.ts:781](https://github.com/elribonazo/pluto-encrypted/blob/1443488/packages/database/src/index.ts#L781)
+>>>>>>> aa5718f (fix: generate documentation for all the packages in 1 shot.):docs/classes/database_src.Database.md
 
 ___
 
@@ -978,7 +1116,11 @@ Domain.Pluto.getPrismDIDKeyPathIndex
 
 #### Defined in
 
+<<<<<<< HEAD:docs/classes/Database.md
 [index.ts:1071](https://github.com/elribonazo/pluto-encrypted/blob/e61ee01/packages/database/src/index.ts#L1071)
+=======
+[packages/database/src/index.ts:1071](https://github.com/elribonazo/pluto-encrypted/blob/1443488/packages/database/src/index.ts#L1071)
+>>>>>>> aa5718f (fix: generate documentation for all the packages in 1 shot.):docs/classes/database_src.Database.md
 
 ___
 
@@ -996,7 +1138,11 @@ Domain.Pluto.getPrismLastKeyPathIndex
 
 #### Defined in
 
+<<<<<<< HEAD:docs/classes/Database.md
 [index.ts:1079](https://github.com/elribonazo/pluto-encrypted/blob/e61ee01/packages/database/src/index.ts#L1079)
+=======
+[packages/database/src/index.ts:1079](https://github.com/elribonazo/pluto-encrypted/blob/1443488/packages/database/src/index.ts#L1079)
+>>>>>>> aa5718f (fix: generate documentation for all the packages in 1 shot.):docs/classes/database_src.Database.md
 
 ___
 
@@ -1016,7 +1162,11 @@ Domain.Pluto.start
 
 #### Defined in
 
+<<<<<<< HEAD:docs/classes/Database.md
 [index.ts:478](https://github.com/elribonazo/pluto-encrypted/blob/e61ee01/packages/database/src/index.ts#L478)
+=======
+[packages/database/src/index.ts:478](https://github.com/elribonazo/pluto-encrypted/blob/1443488/packages/database/src/index.ts#L478)
+>>>>>>> aa5718f (fix: generate documentation for all the packages in 1 shot.):docs/classes/database_src.Database.md
 
 ___
 
@@ -1040,7 +1190,11 @@ Domain.Pluto.storeCredential
 
 #### Defined in
 
+<<<<<<< HEAD:docs/classes/Database.md
 [index.ts:1114](https://github.com/elribonazo/pluto-encrypted/blob/e61ee01/packages/database/src/index.ts#L1114)
+=======
+[packages/database/src/index.ts:1114](https://github.com/elribonazo/pluto-encrypted/blob/1443488/packages/database/src/index.ts#L1114)
+>>>>>>> aa5718f (fix: generate documentation for all the packages in 1 shot.):docs/classes/database_src.Database.md
 
 ___
 
@@ -1065,7 +1219,11 @@ Domain.Pluto.storeCredentialMetadata
 
 #### Defined in
 
+<<<<<<< HEAD:docs/classes/Database.md
 [index.ts:1169](https://github.com/elribonazo/pluto-encrypted/blob/e61ee01/packages/database/src/index.ts#L1169)
+=======
+[packages/database/src/index.ts:1169](https://github.com/elribonazo/pluto-encrypted/blob/1443488/packages/database/src/index.ts#L1169)
+>>>>>>> aa5718f (fix: generate documentation for all the packages in 1 shot.):docs/classes/database_src.Database.md
 
 ___
 
@@ -1093,7 +1251,11 @@ Domain.Pluto.storeDIDPair
 
 #### Defined in
 
+<<<<<<< HEAD:docs/classes/Database.md
 [index.ts:685](https://github.com/elribonazo/pluto-encrypted/blob/e61ee01/packages/database/src/index.ts#L685)
+=======
+[packages/database/src/index.ts:685](https://github.com/elribonazo/pluto-encrypted/blob/1443488/packages/database/src/index.ts#L685)
+>>>>>>> aa5718f (fix: generate documentation for all the packages in 1 shot.):docs/classes/database_src.Database.md
 
 ___
 
@@ -1118,7 +1280,11 @@ Domain.Pluto.storeLinkSecret
 
 #### Defined in
 
+<<<<<<< HEAD:docs/classes/Database.md
 [index.ts:1159](https://github.com/elribonazo/pluto-encrypted/blob/e61ee01/packages/database/src/index.ts#L1159)
+=======
+[packages/database/src/index.ts:1159](https://github.com/elribonazo/pluto-encrypted/blob/1443488/packages/database/src/index.ts#L1159)
+>>>>>>> aa5718f (fix: generate documentation for all the packages in 1 shot.):docs/classes/database_src.Database.md
 
 ___
 
@@ -1144,7 +1310,11 @@ Domain.Pluto.storeMediator
 
 #### Defined in
 
+<<<<<<< HEAD:docs/classes/Database.md
 [index.ts:832](https://github.com/elribonazo/pluto-encrypted/blob/e61ee01/packages/database/src/index.ts#L832)
+=======
+[packages/database/src/index.ts:832](https://github.com/elribonazo/pluto-encrypted/blob/1443488/packages/database/src/index.ts#L832)
+>>>>>>> aa5718f (fix: generate documentation for all the packages in 1 shot.):docs/classes/database_src.Database.md
 
 ___
 
@@ -1172,7 +1342,11 @@ Domain.Pluto.storeMessage
 
 #### Defined in
 
+<<<<<<< HEAD:docs/classes/Database.md
 [index.ts:427](https://github.com/elribonazo/pluto-encrypted/blob/e61ee01/packages/database/src/index.ts#L427)
+=======
+[packages/database/src/index.ts:427](https://github.com/elribonazo/pluto-encrypted/blob/1443488/packages/database/src/index.ts#L427)
+>>>>>>> aa5718f (fix: generate documentation for all the packages in 1 shot.):docs/classes/database_src.Database.md
 
 ___
 
@@ -1200,7 +1374,11 @@ Domain.Pluto.storeMessages
 
 #### Defined in
 
+<<<<<<< HEAD:docs/classes/Database.md
 [index.ts:456](https://github.com/elribonazo/pluto-encrypted/blob/e61ee01/packages/database/src/index.ts#L456)
+=======
+[packages/database/src/index.ts:456](https://github.com/elribonazo/pluto-encrypted/blob/1443488/packages/database/src/index.ts#L456)
+>>>>>>> aa5718f (fix: generate documentation for all the packages in 1 shot.):docs/classes/database_src.Database.md
 
 ___
 
@@ -1227,7 +1405,11 @@ Domain.Pluto.storePeerDID
 
 #### Defined in
 
+<<<<<<< HEAD:docs/classes/Database.md
 [index.ts:643](https://github.com/elribonazo/pluto-encrypted/blob/e61ee01/packages/database/src/index.ts#L643)
+=======
+[packages/database/src/index.ts:643](https://github.com/elribonazo/pluto-encrypted/blob/1443488/packages/database/src/index.ts#L643)
+>>>>>>> aa5718f (fix: generate documentation for all the packages in 1 shot.):docs/classes/database_src.Database.md
 
 ___
 
@@ -1257,7 +1439,11 @@ Domain.Pluto.storePrismDID
 
 #### Defined in
 
+<<<<<<< HEAD:docs/classes/Database.md
 [index.ts:616](https://github.com/elribonazo/pluto-encrypted/blob/e61ee01/packages/database/src/index.ts#L616)
+=======
+[packages/database/src/index.ts:616](https://github.com/elribonazo/pluto-encrypted/blob/1443488/packages/database/src/index.ts#L616)
+>>>>>>> aa5718f (fix: generate documentation for all the packages in 1 shot.):docs/classes/database_src.Database.md
 
 ___
 
@@ -1286,13 +1472,17 @@ Domain.Pluto.storePrivateKeys
 
 #### Defined in
 
+<<<<<<< HEAD:docs/classes/Database.md
 [index.ts:704](https://github.com/elribonazo/pluto-encrypted/blob/e61ee01/packages/database/src/index.ts#L704)
+=======
+[packages/database/src/index.ts:704](https://github.com/elribonazo/pluto-encrypted/blob/1443488/packages/database/src/index.ts#L704)
+>>>>>>> aa5718f (fix: generate documentation for all the packages in 1 shot.):docs/classes/database_src.Database.md
 
 ___
 
 ### createEncrypted
 
-▸ `Static` **createEncrypted**(`options`): `Promise`\<[`Database`](Database.md)\>
+▸ `Static` **createEncrypted**(`options`): `Promise`\<[`Database`](database_src.Database.md)\>
 
 Creates a database instance.
 
@@ -1309,10 +1499,14 @@ Creates a database instance.
 
 #### Returns
 
-`Promise`\<[`Database`](Database.md)\>
+`Promise`\<[`Database`](database_src.Database.md)\>
 
 Database
 
 #### Defined in
 
+<<<<<<< HEAD:docs/classes/Database.md
 [index.ts:362](https://github.com/elribonazo/pluto-encrypted/blob/e61ee01/packages/database/src/index.ts#L362)
+=======
+[packages/database/src/index.ts:362](https://github.com/elribonazo/pluto-encrypted/blob/1443488/packages/database/src/index.ts#L362)
+>>>>>>> aa5718f (fix: generate documentation for all the packages in 1 shot.):docs/classes/database_src.Database.md
