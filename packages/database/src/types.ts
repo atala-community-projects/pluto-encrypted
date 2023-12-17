@@ -26,6 +26,7 @@ export interface GenericORMType<RxDocType> extends RxCollection<any, any, any> {
     remove(queryObj?: MangoQueryNoLimit<any> | string): RxDocument<RxDocType, any>[]
 }
 
+
 export type PlutoCollections = {
     messages: MessageColletion;
     dids: DIDCollection;

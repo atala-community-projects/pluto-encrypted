@@ -9,8 +9,8 @@
     "dev": "lerna watch --include-dependencies -- npm run build-and-test",
     "coverage": "cd packages/database && npm run coverage",
     "test": "npx lerna run --stream test",
-    "docs": "typedoc --options ./typedoc.markdown.cjs --hideGenerator",
-    "docs-html": "typedoc --options ./typedoc.html.cjs --hideGenerator",
+    "docs": "typedoc --options ./typedoc.markdown.cjs ",
+    "docs-html": "typedoc --options ./typedoc.html.cjs ",
     "release": "npx multi-semantic-release --deps.bump=satisfy --deps.release=inherit"
   },
   "author": "elribonazo@gmail.com",
@@ -77,6 +77,7 @@
     "sinon": "^16.0.0",
     "typedoc": "^0.24.8",
     "typedoc-plugin-markdown": "^3.15.3",
+    "typedoc-plugin-merge-modules": "^5.1.0",
     "typedoc-plugin-rename-defaults": "^0.6.5",
     "typedoc-plugin-superstruct": "^1.0.0",
     "typedoc-theme-hierarchy": "^4.0.0",

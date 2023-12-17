@@ -1,10 +1,5 @@
 import {
-  AnonCredsCredential,
-  AnonCredsCredentialProperties,
-  AnonCredsRecoveryId,
-  Domain,
-  JWTCredential,
-  JWTVerifiableCredentialRecoveryId,
+  Domain
 } from "@atala/prism-wallet-sdk";
 import type { GenericORMType, Schema } from "../types";
 import { RxCollection, RxDocument } from "rxdb";
@@ -67,9 +62,6 @@ export const CredentialRequestMetadataMethods: CredentialRequestMetadataMethodTy
     },
 };
 
-/**
- * test content
- */
 export type CredentialRequestMetadataCollection = RxCollection<
   CredentialRequestMetadataSchemaType,
   CredentialRequestMetadataMethodTypes,

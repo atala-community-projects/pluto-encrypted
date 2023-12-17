@@ -2,13 +2,33 @@
  * @packageDocumentation
  * @module encryption
  */
-import { InternalStoreDocType, RxAttachmentWriteData, RxDocumentData, RxDocumentWriteData, RxJsonSchema, RxStorage, RxStorageInstanceCreationParams, b64DecodeUnicode, b64EncodeUnicode, clone, ensureNotFalsy, flatClone, getProperty, hasEncryption, newRxError, newRxTypeError, setProperty, wrapRxStorageInstance } from "rxdb";
+import {
+    InternalStoreDocType,
+    RxAttachmentWriteData,
+    RxDocumentData,
+    RxDocumentWriteData,
+    RxJsonSchema,
+    RxStorage,
+    RxStorageInstanceCreationParams,
+    b64DecodeUnicode,
+    b64EncodeUnicode,
+    clone,
+    ensureNotFalsy,
+    flatClone,
+    getProperty,
+    hasEncryption,
+    newRxError,
+    newRxTypeError,
+    setProperty,
+    wrapRxStorageInstance
+} from "rxdb";
 
 import { sha256 } from '@noble/hashes/sha256';
 import { chacha20poly1305 } from '@noble/ciphers/chacha';
 import { CipherWithOutput } from "@noble/ciphers/utils";
 
-
+export type { RxStorage } from "rxdb";
+export type { CipherWithOutput } from "@noble/ciphers/utils"
 export const MINIMUM_PASSWORD_LENGTH: 8 = 8;
 
 //We must keep nonce static to be able to restore the database later, user only has the password

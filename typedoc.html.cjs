@@ -1,38 +1,9 @@
+const base = require('./typedocBase.cjs')
 
-
-module.exports = {
-    "$schema": "https://typedoc.org/schema.json",
-    "entryPoints": [
-        "packages/*/src/index.ts",
-    ],
-    "entryPointStrategy": "packages",
-    "out": "./docs-html",
-    "tsconfig": "tsconfig.json",
-    "name": "@pluto-encrypted",
-    "useTsLinkResolution": true,
-    "hideGenerator": true,
-    "entryPointStrategy": "expand",
-    "excludePrivate": true,
-    "excludeReferences": true,
-    "excludeProtected": true,
-    "excludeInternal": true,
-    "excludeNotDocumented": true,
-    "readme": "none",
-    "excludeNotDocumentedKinds": [
-        "TypeAlias",
-        "Variable"
-    ],
-    "includeVersion": false,
-
-    "theme": "default",
-    "plugin": [
-        "typedoc-plugin-superstruct",
-        "typedoc-plugin-rename-defaults",
-        "typedoc-plugin-external-module-map",
-        "@bndynet/typedoc-theme"
-    ],
-    "navigationLinks": {
-        "Docs": "https://elribonazo.github.io/pluto-encrypted/",
-        "GitHub": "https://github.com/elribonazo/pluto-encrypted"
-    }
-}
+module.exports = base([
+    "typedoc-plugin-superstruct",
+    "typedoc-plugin-rename-defaults",
+    "typedoc-plugin-external-module-map",
+    "typedoc-plugin-superstruct",
+    "@bndynet/typedoc-theme"
+])

@@ -23,25 +23,30 @@ import { RxDBMigrationPlugin } from "rxdb/plugins/migration";
 import { RxDBQueryBuilderPlugin } from "rxdb/plugins/query-builder";
 import { v4 as uuidv4 } from "uuid";
 import CredentialSchema, {
+  CredentialCollection,
   CredentialMethods
 } from "./schemas/Credential";
 import CredentialRequestMetadataSchema, {
+  CredentialRequestMetadataCollection,
   CredentialRequestMetadataMethods
 } from "./schemas/CredentialRequestMetadata";
-import DIDSchema from "./schemas/DID";
-import DIDPairSchema from "./schemas/DIDPair";
+import DIDSchema, { DIDCollection } from "./schemas/DID";
+import DIDPairSchema, { DIDPairCollection } from "./schemas/DIDPair";
 import LinkSecretSchema, {
+  LinkSecretColletion,
   LinkSecretMethods
 } from "./schemas/LinkSecret";
 import MediatorSchema, {
+  MediatorCollection,
   MediatorMethods
 } from "./schemas/Mediator";
 import MessageSchema, {
+  MessageColletion,
   MessageMethods,
   MessageSchemaType
 } from "./schemas/Message";
 import PrivateKeySchema, {
-  KeySpec, PrivateKeyDocument,
+  KeySpec, PrivateKeyColletion, PrivateKeyDocument,
   PrivateKeyMethods
 } from "./schemas/PrivateKey";
 import { PlutoCollections } from "./types";
@@ -52,11 +57,15 @@ addRxPlugin(RxDBQueryBuilderPlugin);
 addRxPlugin(RxDBJsonDumpPlugin);
 
 export * from "./schemas/Credential";
+export * from "./schemas/CredentialRequestMetadata";
 export * from "./schemas/DID";
 export * from "./schemas/DIDPair";
+export * from "./schemas/LinkSecret";
 export * from "./schemas/Mediator";
 export * from "./schemas/Message";
 export * from "./schemas/PrivateKey";
+export type * from './types'
+export type * from '@atala/prism-wallet-sdk'
 
 export type ValuesOf<T> = T[keyof T];
 export type PlutoDatabase = RxDatabase<PlutoCollections>;
@@ -68,9 +77,6 @@ export type PlutoDatabase = RxDatabase<PlutoCollections>;
  *
  */
 export class Database implements Domain.Pluto {
-  /**
-   * @internal
-   */
   private _db!: PlutoDatabase;
 
   protected get db() {
@@ -86,7 +92,7 @@ export class Database implements Domain.Pluto {
     return this.db.exportJSON();
   }
 
-  get collections() {
+  get collections(): PlutoCollections {
     return this.db.collections
   }
 
@@ -118,7 +124,7 @@ export class Database implements Domain.Pluto {
    * await db.credentialmetadatas.remove({selector: {id: {$eq: 1}}})
    * ```
    */
-  get credentialrequestmetadatas() {
+  get credentialrequestmetadatas(): CredentialRequestMetadataCollection {
     return this.db.collections.credentialrequestmetadatas
   }
 
@@ -150,7 +156,7 @@ export class Database implements Domain.Pluto {
    * await db.linksecrets.remove({selector: {id: {$eq: 1}}})
    * ```
    */
-  get linksecrets() {
+  get linksecrets(): LinkSecretColletion {
     return this.db.collections.linksecrets
   }
 
@@ -182,7 +188,7 @@ export class Database implements Domain.Pluto {
    * await db.didpairs.remove({selector: {id: {$eq: 1}}})
    * ```
    */
-  get didpairs() {
+  get didpairs(): DIDPairCollection {
     return this.db.collections.didpairs
   }
 
@@ -214,7 +220,7 @@ export class Database implements Domain.Pluto {
    * await db.credentials.remove({selector: {id: {$eq: 1}}})
    * ```
    */
-  get credentials() {
+  get credentials(): CredentialCollection {
     return this.db.collections.credentials
   }
 
@@ -246,7 +252,7 @@ export class Database implements Domain.Pluto {
    * await db.mediators.remove({selector: {id: {$eq: 1}}})
    * ```
    */
-  get mediators() {
+  get mediators(): MediatorCollection {
     return this.db.collections.mediators
   }
 
@@ -278,7 +284,7 @@ export class Database implements Domain.Pluto {
     * await db.dids.remove({selector: {id: {$eq: 1}}})
     * ```
     */
-  get dids() {
+  get dids(): DIDCollection {
     return this.db.collections.dids
   }
 
@@ -310,7 +316,7 @@ export class Database implements Domain.Pluto {
     * await db.privatekeys.remove({selector: {id: {$eq: 1}}})
     * ```
     */
-  get privatekeys() {
+  get privatekeys(): PrivateKeyColletion {
     return this.db.collections.privatekeys
   }
 
@@ -342,7 +348,7 @@ export class Database implements Domain.Pluto {
     * await db.messages.remove({selector: {id: {$eq: 1}}})
     * ```
     */
-  get messages() {
+  get messages(): MessageColletion {
     return this.db.collections.messages
   }
 
