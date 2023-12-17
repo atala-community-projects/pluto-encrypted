@@ -1,8 +1,7 @@
 import { InternalStoreDocType, RxAttachmentWriteData, RxDocumentData, RxDocumentWriteData, RxJsonSchema, RxStorage, RxStorageInstanceCreationParams, b64DecodeUnicode, b64EncodeUnicode, clone, ensureNotFalsy, flatClone, getProperty, hasEncryption, newRxError, newRxTypeError, setProperty, wrapRxStorageInstance } from "rxdb";
 
 import { sha256 } from '@noble/hashes/sha256';
-import { chacha20poly1305, xchacha20poly1305 } from '@noble/ciphers/chacha';
-import { managedNonce, randomBytes } from '@noble/ciphers/webcrypto/utils'
+import { chacha20poly1305 } from '@noble/ciphers/chacha';
 import { CipherWithOutput } from "@noble/ciphers/utils";
 
 
