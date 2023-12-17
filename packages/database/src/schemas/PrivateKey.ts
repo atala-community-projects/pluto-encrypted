@@ -99,7 +99,7 @@ export const PrivateKeyMethods: PrivateKeyMethodTypes = {
       throw new Error("Undefined key raw");
     }
 
-    /* istanbul ignore else */
+    /* istanbul ignore else -- @preserve */
     if (curve.value === Domain.Curve.SECP256K1) {
       const index = keySpecification.find(
         (item) => item.name === KeyProperties.index
@@ -134,10 +134,7 @@ export const PrivateKeyMethods: PrivateKeyMethodTypes = {
       }
 
       return privateKey;
-    }
-
-    /* istanbul ignore else */
-    if (curve.value === Domain.Curve.ED25519) {
+    } else if (curve.value === Domain.Curve.ED25519) {
       const privateKey = new Ed25519PrivateKey(Buffer.from(raw.value, "hex"));
 
       privateKey.keySpecification.set(Domain.KeyProperties.rawKey, raw.value);
@@ -148,11 +145,7 @@ export const PrivateKeyMethods: PrivateKeyMethodTypes = {
       );
 
       return privateKey;
-    }
-
-
-    /* istanbul ignore else */
-    if (curve.value === Domain.Curve.X25519) {
+    } else if (curve.value === Domain.Curve.X25519) {
       const privateKey = new X25519PrivateKey(Buffer.from(raw.value, "hex"));
 
       privateKey.keySpecification.set(Domain.KeyProperties.rawKey, raw.value);
@@ -163,10 +156,10 @@ export const PrivateKeyMethods: PrivateKeyMethodTypes = {
       );
 
       return privateKey;
+    } else {
+      /* istanbul ignore next -- @preserve */
+      throw new Error(`Invalid key ${curve.value} ${type}`);
     }
-
-    /* istanbul ignore next */
-    throw new Error(`Invalid key ${curve.value} ${type}`);
   },
 };
 

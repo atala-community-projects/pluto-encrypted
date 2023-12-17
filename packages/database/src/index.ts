@@ -1,77 +1,57 @@
 import { Domain } from "@atala/prism-wallet-sdk";
 import {
-  MangoQuerySelector,
-  RxCollection,
-  RxCollectionBase,
-  RxCollectionCreator,
+  MangoQuerySelector, RxCollectionCreator,
   RxDatabase,
   RxDatabaseCreator,
   RxDumpDatabase,
+  RxError,
   RxQuery,
   RxStorage,
+  addRxPlugin,
   createRxDatabase,
   flatClone,
   getFromMapOrThrow,
   removeRxDatabase
 } from "rxdb";
-import { RxError } from "rxdb";
-import { addRxPlugin } from "rxdb";
+import { BulkWriteRow, RxDocument, RxDocumentData } from "rxdb/dist/types/types";
+import { RxDBJsonDumpPlugin } from "rxdb/plugins/json-dump";
 import { RxDBMigrationPlugin } from "rxdb/plugins/migration";
 import { RxDBQueryBuilderPlugin } from "rxdb/plugins/query-builder";
 import { v4 as uuidv4 } from "uuid";
-import { RxDBJsonDumpPlugin } from "rxdb/plugins/json-dump";
-import MessageSchema, {
-  MessageColletion,
-  MessageDocument,
-  MessageMethods,
-  MessageSchemaType,
-} from "./schemas/Message";
-import DIDSchema, { DIDCollection, DIDDocument, DIDSchemaType } from "./schemas/DID";
 import CredentialSchema, {
-  CredentialCollection,
-  CredentialDocument,
-  CredentialMethods,
-  CredentialSchemaType,
+  CredentialMethods
 } from "./schemas/Credential";
-import DIDPairSchema, { DIDPairCollection, DIDPairDocument, DIDPairSchemaType } from "./schemas/DIDPair";
-import MediatorSchema, {
-  MediatorCollection,
-  MediatorDocument,
-  MediatorMethods,
-  MediatorSchemaType,
-} from "./schemas/Mediator";
-import PrivateKeySchema, {
-  KeySchemaType,
-  KeySpec,
-  PrivateKeyColletion,
-  PrivateKeyDocument,
-  PrivateKeyMethods,
-} from "./schemas/PrivateKey";
-import LinkSecretSchema, {
-  LinkSecretColletion,
-  LinkSecretDocument,
-  LinkSecretMethods,
-  LinkSecretSchemaType,
-} from "./schemas/LinkSecret";
 import CredentialRequestMetadataSchema, {
-  CredentialRequestMetadataCollection,
-  CredentialRequestMetadataDocument,
-  CredentialRequestMetadataMethods,
-  CredentialRequestMetadataSchemaType,
+  CredentialRequestMetadataMethods
 } from "./schemas/CredentialRequestMetadata";
-import { GenericORMType, PlutoCollections } from "./types";
-import { BulkWriteRow, MangoQuerySelectorAndIndex, RxDocument, RxDocumentData } from "rxdb/dist/types/types";
+import DIDSchema from "./schemas/DID";
+import DIDPairSchema from "./schemas/DIDPair";
+import LinkSecretSchema, {
+  LinkSecretMethods
+} from "./schemas/LinkSecret";
+import MediatorSchema, {
+  MediatorMethods
+} from "./schemas/Mediator";
+import MessageSchema, {
+  MessageMethods,
+  MessageSchemaType
+} from "./schemas/Message";
+import PrivateKeySchema, {
+  KeySpec, PrivateKeyDocument,
+  PrivateKeyMethods
+} from "./schemas/PrivateKey";
+import { PlutoCollections } from "./types";
 
 addRxPlugin(RxDBMigrationPlugin);
 addRxPlugin(RxDBQueryBuilderPlugin);
 //addRxPlugin(RxDBDevModePlugin);
 addRxPlugin(RxDBJsonDumpPlugin);
 
-export * from "./schemas/Message";
-export * from "./schemas/DID";
 export * from "./schemas/Credential";
+export * from "./schemas/DID";
 export * from "./schemas/DIDPair";
 export * from "./schemas/Mediator";
+export * from "./schemas/Message";
 export * from "./schemas/PrivateKey";
 
 export type ValuesOf<T> = T[keyof T];
@@ -388,26 +368,36 @@ export class Database implements Domain.Pluto {
       autoStart?: boolean
     }
   ) {
-    const { name, storage, encryptionKey, importData, autoStart = true } = options;
-    if (!storage) {
-      throw new Error("Please provide a valid storage.");
-    }
-    const database = new Database({
-      ignoreDuplicate: true,
-      name: name,
-      storage: storage,
-      password: Buffer.from(encryptionKey).toString(),
-    });
+    try {
+      const { name, storage, encryptionKey, importData, autoStart = true } = options;
+      if (!storage) {
+        throw new Error("Please provide a valid storage.");
+      }
+      const database = new Database({
+        ignoreDuplicate: true,
+        name: name,
+        storage: storage,
+        password: Buffer.from(encryptionKey).toString('hex'),
+      });
 
-    if (autoStart) {
-      await database.start()
-    }
+      if (autoStart) {
+        await database.start()
+      }
 
-    if (importData) {
-      await database.db.importJSON(importData);
-    }
+      if (importData) {
+        await database.db.importJSON(importData);
+      }
 
-    return database;
+      return database;
+    } catch (err) {
+      /* istanbul ignore else */
+      if ((err as RxError).code === "DB1") {
+        throw new Error("Invalid Authentication");
+      } else {
+        /* istanbul ignore next */
+        throw err;
+      }
+    }
   }
 
   /**
@@ -487,137 +477,132 @@ export class Database implements Domain.Pluto {
    */
   async start(): Promise<void> {
     const { dbOptions } = this;
-    try {
-      const database = await createRxDatabase<PlutoDatabase>({
-        ...dbOptions,
-        multiInstance: false
-      });
-      await database.addCollections<PlutoCollections>({
-        messages: this.applyORMStatics({
-          schema: MessageSchema,
-          methods: MessageMethods,
-        }),
-        dids: this.applyORMStatics({
-          schema: DIDSchema,
-        }),
-        didpairs: this.applyORMStatics({
-          schema: DIDPairSchema,
-        }),
-        mediators: this.applyORMStatics({
-          schema: MediatorSchema,
-          methods: MediatorMethods,
-        }),
-        privatekeys: this.applyORMStatics({
-          schema: PrivateKeySchema,
-          methods: PrivateKeyMethods,
-        }),
-        credentials: this.applyORMStatics({
-          schema: CredentialSchema,
-          methods: CredentialMethods,
-        }),
-        credentialrequestmetadatas: this.applyORMStatics({
-          schema: CredentialRequestMetadataSchema,
-          methods: CredentialRequestMetadataMethods,
-        }),
-        linksecrets: this.applyORMStatics({
-          schema: LinkSecretSchema,
-          methods: LinkSecretMethods,
-        }),
-      });
-      this._db = database;
 
-      const execOrmNames = ['count', 'findByIds', 'find', 'findOne', "remove"];
-      for (let ormNme of execOrmNames) {
-        for (let collectionName in this.db.collections) {
-          const collection: ValuesOf<PlutoCollections> = this.db.collections[collectionName]
-          const originalOrmMethod = collection[ormNme]
+    const database = await createRxDatabase<PlutoDatabase>({
+      ...dbOptions,
+      multiInstance: false
+    });
+    await database.addCollections<PlutoCollections>({
+      messages: this.applyORMStatics({
+        schema: MessageSchema,
+        methods: MessageMethods,
+      }),
+      dids: this.applyORMStatics({
+        schema: DIDSchema,
+      }),
+      didpairs: this.applyORMStatics({
+        schema: DIDPairSchema,
+      }),
+      mediators: this.applyORMStatics({
+        schema: MediatorSchema,
+        methods: MediatorMethods,
+      }),
+      privatekeys: this.applyORMStatics({
+        schema: PrivateKeySchema,
+        methods: PrivateKeyMethods,
+      }),
+      credentials: this.applyORMStatics({
+        schema: CredentialSchema,
+        methods: CredentialMethods,
+      }),
+      credentialrequestmetadatas: this.applyORMStatics({
+        schema: CredentialRequestMetadataSchema,
+        methods: CredentialRequestMetadataMethods,
+      }),
+      linksecrets: this.applyORMStatics({
+        schema: LinkSecretSchema,
+        methods: LinkSecretMethods,
+      }),
+    });
+    this._db = database;
 
-          collection[ormNme] = new Proxy(originalOrmMethod, {
-            async apply(target, thisArg, args) {
+    const execOrmNames = ['count', 'findByIds', 'find', 'findOne', "remove"];
+    for (let ormNme of execOrmNames) {
+      for (let collectionName in this.db.collections) {
+        const collection: ValuesOf<PlutoCollections> = this.db.collections[collectionName]
+        const originalOrmMethod = collection[ormNme]
 
-              if (target.name === ormNme) {
-                if (ormNme === "remove") {
-                  const rxDocumentArray = await collection.find(...args)
-                  const docsData: RxDocumentData<any>[] = [];
-                  const docsMap: Map<string, RxDocumentData<any>> = new Map();
-                  rxDocumentArray.forEach(rxDocument => {
-                    const data: RxDocumentData<any> = rxDocument.toMutableJSON(true) as any;
-                    docsData.push(data);
-                    docsMap.set(rxDocument.primary, data);
-                  });
+        collection[ormNme] = new Proxy(originalOrmMethod, {
+          async apply(target, thisArg, args) {
+            /* istanbul ignore else -- @preserve */
+            if (target.name === ormNme) {
+              if (ormNme === "remove") {
+                const rxDocumentArray = await collection.find(...args)
+                const docsData: RxDocumentData<any>[] = [];
+                const docsMap: Map<string, RxDocumentData<any>> = new Map();
+                rxDocumentArray.forEach(rxDocument => {
+                  const data: RxDocumentData<any> = rxDocument.toMutableJSON(true) as any;
+                  docsData.push(data);
+                  docsMap.set(rxDocument.primary, data);
+                });
 
-                  await Promise.all(
-                    docsData.map(doc => {
-                      const primary = (doc as any)[collection.schema.primaryPath];
-                      const rxDocument = rxDocumentArray.find((doc) => doc[collection.schema.primaryPath] === primary)
-                      return collection._runHooks('pre', 'remove', doc, rxDocument);
-                    })
-                  );
-
-                  const removeDocs: BulkWriteRow<any>[] = docsData.map(doc => {
-                    const writeDoc = flatClone(doc);
-                    writeDoc._deleted = true;
-                    return {
-                      previous: doc,
-                      document: writeDoc
-                    };
-                  });
-
-                  const results = await collection.storageInstance.bulkWrite(
-                    removeDocs,
-                    'rx-collection-bulk-remove'
-                  );
-
-                  const successIds: string[] = Object.keys(results.success);
-
-                  await Promise.all(
-                    successIds.map(id => {
-                      return collection._runHooks(
-                        'post',
-                        'remove',
-                        docsMap.get(id),
-                        rxDocumentArray.find((doc) => doc[collection.schema.primaryPath] === id)
-                      );
-                    })
-                  );
-
-                  const rxDocumentMap = rxDocumentArray.reduce((map, doc) => {
+                await Promise.all(
+                  docsData.map(doc => {
                     const primary = (doc as any)[collection.schema.primaryPath];
-                    map.set(primary, doc);
-                    return map
-                  }, new Map<string, RxDocument<any>>());
+                    const rxDocument = rxDocumentArray.find((doc) => doc[collection.schema.primaryPath] === primary)
+                    return collection._runHooks('pre', 'remove', doc, rxDocument);
+                  })
+                );
 
-                  const rxDocuments = successIds.map(id => getFromMapOrThrow(rxDocumentMap, id));
-                  const [error] = Object.values(results.error)
-                  if (error) {
-                    //TODO: Improve error handling
-                    throw new Error(`Could not remove ${JSON.stringify(error)}`)
-                  }
-                  return rxDocuments;
+                const removeDocs: BulkWriteRow<any>[] = docsData.map(doc => {
+                  const writeDoc = flatClone(doc);
+                  writeDoc._deleted = true;
+                  return {
+                    previous: doc,
+                    document: writeDoc
+                  };
+                });
+
+                const results = await collection.storageInstance.bulkWrite(
+                  removeDocs,
+                  'rx-collection-bulk-remove'
+                );
+
+                const successIds: string[] = Object.keys(results.success);
+
+                await Promise.all(
+                  successIds.map(id => {
+                    return collection._runHooks(
+                      'post',
+                      'remove',
+                      docsMap.get(id),
+                      rxDocumentArray.find((doc) => doc[collection.schema.primaryPath] === id)
+                    );
+                  })
+                );
+
+                const rxDocumentMap = rxDocumentArray.reduce((map, doc) => {
+                  const primary = (doc as any)[collection.schema.primaryPath];
+                  map.set(primary, doc);
+                  return map
+                }, new Map<string, RxDocument<any>>());
+
+                const rxDocuments = successIds.map(id => getFromMapOrThrow(rxDocumentMap, id));
+                const [error] = Object.values(results.error)
+                /* istanbul ignore else -- @preserve */
+                /* istanbul ignore if -- @preserve */
+                if (error) {
+                  //TODO: Improve error handling
+                  /* istanbul ignore next -- @preserve */
+                  throw new Error(`Could not remove ${JSON.stringify(error)}`)
                 }
-
-                const query = Reflect.apply(target, thisArg, args) as RxQuery;
-
-                if (!query.exec) {
-                  throw new Error("Wrong ORM function does not return exec")
-                }
-                return query.exec()
+                return rxDocuments;
               }
-              return Reflect.apply(target, thisArg, args);
+
+              const query = Reflect.apply(target, thisArg, args) as RxQuery;
+              return query.exec()
             }
-          })
+
+            /* istanbul ignore next -- @preserve */
+            return Reflect.apply(target, thisArg, args);
+          }
+        })
 
 
-        }
       }
-
-    } catch (err) {
-      /* istanbul ignore else */
-      if ((err as RxError).code === "DB1") {
-        throw new Error("Invalid authentication");
-        /* istanbul ignore next */
-      } else throw err;
     }
+
+
   }
 
   /**
@@ -714,13 +699,13 @@ export class Database implements Domain.Pluto {
    * @param privateKey 
    * @param did 
    * @param keyPathIndex 
-   * @param metaId 
+   * @param _metaId 
    */
   async storePrivateKeys(
     privateKey: Domain.PrivateKey,
     did: Domain.DID,
     keyPathIndex: number,
-    metaId?: string | null
+    _metaId?: string | null
   ): Promise<void> {
     await this.db.privatekeys.insert({
       id: uuidv4(),
@@ -1131,6 +1116,7 @@ export class Database implements Domain.Pluto {
       throw new Error("Credential is not storable");
     }
     const storable = credential.toStorable();
+    /* istanbul ignore else -- @preserve */
     if (!storable.id) storable.id = uuidv4();
 
     await this.db.credentials.insert(storable);

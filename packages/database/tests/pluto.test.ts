@@ -1,6 +1,6 @@
 import "./setup";
 
-import { describe, it, beforeEach, afterEach } from 'vitest';
+import { describe, it, vi, beforeEach, afterEach } from 'vitest';
 import fs from 'fs';
 import path from 'path';
 import { randomUUID } from "crypto";
@@ -12,7 +12,7 @@ import {
   Pollux,
 } from "@atala/prism-wallet-sdk";
 import * as sinon from "sinon";
-import { RxStorage } from "rxdb";
+import { RxStorage, getFromMapOrThrow, newRxError } from "rxdb";
 import InMemory from "../../inmemory/src";
 import IndexDb from "../../indexdb/src";
 import { createLevelDBStorage } from '../../leveldb/src'
@@ -91,7 +91,36 @@ describe("Pluto encrypted testing with different storages", () => {
 
   storages.forEach((storage, i) => {
 
-    const storageName = `[${storage.name}]`;
+    const storageName = `[${storage.name}]`
+
+
+    it(storageName + "Should throw an error if pluto has is startede with a wrong database password", async ({ expect }) => {
+      const forceDatabaseName = getStorageDBName(storage)
+      const createDatabase = async (password: Uint8Array) => {
+        const db = await Database.createEncrypted(
+          {
+            name: forceDatabaseName,
+            encryptionKey: password,
+            storage: storage,
+          }
+        );
+        await db.getAllPrismDIDs()
+        const did = Domain.DID.fromString(
+          "did:prism:733e594871d7700d35e6116011a08fc11e88ff9d366d8b5571ffc1aa18d249ea:Ct8BCtwBEnQKH2F1dGhlbnRpY2F0aW9uYXV0aGVudGljYXRpb25LZXkQBEJPCglzZWNwMjU2azESIDS5zeYUkLCSAJLI6aLXRTPRxstCLPUEI6TgBrAVCHkwGiDk-ffklrHIFW7pKkT8i-YksXi-XXi5h31czUMaVClcpxJkCg9tYXN0ZXJtYXN0ZXJLZXkQAUJPCglzZWNwMjU2azESIDS5zeYUkLCSAJLI6aLXRTPRxstCLPUEI6TgBrAVCHkwGiDk-ffklrHIFW7pKkT8i-YksXi-XXi5h31czUMaVClcpw"
+        );
+        const privateKey = Fixtures.secp256K1.privateKey;
+        await db.storePrismDID(did, 0, privateKey);
+      }
+
+      await createDatabase(defaultPassword);
+
+      const keyData2 = keyData;
+      keyData2[0] = 1;
+      keyData2[1] = 2;
+
+      await expect(() => createDatabase(keyData2)).rejects.toThrowError(new Error("Invalid Authentication"));
+
+    });
 
 
     describe(storageName, () => {
@@ -112,6 +141,8 @@ describe("Pluto encrypted testing with different storages", () => {
           await db.clear()
         }
       })
+
+
 
 
       it(storageName + "Should throw an error if pluto has not been started", async ({ expect }) => {
