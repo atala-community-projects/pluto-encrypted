@@ -1,12 +1,12 @@
-[@pluto-encrypted/database](../README.md) / leveldb/build
+[@pluto-encrypted](../README.md) / leveldb
 
-# Module: leveldb/build
+# Module: leveldb
 
 ## Table of contents
 
 ### Functions
 
-- [createLevelDBStorage](leveldb_build.md#createleveldbstorage)
+- [createLevelDBStorage](leveldb.md#createleveldbstorage)
 
 ## Functions
 
@@ -26,4 +26,4 @@
 
 #### Defined in
 
-packages/leveldb/build/index.d.ts:4
+[leveldb/src/index.ts:73](https://github.com/elribonazo/pluto-encrypted/blob/2d1bca5/packages/leveldb/src/index.ts#L73)

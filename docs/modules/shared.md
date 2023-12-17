@@ -1,12 +1,12 @@
-[@pluto-encrypted/database](../README.md) / shared/build
+[@pluto-encrypted](../README.md) / shared
 
-# Module: shared/build
+# Module: shared
 
 ## Table of contents
 
 ### Functions
 
-- [conditionMatches](shared_build.md#conditionmatches)
+- [conditionMatches](shared.md#conditionmatches)
 
 ## Functions
 
@@ -34,4 +34,4 @@
 
 #### Defined in
 
-packages/shared/build/index.d.ts:2
+[shared/src/index.ts:9](https://github.com/elribonazo/pluto-encrypted/blob/2d1bca5/packages/shared/src/index.ts#L9)

@@ -1,14 +1,14 @@
-[@pluto-encrypted/database](../README.md) / encryption/build
+[@pluto-encrypted](../README.md) / encryption
 
-# Module: encryption/build
+# Module: encryption
 
 ## Table of contents
 
 ### Functions
 
-- [decryptString](encryption_build.md#decryptstring)
-- [encryptString](encryption_build.md#encryptstring)
-- [wrappedKeyEncryptionStorage](encryption_build.md#wrappedkeyencryptionstorage)
+- [decryptString](encryption.md#decryptstring)
+- [encryptString](encryption.md#encryptstring)
+- [wrappedKeyEncryptionStorage](encryption.md#wrappedkeyencryptionstorage)
 
 ## Functions
 
@@ -30,7 +30,7 @@
 
 #### Defined in
 
-packages/encryption/build/index.d.ts:5
+[encryption/src/index.ts:26](https://github.com/elribonazo/pluto-encrypted/blob/2d1bca5/packages/encryption/src/index.ts#L26)
 
 ___
 
@@ -52,13 +52,15 @@ ___
 
 #### Defined in
 
-packages/encryption/build/index.d.ts:4
+[encryption/src/index.ts:17](https://github.com/elribonazo/pluto-encrypted/blob/2d1bca5/packages/encryption/src/index.ts#L17)
 
 ___
 
 ### wrappedKeyEncryptionStorage
 
 ▸ **wrappedKeyEncryptionStorage**\<`Internals`, `InstanceCreationOptions`\>(`args`): `RxStorage`\<`Internals`, `InstanceCreationOptions`\>
+
+Create encrypted storage for pluto-encrypted
 
 #### Type parameters
 
@@ -69,15 +71,17 @@ ___
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `args` | `Object` |
-| `args.storage` | `RxStorage`\<`Internals`, `InstanceCreationOptions`\> |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `args` | `Object` | { storage: RxStorage<Internals, InstanceCreationOptions>; } |
+| `args.storage` | `RxStorage`\<`Internals`, `InstanceCreationOptions`\> | - |
 
 #### Returns
 
 `RxStorage`\<`Internals`, `InstanceCreationOptions`\>
 
+RxStorage<Internals, InstanceCreationOptions>
+
 #### Defined in
 
-packages/encryption/build/index.d.ts:9
+[encryption/src/index.ts:58](https://github.com/elribonazo/pluto-encrypted/blob/2d1bca5/packages/encryption/src/index.ts#L58)
