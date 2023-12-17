@@ -1,3 +1,10 @@
+## @pluto-encrypted/database [1.0.15](https://github.com/elribonazo/pluto-encrypted/compare/@pluto-encrypted/database@1.0.14...@pluto-encrypted/database@1.0.15) (2023-12-17)
+
+
+### Bug Fixes
+
+* Remove vulnerable dependencies with unused dev dependency, babel. ([94dcc39](https://github.com/elribonazo/pluto-encrypted/commit/94dcc3948d8c2e1774362fcfcfda0198b78da05c))
+
 ## @pluto-encrypted/database [1.0.14](https://github.com/elribonazo/pluto-encrypted/compare/@pluto-encrypted/database@1.0.13...@pluto-encrypted/database@1.0.14) (2023-12-17)
 
 
