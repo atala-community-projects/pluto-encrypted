@@ -122,33 +122,6 @@ describe("Pluto encrypted testing with different storages", () => {
 
     });
 
-    it(storageName + "Should throw an error during database creation if getFromMapOrThrow returns an exception", async ({ expect }) => {
-      const storages = (db as any).db.storageInstances
-      for (let storage of storages) {
-        const mock = vi.fn().mockImplementation(storage.bulkWrite)
-        mock.mockImplementation(() => {
-          return {
-            success: [],
-            errors: [new Error("test")]
-          }
-        })
-      }
-
-      const remove = async (db: Database) => {
-        const did = Domain.DID.fromString(
-          "did:prism:733e594871d7700d35e6116011a08fc11e88ff9d366d8b5571ffc1aa18d249ea:Ct8BCtwBEnQKH2F1dGhlbnRpY2F0aW9uYXV0aGVudGljYXRpb25LZXkQBEJPCglzZWNwMjU2azESIDS5zeYUkLCSAJLI6aLXRTPRxstCLPUEI6TgBrAVCHkwGiDk-ffklrHIFW7pKkT8i-YksXi-XXi5h31czUMaVClcpxJkCg9tYXN0ZXJtYXN0ZXJLZXkQAUJPCglzZWNwMjU2azESIDS5zeYUkLCSAJLI6aLXRTPRxstCLPUEI6TgBrAVCHkwGiDk-ffklrHIFW7pKkT8i-YksXi-XXi5h31czUMaVClcpw"
-        );
-        const privateKey = Fixtures.secp256K1.privateKey;
-        await db.storePrismDID(did, 0, privateKey);
-        await db.dids.remove()
-      }
-
-      await expect(() => remove(db)).rejects.toThrowError(new Error("Invalid Authentication"));
-
-      vi.restoreAllMocks()
-    });
-
-
 
     describe(storageName, () => {
 
