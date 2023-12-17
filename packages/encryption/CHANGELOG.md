@@ -1,3 +1,10 @@
+## @pluto-encrypted/encryption [1.0.4](https://github.com/elribonazo/pluto-encrypted/compare/@pluto-encrypted/encryption@1.0.3...@pluto-encrypted/encryption@1.0.4) (2023-12-17)
+
+
+### Bug Fixes
+
+* clean encrypted dependencies ([1443488](https://github.com/elribonazo/pluto-encrypted/commit/14434886507fd18bda5b562da57d852fc8e19648))
+
 ## @pluto-encrypted/encryption [1.0.3](https://github.com/elribonazo/pluto-encrypted/compare/@pluto-encrypted/encryption@1.0.2...@pluto-encrypted/encryption@1.0.3) (2023-12-17)
 
 
