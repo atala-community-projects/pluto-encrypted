@@ -1,3 +1,20 @@
+## @pluto-encrypted/database [1.0.14](https://github.com/elribonazo/pluto-encrypted/compare/@pluto-encrypted/database@1.0.13...@pluto-encrypted/database@1.0.14) (2023-12-17)
+
+
+### Bug Fixes
+
+* Improve code coverage and set 100 threshold from now on ([#60](https://github.com/elribonazo/pluto-encrypted/issues/60)) ([3bc51e9](https://github.com/elribonazo/pluto-encrypted/commit/3bc51e93b95a14611ea0799f5d7c22bfd69bb21a))
+
+
+
+
+
+### Dependencies
+
+* **@pluto-encrypted/indexdb:** upgraded to 1.1.4
+* **@pluto-encrypted/inmemory:** upgraded to 1.1.3
+* **@pluto-encrypted/leveldb:** upgraded to 1.1.3
+
 ## @pluto-encrypted/database [1.0.13](https://github.com/elribonazo/pluto-encrypted/compare/@pluto-encrypted/database@1.0.12...@pluto-encrypted/database@1.0.13) (2023-12-16)
 
 
