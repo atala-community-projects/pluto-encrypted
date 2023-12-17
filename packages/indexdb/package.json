@@ -1,6 +1,6 @@
 {
   "name": "@pluto-encrypted/indexdb",
-  "version": "1.1.4",
+  "version": "1.1.5",
   "description": "Secure Encrypted IndexDB storage for @pluto-encrypted/database.",
   "main": "./build/cjs/index.cjs",
   "module": "./build/esm/index.mjs",
@@ -28,10 +28,10 @@
   "dependencies": {
     "rxdb": "^14.17.0",
     "uuid": "^9.0.1",
-    "@pluto-encrypted/encryption": "1.0.3"
+    "@pluto-encrypted/encryption": "1.0.4"
   },
   "devDependencies": {
-    "@pluto-encrypted/encryption": "1.0.3"
+    "@pluto-encrypted/encryption": "1.0.4"
   },
   "files": [
     "build/*"
