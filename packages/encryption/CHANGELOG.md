@@ -1,3 +1,10 @@
+## @pluto-encrypted/encryption [1.0.6](https://github.com/elribonazo/pluto-encrypted/compare/@pluto-encrypted/encryption@1.0.5...@pluto-encrypted/encryption@1.0.6) (2023-12-17)
+
+
+### Bug Fixes
+
+* Improve doc generation, export al types and possible external types from other dependencies. ([971241f](https://github.com/elribonazo/pluto-encrypted/commit/971241fd26aca33a0c1b8f01e36c56a9c8a8202c))
+
 ## @pluto-encrypted/encryption [1.0.5](https://github.com/elribonazo/pluto-encrypted/compare/@pluto-encrypted/encryption@1.0.4...@pluto-encrypted/encryption@1.0.5) (2023-12-17)
 
 

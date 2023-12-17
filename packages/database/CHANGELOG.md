@@ -1,3 +1,20 @@
+## @pluto-encrypted/database [1.0.18](https://github.com/elribonazo/pluto-encrypted/compare/@pluto-encrypted/database@1.0.17...@pluto-encrypted/database@1.0.18) (2023-12-17)
+
+
+### Bug Fixes
+
+* Improve doc generation, export al types and possible external types from other dependencies. ([971241f](https://github.com/elribonazo/pluto-encrypted/commit/971241fd26aca33a0c1b8f01e36c56a9c8a8202c))
+
+
+
+
+
+### Dependencies
+
+* **@pluto-encrypted/indexdb:** upgraded to 1.1.7
+* **@pluto-encrypted/inmemory:** upgraded to 1.1.6
+* **@pluto-encrypted/leveldb:** upgraded to 1.1.6
+
 ## @pluto-encrypted/database [1.0.17](https://github.com/elribonazo/pluto-encrypted/compare/@pluto-encrypted/database@1.0.16...@pluto-encrypted/database@1.0.17) (2023-12-17)
 
 

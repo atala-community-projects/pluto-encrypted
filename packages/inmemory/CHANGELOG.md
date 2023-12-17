@@ -1,3 +1,13 @@
+## @pluto-encrypted/inmemory [1.1.6](https://github.com/elribonazo/pluto-encrypted/compare/@pluto-encrypted/inmemory@1.1.5...@pluto-encrypted/inmemory@1.1.6) (2023-12-17)
+
+
+
+
+
+### Dependencies
+
+* **@pluto-encrypted/encryption:** upgraded to 1.0.6
+
 ## @pluto-encrypted/inmemory [1.1.5](https://github.com/elribonazo/pluto-encrypted/compare/@pluto-encrypted/inmemory@1.1.4...@pluto-encrypted/inmemory@1.1.5) (2023-12-17)
 
 
