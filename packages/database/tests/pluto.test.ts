@@ -746,6 +746,28 @@ describe("Pluto encrypted testing with different storages", () => {
         }
       })
 
+      it(storageName + "Should be able to request remove orm method on credential model", async ({ expect }) => {
+        const payload = Fixtures.createAnonCredsPayload();
+        const result = new AnonCredsCredential({
+          ...payload,
+          values: {
+            ...(payload.values.map(([varname, val]) => ({
+              [varname]: val,
+            })) as any),
+          },
+        });
+        result.recoveryId = "demo";
+        await db.storeCredential(result);
+        const removed = await db.credentials.remove({
+          selector: {
+            recoveryId: {
+              $eq: result.recoveryId
+            }
+          }
+        });
+        expect(removed.length).toBe(1)
+      });
+
       it(storageName + "Should be able to request remove orm method on all models", async ({ expect }) => {
         const collectionNames = Object.keys(db.collections);
         const payload = Fixtures.createAnonCredsPayload();
