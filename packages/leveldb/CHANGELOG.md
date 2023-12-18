@@ -1,3 +1,19 @@
+## @pluto-encrypted/leveldb [1.1.7](https://github.com/elribonazo/pluto-encrypted/compare/@pluto-encrypted/leveldb@1.1.6...@pluto-encrypted/leveldb@1.1.7) (2023-12-18)
+
+
+### Bug Fixes
+
+* Improve all package documentation ([2602af4](https://github.com/elribonazo/pluto-encrypted/commit/2602af4f37f97eb2f70d39d79eb3c3e715e7cead))
+
+
+
+
+
+### Dependencies
+
+* **@pluto-encrypted/shared:** upgraded to 1.0.4
+* **@pluto-encrypted/encryption:** upgraded to 1.0.7
+
 ## @pluto-encrypted/leveldb [1.1.6](https://github.com/elribonazo/pluto-encrypted/compare/@pluto-encrypted/leveldb@1.1.5...@pluto-encrypted/leveldb@1.1.6) (2023-12-17)
 
 
