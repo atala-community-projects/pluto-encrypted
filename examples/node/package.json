@@ -13,9 +13,9 @@
     "type": "module",
     "dependencies": {
         "@atala/prism-wallet-sdk": "^3.2.0",
-        "@pluto-encrypted/database": "../../packages/database/",
-        "@pluto-encrypted/inmemory": "../../packages/inmemory/",
-        "@pluto-encrypted/leveldb": "../../packages/leveldb/",
+        "@pluto-encrypted/database": "^1.0.19",
+        "@pluto-encrypted/inmemory": "^1.1.7",
+        "@pluto-encrypted/leveldb": "^1.1.7",
         "fake-indexeddb": "^5.0.1",
         "prettier": "^3.0.2"
     },

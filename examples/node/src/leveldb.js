@@ -5,7 +5,7 @@ async function createTestScenario() {
   const SDK = await import("@atala/prism-wallet-sdk");
 
   const { Database } = PlutoEncrypted;
-  const defaultPassword = new Uint8Array(32).fill(1);
+  const defaultPassword = Buffer.from("password");
   const mediatorDID = SDK.Domain.DID.fromString(
     "did:peer:2.Ez6LSghwSE437wnDE1pt3X6hVDUQzSjsHzinpX3XFvMjRAm7y.Vz6Mkhh1e5CEYYq6JBUcTZ6Cp2ranCWRrv7Yax3Le4N59R6dd.SeyJ0IjoiZG0iLCJzIjoiaHR0cHM6Ly9iZXRhLW1lZGlhdG9yLmF0YWxhcHJpc20uaW8iLCJyIjpbXSwiYSI6WyJkaWRjb21tL3YyIl19"
   );
@@ -16,7 +16,7 @@ async function createTestScenario() {
     {
       name: `my-db`,
       encryptionKey: defaultPassword,
-      storage: createLevelDBStorage({ dbName: "./db" }),
+      storage: createLevelDBStorage({ dbName: "db", dbPath: './db' }),
     }
   );
   const didcomm = new SDK.DIDCommWrapper(apollo, castor, pluto);

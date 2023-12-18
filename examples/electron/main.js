@@ -54,7 +54,9 @@ async function createTestScenario(leveldb) {
 
 
 
-const { ClassicLevel } = require('classic-level')
+const levelup = require('levelup')
+const { Level } = require('level');
+
 const { ManyLevelHost } = require('many-level')
 
 
@@ -65,10 +67,12 @@ const { join } = require('path')
 
 app.enableSandbox()
 app.once('ready', async function () {
-  const db = new ClassicLevel('./db')
+  const levelDB = new Level('./db');
+  await levelDB.open()
+
+  const db = levelup(levelDB)
   const host = new ManyLevelHost(db)
 
-  await db.open()
   const { seed, agent, SDK } = await createTestScenario(db);
   console.log(
     `Welcome to PrismEdge Agent, state ${agent.state
