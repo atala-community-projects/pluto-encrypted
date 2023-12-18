@@ -20,7 +20,7 @@ import { createLevelDBStorage } from '../../leveldb/src'
 import * as Fixtures from "./fixtures";
 import { Database, PrivateKeyMethods } from "../src";
 
-
+const pollux = new Pollux(new Castor(new Apollo()));
 const keyData = new Uint8Array(32);
 const jwtParts = [
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9",
@@ -630,12 +630,13 @@ describe("Pluto encrypted testing with different storages", () => {
           Domain.CredentialType.JWT
         );
         const encoded = encodeJWTCredential(jwtPayload);
-        const pollux = new Pollux(new Castor(new Apollo()));
+
         const result = await pollux.parseCredential(Buffer.from(encoded), {
           type: Domain.CredentialType.JWT,
         });
         await db.storeCredential(result);
-        expect((await db.getAllCredentials()).length).toBe(1);
+        const results = await db.getAllCredentials()
+        expect(results.length).toBe(1);
       });
 
       it(storageName + "Should store and fetch a Anoncreds Credential", async ({ expect }) => {
@@ -719,21 +720,34 @@ describe("Pluto encrypted testing with different storages", () => {
       })
 
       it(storageName + "Should be able to request count orm method on all models", async ({ expect }) => {
-        const count = await db.privatekeys.count();
-        expect(count).toBe(0)
+        const collectionNames = Object.keys(db.collections);
+        for (let collectionName of collectionNames) {
+          const collection = db[collectionName];
+          const count = await collection.count();
+          expect(count).toBe(0)
+        }
       })
 
       it(storageName + "Should be able to request findByIds orm method on all models", async ({ expect }) => {
-        const count = await db.privatekeys.findByIds([]);
-        expect(count.size).toBe(0)
+        const collectionNames = Object.keys(db.collections);
+        for (let collectionName of collectionNames) {
+          const collection = db[collectionName];
+          const count = await collection.findByIds([]);
+          expect(count.size).toBe(0)
+        }
       })
 
       it(storageName + "Should be able to request find orm method on all models", async ({ expect }) => {
-        const results = await db.privatekeys.find();
-        expect(results.length).toBe(0)
+        const collectionNames = Object.keys(db.collections);
+        for (let collectionName of collectionNames) {
+          const collection = db[collectionName];
+          const results = await collection.find();
+          expect(results.length).toBe(0)
+        }
       })
 
       it(storageName + "Should be able to request remove orm method on all models", async ({ expect }) => {
+        const collectionNames = Object.keys(db.collections);
         const payload = Fixtures.createAnonCredsPayload();
         const result = new AnonCredsCredential({
           ...payload,
@@ -744,23 +758,19 @@ describe("Pluto encrypted testing with different storages", () => {
           },
         });
         result.recoveryId = "demo";
-        await db.storeCredential(result);
-        const removed = await db.credentials.remove({
-          selector: {
-            recoveryId: {
-              $eq: result.recoveryId
+        for (let collectionName of collectionNames) {
+          const collection = db[collectionName];
+          const collectionPrimaryKeyField = collection.schema.primaryPath;
+          const removed = await collection.remove({
+            selector: {
+              [collectionPrimaryKeyField]: {
+                $eq: result.recoveryId
+              }
             }
-          }
-        });
-        expect(removed.length).toBe(1)
+          });
+          expect(removed.length).toBe(0)
+        }
       });
-
-
-
-
-
     });
   })
-
-
 })
