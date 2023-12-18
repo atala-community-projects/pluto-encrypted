@@ -18,13 +18,10 @@ module.exports = (plugins) => ({
     "excludeReferences": false,
     "excludeProtected": false,
     "excludeInternal": false,
-    "excludeNotDocumented": false,
-    "readme": "none",
+    "excludeNotDocumented": true,
     "excludeNotDocumentedKinds": [
-        "TypeAlias",
         "Variable"
     ],
-    "includeVersion": false,
     "theme": "default",
     "plugin": plugins,
     "navigationLinks": {

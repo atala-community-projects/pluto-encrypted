@@ -1,10 +1,11 @@
 /**
  * @packageDocumentation
  * @module shared
+ * @description Shared is used by other dependencies of pluto-encrypted to reduce code duplication.
  */
 import { MangoQuerySelector, RxDocumentData } from "rxdb";
-
-
+export type { RxDocumentMeta, PlainJsonValue, PropertyType, PlainSimpleJsonObject } from "rxdb/dist/types/types";
+export type { MangoQuerySelector, RxAttachmentDataBase, MangoQueryOperators, RxDocumentData, RxAttachmentData } from "rxdb";
 
 export function conditionMatches<RxDocType>(selector: MangoQuerySelector<RxDocType>, key: string, document: RxDocumentData<RxDocType>) {
     if (key === "$and") {

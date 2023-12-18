@@ -1,6 +1,27 @@
 /**
  * @packageDocumentation
  * @module encryption
+ * @description This package is an rxdb encryption layer, a replacement for the vulnerable crypto-js dependency provided by the free version of rxDB. 
+ * The package can be used outside or Pluto as its fully compatible with RXDB.
+ * @examples In order to use this package in any RXDB environment type the following code.
+ * Install the package with npm
+ * ```bash
+ * npm i @pluto-encrypted/encryption --save
+ * ```
+ * or with yarn
+ * ```bash
+ * npm i @pluto-encrypted/encryption --save
+ * ```
+ * 
+ * Integrate in your existing RXDB storage.
+ * ```typescript
+ * import { wrappedKeyEncryptionStorage } from "@pluto-encrypted/encryption";
+ * import { RxStorage } from "rxdb";
+ * const storage: RxStorage<any, any> = wrappedKeyEncryptionStorage({
+ *     storage: [[ADD your RXDB instance here]],
+ * })
+ * export default storage;
+ * ```
  */
 import {
     InternalStoreDocType,
@@ -34,7 +55,7 @@ export const MINIMUM_PASSWORD_LENGTH: 8 = 8;
 //We must keep nonce static to be able to restore the database later, user only has the password
 const nonce = Buffer.from('b47e1d4e5f7377c2e80a19b8', 'hex')
 
-export function encryptString(chacha: CipherWithOutput, value: string, password: string): string {
+export function encryptString(chacha: CipherWithOutput, value: string): string {
     try {
         const encrypted = chacha.encrypt(Buffer.from(value));
         return Buffer.from(encrypted).toString('hex');
@@ -43,7 +64,7 @@ export function encryptString(chacha: CipherWithOutput, value: string, password:
     }
 }
 
-export function decryptString(chacha: CipherWithOutput, cipherText: string, password: any): string {
+export function decryptString(chacha: CipherWithOutput, cipherText: string): string {
     try {
         /**
          * Trying to decrypt non-strings
@@ -69,6 +90,10 @@ export type InternalStorePasswordDocType = InternalStoreDocType<{
     hash: string;
 }>;
 
+export type EncryptableStorageType<Internals, InstanceCreationOptions> = {
+    storage: RxStorage<Internals, InstanceCreationOptions>;
+}
+
 
 /**
  * Create encrypted storage for pluto-encrypted
@@ -76,9 +101,7 @@ export type InternalStorePasswordDocType = InternalStoreDocType<{
  * @returns RxStorage<Internals, InstanceCreationOptions>
  */
 export function wrappedKeyEncryptionStorage<Internals, InstanceCreationOptions>(
-    args: {
-        storage: RxStorage<Internals, InstanceCreationOptions>;
-    }
+    args: EncryptableStorageType<Internals, InstanceCreationOptions>
 ): RxStorage<Internals, InstanceCreationOptions> {
     return Object.assign(
         {},
@@ -136,7 +159,7 @@ export function wrappedKeyEncryptionStorage<Internals, InstanceCreationOptions>(
                                     }
 
                                     const stringValue = JSON.stringify(value);
-                                    const encrypted = encryptString(chacha, stringValue, password);
+                                    const encrypted = encryptString(chacha, stringValue);
                                     setProperty(docData, path, encrypted);
                                 });
 
@@ -150,7 +173,7 @@ export function wrappedKeyEncryptionStorage<Internals, InstanceCreationOptions>(
                                     const useAttachment: RxAttachmentWriteData = flatClone(attachment) as any;
                                     if (useAttachment.data) {
                                         const dataString = useAttachment.data;
-                                        useAttachment.data = b64EncodeUnicode(encryptString(chacha, dataString, password));
+                                        useAttachment.data = b64EncodeUnicode(encryptString(chacha, dataString));
                                     }
                                     newAttachments[id] = useAttachment;
                                 });
@@ -170,7 +193,7 @@ export function wrappedKeyEncryptionStorage<Internals, InstanceCreationOptions>(
                                     if (typeof value === 'undefined') {
                                         return;
                                     }
-                                    const decrypted = decryptString(chacha, value, password);
+                                    const decrypted = decryptString(chacha, value);
                                     const decryptedParsed = JSON.parse(decrypted);
                                     setProperty(docData, path, decryptedParsed);
                                 });
@@ -186,7 +209,7 @@ export function wrappedKeyEncryptionStorage<Internals, InstanceCreationOptions>(
                                 params.schema.attachments &&
                                 params.schema.attachments.encrypted
                             ) {
-                                const decrypted = decryptString(chacha, b64DecodeUnicode(attachmentData), password);
+                                const decrypted = decryptString(chacha, b64DecodeUnicode(attachmentData));
                                 return decrypted;
                             } else {
                                 return attachmentData;

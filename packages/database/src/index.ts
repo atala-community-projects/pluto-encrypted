@@ -65,7 +65,7 @@ export * from "./schemas/Mediator";
 export * from "./schemas/Message";
 export * from "./schemas/PrivateKey";
 export type * from './types'
-export type * from '@atala/prism-wallet-sdk'
+export type { Domain as WALLET_SDK_DOMAIN } from '@atala/prism-wallet-sdk'
 
 export type ValuesOf<T> = T[keyof T];
 export type PlutoDatabase = RxDatabase<PlutoCollections>;
