@@ -48,7 +48,7 @@ async function preloadData<RxDocType>(constructorProps: LevelDBInternalConstruct
 }
 
 function getRxStorageLevel<RxDocType>(settings: LevelDBSettings): RxStorageLevelDBType<RxDocType> {
-    if (!levelDBInstance) {
+    if (true) {
         levelDBInstance = {
             name: RX_STORAGE_NAME_LEVELDB,
             statics: RxStorageDefaultStatics,
