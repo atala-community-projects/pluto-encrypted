@@ -1,6 +1,6 @@
 {
   "name": "@pluto-encrypted/encryption",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "Encryption layer for pluto encrypted db engines.",
   "main": "./build/cjs/index.cjs",
   "module": "./build/esm/index.mjs",
