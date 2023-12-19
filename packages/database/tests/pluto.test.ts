@@ -245,6 +245,74 @@ describe("Pluto encrypted testing with different storages", () => {
 
     });
 
+    it(storageName + "Should run migration once the schema version has changed and user had existing data over time, with multiple versions", async ({ expect }) => {
+
+      const forceDatabaseName = `${databaseName}${randomUUID()}`
+      const db = await Database.createEncrypted(
+        {
+          name: forceDatabaseName,
+          encryptionKey: defaultPassword,
+          storage,
+        }
+      );
+
+      await db.storeLinkSecret("demo123", "demo321");
+
+      const migrationDB = await Database.createEncrypted(
+        {
+          name: forceDatabaseName,
+          encryptionKey: defaultPassword,
+          storage,
+          collections: {
+            linksecrets: Database.configureCollection(
+              {
+                methods: {
+                  toDomainLinkSecret: function toDomainLinkSecret(this: any) {
+                    return this.secreto;
+                  },
+                },
+                autoMigrate: false,
+                schema: {
+                  version: 2,
+                  primaryKey: "test",
+                  type: "object",
+                  properties: {
+                    test: {
+                      type: "string",
+                      maxLength: 60,
+                    },
+                    secreto: {
+                      type: "string",
+                    }
+                  },
+                  encrypted: ["secreto"],
+                  required: ["test", "secreto"],
+                },
+                migrationStrategies: {
+                  // 1 means, this transforms data from version 0 to version 1
+                  1: async function (oldDoc) {
+                    oldDoc.secreto = oldDoc.secret;
+                    delete oldDoc.secret
+                    return oldDoc;
+                  },
+                  2: async function (oldDoc) {
+                    if (!oldDoc.test) {
+                      oldDoc.test = oldDoc.name;
+                      delete oldDoc.name
+                    }
+                    return oldDoc;
+                  }
+                }
+              }
+            )
+          }
+        }
+      );
+
+      const linkSecret = await migrationDB.getLinkSecret()
+      expect(linkSecret).toBe("demo123")
+
+    });
 
     describe(storageName, () => {
 
