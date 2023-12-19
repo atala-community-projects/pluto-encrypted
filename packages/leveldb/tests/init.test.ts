@@ -45,4 +45,44 @@ describe("LevelDb init", () => {
 
     // await db.close()
   })
+
+  it('should be able to instanciate multiple databases in the same thread', async ({ expect }) => {
+
+    const db = await Database.createEncrypted(
+      {
+        name: databaseName,
+        encryptionKey: defaultPassword,
+        storage: createLevelDBStorage({
+          dbPath: "./db"
+        }),
+      }
+    );
+
+    await db.storeLinkSecret("first", "first")
+
+    const db2 = await Database.createEncrypted(
+      {
+        name: databaseName,
+        encryptionKey: defaultPassword,
+        storage: createLevelDBStorage({
+          dbPath: "./db2"
+        }),
+      }
+    );
+
+    await db2.storeLinkSecret("second", "second")
+
+    const firstLinkSecret = await db.getLinkSecret();
+
+    const secondLinkSecret = await db2.getLinkSecret();
+
+    expect(firstLinkSecret).toBe("first")
+    expect(secondLinkSecret).toBe("second")
+
+    await db.clear()
+    await db2.clear()
+
+
+
+  })
 })

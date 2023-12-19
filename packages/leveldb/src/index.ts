@@ -33,9 +33,7 @@ export type * from './leveldb/types';
 export type { MangoQuerySelectorAndIndex, CRDTSchemaOptions, RxQueryPlanKey, PrimaryKey, StringKeys, TopLevelProperty, MangoQuerySortDirection } from "rxdb/dist/types/types";
 export type { DefaultPreparedQuery, RxJsonSchema, FilledMangoQuery, CompressionMode, RxQueryPlan, MangoQuery, MangoQueryNoLimit, MangoQuerySortPart } from 'rxdb'
 export type { Level } from 'level'
-let internalInstance: LevelDBInternal<any>
 export const RX_STORAGE_NAME_LEVELDB = 'leveldb';
-let levelDBInstance: RxStorageLevelDBType<any>;
 
 async function preloadData<RxDocType>(constructorProps: LevelDBInternalConstructor<RxDocType>) {
     try {
@@ -47,49 +45,53 @@ async function preloadData<RxDocType>(constructorProps: LevelDBInternalConstruct
     }
 }
 
+let internalInstance: Map<string, LevelDBInternal<any>> = new Map()
+
 function getRxStorageLevel<RxDocType>(settings: LevelDBSettings): RxStorageLevelDBType<RxDocType> {
-    if (!levelDBInstance) {
-        levelDBInstance = {
-            name: RX_STORAGE_NAME_LEVELDB,
-            statics: RxStorageDefaultStatics,
-            async createStorageInstance<RxDocType>(params: RxStorageInstanceCreationParams<RxDocType, LevelDBSettings>): Promise<RxStorageInstance<RxDocType, LevelDBStorageInternals<RxDocType>, LevelDBSettings, any>> {
-                const levelDBConstructorProps: LevelDBInternalConstructor<RxDocType> = "level" in settings ?
-                    {
-                        level: settings.level,
-                        refCount: 1,
-                        schema: params.schema,
-                    }
-                    :
-                    {
-                        dbPath: settings.dbPath,
-                        refCount: 1,
-                        schema: params.schema,
-                    };
-
-                if (!internalInstance) {
-                    internalInstance = await preloadData<RxDocType>(levelDBConstructorProps);
-                } else {
-                    internalInstance.refCount++
+    const instance: RxStorageLevelDBType<any> = {
+        name: RX_STORAGE_NAME_LEVELDB,
+        statics: RxStorageDefaultStatics,
+        async createStorageInstance<RxDocType>(params: RxStorageInstanceCreationParams<RxDocType, LevelDBSettings>): Promise<RxStorageInstance<RxDocType, LevelDBStorageInternals<RxDocType>, LevelDBSettings, any>> {
+            const levelDBConstructorProps: LevelDBInternalConstructor<RxDocType> = "level" in settings ?
+                {
+                    level: settings.level,
+                    refCount: 1,
+                    schema: params.schema,
                 }
+                :
+                {
+                    dbPath: settings.dbPath,
+                    refCount: 1,
+                    schema: params.schema,
+                };
 
-                const rxStorageInstance = new RxStorageIntanceLevelDB<RxDocType>(
-                    this,
-                    params.databaseName,
-                    params.collectionName,
-                    params.schema,
-                    internalInstance,
-                    settings
-                )
+            const databasePath = "level" in levelDBConstructorProps ?
+                levelDBConstructorProps.level.db.location :
+                levelDBConstructorProps.dbPath;
 
-                return rxStorageInstance
+            const existingInstance = internalInstance.get(databasePath);
+
+            if (!existingInstance) {
+                internalInstance.set(databasePath, await preloadData<RxDocType>(levelDBConstructorProps))
+            } else {
+                existingInstance.refCount++;
+                internalInstance.set(databasePath, existingInstance)
             }
+
+            const rxStorageInstance = new RxStorageIntanceLevelDB<RxDocType>(
+                this,
+                params.databaseName,
+                params.collectionName,
+                params.schema,
+                internalInstance.get(databasePath)!,
+                settings
+            )
+
+            return rxStorageInstance
         }
     }
-    else {
-        console.warn('already got an instance')
-    }
 
-    return levelDBInstance
+    return instance
 }
 
 

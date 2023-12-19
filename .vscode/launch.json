@@ -47,21 +47,10 @@
       "type": "node"
     },
     {
-      "cwd": "${workspaceFolder}/packages/database",
-      "type": "node",
+      "command": "npm run test",
+      "name": "Test2",
       "request": "launch",
-      "console": "integratedTerminal",
-      "name": "TEST",
-      "program": "${workspaceRoot}/node_modules/.bin/vitest",
-      "args": [
-        "--pool",
-        "threads",
-        "--poolOptions.threads.singleThread",
-      ],
-      "skipFiles": [
-        "${workspaceRoot}/../../node_modules/**/*",
-        "<node_internals>/**/*"
-      ]
+      "type": "node-terminal"
     }
   ]
 }
