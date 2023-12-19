@@ -1,3 +1,13 @@
+## @pluto-encrypted/database [1.0.23](https://github.com/elribonazo/pluto-encrypted/compare/@pluto-encrypted/database@1.0.22...@pluto-encrypted/database@1.0.23) (2023-12-19)
+
+
+
+
+
+### Dependencies
+
+* **@pluto-encrypted/leveldb:** upgraded to 1.1.8
+
 ## @pluto-encrypted/database [1.0.19](https://github.com/elribonazo/pluto-encrypted/compare/@pluto-encrypted/database@1.0.18...@pluto-encrypted/database@1.0.19) (2023-12-18)
 
 

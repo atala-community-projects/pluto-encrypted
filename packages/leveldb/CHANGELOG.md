@@ -1,3 +1,10 @@
+## @pluto-encrypted/leveldb [1.1.8](https://github.com/elribonazo/pluto-encrypted/compare/@pluto-encrypted/leveldb@1.1.7...@pluto-encrypted/leveldb@1.1.8) (2023-12-19)
+
+
+### Bug Fixes
+
+* allow leveldb storage to start twice ([#62](https://github.com/elribonazo/pluto-encrypted/issues/62)) ([b9e0633](https://github.com/elribonazo/pluto-encrypted/commit/b9e06330f01f672a790a33d9a6127f835d1b7009))
+
 ## @pluto-encrypted/leveldb [1.1.7](https://github.com/elribonazo/pluto-encrypted/compare/@pluto-encrypted/leveldb@1.1.6...@pluto-encrypted/leveldb@1.1.7) (2023-12-18)
 
 
