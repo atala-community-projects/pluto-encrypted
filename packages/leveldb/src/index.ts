@@ -66,7 +66,7 @@ function getRxStorageLevel<RxDocType>(settings: LevelDBSettings): RxStorageLevel
                 };
 
             const databasePath = "level" in levelDBConstructorProps ?
-                levelDBConstructorProps.level.path :
+                levelDBConstructorProps.level.db.location :
                 levelDBConstructorProps.dbPath;
 
             const existingInstance = internalInstance.get(databasePath);
