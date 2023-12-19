@@ -35,7 +35,6 @@ export type { DefaultPreparedQuery, RxJsonSchema, FilledMangoQuery, CompressionM
 export type { Level } from 'level'
 let internalInstance: LevelDBInternal<any>
 export const RX_STORAGE_NAME_LEVELDB = 'leveldb';
-let levelDBInstance: RxStorageLevelDBType<any>;
 
 async function preloadData<RxDocType>(constructorProps: LevelDBInternalConstructor<RxDocType>) {
     try {
@@ -48,48 +47,43 @@ async function preloadData<RxDocType>(constructorProps: LevelDBInternalConstruct
 }
 
 function getRxStorageLevel<RxDocType>(settings: LevelDBSettings): RxStorageLevelDBType<RxDocType> {
-    if (true) {
-        levelDBInstance = {
-            name: RX_STORAGE_NAME_LEVELDB,
-            statics: RxStorageDefaultStatics,
-            async createStorageInstance<RxDocType>(params: RxStorageInstanceCreationParams<RxDocType, LevelDBSettings>): Promise<RxStorageInstance<RxDocType, LevelDBStorageInternals<RxDocType>, LevelDBSettings, any>> {
-                const levelDBConstructorProps: LevelDBInternalConstructor<RxDocType> = "level" in settings ?
-                    {
-                        level: settings.level,
-                        refCount: 1,
-                        schema: params.schema,
-                    }
-                    :
-                    {
-                        dbPath: settings.dbPath,
-                        refCount: 1,
-                        schema: params.schema,
-                    };
-
-                if (!internalInstance) {
-                    internalInstance = await preloadData<RxDocType>(levelDBConstructorProps);
-                } else {
-                    internalInstance.refCount++
+    const instance: RxStorageLevelDBType<any> = {
+        name: RX_STORAGE_NAME_LEVELDB,
+        statics: RxStorageDefaultStatics,
+        async createStorageInstance<RxDocType>(params: RxStorageInstanceCreationParams<RxDocType, LevelDBSettings>): Promise<RxStorageInstance<RxDocType, LevelDBStorageInternals<RxDocType>, LevelDBSettings, any>> {
+            const levelDBConstructorProps: LevelDBInternalConstructor<RxDocType> = "level" in settings ?
+                {
+                    level: settings.level,
+                    refCount: 1,
+                    schema: params.schema,
                 }
+                :
+                {
+                    dbPath: settings.dbPath,
+                    refCount: 1,
+                    schema: params.schema,
+                };
 
-                const rxStorageInstance = new RxStorageIntanceLevelDB<RxDocType>(
-                    this,
-                    params.databaseName,
-                    params.collectionName,
-                    params.schema,
-                    internalInstance,
-                    settings
-                )
-
-                return rxStorageInstance
+            if (!internalInstance) {
+                internalInstance = await preloadData<RxDocType>(levelDBConstructorProps);
+            } else {
+                internalInstance.refCount++
             }
+
+            const rxStorageInstance = new RxStorageIntanceLevelDB<RxDocType>(
+                this,
+                params.databaseName,
+                params.collectionName,
+                params.schema,
+                internalInstance,
+                settings
+            )
+
+            return rxStorageInstance
         }
     }
-    else {
-        console.warn('already got an instance')
-    }
 
-    return levelDBInstance
+    return instance
 }
 
 
