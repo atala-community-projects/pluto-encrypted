@@ -12,13 +12,13 @@ import {
   Pollux,
 } from "@atala/prism-wallet-sdk";
 import * as sinon from "sinon";
-import { RxStorage, getFromMapOrThrow, newRxError } from "rxdb";
+import { RxStorage } from "rxdb";
 import InMemory from "../../inmemory/src";
 import IndexDb from "../../indexdb/src";
 import { createLevelDBStorage } from '../../leveldb/src'
 
 import * as Fixtures from "./fixtures";
-import { Database, PrivateKeyMethods } from "../src";
+import { Database, LinkSecretDocument, LinkSecretMethods, PrivateKeyMethods } from "../src";
 
 const pollux = new Pollux(new Castor(new Apollo()));
 const keyData = new Uint8Array(32);
@@ -74,7 +74,6 @@ function getStorageDBName(storage: RxStorage<any, any>) {
   return `${databaseName}${randomUUID()}`
 }
 
-
 describe("Pluto encrypted testing with different storages", () => {
   let db: Database;
   let currentDBName: string;
@@ -91,8 +90,7 @@ describe("Pluto encrypted testing with different storages", () => {
 
   storages.forEach((storage, i) => {
 
-    const storageName = `[${storage.name}]`
-
+    const storageName = `[${storage.name}]`;
 
     it(storageName + "Should throw an error if pluto has is startede with a wrong database password", async ({ expect }) => {
       const forceDatabaseName = getStorageDBName(storage)
@@ -122,6 +120,66 @@ describe("Pluto encrypted testing with different storages", () => {
 
     });
 
+    it(storageName + "Should run migration once the schema version has changed and user had existing data", async ({ expect }) => {
+
+      const forceDatabaseName = `${databaseName}${randomUUID()}`
+      const db = await Database.createEncrypted(
+        {
+          name: forceDatabaseName,
+          encryptionKey: defaultPassword,
+          storage,
+        }
+      );
+
+      await db.storeLinkSecret("demo123", "demo321");
+
+      const migrationDB = await Database.createEncrypted(
+        {
+          name: forceDatabaseName,
+          encryptionKey: defaultPassword,
+          storage,
+          collections: {
+            linksecrets: {
+              methods: {
+                toDomainLinkSecret: function toDomainLinkSecret(this: any) {
+                  return this.secreto;
+                },
+              },
+              autoMigrate: false,
+              schema: {
+                version: 1,
+                primaryKey: "name",
+                type: "object",
+                properties: {
+                  name: {
+                    type: "string",
+                    maxLength: 60,
+                  },
+                  secreto: {
+                    type: "string",
+                  }
+                },
+                encrypted: ["secreto"],
+                required: ["name", "secreto"],
+              },
+              migrationStrategies: {
+                // 1 means, this transforms data from version 0 to version 1
+                1: async function (oldDoc) {
+                  oldDoc.secreto = oldDoc.secret;
+                  delete oldDoc.secret
+                  return oldDoc;
+                }
+              }
+            }
+          }
+        }
+      );
+
+      const linkSecret = await migrationDB.getLinkSecret()
+      expect(linkSecret).toBe("demo123")
+
+    });
+
 
     describe(storageName, () => {
 
@@ -141,9 +199,6 @@ describe("Pluto encrypted testing with different storages", () => {
           await db.clear()
         }
       })
-
-
-
 
       it(storageName + "Should throw an error if pluto has not been started", async ({ expect }) => {
         const createDatabase = async () => {
