@@ -33,7 +33,6 @@ export type * from './leveldb/types';
 export type { MangoQuerySelectorAndIndex, CRDTSchemaOptions, RxQueryPlanKey, PrimaryKey, StringKeys, TopLevelProperty, MangoQuerySortDirection } from "rxdb/dist/types/types";
 export type { DefaultPreparedQuery, RxJsonSchema, FilledMangoQuery, CompressionMode, RxQueryPlan, MangoQuery, MangoQueryNoLimit, MangoQuerySortPart } from 'rxdb'
 export type { Level } from 'level'
-let internalInstance: LevelDBInternal<any>
 export const RX_STORAGE_NAME_LEVELDB = 'leveldb';
 
 async function preloadData<RxDocType>(constructorProps: LevelDBInternalConstructor<RxDocType>) {
@@ -45,6 +44,8 @@ async function preloadData<RxDocType>(constructorProps: LevelDBInternalConstruct
         throw err
     }
 }
+
+let internalInstance: Map<string, LevelDBInternal<any>> = new Map()
 
 function getRxStorageLevel<RxDocType>(settings: LevelDBSettings): RxStorageLevelDBType<RxDocType> {
     const instance: RxStorageLevelDBType<any> = {
@@ -64,10 +65,17 @@ function getRxStorageLevel<RxDocType>(settings: LevelDBSettings): RxStorageLevel
                     schema: params.schema,
                 };
 
-            if (!internalInstance) {
-                internalInstance = await preloadData<RxDocType>(levelDBConstructorProps);
+            const databasePath = "level" in levelDBConstructorProps ?
+                levelDBConstructorProps.level.path :
+                levelDBConstructorProps.dbPath;
+
+            const existingInstance = internalInstance.get(databasePath);
+
+            if (!existingInstance) {
+                internalInstance.set(databasePath, await preloadData<RxDocType>(levelDBConstructorProps))
             } else {
-                internalInstance.refCount++
+                existingInstance.refCount++;
+                internalInstance.set(databasePath, existingInstance)
             }
 
             const rxStorageInstance = new RxStorageIntanceLevelDB<RxDocType>(
@@ -75,7 +83,7 @@ function getRxStorageLevel<RxDocType>(settings: LevelDBSettings): RxStorageLevel
                 params.databaseName,
                 params.collectionName,
                 params.schema,
-                internalInstance,
+                internalInstance.get(databasePath)!,
                 settings
             )
 
