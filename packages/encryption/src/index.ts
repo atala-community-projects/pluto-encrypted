@@ -127,6 +127,7 @@ export function wrappedKeyEncryptionStorage<Internals, InstanceCreationOptions>(
                             schema: params.schema
                         });
                     }
+
                     const password = params.password;
 
                     const hashedPassword = sha256(password)
@@ -256,3 +257,7 @@ function validatePassword(password: string) {
         });
     }
 }
+
+
+export * from './migration'
+
