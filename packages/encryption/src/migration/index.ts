@@ -79,7 +79,6 @@ export class EncryptedDataMigrator {
                         let row: RxDocument<any, any>
                         let notMatching: any[] = []
                         while ((row = await getBatchOfOldCollection(oldCollection, batchSize, notMatching)).length > 0) {
-                            debugger;
                             await _migrateDocuments(oldCollection, row)
                             notMatching.push(...row.map((document) => document[oldCollection.schema.primaryPath]))
                         }
@@ -148,8 +147,6 @@ export async function getOldCollectionDocs(
 
     const collectionDocKeys = getPreviousVersions(dataMigrator.currentSchema.jsonSchema)
         .map(version => dataMigrator.name + '-' + version);
-
-    debugger;
 
     const docs = await dataMigrator.database.internalStore.findDocumentsById(
         collectionDocKeys.map(key => getPrimaryKeyOfInternalDocument(
@@ -240,7 +237,6 @@ export function getBatchOfOldCollection(
             skip: 0
         }
     );
-    debugger;
     return storageInstance
         .query(preparedQuery)
         .then(result => result.documents
@@ -421,7 +417,6 @@ export async function _migrateDocuments<RxDocType>(
          * so that getWrappedStorageInstance() does not overwrite its own revision.
          */
         const originalStorageInstance = oldCollection.newestCollection.storageInstance.originalStorageInstance;
-        debugger;
         await originalStorageInstance.bulkWrite(
             bulkWriteToStorageInput.map(document => ({ document })),
             'data-migrator-import'
@@ -449,7 +444,6 @@ export async function _migrateDocuments<RxDocType>(
     });
 
     if (bulkDeleteInputData.length) {
-        debugger;
         await oldCollection.storageInstance.bulkWrite(
             bulkDeleteInputData,
             'data-migrator-delete'

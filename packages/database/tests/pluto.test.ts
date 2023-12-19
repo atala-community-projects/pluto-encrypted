@@ -180,6 +180,68 @@ describe("Pluto encrypted testing with different storages", () => {
 
     });
 
+    it(storageName + "Should run migration once the schema version has changed its primaryKey and user had existing data", async ({ expect }) => {
+
+      const forceDatabaseName = `${databaseName}${randomUUID()}`
+      const db = await Database.createEncrypted(
+        {
+          name: forceDatabaseName,
+          encryptionKey: defaultPassword,
+          storage,
+        }
+      );
+
+      await db.storeLinkSecret("demo123", "demo321");
+
+      const migrationDB = await Database.createEncrypted(
+        {
+          name: forceDatabaseName,
+          encryptionKey: defaultPassword,
+          storage,
+          collections: {
+            linksecrets: {
+              methods: {
+                toDomainLinkSecret: function toDomainLinkSecret(this: any) {
+                  return this.secreto;
+                },
+              },
+              autoMigrate: false,
+              schema: {
+                version: 1,
+                primaryKey: "name2",
+                type: "object",
+                properties: {
+                  name2: {
+                    type: "string",
+                    maxLength: 60,
+                  },
+                  secreto: {
+                    type: "string",
+                  }
+                },
+                encrypted: ["secreto"],
+                required: ["name2", "secreto"],
+              },
+              migrationStrategies: {
+                // 1 means, this transforms data from version 0 to version 1
+                1: async function (oldDoc) {
+                  oldDoc.secreto = oldDoc.secret;
+                  oldDoc.name2 = oldDoc.name;
+                  delete oldDoc.secret
+                  delete oldDoc.name
+                  return oldDoc;
+                }
+              }
+            }
+          }
+        }
+      );
+
+      const linkSecret = await migrationDB.getLinkSecret()
+      expect(linkSecret).toBe("demo123")
+
+    });
+
 
     describe(storageName, () => {
 

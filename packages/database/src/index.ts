@@ -543,9 +543,7 @@ export class Database implements Domain.Pluto {
         collection.migrationStrategies
       )
     );
-    debugger;
-    const migrate = await mustMigrate(dataMigrator);
-    return migrate
+    return mustMigrate(dataMigrator)
   }
 
   private async migration(database: RxDatabase<PlutoCollections, any, any>) {
@@ -553,7 +551,6 @@ export class Database implements Domain.Pluto {
       const collection = database[collectionName].asRxCollection
       const needed = await this.isMigrationNeeded(collection)
       if (needed) {
-        debugger;
         const migrator = new EncryptedDataMigrator(
           collection.asRxCollection,
           collection.migrationStrategies
