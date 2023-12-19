@@ -139,38 +139,40 @@ describe("Pluto encrypted testing with different storages", () => {
           encryptionKey: defaultPassword,
           storage,
           collections: {
-            linksecrets: {
-              methods: {
-                toDomainLinkSecret: function toDomainLinkSecret(this: any) {
-                  return this.secreto;
-                },
-              },
-              autoMigrate: false,
-              schema: {
-                version: 1,
-                primaryKey: "name",
-                type: "object",
-                properties: {
-                  name: {
-                    type: "string",
-                    maxLength: 60,
+            linksecrets: Database.configureCollection(
+              {
+                methods: {
+                  toDomainLinkSecret: function toDomainLinkSecret(this: any) {
+                    return this.secreto;
                   },
-                  secreto: {
-                    type: "string",
-                  }
                 },
-                encrypted: ["secreto"],
-                required: ["name", "secreto"],
-              },
-              migrationStrategies: {
-                // 1 means, this transforms data from version 0 to version 1
-                1: async function (oldDoc) {
-                  oldDoc.secreto = oldDoc.secret;
-                  delete oldDoc.secret
-                  return oldDoc;
+                autoMigrate: false,
+                schema: {
+                  version: 1,
+                  primaryKey: "name",
+                  type: "object",
+                  properties: {
+                    name: {
+                      type: "string",
+                      maxLength: 60,
+                    },
+                    secreto: {
+                      type: "string",
+                    }
+                  },
+                  encrypted: ["secreto"],
+                  required: ["name", "secreto"],
+                },
+                migrationStrategies: {
+                  // 1 means, this transforms data from version 0 to version 1
+                  1: async function (oldDoc) {
+                    oldDoc.secreto = oldDoc.secret;
+                    delete oldDoc.secret
+                    return oldDoc;
+                  }
                 }
               }
-            }
+            )
           }
         }
       );
@@ -199,40 +201,41 @@ describe("Pluto encrypted testing with different storages", () => {
           encryptionKey: defaultPassword,
           storage,
           collections: {
-            linksecrets: {
-              methods: {
-                toDomainLinkSecret: function toDomainLinkSecret(this: any) {
-                  return this.secreto;
-                },
-              },
-              autoMigrate: false,
-              schema: {
-                version: 1,
-                primaryKey: "name2",
-                type: "object",
-                properties: {
-                  name2: {
-                    type: "string",
-                    maxLength: 60,
+            linksecrets: Database.configureCollection(
+              {
+                methods: {
+                  toDomainLinkSecret: function toDomainLinkSecret(this: any) {
+                    return this.secreto;
                   },
-                  secreto: {
-                    type: "string",
-                  }
                 },
-                encrypted: ["secreto"],
-                required: ["name2", "secreto"],
-              },
-              migrationStrategies: {
-                // 1 means, this transforms data from version 0 to version 1
-                1: async function (oldDoc) {
-                  oldDoc.secreto = oldDoc.secret;
-                  oldDoc.name2 = oldDoc.name;
-                  delete oldDoc.secret
-                  delete oldDoc.name
-                  return oldDoc;
+                schema: {
+                  version: 1,
+                  primaryKey: "name2",
+                  type: "object",
+                  properties: {
+                    name2: {
+                      type: "string",
+                      maxLength: 60,
+                    },
+                    secreto: {
+                      type: "string",
+                    }
+                  },
+                  encrypted: ["secreto"],
+                  required: ["name2", "secreto"],
+                },
+                migrationStrategies: {
+                  // 1 means, this transforms data from version 0 to version 1
+                  1: async function (oldDoc) {
+                    oldDoc.secreto = oldDoc.secret;
+                    oldDoc.name2 = oldDoc.name;
+                    delete oldDoc.secret
+                    delete oldDoc.name
+                    return oldDoc;
+                  }
                 }
               }
-            }
+            )
           }
         }
       );

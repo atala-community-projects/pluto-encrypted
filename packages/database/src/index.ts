@@ -18,7 +18,6 @@ import {
   getFromMapOrThrow,
   removeRxDatabase
 } from "rxdb";
-import { RxDBDevModePlugin } from "rxdb/plugins/dev-mode";
 import { RxDBEncryptedMigrationPlugin } from "@pluto-encrypted/encryption";
 import { BulkWriteRow, RxCollection, RxDocument, RxDocumentData } from "rxdb/dist/types/types";
 import { RxDBJsonDumpPlugin } from "rxdb/plugins/json-dump";
@@ -87,10 +86,6 @@ export class Database implements Domain.Pluto {
   }
 
   constructor(private dbOptions: RxDatabaseCreator) {
-
-    if (process.env.NODE_ENV === "debug") {
-      addRxPlugin(RxDBDevModePlugin);
-    }
     addRxPlugin(RxDBQueryBuilderPlugin);
     addRxPlugin(RxDBJsonDumpPlugin);
     addRxPlugin(RxDBEncryptedMigrationPlugin);
@@ -559,6 +554,11 @@ export class Database implements Domain.Pluto {
 
       }
     }
+  }
+
+  public static configureCollection(collection: RxCollectionCreator<any>) {
+    collection.autoMigrate = false
+    return collection
   }
 
   /**
