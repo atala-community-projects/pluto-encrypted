@@ -1,3 +1,10 @@
+# @pluto-encrypted/shared [1.1.0](https://github.com/elribonazo/pluto-encrypted/compare/@pluto-encrypted/shared@1.0.4...@pluto-encrypted/shared@1.1.0) (2023-12-19)
+
+
+### Features
+
+* **migrations:** Support migrations across all encrypted storages supported by pluto encrypted ([#63](https://github.com/elribonazo/pluto-encrypted/issues/63)) ([6b609df](https://github.com/elribonazo/pluto-encrypted/commit/6b609df8cf893a269fc0c1f8026db0caa6098ac5))
+
 ## @pluto-encrypted/shared [1.0.4](https://github.com/elribonazo/pluto-encrypted/compare/@pluto-encrypted/shared@1.0.3...@pluto-encrypted/shared@1.0.4) (2023-12-18)
 
 

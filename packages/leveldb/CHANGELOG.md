@@ -1,3 +1,19 @@
+# @pluto-encrypted/leveldb [1.2.0](https://github.com/elribonazo/pluto-encrypted/compare/@pluto-encrypted/leveldb@1.1.8...@pluto-encrypted/leveldb@1.2.0) (2023-12-19)
+
+
+### Features
+
+* **migrations:** Support migrations across all encrypted storages supported by pluto encrypted ([#63](https://github.com/elribonazo/pluto-encrypted/issues/63)) ([6b609df](https://github.com/elribonazo/pluto-encrypted/commit/6b609df8cf893a269fc0c1f8026db0caa6098ac5))
+
+
+
+
+
+### Dependencies
+
+* **@pluto-encrypted/shared:** upgraded to 1.1.0
+* **@pluto-encrypted/encryption:** upgraded to 1.1.0
+
 ## @pluto-encrypted/leveldb [1.1.8](https://github.com/elribonazo/pluto-encrypted/compare/@pluto-encrypted/leveldb@1.1.7...@pluto-encrypted/leveldb@1.1.8) (2023-12-19)
 
 

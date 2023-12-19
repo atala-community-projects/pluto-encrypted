@@ -1,3 +1,13 @@
+# @pluto-encrypted/indexdb [1.2.0](https://github.com/elribonazo/pluto-encrypted/compare/@pluto-encrypted/indexdb@1.1.8...@pluto-encrypted/indexdb@1.2.0) (2023-12-19)
+
+
+
+
+
+### Dependencies
+
+* **@pluto-encrypted/encryption:** upgraded to 1.1.0
+
 ## @pluto-encrypted/indexdb [1.1.8](https://github.com/elribonazo/pluto-encrypted/compare/@pluto-encrypted/indexdb@1.1.7...@pluto-encrypted/indexdb@1.1.8) (2023-12-18)
 
 

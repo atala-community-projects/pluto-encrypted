@@ -1,3 +1,20 @@
+# @pluto-encrypted/database [1.1.0](https://github.com/elribonazo/pluto-encrypted/compare/@pluto-encrypted/database@1.0.23...@pluto-encrypted/database@1.1.0) (2023-12-19)
+
+
+### Features
+
+* **migrations:** Support migrations across all encrypted storages supported by pluto encrypted ([#63](https://github.com/elribonazo/pluto-encrypted/issues/63)) ([6b609df](https://github.com/elribonazo/pluto-encrypted/commit/6b609df8cf893a269fc0c1f8026db0caa6098ac5))
+
+
+
+
+
+### Dependencies
+
+* **@pluto-encrypted/indexdb:** upgraded to 1.2.0
+* **@pluto-encrypted/inmemory:** upgraded to 1.2.0
+* **@pluto-encrypted/leveldb:** upgraded to 1.2.0
+
 ## @pluto-encrypted/database [1.0.23](https://github.com/elribonazo/pluto-encrypted/compare/@pluto-encrypted/database@1.0.22...@pluto-encrypted/database@1.0.23) (2023-12-19)
 
 
