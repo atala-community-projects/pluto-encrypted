@@ -1,3 +1,10 @@
+## @pluto-encrypted/inmemory [1.2.1](https://github.com/elribonazo/pluto-encrypted/compare/@pluto-encrypted/inmemory@1.2.0...@pluto-encrypted/inmemory@1.2.1) (2023-12-19)
+
+
+### Bug Fixes
+
+* Enable multiple instances of inMemory storage if different database names have been specified. ([8703989](https://github.com/elribonazo/pluto-encrypted/commit/8703989abb419409867593f8361bd7bba853319f))
+
 # @pluto-encrypted/inmemory [1.2.0](https://github.com/elribonazo/pluto-encrypted/compare/@pluto-encrypted/inmemory@1.1.7...@pluto-encrypted/inmemory@1.2.0) (2023-12-19)
 
 
