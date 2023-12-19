@@ -40,14 +40,23 @@ export class RxStorageIntanceLevelDB<RxDocType> implements RxStorageInstance<
         const documentKeys: string[] = documentWrites.map(writeRow => writeRow.document[this.primaryPath] as any);
         const documents = await this.internals.getDocuments(documentKeys)
 
-        const fixed = documentWrites.map((writeDoc) => {
-            const currentId = writeDoc.document[this.primaryPath] as any;
-            const previousDocument = documents.get(currentId)
-            if (previousDocument) {
-                writeDoc.previous = previousDocument
+        const fixed = documentWrites.reduce<BulkWriteRow<RxDocType>[]>((fixedDocs, currentWriteDoc) => {
+            const currentId = currentWriteDoc.document[this.primaryPath] as any;
+            const previousDocument = currentWriteDoc.previous || documents.get(currentId)
+            if (context === "data-migrator-delete") {
+                if (previousDocument && previousDocument._rev === currentWriteDoc.document._rev) {
+                    fixedDocs.push(currentWriteDoc)
+                }
+            } else {
+                if (previousDocument) {
+                    currentWriteDoc.previous = previousDocument
+                } else {
+                    currentWriteDoc.previous = undefined
+                }
+                fixedDocs.push(currentWriteDoc)
             }
-            return writeDoc
-        })
+            return fixedDocs
+        }, []);
 
         const categorized = categorizeBulkWriteRows<RxDocType>(
             this,
