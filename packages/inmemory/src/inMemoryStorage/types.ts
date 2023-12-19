@@ -28,6 +28,8 @@ export type InMemoryStorageInternals<RxDocType> = {
     documents: InMemoryDataStructure<RxDocType>;
     removed: boolean;
     refCount: number;
+    addIndex(indexName: string, docId: IndexType);
+    removeFromIndex(indexName: string, id: string): void;
     bulkPut(
         items: any,
         collectionName: string,

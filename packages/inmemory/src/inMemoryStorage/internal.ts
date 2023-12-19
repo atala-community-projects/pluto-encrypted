@@ -24,15 +24,20 @@ export class InMemoryInternal<RxDocType> implements InMemoryStorageInternals<RxD
         return this.data
     }
 
-    private addIndex(indexName: string, docId: IndexType) {
+    public addIndex(indexName: string, docId: IndexType) {
         if (this.index.has(indexName)) {
             const values = this.index.get(indexName) || [];
-            if (values) {
-                values.push(docId)
-            }
-            this.index.set(indexName, values)
+            const newIndexes = Array.from(new Set([...values, docId]));
+            this.index.set(indexName, newIndexes)
         } else {
             this.index.set(indexName, [docId])
+        }
+    }
+
+    public removeFromIndex(indexName: string, id: string) {
+        if (this.index.has(indexName)) {
+            const values = this.index.get(indexName) || [];
+            this.index.set(indexName, values.filter((vId) => vId !== id))
         }
     }
 
@@ -41,23 +46,37 @@ export class InMemoryInternal<RxDocType> implements InMemoryStorageInternals<RxD
         this.index.clear();
     }
 
-    bulkPut(items: RxDocumentData<RxDocType>[], collectionName: string, schema: Readonly<RxJsonSchema<RxDocumentData<RxDocType>>>) {
+    async bulkPut(items: RxDocumentData<RxDocType>[], collectionName: string, schema: Readonly<RxJsonSchema<RxDocumentData<RxDocType>>>) {
         const primaryKeyKey = typeof schema.primaryKey === "string" ? schema.primaryKey : schema.primaryKey.key;
         const indexName = `[${collectionName}+${primaryKeyKey}]`;
 
         for (let item of items) {
+            const shouldDelete = item._deleted;
+
             let primaryKeyVal = item[primaryKeyKey];
             if (!("id" in item) || !['string', 'number'].includes(typeof item.id)) {
                 if (!primaryKeyKey || !primaryKeyVal) {
                     throw new Error("Data must have a primaryKey defined of type string or number")
                 }
                 const id = item[primaryKeyKey] as any;
-                this.data.set(id, item);
-                this.addIndex(indexName, id)
+                if (shouldDelete) {
+                    await this.data.delete(id)
+                    await this.removeFromIndex(indexName, id)
+                } else {
+                    await this.data.set(id, item);
+                    await this.addIndex(indexName, id)
+                }
+
             } else {
                 const id = item.id as any;
-                this.data.set(id, item)
-                this.addIndex(indexName, id)
+                if (shouldDelete) {
+                    await this.data.delete(id)
+                    await this.removeFromIndex(indexName, id)
+                } else {
+                    await this.data.set(id, item)
+                    await this.addIndex(indexName, id)
+                }
+
 
             }
 
@@ -67,12 +86,8 @@ export class InMemoryInternal<RxDocType> implements InMemoryStorageInternals<RxD
     bulkGet(docIds: string[], withDeleted: boolean): RxDocumentDataById<RxDocType> {
         return docIds.reduce<RxDocumentDataById<RxDocType>>((alldocs, current) => {
             const data = this.data.get(current);
-            if (data &&
-                (
-                    !data._deleted ||
-                    withDeleted
-                )) {
-                alldocs[1] = data
+            if (data) {
+                alldocs[current] = data
             }
             return alldocs;
         }, {})
