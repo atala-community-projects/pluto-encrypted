@@ -23,32 +23,31 @@ import { RxStorageIntanceInMemory } from "./inMemoryStorage/instance";
 import { InMemoryInternal } from "./inMemoryStorage/internal";
 import { wrappedKeyEncryptionStorage } from "@pluto-encrypted/encryption";
 
-let inMemoryInstance: RxStorageInMemoryType<any>;
-let internalInstance: InMemoryInternal<any>
+
+let internalInstance: Map<string, InMemoryInternal<any>> = new Map()
 
 function getRxStorageMemory<RxDocType>(settings: InMemorySettings = {}): RxStorageInMemoryType<RxDocType> {
-    if (!inMemoryInstance) {
-        inMemoryInstance = {
-            name: "in-memory",
-            statics: RxStorageDefaultStatics,
-            async createStorageInstance<RxDocType>(params: RxStorageInstanceCreationParams<RxDocType, InMemorySettings>): Promise<RxStorageInstance<RxDocType, InMemoryStorageInternals<RxDocType>, InMemorySettings, any>> {
-                if (!internalInstance) {
-                    internalInstance = new InMemoryInternal<RxDocType>(0)
-                } else {
-                    internalInstance.refCount++
-                }
-                return new RxStorageIntanceInMemory(
-                    this,
-                    params.databaseName,
-                    params.collectionName,
-                    params.schema,
-                    internalInstance,
-                    settings
-                )
+    const inMemoryInstance: RxStorageInMemoryType<any> = {
+        name: "in-memory",
+        statics: RxStorageDefaultStatics,
+        async createStorageInstance<RxDocType>(params: RxStorageInstanceCreationParams<RxDocType, InMemorySettings>): Promise<RxStorageInstance<RxDocType, InMemoryStorageInternals<RxDocType>, InMemorySettings, any>> {
+            const existingInstance = internalInstance.get(params.databaseName)
+            if (!existingInstance) {
+                internalInstance.set(params.databaseName, new InMemoryInternal<RxDocType>(0));
+            } else {
+                existingInstance.refCount++;
+                internalInstance.set(params.databaseName, existingInstance)
             }
+            return new RxStorageIntanceInMemory(
+                this,
+                params.databaseName,
+                params.collectionName,
+                params.schema,
+                internalInstance.get(params.databaseName)!,
+                settings
+            )
         }
     }
-
     return inMemoryInstance
 }
 
