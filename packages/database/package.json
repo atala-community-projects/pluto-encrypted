@@ -17,8 +17,8 @@
   "scripts": {
     "prepublishOnly": "npm run build",
     "clean-packages": "rm -rf node_modules && rm -rf build",
-    "test": "NODE_ENV=debug npx vitest run tests/*.test.ts",
-    "test:watch": "NODE_ENV=debug vitest tests/*.test.ts",
+    "test": "NODE_ENV=debug npx vitest run tests/*.test.ts --pool threads --poolOptions.threads.singleThread",
+    "test:watch": "NODE_ENV=debug vitest tests/*.test.ts --pool threads --poolOptions.threads.singleThread",
     "test:debug": "NODE_ENV=debug vitest tests/*.test.ts --inspect-brk --pool threads --poolOptions.threads.singleThread",
     "build": "rm -rf build && npx rollup -c rollup/rollup.mjs",
     "coverage": "npx vitest run --coverage && npx istanbul-badges-readme --readmeDir=\"../../\"",
@@ -40,6 +40,7 @@
     "@pluto-encrypted/leveldb": "^1.1.1"
   },
   "devDependencies": {
+    "@pluto-encrypted/encryption": "^1.0.1",
     "@pluto-encrypted/indexdb": "1.1.8",
     "@pluto-encrypted/inmemory": "1.1.7",
     "@pluto-encrypted/leveldb": "1.1.8",
@@ -48,6 +49,7 @@
   },
   "dependencies": {
     "@atala/prism-wallet-sdk": "^3.2.0",
+    "@pluto-encrypted/encryption": "^1.0.1",
     "rxdb": "^14.17.0",
     "uuid": "^9.0.1"
   },

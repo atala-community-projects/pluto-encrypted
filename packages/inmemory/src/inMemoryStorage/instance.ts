@@ -40,11 +40,30 @@ export class RxStorageIntanceInMemory<RxDocType> implements RxStorageInstance<
             error: {}
         };
 
+        const fixed = documentWrites.reduce<BulkWriteRow<RxDocType>[]>((fixedDocs, currentWriteDoc) => {
+            const currentId = currentWriteDoc.document[this.primaryPath] as any;
+            const previousDocument = currentWriteDoc.previous || this.internals.documents.get(currentId)
+            if (context === "data-migrator-delete") {
+                if (previousDocument && previousDocument._rev === currentWriteDoc.document._rev) {
+                    fixedDocs.push(currentWriteDoc)
+                }
+            } else {
+                if (previousDocument) {
+                    currentWriteDoc.previous = previousDocument
+                } else {
+                    currentWriteDoc.previous = undefined
+                }
+                fixedDocs.push(currentWriteDoc)
+            }
+            return fixedDocs
+        }, []);
+
+
         const categorized = categorizeBulkWriteRows<RxDocType>(
             this,
             primaryPath as any,
             this.internals.documents as any,
-            documentWrites,
+            fixed,
             context
         );
         ret.error = categorized.errors;
@@ -56,7 +75,7 @@ export class RxStorageIntanceInMemory<RxDocType> implements RxStorageInstance<
         for (let i = 0; i < bulkInsertDocs.length; ++i) {
             const writeRow = bulkInsertDocs[i]!;
             const docId = writeRow.document[primaryPath];
-            this.internals.bulkPut([writeRow.document], this.collectionName, this.schema)
+            await this.internals.bulkPut([writeRow.document], this.collectionName, this.schema)
             ret.success[docId as any] = writeRow.document;
         }
 
@@ -64,7 +83,7 @@ export class RxStorageIntanceInMemory<RxDocType> implements RxStorageInstance<
         for (let i = 0; i < bulkUpdateDocs.length; ++i) {
             const writeRow = bulkUpdateDocs[i]!;
             const docId = writeRow.document[primaryPath];
-            this.internals.bulkPut([writeRow.document], this.collectionName, this.schema)
+            await this.internals.bulkPut([writeRow.document], this.collectionName, this.schema)
             ret.success[docId as any] = writeRow.document;
         }
 
@@ -159,6 +178,7 @@ export class RxStorageIntanceInMemory<RxDocType> implements RxStorageInstance<
 
     /* istanbul ignore next */
     async remove(): Promise<void> {
+
         return Promise.resolve()
     }
 

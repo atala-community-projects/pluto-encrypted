@@ -4,7 +4,7 @@
  */
 import { Domain } from "@atala/prism-wallet-sdk";
 import {
-  MangoQuerySelector, RxCollectionCreator,
+  MangoQuerySelector, PROMISE_RESOLVE_FALSE, RxCollectionCreator,
   RxDatabase,
   RxDatabaseCreator,
   RxDumpDatabase,
@@ -14,12 +14,13 @@ import {
   addRxPlugin,
   createRxDatabase,
   flatClone,
+  getFromMapOrCreate,
   getFromMapOrThrow,
   removeRxDatabase
 } from "rxdb";
-import { BulkWriteRow, RxDocument, RxDocumentData } from "rxdb/dist/types/types";
+import { RxDBEncryptedMigrationPlugin } from "@pluto-encrypted/encryption";
+import { BulkWriteRow, RxCollection, RxDocument, RxDocumentData } from "rxdb/dist/types/types";
 import { RxDBJsonDumpPlugin } from "rxdb/plugins/json-dump";
-import { RxDBMigrationPlugin } from "rxdb/plugins/migration";
 import { RxDBQueryBuilderPlugin } from "rxdb/plugins/query-builder";
 import { v4 as uuidv4 } from "uuid";
 import CredentialSchema, {
@@ -50,11 +51,9 @@ import PrivateKeySchema, {
   PrivateKeyMethods
 } from "./schemas/PrivateKey";
 import { PlutoCollections } from "./types";
-
-addRxPlugin(RxDBMigrationPlugin);
-addRxPlugin(RxDBQueryBuilderPlugin);
-//addRxPlugin(RxDBDevModePlugin);
-addRxPlugin(RxDBJsonDumpPlugin);
+import { DATA_MIGRATOR_BY_COLLECTION } from "@pluto-encrypted/encryption";
+import { EncryptedDataMigrator } from "@pluto-encrypted/encryption";
+import { mustMigrate } from "@pluto-encrypted/encryption";
 
 export * from "./schemas/Credential";
 export * from "./schemas/CredentialRequestMetadata";
@@ -77,7 +76,7 @@ export type PlutoDatabase = RxDatabase<PlutoCollections>;
  *
  */
 export class Database implements Domain.Pluto {
-  private _db!: PlutoDatabase;
+  private _db!: RxDatabase<PlutoCollections, any, any>;
 
   protected get db() {
     if (!this._db) {
@@ -86,7 +85,11 @@ export class Database implements Domain.Pluto {
     return this._db;
   }
 
-  constructor(private dbOptions: RxDatabaseCreator) { }
+  constructor(private dbOptions: RxDatabaseCreator) {
+    addRxPlugin(RxDBQueryBuilderPlugin);
+    addRxPlugin(RxDBJsonDumpPlugin);
+    addRxPlugin(RxDBEncryptedMigrationPlugin);
+  }
 
   async backup() {
     return this.db.exportJSON();
@@ -375,11 +378,21 @@ export class Database implements Domain.Pluto {
       encryptionKey: Uint8Array,
       importData?: RxDumpDatabase<PlutoCollections>,
       storage: RxStorage<any, any>,
-      autoStart?: boolean
+      autoStart?: boolean,
+      collections?: Partial<{
+        messages: RxCollectionCreator<any>;
+        dids: RxCollectionCreator<any>;
+        didpairs: RxCollectionCreator<any>;
+        mediators: RxCollectionCreator<any>;
+        privatekeys: RxCollectionCreator<any>;
+        credentials: RxCollectionCreator<any>;
+        credentialrequestmetadatas: RxCollectionCreator<any>;
+        linksecrets: RxCollectionCreator<any>;
+      }>
     }
   ) {
     try {
-      const { name, storage, encryptionKey, importData, autoStart = true } = options;
+      const { name, storage, encryptionKey, importData, autoStart = true, collections } = options;
       if (!storage) {
         throw new Error("Please provide a valid storage.");
       }
@@ -391,7 +404,7 @@ export class Database implements Domain.Pluto {
       });
 
       if (autoStart) {
-        await database.start()
+        await database.start(collections)
       }
 
       if (importData) {
@@ -478,52 +491,103 @@ export class Database implements Domain.Pluto {
     return messages.map((message) => message.toDomainMessage());
   }
 
-  private applyORMStatics(collectionObj: RxCollectionCreator<any>) {
-    return collectionObj
+  private getDefaultCollections() {
+    return {
+      messages: {
+        schema: MessageSchema,
+        methods: MessageMethods
+      },
+      dids: {
+        schema: DIDSchema
+      },
+      didpairs: {
+        schema: DIDPairSchema
+      },
+      mediators: {
+        schema: MediatorSchema,
+        methods: MediatorMethods
+      },
+      privatekeys: {
+        schema: PrivateKeySchema,
+        methods: PrivateKeyMethods
+      },
+      credentials: {
+        schema: CredentialSchema,
+        methods: CredentialMethods
+      },
+      credentialrequestmetadatas: {
+        schema: CredentialRequestMetadataSchema,
+        methods: CredentialRequestMetadataMethods
+      },
+      linksecrets: {
+        schema: LinkSecretSchema,
+        methods: LinkSecretMethods
+      },
+    }
+  }
+
+  private async isMigrationNeeded(collection: RxCollection) {
+    if (collection.schema.version === 0) {
+      return PROMISE_RESOLVE_FALSE;
+    }
+    const dataMigrator = getFromMapOrCreate(
+      DATA_MIGRATOR_BY_COLLECTION,
+      collection,
+      () => new EncryptedDataMigrator(
+        collection.asRxCollection,
+        collection.migrationStrategies
+      )
+    );
+    return mustMigrate(dataMigrator)
+  }
+
+  private async migration(database: RxDatabase<PlutoCollections, any, any>) {
+    for (let collectionName of Object.keys(database.collections)) {
+      const collection = database[collectionName].asRxCollection
+      const needed = await this.isMigrationNeeded(collection)
+      if (needed) {
+        const migrator = new EncryptedDataMigrator(
+          collection.asRxCollection,
+          collection.migrationStrategies
+        )
+        const migration = await migrator.migratePromise(10)
+
+      }
+    }
+  }
+
+  public static configureCollection(collection: RxCollectionCreator<any>) {
+    collection.autoMigrate = false
+    return collection
   }
 
   /**
    * Start the database and build collections
    */
-  async start(): Promise<void> {
+  async start(collections?: Partial<{
+    messages: RxCollectionCreator<any>;
+    dids: RxCollectionCreator<any>;
+    didpairs: RxCollectionCreator<any>;
+    mediators: RxCollectionCreator<any>;
+    privatekeys: RxCollectionCreator<any>;
+    credentials: RxCollectionCreator<any>;
+    credentialrequestmetadatas: RxCollectionCreator<any>;
+    linksecrets: RxCollectionCreator<any>;
+  }>): Promise<void> {
     const { dbOptions } = this;
 
-    const database = await createRxDatabase<PlutoDatabase>({
+    const database = await createRxDatabase<PlutoCollections>({
       ...dbOptions,
       multiInstance: false
     });
-    await database.addCollections<PlutoCollections>({
-      messages: this.applyORMStatics({
-        schema: MessageSchema,
-        methods: MessageMethods,
-      }),
-      dids: this.applyORMStatics({
-        schema: DIDSchema,
-      }),
-      didpairs: this.applyORMStatics({
-        schema: DIDPairSchema,
-      }),
-      mediators: this.applyORMStatics({
-        schema: MediatorSchema,
-        methods: MediatorMethods,
-      }),
-      privatekeys: this.applyORMStatics({
-        schema: PrivateKeySchema,
-        methods: PrivateKeyMethods,
-      }),
-      credentials: this.applyORMStatics({
-        schema: CredentialSchema,
-        methods: CredentialMethods,
-      }),
-      credentialrequestmetadatas: this.applyORMStatics({
-        schema: CredentialRequestMetadataSchema,
-        methods: CredentialRequestMetadataMethods,
-      }),
-      linksecrets: this.applyORMStatics({
-        schema: LinkSecretSchema,
-        methods: LinkSecretMethods,
-      }),
+
+    await database.addCollections({
+      ...this.getDefaultCollections(),
+      ...(collections || {})
     });
+
+    await this.migration(database)
+
     this._db = database;
 
     const execOrmNames = ['count', 'findByIds', 'find', 'findOne', "remove"];
