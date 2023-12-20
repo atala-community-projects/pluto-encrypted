@@ -51,6 +51,7 @@
     "@atala/prism-wallet-sdk": "^3.2.0",
     "@pluto-encrypted/encryption": "^1.0.1",
     "rxdb": "^14.17.0",
+    "rxjs": "7.8.1",
     "uuid": "^9.0.1"
   },
   "files": [

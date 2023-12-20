@@ -223,17 +223,16 @@ export class LevelDBInternal<RxDocType> implements LevelDBStorageInternals<RxDoc
             const indexName = `[${collectionName}+${primaryKeyKey}]`;
             for (let item of items) {
                 const shouldDelete = item._deleted;
-                let primaryKeyVal = item[primaryKeyKey];
-
                 if (!("id" in item) || !['string', 'number'].includes(typeof item.id)) {
 
-                    if (!primaryKeyKey || !primaryKeyVal) {
+                    if (!primaryKeyKey) {
                         throw new Error("Data must have a primaryKey defined of type string or number")
                     }
                     const id = item[primaryKeyKey] as string;
                     if (shouldDelete) {
                         await this.removeFromIndex(indexName, id)
                         await this.removeFromIndex('[all]', id)
+                        await this.delete(id)
                         this.documents.delete(id)
                     } else {
                         await this.updateIndex(indexName, id)
@@ -249,6 +248,7 @@ export class LevelDBInternal<RxDocType> implements LevelDBStorageInternals<RxDoc
                     if (shouldDelete) {
                         await this.removeFromIndex(indexName, id)
                         await this.removeFromIndex('[all]', id)
+                        await this.delete(id)
                         this.documents.delete(id)
                     } else {
                         await this.updateIndex(indexName, id)

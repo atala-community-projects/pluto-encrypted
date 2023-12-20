@@ -40,7 +40,8 @@
   },
   "devDependencies": {
     "@pluto-encrypted/shared": "1.1.0",
-    "@pluto-encrypted/encryption": "1.1.0"
+    "@pluto-encrypted/encryption": "1.1.0",
+    "@pluto-encrypted/test-suite": "^0.0.1"
   },
   "files": [
     "build/*"

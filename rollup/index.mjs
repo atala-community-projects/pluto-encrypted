@@ -26,7 +26,9 @@ const externals = [
     "@noble/hashes/sha256",
     "@noble/ciphers/chacha",
     "@noble/ciphers/webcrypto/utils",
-    "@pluto-encrypted/encryption"
+    "@pluto-encrypted/encryption",
+    "vitest",
+    "rxjs/operators"
 ];
 
 export default function CreateConfig(buildPath, plugins = [], extraInputs = []) {

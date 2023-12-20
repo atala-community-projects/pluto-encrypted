@@ -418,6 +418,7 @@ export class Database implements Domain.Pluto {
         throw new Error("Invalid Authentication");
       } else {
         /* istanbul ignore next */
+
         throw err;
       }
     }

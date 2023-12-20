@@ -42,14 +42,20 @@ export class RxStorageIntanceLevelDB<RxDocType> implements RxStorageInstance<
 
         const fixed = documentWrites.reduce<BulkWriteRow<RxDocType>[]>((fixedDocs, currentWriteDoc) => {
             const currentId = currentWriteDoc.document[this.primaryPath] as any;
-            const previousDocument = currentWriteDoc.previous || documents.get(currentId)
             if (context === "data-migrator-delete") {
-                if (previousDocument && previousDocument._rev === currentWriteDoc.document._rev) {
-                    fixedDocs.push(currentWriteDoc)
+                const previousDocument = currentWriteDoc.previous || documents.get(currentId)
+
+                if (previousDocument) {
+                    if (previousDocument._meta.lwt !== currentWriteDoc.document._meta.lwt) {
+                        fixedDocs.push(currentWriteDoc)
+                    }
                 }
             } else {
+                const previousDocument = currentWriteDoc.previous
                 if (previousDocument) {
-                    currentWriteDoc.previous = previousDocument
+                    if (previousDocument._meta.lwt !== currentWriteDoc.document._meta.lwt) {
+                        currentWriteDoc.previous = previousDocument
+                    }
                 } else {
                     currentWriteDoc.previous = undefined
                 }
@@ -166,8 +172,9 @@ export class RxStorageIntanceLevelDB<RxDocType> implements RxStorageInstance<
     /* istanbul ignore next */
     async close(): Promise<void> {
         if (this.closed) {
-            return Promise.reject(new Error('already closed'));
+            return Promise.resolve()
         }
+
         await this.internals.close()
         this.changes$.complete();
         this.closed = true;
