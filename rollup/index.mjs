@@ -28,7 +28,9 @@ const externals = [
     "@noble/ciphers/webcrypto/utils",
     "@pluto-encrypted/encryption",
     "vitest",
-    "rxjs/operators"
+    "rxjs/operators",
+    "@faker-js/faker",
+    "async-test-util"
 ];
 
 export default function CreateConfig(buildPath, plugins = [], extraInputs = []) {

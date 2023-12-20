@@ -1,90 +1,30 @@
-import { RxDocumentData, RxDocumentWriteData, RxJsonSchema, RxStorage, RxStorageInstance, RxStorageInstanceCreationParams, clone, createRevision, ensureNotFalsy, fillWithDefaultSettings, flatCloneDocWithMeta, getPseudoSchemaForVersion, newRxError, now, parseRevision, randomCouchString } from "rxdb";
-import { describe, it, beforeEach, afterEach } from 'vitest';
+// import { faker } from "@faker-js/faker";
+// import { randomNumber, randomString } from "async-test-util";
+// import { MangoQuery, RxDocumentData, RxDocumentWriteData, RxJsonSchema, RxSchema, RxStorage, RxStorageInstance, RxStorageInstanceCreationParams, clone, createRevision, createRxDatabase, deepFreeze, ensureNotFalsy, fillWithDefaultSettings, flatCloneDocWithMeta, getPrimaryFieldOfPrimaryKey, getPseudoSchemaForVersion, getQueryMatcher, getQueryPlan, getSortComparator, lastOfArray, newRxError, normalizeMangoQuery, now, parseRevision, randomCouchString } from "rxdb";
 
-declare type TestDocType = { key: string; value: string; };
-declare type OptionalValueTestDoc = { key: string; value?: string; };
+// import * as schemas from './helper/schemas';
+// import {
+//     HeroArrayDocumentType,
+//     human,
+//     nestedHuman,
+//     NestedHumanDocumentType,
+//     simpleHumanV3,
+//     SimpleHumanV3DocumentType
+// } from '../helper/schema-objects.ts';
+import { RxDocumentData, RxDocumentWriteData, RxSchema, RxStorage, RxStorageInstance, RxStorageInstanceCreationParams, clone, createRevision, ensureNotFalsy, flatCloneDocWithMeta, getPseudoSchemaForVersion, newRxError, now, parseRevision, randomCouchString } from "rxdb";
+import { EXAMPLE_REVISION_1, EXAMPLE_REVISION_2, EXAMPLE_REVISION_3, EXAMPLE_REVISION_4, OptionalValueTestDoc, RxTestStorage, TestDocType, TestSuite, getTestDataSchema, testContext, testCorrectQueries, withIndexes } from "./helper";
+import * as schemas from './helper/schemas';
+import { HeroArrayDocumentType, NestedHumanDocumentType, SimpleHumanV3DocumentType, human, nestedHuman, simpleHumanV3 } from "./helper/schema-objects";
+import { HumanDocumentType } from "./helper/schemas";
 
-type TestSuite = {
-    describe: typeof describe,
-    it: typeof it,
-    beforeEach: typeof beforeEach,
-    afterEach: typeof afterEach
-}
-
-function getTestDataSchema(): RxJsonSchema<RxDocumentData<TestDocType>> {
-    return fillWithDefaultSettings({
-        version: 0,
-        type: 'object',
-        primaryKey: 'key',
-        properties: {
-            key: {
-                type: 'string',
-                maxLength: 100
-            },
-            value: {
-                type: 'string',
-                maxLength: 100
-            }
-        },
-        required: [
-            'key',
-            'value'
-        ],
-        indexes: [
-            'value'
-        ]
-    });
-}
+let storage: RxStorage<any, any>;
+let storageInstance: RxStorageInstance<any, any, any, any>;
 
 
-export const EXAMPLE_REVISION_1 = '1-12080c42d471e3d2625e49dcca3b8e1a';
-export const EXAMPLE_REVISION_2 = '2-22080c42d471e3d2625e49dcca3b8e2b';
-export const EXAMPLE_REVISION_3 = '3-32080c42d471e3d2625e49dcca3b8e3c';
-export const EXAMPLE_REVISION_4 = '4-42080c42d471e3d2625e49dcca3b8e3c';
-export const testContext = 'rx-storage-implementations.test.ts';
-
-export type RxTestStorage = {
-    // TODO remove name here, it can be read out already via getStorage().name
-    readonly name: string;
-    readonly getStorage: (encrypted?: boolean) => RxStorage<any, any>;
-    /**
-     * Returns a storage that is used in performance tests.
-     * For example in a browser it should return the storage with an IndexedDB based adapter,
-     * while in node.js it must use the filesystem.
-     */
-    readonly getPerformanceStorage: (encrypted?: boolean) => {
-        storage: RxStorage<any, any>;
-        /**
-         * A description that describes the storage and setting.
-         * For example 'dexie-native'.
-         */
-        description: string;
-    };
-    /**
-     * True if the storage is able to
-     * keep data after an instance is closed and opened again.
-     */
-    readonly hasPersistence: boolean;
-    readonly hasMultiInstance: boolean;
-    readonly hasAttachments: boolean;
-    /**
-     * To make it possible to test alternative encryption plugins,
-     * you can specify hasEncryption to signal
-     * the test runner that the given storage already contains an
-     * encryption plugin that should be used to test encryption tests.
-     * Otherwise the encryption-crypto-js plugin will be tested.
-     *
-     * hasEncryption must contain a function that is able
-     * to create a new password.
-     */
-    readonly hasEncryption?: () => Promise<string>;
-};
-
-export function runTestSuite(suite: TestSuite, testStorage: RxTestStorage) {
-    const { describe, it, beforeEach } = suite
+export function runTestSuite<RxDocType>(suite: TestSuite, testStorage: RxTestStorage) {
+    const { describe, it, beforeEach, afterEach } = suite
     describe('RxStorageInstance', () => {
-        let storage: RxStorage<any, any>;
-        let storageInstance: RxStorageInstance<any, any, any, any>;
+
         beforeEach(async () => {
             storage = await testStorage.getStorage()
         })
@@ -740,6 +680,1196 @@ export function runTestSuite(suite: TestSuite, testStorage: RxTestStorage) {
                 expect(getDocFromDb2[pkey2]).not.toBe(undefined)
 
             });
+
+
         });
+
+
     });
+
+    describe("RxStorageInstance Queries", () => {
+        testCorrectQueries<HumanDocumentType>(suite, testStorage, {
+            testTitle: '$gt/$gte',
+            data: [
+                human('aa', 10, 'alice'),
+                human('bb', 20, 'bob'),
+                /**
+                 * One must have a longer id
+                 * because we had many bugs around how padLeft
+                 * works on custom indexes.
+                 */
+                human('cc-looong-id', 30, 'carol'),
+                human('dd', 40, 'dave'),
+                human('ee', 50, 'eve')
+            ],
+            schema: withIndexes(schemas.human, [
+                ['age'],
+                ['age', 'firstName'],
+                ['firstName'],
+                ['passportId']
+            ]),
+            queries: [
+                {
+                    info: 'normal $gt by number',
+                    query: {
+                        selector: {
+                            age: {
+                                $gt: 20
+                            }
+                        },
+                        sort: [{ age: 'asc' }]
+                    },
+                    selectorSatisfiedByIndex: true,
+                    expectedResultDocIds: [
+                        'cc-looong-id',
+                        'dd',
+                        'ee'
+                    ]
+                },
+                {
+                    info: 'normal $gte',
+                    query: {
+                        selector: {
+                            age: {
+                                $gte: 20
+                            }
+                        },
+                        sort: [{ age: 'asc' }]
+                    },
+                    selectorSatisfiedByIndex: true,
+                    expectedResultDocIds: [
+                        'bb',
+                        'cc-looong-id',
+                        'dd',
+                        'ee'
+                    ]
+                },
+                {
+                    info: '$gt on primary key',
+                    query: {
+                        selector: {
+                            passportId: {
+                                $gt: 'dd'
+                            }
+                        },
+                        sort: [{ passportId: 'asc' }]
+                    },
+                    selectorSatisfiedByIndex: true,
+                    expectedResultDocIds: [
+                        'ee'
+                    ]
+                },
+                {
+                    info: '$gt and $gte on same field',
+                    query: {
+                        selector: {
+                            age: {
+                                $gte: 40,
+                                $gt: 19,
+                            },
+                        },
+                        sort: [{ age: 'asc' }]
+                    },
+                    expectedResultDocIds: [
+                        'dd',
+                        'ee'
+                    ]
+                },
+                {
+                    info: 'sort by something that is not in the selector',
+                    query: {
+                        selector: {
+                            age: {
+                                $gt: 20
+                            }
+                        },
+                        sort: [{ passportId: 'asc' }]
+                    },
+                    selectorSatisfiedByIndex: true,
+                    expectedResultDocIds: [
+                        'cc-looong-id',
+                        'dd',
+                        'ee'
+                    ]
+                },
+                {
+                    info: 'with string comparison',
+                    query: {
+                        selector: {
+                            firstName: {
+                                $gt: 'bob'
+                            }
+                        }
+                    },
+                    selectorSatisfiedByIndex: true,
+                    expectedResultDocIds: [
+                        'cc-looong-id',
+                        'dd',
+                        'ee'
+                    ]
+                },
+                {
+                    info: 'compare more then one field',
+                    query: {
+                        selector: {
+                            age: {
+                                $gt: 20
+                            },
+                            firstName: {
+                                $gt: 'a'
+                            }
+                        }
+                    },
+                    selectorSatisfiedByIndex: false,
+                    expectedResultDocIds: [
+                        'cc-looong-id',
+                        'dd',
+                        'ee'
+                    ]
+                }
+            ]
+        });
+
+        testCorrectQueries<schemas.HumanDocumentType>(suite, testStorage, {
+            testTitle: '$lt/$lte',
+            data: [
+                human('aa', 10, 'alice'),
+                human('bb', 20, 'bob'),
+                /**
+                 * One must have a longer id
+                 * because we had many bugs around how padLeft
+                 * works on custom indexes.
+                 */
+                human('cc-looong-id', 30, 'carol'),
+                human('dd', 40, 'dave'),
+                human('ee', 50, 'eve')
+            ],
+            schema: withIndexes(schemas.human, [
+                ['age'],
+                ['age', 'firstName'],
+                ['firstName'],
+                ['passportId']
+            ]),
+            queries: [
+                {
+                    info: 'normal $lt',
+                    query: {
+                        selector: {
+                            age: {
+                                $lt: 40
+                            }
+                        },
+                        sort: [{ age: 'asc' }]
+                    },
+                    selectorSatisfiedByIndex: true,
+                    expectedResultDocIds: [
+                        'aa',
+                        'bb',
+                        'cc-looong-id'
+                    ]
+                },
+                {
+                    info: 'normal $lte',
+                    query: {
+                        selector: {
+                            age: {
+                                $lte: 40
+                            }
+                        },
+                        sort: [{ age: 'asc' }]
+                    },
+                    selectorSatisfiedByIndex: true,
+                    expectedResultDocIds: [
+                        'aa',
+                        'bb',
+                        'cc-looong-id',
+                        'dd'
+                    ]
+                },
+                {
+                    info: 'sort by something that is not in the selector',
+                    query: {
+                        selector: {
+                            age: {
+                                $lt: 40
+                            }
+                        },
+                        sort: [{ passportId: 'asc' }]
+                    },
+                    selectorSatisfiedByIndex: false,
+                    expectedResultDocIds: [
+                        'aa',
+                        'bb',
+                        'cc-looong-id'
+                    ]
+                },
+                {
+                    /**
+                     * @link https://github.com/pubkey/rxdb/pull/4751
+                     */
+                    info: '$lt on primaryKey',
+                    query: {
+                        selector: {
+                            passportId: {
+                                $lt: 'bb'
+                            }
+                        },
+                        sort: [{ passportId: 'asc' }]
+                    },
+                    expectedResultDocIds: [
+                        'aa'
+                    ]
+                },
+                {
+                    info: 'compare more then one field',
+                    query: {
+                        selector: {
+                            age: {
+                                $lt: 40
+                            },
+                            firstName: {
+                                $lt: 'd'
+                            }
+                        }
+                    },
+                    selectorSatisfiedByIndex: false,
+                    expectedResultDocIds: [
+                        'aa',
+                        'bb',
+                        'cc-looong-id'
+                    ]
+                }
+            ]
+        });
+        testCorrectQueries<NestedHumanDocumentType>(suite, testStorage, {
+            testTitle: 'nested properties',
+            data: [
+                nestedHuman({
+                    passportId: 'aaa',
+                    mainSkill: {
+                        level: 6,
+                        name: 'zzz'
+                    }
+                }),
+                nestedHuman({
+                    passportId: 'bbb',
+                    mainSkill: {
+                        level: 4,
+                        name: 'ttt'
+                    }
+                }),
+                nestedHuman({
+                    passportId: 'ccc',
+                    mainSkill: {
+                        level: 3,
+                        name: 'ccc'
+                    }
+                })
+            ],
+            schema: withIndexes(schemas.nestedHuman, [
+                ['mainSkill.level'],
+                ['mainSkill.name']
+            ]),
+            queries: [
+                {
+                    info: 'sort by nested mainSkill.name',
+                    query: {
+                        selector: {
+                        },
+                        sort: [{ 'mainSkill.name': 'asc' }]
+                    },
+                    expectedResultDocIds: [
+                        'ccc',
+                        'bbb',
+                        'aaa'
+                    ]
+                }
+            ]
+        });
+        testCorrectQueries<SimpleHumanV3DocumentType>(suite, testStorage, {
+            testTitle: '$or',
+            data: [
+                simpleHumanV3({
+                    passportId: 'aaa',
+                    oneOptional: 'A'
+                }),
+                simpleHumanV3({
+                    passportId: 'bbb',
+                    oneOptional: 'B'
+                }),
+                simpleHumanV3({
+                    passportId: 'ccc'
+                })
+            ],
+            schema: withIndexes(schemas.humanMinimal, [
+            ]),
+            queries: [
+                {
+                    info: 'match A or B',
+                    query: {
+                        selector: {
+                            $or: [
+                                {
+                                    passportId: 'aaa'
+                                },
+                                {
+                                    passportId: 'bbb'
+                                }
+                            ]
+                        },
+                        sort: [{ 'passportId': 'asc' }]
+                    },
+                    expectedResultDocIds: [
+                        'aaa',
+                        'bbb'
+                    ]
+                },
+                {
+                    info: 'match with optional field',
+                    query: {
+                        selector: {
+                            passportId: {
+                                $eq: 'ccc'
+                            },
+                            $or: [
+                                {
+                                    oneOptional: {
+                                        $ne: 'foobar1'
+                                    }
+                                },
+                                {
+                                    oneOptional: {
+                                        $ne: 'foobar2'
+                                    }
+                                }
+                            ]
+                        },
+                        sort: [{ 'passportId': 'asc' }]
+                    },
+                    expectedResultDocIds: [
+                        'ccc'
+                    ]
+                },
+                {
+                    info: 'match non on non-existing optional field',
+                    query: {
+                        selector: {
+                            passportId: {
+                                $eq: 'foobar'
+                            },
+                            $or: [
+                                {
+                                    oneOptional: {
+                                        $ne: 'foobar1'
+                                    }
+                                },
+                                {
+                                    oneOptional: {
+                                        $ne: 'foobar2'
+                                    }
+                                }
+                            ]
+                        },
+                        sort: [{ 'passportId': 'asc' }]
+                    },
+                    expectedResultDocIds: []
+                }
+            ]
+        });
+        testCorrectQueries<schemas.HumanDocumentType>(suite, testStorage, {
+            testTitle: '$in',
+            data: [
+                human('aa', 10, 'alice'),
+                human('bb', 20, 'bob'),
+                human('cc', 30, 'carol'),
+                human('dd', 40, 'dave'),
+                human('ee', 50, 'eve')
+            ],
+            schema: schemas.human,
+            queries: [
+                {
+                    info: 'get first',
+                    query: {
+                        selector: {
+                            firstName: {
+                                $in: ['alice']
+                            },
+                        },
+                        sort: [{ passportId: 'asc' }]
+                    },
+                    expectedResultDocIds: [
+                        'aa'
+                    ]
+                },
+                {
+                    info: 'get by multiple',
+                    query: {
+                        selector: {
+                            firstName: {
+                                $in: ['alice', 'bob']
+                            },
+                        },
+                        sort: [{ passportId: 'asc' }]
+                    },
+                    expectedResultDocIds: [
+                        'aa',
+                        'bb'
+                    ]
+                },
+                {
+                    info: 'get none matching',
+                    query: {
+                        selector: {
+                            firstName: {
+                                $in: ['foobar', 'barfoo']
+                            },
+                        },
+                        sort: [{ passportId: 'asc' }]
+                    },
+                    expectedResultDocIds: []
+                },
+                {
+                    info: 'get by primary key',
+                    query: {
+                        selector: {
+                            passportId: {
+                                $in: ['aa', 'cc', 'ee']
+                            }
+                        }
+                    },
+                    expectedResultDocIds: ['aa', 'cc', 'ee']
+                }
+            ]
+        });
+        testCorrectQueries<HeroArrayDocumentType>(suite, testStorage, {
+            testTitle: '$elemMatch/$size',
+            data: [
+                {
+                    name: 'foo1',
+                    skills: [
+                        {
+                            name: 'bar1',
+                            damage: 10
+                        },
+                        {
+                            name: 'bar2',
+                            damage: 5
+                        },
+                    ],
+                },
+                {
+                    name: 'foo2',
+                    skills: [
+                        {
+                            name: 'bar3',
+                            damage: 10
+                        },
+                        {
+                            name: 'bar4',
+                            damage: 10
+                        },
+                    ],
+                },
+                {
+                    name: 'foo3',
+                    skills: [
+                        {
+                            name: 'bar5',
+                            damage: 5
+                        },
+                    ],
+                }
+            ],
+            schema: schemas.heroArray,
+            queries: [
+                {
+                    info: '$elemMatch',
+                    query: {
+                        selector: {
+                            skills: {
+                                $elemMatch: {
+                                    damage: 5
+                                }
+                            },
+                        },
+                        sort: [{ name: 'asc' }]
+                    },
+                    selectorSatisfiedByIndex: false,
+                    expectedResultDocIds: [
+                        'foo1',
+                        'foo3'
+                    ]
+                },
+                {
+                    info: '$elemMatch with other operator',
+                    query: {
+                        selector: {
+                            name: {
+                                $eq: 'foo3'
+                            },
+                            skills: {
+                                $elemMatch: {
+                                    damage: 5
+                                }
+                            },
+                        },
+                        sort: [{ name: 'asc' }]
+                    },
+                    selectorSatisfiedByIndex: false,
+                    expectedResultDocIds: [
+                        'foo3'
+                    ]
+                },
+                {
+                    info: '$size',
+                    query: {
+                        selector: {
+                            skills: {
+                                $size: 1
+                            },
+                        },
+                        sort: [{ name: 'asc' }]
+                    },
+                    selectorSatisfiedByIndex: false,
+                    expectedResultDocIds: [
+                        'foo3'
+                    ]
+                },
+            ]
+        });
+        testCorrectQueries(suite, testStorage, {
+            testTitle: '$eq operator',
+            data: [
+                {
+                    id: 'zero',
+                    nonPrimaryString: 'zero',
+                    integer: 0,
+                    number: 0,
+                    boolean: false,
+                    null: 'not-null'
+                },
+                {
+                    id: 'one',
+                    nonPrimaryString: 'one',
+                    integer: 1,
+                    number: 1,
+                    boolean: true,
+                    null: null
+                },
+                {
+                    id: 'two',
+                    nonPrimaryString: 'two',
+                    integer: 2,
+                    number: 2,
+                    boolean: false,
+                    null: 'not-null'
+                }
+            ],
+            schema: {
+                version: 0,
+                primaryKey: 'id',
+                type: 'object',
+                properties: {
+                    id: {
+                        type: 'string',
+                        maxLength: 100
+                    },
+                    nonPrimaryString: {
+                        type: 'string'
+                    },
+                    integer: {
+                        type: 'integer'
+                    },
+                    number: {
+                        type: 'number'
+                    },
+                    boolean: {
+                        type: 'boolean'
+                    },
+                    null: {
+                        type: 'null'
+                    }
+                },
+                indexes: [
+                    // boolean indexing was broken on some storages
+                    'boolean'
+                ],
+                required: [
+                    'id',
+                    'nonPrimaryString',
+                    'integer',
+                    'number',
+                    'boolean'
+                ],
+            },
+            queries: [
+                {
+                    info: '$eq primary key',
+                    query: {
+                        selector: {
+                            id: {
+                                $eq: 'one'
+                            }
+                        },
+                        sort: [{ id: 'asc' }]
+                    },
+                    expectedResultDocIds: [
+                        'one'
+                    ]
+                },
+                {
+                    info: '$eq non-primary string',
+                    query: {
+                        selector: {
+                            nonPrimaryString: {
+                                $eq: 'one'
+                            }
+                        },
+                        sort: [{ id: 'asc' }]
+                    },
+                    expectedResultDocIds: [
+                        'one'
+                    ]
+                },
+                {
+                    info: '$eq integer',
+                    query: {
+                        selector: {
+                            integer: {
+                                $eq: 1
+                            }
+                        },
+                        sort: [{ id: 'asc' }]
+                    },
+                    expectedResultDocIds: [
+                        'one'
+                    ]
+                },
+                {
+                    info: '$eq number',
+                    query: {
+                        selector: {
+                            number: {
+                                $eq: 1
+                            }
+                        },
+                        sort: [{ id: 'asc' }]
+                    },
+                    expectedResultDocIds: [
+                        'one'
+                    ]
+                },
+                {
+                    info: '$eq boolean',
+                    query: {
+                        selector: {
+                            boolean: {
+                                $eq: true
+                            }
+                        },
+                        sort: [{ id: 'asc' }]
+                    },
+                    expectedResultDocIds: [
+                        'one'
+                    ]
+                },
+                {
+                    info: '$eq null',
+                    query: {
+                        selector: {
+                            null: {
+                                $eq: null
+                            }
+                        },
+                        sort: [{ id: 'asc' }]
+                    },
+                    expectedResultDocIds: [
+                        'one'
+                    ]
+                }
+            ]
+        });
+        /**
+         * @link https://github.com/pubkey/rxdb/issues/4571
+         */
+        testCorrectQueries(suite, testStorage, {
+            testTitle: '$eq operator with composite primary key',
+            data: [
+                {
+                    id: 'one',
+                    key: 'one|1|1',
+                    string: 'one',
+                    number: 1,
+                    integer: 1,
+                },
+                {
+                    id: 'two',
+                    key: 'two|1|1',
+                    string: 'two',
+                    number: 1,
+                    integer: 1,
+                },
+                {
+                    id: 'three',
+                    key: 'one|2|1',
+                    string: 'one',
+                    number: 2,
+                    integer: 1,
+                },
+            ],
+            schema: {
+                version: 0,
+                indexes: ['string', ['number', 'integer']],
+                primaryKey: {
+                    key: 'key',
+                    fields: ['string', 'number', 'integer'],
+                    separator: '|',
+                },
+                type: 'object',
+                properties: {
+                    key: {
+                        maxLength: 100,
+                        type: 'string',
+                    },
+                    id: {
+                        maxLength: 100,
+                        type: 'string',
+                    },
+                    string: {
+                        maxLength: 50,
+                        type: 'string',
+                    },
+                    number: {
+                        type: 'number',
+                        minimum: 0,
+                        maximum: 100,
+                        multipleOf: 1,
+                    },
+                    integer: {
+                        type: 'integer',
+                        minimum: 0,
+                        maximum: 100,
+                        multipleOf: 1,
+                    },
+                },
+                required: ['id', 'key', 'string', 'number', 'integer'],
+            },
+            queries: [
+                {
+                    info: '$eq primary key 2',
+                    query: {
+                        selector: {
+                            id: {
+                                $eq: 'one',
+                            },
+                        },
+                        sort: [{ id: 'asc' }],
+                    },
+                    expectedResultDocIds: ['one|1|1'],
+                },
+                {
+                    info: '$eq by key',
+                    query: {
+                        selector: {
+                            key: {
+                                $eq: 'one|1|1',
+                            },
+                        },
+                        sort: [{ id: 'asc' }],
+                    },
+                    expectedResultDocIds: ['one|1|1'],
+                },
+                {
+                    info: '$eq by composite key fields',
+                    query: {
+                        selector: {
+                            $and: [
+                                {
+                                    string: {
+                                        $eq: 'one',
+                                    },
+                                },
+                                {
+                                    number: {
+                                        $eq: 1,
+                                    },
+                                    integer: {
+                                        $eq: 1,
+                                    },
+                                },
+                            ],
+                        },
+                        sort: [{ number: 'desc', integer: 'desc' }],
+                    },
+                    expectedResultDocIds: ['one|1|1'],
+                },
+            ],
+        });
+        /**
+         * @link https://github.com/pubkey/rxdb/issues/5273
+         */
+        testCorrectQueries<{
+            id: string;
+            hasHighlights: number;
+            lastOpenedAt: number;
+            exists: number;
+        }>(suite, testStorage, {
+            testTitle: 'issue: compound index has wrong range',
+            data: [
+                {
+                    id: '1',
+                    exists: 1,
+                    hasHighlights: 1,
+                    lastOpenedAt: 1600000000000
+                },
+                {
+                    id: '2',
+                    exists: 1,
+                    hasHighlights: 1,
+                    lastOpenedAt: 1700000000000
+                }
+            ],
+            schema: {
+                version: 0,
+                indexes: [
+                    ['exists', 'hasHighlights', 'lastOpenedAt']
+                ],
+                primaryKey: 'id',
+                type: 'object',
+                properties: {
+                    id: {
+                        type: 'string',
+                        maxLength: 1
+                    },
+                    hasHighlights: {
+                        type: 'integer',
+                        minimum: 0,
+                        maximum: 1,
+                        multipleOf: 1
+                    },
+                    lastOpenedAt: {
+                        type: 'integer',
+                        minimum: 0,
+                        maximum: Number.MAX_SAFE_INTEGER,
+                        multipleOf: 1,
+                    },
+                    exists: {
+                        type: 'integer',
+                        minimum: 0,
+                        maximum: 1,
+                        multipleOf: 1
+                    },
+                },
+                required: ['id', 'hasHighlights', 'lastOpenedAt', 'exists']
+            },
+            queries: [
+                {
+                    info: 'multiple operators',
+                    query: {
+                        selector: {
+                            exists: 1,
+                            lastOpenedAt: {
+                                $gte: 1600000000000,
+                                $lte: 1650000000000
+                            }
+                        }
+                    },
+                    selectorSatisfiedByIndex: false,
+                    expectedResultDocIds: ['1']
+                },
+                {
+                    info: 'multiple operators 2',
+                    query: {
+                        selector: {
+                            exists: 1,
+                            lastOpenedAt: {
+                                $gte: 1600000000000
+                            }
+                        }
+                    },
+                    selectorSatisfiedByIndex: false,
+                    expectedResultDocIds: ['1', '2']
+                },
+                {
+                    info: 'all operators in index',
+                    query: {
+                        selector: {
+                            exists: 1,
+                            hasHighlights: 1,
+                            lastOpenedAt: {
+                                $gte: 1600000000000
+                            }
+                        }
+                    },
+                    selectorSatisfiedByIndex: true,
+                    expectedResultDocIds: ['1', '2']
+                }
+            ],
+        });
+        testCorrectQueries(suite, testStorage, {
+            testTitle: '$type',
+            data: [
+                {
+                    foo: '1',
+                    bar: 'test'
+                },
+                {
+                    foo: '2',
+                    bar: 2.0
+                }
+            ],
+            schema: {
+                version: 0,
+                primaryKey: 'foo',
+                type: 'object',
+                properties: {
+                    foo: {
+                        type: 'string',
+                        maxLength: 100
+                    },
+                    bar: {
+                        oneOf: [
+                            {
+                                type: 'string'
+                            },
+                            {
+                                type: 'number'
+                            }
+                        ]
+                    },
+                },
+                required: ['foo', 'bar'],
+            },
+            queries: [
+                {
+                    info: '$type string',
+                    query: {
+                        selector: {
+                            bar: {
+                                $type: 'string'
+                            }
+                        },
+                        sort: [{ foo: 'asc' }]
+                    },
+                    expectedResultDocIds: [
+                        '1'
+                    ]
+                },
+                {
+                    info: '$type number',
+                    query: {
+                        selector: {
+                            bar: {
+                                $type: 'number'
+                            }
+                        },
+                        sort: [{ foo: 'asc' }]
+                    },
+                    expectedResultDocIds: [
+                        '2'
+                    ]
+                },
+            ]
+        });
+        testCorrectQueries<{
+            _id: string;
+            name: string;
+            gender: string;
+            age: number;
+        }>(suite, testStorage, {
+            testTitle: 'issue: wrong results on complex index',
+            data: [
+                {
+                    '_id': 'nogljngyvo',
+                    'name': 'cjbovwbzjx',
+                    'gender': 'f',
+                    'age': 18
+                },
+                {
+                    '_id': 'zmbznyggnu',
+                    'name': 'rpjljekeoy',
+                    'gender': 'm',
+                    'age': 3
+                },
+                {
+                    '_id': 'hauezldqea',
+                    'name': 'ckjndqrthh',
+                    'gender': 'f',
+                    'age': 20
+                },
+                {
+                    '_id': 'utarwoqkav',
+                    'name': 'thfubuvqwr',
+                    'gender': 'm',
+                    'age': 12
+                }
+            ],
+            schema: {
+                primaryKey: '_id',
+                type: 'object',
+                version: 0,
+                properties: {
+                    _id: {
+                        type: 'string',
+                        maxLength: 20
+                    },
+                    name: {
+                        type: 'string',
+                        maxLength: 20
+                    },
+                    gender: {
+                        type: 'string',
+                        enum: ['f', 'm', 'x'],
+                        maxLength: 1
+                    },
+                    age: {
+                        type: 'number',
+                        minimum: 0,
+                        maximum: 100,
+                        multipleOf: 1
+                    }
+                },
+                indexes: [
+                    [
+                        'name',
+                        'gender',
+                        'age',
+                        '_id'
+                    ],
+                    [
+                        'gender',
+                        'age',
+                        'name',
+                        '_id'
+                    ],
+                    [
+                        'age',
+                        'name',
+                        'gender',
+                        '_id'
+                    ]
+                ]
+            },
+            queries: [
+                {
+                    info: 'complex query on index',
+                    query: {
+                        'selector': {
+                            'gender': {
+                                '$gt': 'x'
+                            },
+                            'name': {
+                                '$lt': 'hqybnsozrv'
+                            }
+                        },
+                        'sort': [
+                            {
+                                'gender': 'asc'
+                            },
+                            {
+                                'age': 'asc'
+                            },
+                            {
+                                '_id': 'asc'
+                            }
+                        ],
+                        'index': [
+                            'name',
+                            'gender',
+                            'age',
+                            '_id'
+                        ]
+                    },
+                    expectedResultDocIds: []
+                },
+                {
+                    info: 'complex query on end of index',
+                    query: {
+                        'selector': {
+                            'gender': {
+                                '$lt': 'x',
+                                '$lte': 'm'
+                            },
+                        },
+                        'sort': [
+                            {
+                                'age': 'asc'
+                            },
+                            {
+                                'name': 'asc'
+                            },
+                            {
+                                '_id': 'asc'
+                            }
+
+                        ],
+                        'index': [
+                            'gender',
+                            'age',
+                            'name',
+                            '_id'
+
+                        ]
+                    },
+                    expectedResultDocIds: ['zmbznyggnu', 'utarwoqkav', 'nogljngyvo', 'hauezldqea']
+                },
+                {
+                    info: 'had wrong index string on upper bound',
+                    query: {
+                        'selector': {
+                            'age': {
+                                '$gte': 4,
+                                '$lte': 20
+                            },
+                            'gender': {
+                                '$lt': 'm'
+                            },
+
+                        },
+                        'sort': [
+                            {
+                                'name': 'asc'
+                            },
+                            {
+                                '_id': 'asc'
+                            }
+                        ],
+                        'index': [
+                            'age',
+                            'name',
+                            'gender',
+                            '_id'
+                        ]
+                    },
+                    expectedResultDocIds: ['nogljngyvo', 'hauezldqea']
+                },
+                {
+                    info: 'had wrong index string on upper bound for $eq',
+                    query: {
+                        'selector': {
+                            'age': {
+                                '$lte': 12
+                            },
+                            'gender': {
+                                '$lt': 'x',
+                                '$eq': 'm'
+                            },
+                        },
+                        'sort': [
+                            {
+                                '_id': 'asc'
+                            }
+                        ],
+                        'index': [
+                            'gender',
+                            'age',
+                            'name',
+                            '_id'
+                        ]
+                    },
+                    expectedResultDocIds: ['utarwoqkav', 'zmbznyggnu']
+                },
+            ],
+        });
+    })
 }
