@@ -21,7 +21,7 @@ let storage: RxStorage<any, any>;
 let storageInstance: RxStorageInstance<any, any, any, any>;
 
 
-export function runTestSuite<RxDocType>(suite: TestSuite, testStorage: RxTestStorage) {
+export function runTestSuite(suite: TestSuite, testStorage: RxTestStorage) {
     const { describe, it, beforeEach, afterEach } = suite
     describe('RxStorageInstance', () => {
 

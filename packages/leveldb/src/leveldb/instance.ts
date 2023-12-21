@@ -1,11 +1,11 @@
 
-import { RxStorageInstance, RxStorageDefaultCheckpoint, StringKeys, RxDocumentData, EventBulk, RxStorageChangeEvent, RxJsonSchema, getPrimaryFieldOfPrimaryKey, BulkWriteRow, RxStorageBulkWriteResponse, newRxError, CategorizeBulkWriteRowsOutput, categorizeBulkWriteRows, PROMISE_RESOLVE_VOID, ensureNotFalsy, now, RxDocumentDataById, RxStorageQueryResult, RxStorageCountResult, RxConflictResultionTask, RxConflictResultionTaskSolution, getQueryMatcher, getStartIndexStringFromLowerBound, getStartIndexStringFromUpperBound, MangoQuerySelector, flatClone } from "rxdb";
+import { RxStorageInstance, RxStorageDefaultCheckpoint, StringKeys, RxDocumentData, EventBulk, RxStorageChangeEvent, RxJsonSchema, getPrimaryFieldOfPrimaryKey, BulkWriteRow, RxStorageBulkWriteResponse, newRxError, CategorizeBulkWriteRowsOutput, categorizeBulkWriteRows, PROMISE_RESOLVE_VOID, ensureNotFalsy, now, RxDocumentDataById, RxStorageQueryResult, RxStorageCountResult, RxConflictResultionTask, RxConflictResultionTaskSolution, getQueryMatcher, getStartIndexStringFromLowerBound, getStartIndexStringFromUpperBound, MangoQuerySelector, flatClone, getSortComparator } from "rxdb";
 import {
     Subject, Observable
 } from "rxjs";
 
 import { LevelDBStorageInternals, LevelDBSettings, RxStorageLevelDBType, LevelDBPreparedQuery } from "./types";
-import { conditionMatches } from '@pluto-encrypted/shared'
+
 export class RxStorageIntanceLevelDB<RxDocType> implements RxStorageInstance<
     RxDocType,
     LevelDBStorageInternals<RxDocType>,
@@ -120,22 +120,31 @@ export class RxStorageIntanceLevelDB<RxDocType> implements RxStorageInstance<
     async query(preparedQuery: LevelDBPreparedQuery<RxDocType>): Promise<RxStorageQueryResult<RxDocType>> {
         const selector = preparedQuery.query.selector;
         const selectorKeys = Object.keys(selector);
+        const skip = preparedQuery.query.skip ? preparedQuery.query.skip : 0;
+        const limit = preparedQuery.query.limit ? preparedQuery.query.limit : Infinity;
+        const skipPlusLimit = skip + limit;
         const collectionIndex = `[${this.collectionName}+${preparedQuery.queryPlan.index.join("+")}]`
         const documentIds = await this.internals.getIndex(collectionIndex);
         const documents: RxDocumentData<RxDocType>[] = await this.internals.bulkGet(documentIds);
-        const filteredDocuments = documents.filter((document) => {
+        const queryMatcher = getQueryMatcher(this.schema, preparedQuery.query)
+        let filteredDocuments = documents.filter((document) => {
             if (selectorKeys.length <= 0) {
                 return true
             } else {
-                for (let key of selectorKeys) {
-                    const matches = conditionMatches(selector, key, document)
-                    if (matches) {
-                        return true;
-                    }
+                const matches = !queryMatcher || queryMatcher(document)
+                if (matches) {
+                    return true;
                 }
             }
             return false
         })
+
+        if (!preparedQuery.queryPlan.sortFieldsSameAsIndexFields) {
+            const sortComparator = getSortComparator(this.schema, preparedQuery.query);
+            filteredDocuments = filteredDocuments.sort(sortComparator);
+        }
+
+        filteredDocuments = filteredDocuments.slice(skip, skipPlusLimit);
         return {
             documents: filteredDocuments
         }
