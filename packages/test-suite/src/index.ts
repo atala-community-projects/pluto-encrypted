@@ -575,7 +575,7 @@ export function runTestSuite(suite: TestSuite, testStorage: RxTestStorage) {
                 const databaseName = randomCouchString(10);
                 const databaseInstanceToken = randomCouchString(10);
 
-                const storageInstances = await Promise.all(
+                await Promise.all(
                     new Array(collectionsAmount)
                         .fill(0)
                         .map(async () => {
@@ -608,10 +608,8 @@ export function runTestSuite(suite: TestSuite, testStorage: RxTestStorage) {
                             return storageInstance;
                         })
                 );
-                await Promise.all(
-                    storageInstances.map(i => i.cleanup(Infinity).then(() => i.close()))
-                );
-            });
+
+            }, { timeout: 15000 });
 
             // Some storages had problems storing non-utf-8 chars like "é"
             it('write and read with umlauts', async ({ expect }) => {

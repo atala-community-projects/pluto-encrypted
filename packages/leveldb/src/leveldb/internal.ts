@@ -1,4 +1,4 @@
-import { RxDocumentData, RxJsonSchema, getIndexableStringMonad, getPrimaryFieldOfPrimaryKey } from "rxdb";
+import { RxDocumentData, RxJsonSchema, getPrimaryFieldOfPrimaryKey } from "rxdb";
 import Level from 'level';
 import pull from 'pull-stream';
 import pullLevel from 'pull-level';
@@ -8,7 +8,6 @@ import {
     LevelDBInternalConstructor,
     LevelDBType
 } from "./types";
-import { pushAtSortPosition } from "array-push-at-sort-position";
 
 function isArray(arr) {
     return Array.isArray(arr)
