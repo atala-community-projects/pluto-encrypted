@@ -5,6 +5,8 @@ import {
 } from "rxjs";
 
 import { LevelDBStorageInternals, LevelDBSettings, RxStorageLevelDBType, LevelDBPreparedQuery } from "./types";
+import { QueryMatcher } from "rxdb/dist/types/types";
+import { fixTxPipe } from "@pluto-encrypted/shared";
 
 export class RxStorageIntanceLevelDB<RxDocType> implements RxStorageInstance<
     RxDocType,
@@ -118,36 +120,115 @@ export class RxStorageIntanceLevelDB<RxDocType> implements RxStorageInstance<
     }
 
     async query(preparedQuery: LevelDBPreparedQuery<RxDocType>): Promise<RxStorageQueryResult<RxDocType>> {
-        const selector = preparedQuery.query.selector;
+        const { queryPlan, query } = preparedQuery;
+        const selector = query.selector;
         const selectorKeys = Object.keys(selector);
-        const skip = preparedQuery.query.skip ? preparedQuery.query.skip : 0;
-        const limit = preparedQuery.query.limit ? preparedQuery.query.limit : Infinity;
+        const skip = query.skip ? query.skip : 0;
+        const limit = query.limit ? query.limit : Infinity;
         const skipPlusLimit = skip + limit;
-        const collectionIndex = `[${this.collectionName}+${preparedQuery.queryPlan.index.join("+")}]`
-        const documentIds = await this.internals.getIndex(collectionIndex);
-        const documents: RxDocumentData<RxDocType>[] = await this.internals.bulkGet(documentIds);
-        const queryMatcher = getQueryMatcher(this.schema, preparedQuery.query)
+        let queryMatcher: QueryMatcher<RxDocumentData<RxDocType>> = getQueryMatcher(
+            this.schema,
+            query
+        );
+
+
+        const queryPlanFields: string[] = queryPlan.index;
+        let indexes: string[] = []
+        if (queryPlanFields.length === 1) {
+            indexes.push(fixTxPipe(queryPlanFields[0]!))
+        } else {
+            indexes.push(...queryPlanFields.map(field => fixTxPipe(field)))
+
+        }
+
+        const shouldAddCompoundIndexes = this.schema.indexes?.find((index) => {
+            if (typeof index === "string") {
+                return indexes.find((index2) => index2 === index)
+            } else {
+                return index.find((subIndex) => subIndex === subIndex)
+            }
+        });
+
+        if (shouldAddCompoundIndexes) {
+            indexes.splice(0, indexes.length)
+            if (typeof shouldAddCompoundIndexes === "string") {
+                indexes.push(shouldAddCompoundIndexes)
+            } else {
+                indexes.push(...shouldAddCompoundIndexes)
+            }
+
+        }
+
+        const indexName: string = `[${indexes.join('+')}]`;
+        const docsWithIndex = await this.internals.getIndex(indexName);
+        const documents: RxDocumentData<RxDocType>[] = await this.internals.bulkGet(docsWithIndex);
         let filteredDocuments = documents.filter((document) => {
             if (selectorKeys.length <= 0) {
                 return true
             } else {
-                const matches = !queryMatcher || queryMatcher(document)
-                if (matches) {
-                    return true;
-                }
+                return queryMatcher(document)
             }
-            return false
         })
 
-        if (!preparedQuery.queryPlan.sortFieldsSameAsIndexFields) {
-            const sortComparator = getSortComparator(this.schema, preparedQuery.query);
-            filteredDocuments = filteredDocuments.sort(sortComparator);
-        }
+        const sortComparator = getSortComparator(this.schema, preparedQuery.query);
+        filteredDocuments = filteredDocuments.sort(sortComparator);
 
         filteredDocuments = filteredDocuments.slice(skip, skipPlusLimit);
         return {
             documents: filteredDocuments
         }
+        // let indexOfLower = (queryPlan.inclusiveStart ? boundGE : boundGT)(
+        //     docsWithIndex,
+        //     {
+        //         indexString: lowerBoundString
+        //     } as any,
+        //     compareDocsWithIndex
+        // );
+        // const indexOfUpper = (queryPlan.inclusiveEnd ? boundLE : boundLT)(
+        //     docsWithIndex,
+        //     {
+        //         indexString: upperBoundString
+        //     } as any,
+        //     compareDocsWithIndex
+        // );
+
+        // let rows: RxDocumentData<RxDocType>[] = [];
+        // let done = false;
+        // while (!done) {
+        //     const currentRow = docsWithIndex[indexOfLower] as any;
+        //     if (
+        //         !currentRow ||
+        //         indexOfLower > indexOfUpper
+        //     ) {
+        //         break;
+        //     }
+        //     const currentDoc = currentRow.doc;
+
+        //     if (!queryMatcher || queryMatcher(currentDoc)) {
+        //         rows.push(currentDoc);
+        //     }
+
+        //     if (
+        //         (rows.length >= skipPlusLimit && !mustManuallyResort) ||
+        //         indexOfLower >= docsWithIndex.length
+        //     ) {
+        //         done = true;
+        //     }
+
+        //     indexOfLower++;
+        // }
+
+        // if (mustManuallyResort) {
+        //     const sortComparator = getSortComparator(this.schema, preparedQuery.query);
+        //     rows = rows.sort(sortComparator);
+        // }
+
+        // // apply skip and limit boundaries.
+        // rows = rows.slice(skip, skipPlusLimit);
+        // return Promise.resolve({
+        //     documents: rows
+        // })
+
     }
 
     async count(preparedQuery: any): Promise<RxStorageCountResult> {

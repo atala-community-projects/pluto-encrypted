@@ -1,4 +1,4 @@
-import { RxDocumentData, RxJsonSchema, getPrimaryFieldOfPrimaryKey } from "rxdb";
+import { RxDocumentData, RxJsonSchema, getIndexableStringMonad, getPrimaryFieldOfPrimaryKey } from "rxdb";
 import Level from 'level';
 import pull from 'pull-stream';
 import pullLevel from 'pull-level';
@@ -8,6 +8,7 @@ import {
     LevelDBInternalConstructor,
     LevelDBType
 } from "./types";
+import { pushAtSortPosition } from "array-push-at-sort-position";
 
 function isArray(arr) {
     return Array.isArray(arr)
@@ -122,11 +123,6 @@ export class LevelDBInternal<RxDocType> implements LevelDBStorageInternals<RxDoc
                 } else {
                     throw err
                 }
-                // if ((err as any).code && (err as any).code === 'LEVEL_NOT_FOUND') {
-                //     return null
-                // } else {
-                //     throw err
-                // }
             })
     }
 
@@ -217,49 +213,63 @@ export class LevelDBInternal<RxDocType> implements LevelDBStorageInternals<RxDoc
         return this.db.close()
     }
 
+    private safeIndexList(schema: Readonly<RxJsonSchema<RxDocumentData<RxDocType>>>) {
+        const primaryKeyKey = typeof schema.primaryKey === "string" ? schema.primaryKey : schema.primaryKey.key;
+
+        const allIndexes: string[][] = [];
+        for (let requiredIndexes of (schema.indexes || [])) {
+            const currentIndexes: string[] = []
+            if (typeof requiredIndexes === "string") {
+                currentIndexes.push(requiredIndexes)
+            } else {
+                currentIndexes.push(...requiredIndexes)
+            }
+            if (!currentIndexes.includes(primaryKeyKey)) {
+                currentIndexes.unshift(primaryKeyKey)
+            }
+            allIndexes.push(currentIndexes)
+        }
+
+        return allIndexes
+    }
+
+    private getPrivateKeyValue(document: RxDocumentData<RxDocType>, schema: Readonly<RxJsonSchema<RxDocumentData<RxDocType>>>) {
+        const primaryKeyKey = typeof schema.primaryKey === "string" ? schema.primaryKey : schema.primaryKey.key;
+        if (!primaryKeyKey) {
+            throw new Error("Data must have a primaryKey defined of type string or number")
+        }
+        const id = document[primaryKeyKey] as string;
+        return id
+    }
+
     async bulkPut(items: RxDocumentData<RxDocType>[], collectionName: string, schema: Readonly<RxJsonSchema<RxDocumentData<RxDocType>>>) {
         try {
             const primaryKeyKey = typeof schema.primaryKey === "string" ? schema.primaryKey : schema.primaryKey.key;
-            const indexName = `[${collectionName}+${primaryKeyKey}]`;
+            const safeIndexList = this.safeIndexList(schema);
+
             for (let item of items) {
+
                 const shouldDelete = item._deleted;
-                if (!("id" in item) || !['string', 'number'].includes(typeof item.id)) {
-
-                    if (!primaryKeyKey) {
-                        throw new Error("Data must have a primaryKey defined of type string or number")
+                const id = this.getPrivateKeyValue(item, schema)
+                if (shouldDelete) {
+                    for (let requiredIndexes of safeIndexList) {
+                        const requiredIndex = `[${requiredIndexes.join("+")}]`
+                        await this.removeFromIndex(requiredIndex, id)
                     }
-                    const id = item[primaryKeyKey] as string;
-                    if (shouldDelete) {
-                        await this.removeFromIndex(indexName, id)
-                        await this.removeFromIndex('[all]', id)
-                        await this.delete(id)
-                        this.documents.delete(id)
-                    } else {
-                        await this.updateIndex(indexName, id)
-                        await this.updateIndex('[all]', id)
-                        await this.set(id, item);
-
-                        this.documents.set(id, item)
-                    }
-
-
+                    await this.removeFromIndex(`[${primaryKeyKey}]`, id)
+                    await this.removeFromIndex('[all]', id)
+                    await this.delete(id)
+                    this.documents.delete(id)
                 } else {
-                    const id = item.id as string;
-                    if (shouldDelete) {
-                        await this.removeFromIndex(indexName, id)
-                        await this.removeFromIndex('[all]', id)
-                        await this.delete(id)
-                        this.documents.delete(id)
-                    } else {
-                        await this.updateIndex(indexName, id)
-                        await this.updateIndex('[all]', id)
-                        await this.set(id, item)
-
-                        this.documents.set(id, item)
+                    for (let requiredIndexes of safeIndexList) {
+                        const requiredIndex = `[${requiredIndexes.join("+")}]`
+                        await this.updateIndex(requiredIndex, id)
                     }
-
+                    await this.updateIndex(`[${primaryKeyKey}]`, id)
+                    await this.updateIndex('[all]', id)
+                    await this.set(id, item);
+                    this.documents.set(id, item)
                 }
-
             }
         } catch (err) {
             throw err
