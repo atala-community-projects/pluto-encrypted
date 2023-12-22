@@ -82,6 +82,7 @@ describe("Testing suite", () => {
     hasPersistence: true,
     hasMultiInstance: false,
     hasAttachments: false,
+    hasBooleanIndexSupport: true,
     async hasEncryption() {
       return 'RandomPassword'
     }

@@ -103,6 +103,7 @@ export type RxTestStorage = {
     readonly hasPersistence: boolean;
     readonly hasMultiInstance: boolean;
     readonly hasAttachments: boolean;
+    readonly hasBooleanIndexSupport: boolean;
     /**
      * To make it possible to test alternative encryption plugins,
      * you can specify hasEncryption to signal
@@ -291,10 +292,9 @@ export function testCorrectQueries<RxDocType>(
                 }
             }
 
-            await Promise.all([
-                database.remove(),
-                storageInstance.close()
-            ]);
+            await storageInstance.cleanup(Infinity)
+            await database.remove()
+
         });
 
     })

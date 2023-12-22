@@ -32,7 +32,6 @@ export function runTestSuite(suite: TestSuite, testStorage: RxTestStorage) {
         afterEach(async () => {
             if (storageInstance) {
                 await storageInstance.cleanup(Infinity);
-                await storageInstance.close();
             }
         })
 
@@ -1242,158 +1241,162 @@ export function runTestSuite(suite: TestSuite, testStorage: RxTestStorage) {
                 },
             ]
         });
-        testCorrectQueries(suite, testStorage, {
-            testTitle: '$eq operator',
-            data: [
-                {
-                    id: 'zero',
-                    nonPrimaryString: 'zero',
-                    integer: 0,
-                    number: 0,
-                    boolean: false,
-                    null: 'not-null'
-                },
-                {
-                    id: 'one',
-                    nonPrimaryString: 'one',
-                    integer: 1,
-                    number: 1,
-                    boolean: true,
-                    null: null
-                },
-                {
-                    id: 'two',
-                    nonPrimaryString: 'two',
-                    integer: 2,
-                    number: 2,
-                    boolean: false,
-                    null: 'not-null'
-                }
-            ],
-            schema: {
-                version: 0,
-                primaryKey: 'id',
-                type: 'object',
-                properties: {
-                    id: {
-                        type: 'string',
-                        maxLength: 100
+
+        if (testStorage.hasBooleanIndexSupport) {
+            testCorrectQueries(suite, testStorage, {
+                testTitle: '$eq operator',
+                data: [
+                    {
+                        id: 'zero',
+                        nonPrimaryString: 'zero',
+                        integer: 0,
+                        number: 0,
+                        boolean: false,
+                        null: 'not-null'
                     },
-                    nonPrimaryString: {
-                        type: 'string'
+                    {
+                        id: 'one',
+                        nonPrimaryString: 'one',
+                        integer: 1,
+                        number: 1,
+                        boolean: true,
+                        null: null
                     },
-                    integer: {
-                        type: 'integer'
-                    },
-                    number: {
-                        type: 'number'
-                    },
-                    boolean: {
-                        type: 'boolean'
-                    },
-                    null: {
-                        type: 'null'
+                    {
+                        id: 'two',
+                        nonPrimaryString: 'two',
+                        integer: 2,
+                        number: 2,
+                        boolean: false,
+                        null: 'not-null'
                     }
-                },
-                indexes: [
-                    // boolean indexing was broken on some storages
-                    'boolean'
                 ],
-                required: [
-                    'id',
-                    'nonPrimaryString',
-                    'integer',
-                    'number',
-                    'boolean'
-                ],
-            },
-            queries: [
-                {
-                    info: '$eq primary key',
-                    query: {
-                        selector: {
-                            id: {
-                                $eq: 'one'
-                            }
+                schema: {
+                    version: 0,
+                    primaryKey: 'id',
+                    type: 'object',
+                    properties: {
+                        id: {
+                            type: 'string',
+                            maxLength: 100
                         },
-                        sort: [{ id: 'asc' }]
+                        nonPrimaryString: {
+                            type: 'string'
+                        },
+                        integer: {
+                            type: 'integer'
+                        },
+                        number: {
+                            type: 'number'
+                        },
+                        boolean: {
+                            type: 'boolean'
+                        },
+                        null: {
+                            type: 'null'
+                        }
                     },
-                    expectedResultDocIds: [
-                        'one'
-                    ]
+                    indexes: [
+                        // boolean indexing was broken on some storages
+                        'boolean'
+                    ],
+                    required: [
+                        'id',
+                        'nonPrimaryString',
+                        'integer',
+                        'number',
+                        'boolean'
+                    ],
                 },
-                {
-                    info: '$eq non-primary string',
-                    query: {
-                        selector: {
-                            nonPrimaryString: {
-                                $eq: 'one'
-                            }
+                queries: [
+                    {
+                        info: '$eq primary key',
+                        query: {
+                            selector: {
+                                id: {
+                                    $eq: 'one'
+                                }
+                            },
+                            sort: [{ id: 'asc' }]
                         },
-                        sort: [{ id: 'asc' }]
+                        expectedResultDocIds: [
+                            'one'
+                        ]
                     },
-                    expectedResultDocIds: [
-                        'one'
-                    ]
-                },
-                {
-                    info: '$eq integer',
-                    query: {
-                        selector: {
-                            integer: {
-                                $eq: 1
-                            }
+                    {
+                        info: '$eq non-primary string',
+                        query: {
+                            selector: {
+                                nonPrimaryString: {
+                                    $eq: 'one'
+                                }
+                            },
+                            sort: [{ id: 'asc' }]
                         },
-                        sort: [{ id: 'asc' }]
+                        expectedResultDocIds: [
+                            'one'
+                        ]
                     },
-                    expectedResultDocIds: [
-                        'one'
-                    ]
-                },
-                {
-                    info: '$eq number',
-                    query: {
-                        selector: {
-                            number: {
-                                $eq: 1
-                            }
+                    {
+                        info: '$eq integer',
+                        query: {
+                            selector: {
+                                integer: {
+                                    $eq: 1
+                                }
+                            },
+                            sort: [{ id: 'asc' }]
                         },
-                        sort: [{ id: 'asc' }]
+                        expectedResultDocIds: [
+                            'one'
+                        ]
                     },
-                    expectedResultDocIds: [
-                        'one'
-                    ]
-                },
-                {
-                    info: '$eq boolean',
-                    query: {
-                        selector: {
-                            boolean: {
-                                $eq: true
-                            }
+                    {
+                        info: '$eq number',
+                        query: {
+                            selector: {
+                                number: {
+                                    $eq: 1
+                                }
+                            },
+                            sort: [{ id: 'asc' }]
                         },
-                        sort: [{ id: 'asc' }]
+                        expectedResultDocIds: [
+                            'one'
+                        ]
                     },
-                    expectedResultDocIds: [
-                        'one'
-                    ]
-                },
-                {
-                    info: '$eq null',
-                    query: {
-                        selector: {
-                            null: {
-                                $eq: null
-                            }
+                    {
+                        info: '$eq boolean',
+                        query: {
+                            selector: {
+                                boolean: {
+                                    $eq: true
+                                }
+                            },
+                            sort: [{ id: 'asc' }]
                         },
-                        sort: [{ id: 'asc' }]
+                        expectedResultDocIds: [
+                            'one'
+                        ]
                     },
-                    expectedResultDocIds: [
-                        'one'
-                    ]
-                }
-            ]
-        });
+                    {
+                        info: '$eq null',
+                        query: {
+                            selector: {
+                                null: {
+                                    $eq: null
+                                }
+                            },
+                            sort: [{ id: 'asc' }]
+                        },
+                        expectedResultDocIds: [
+                            'one'
+                        ]
+                    }
+                ]
+            });
+        }
+
         /**
          * @link https://github.com/pubkey/rxdb/issues/4571
          */

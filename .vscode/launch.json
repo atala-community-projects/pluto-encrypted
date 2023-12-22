@@ -47,6 +47,7 @@
       "type": "node"
     },
     {
+      "cwd": "${workspaceFolder}/packages/indexdb",
       "command": "npm run test",
       "name": "TEST",
       "request": "launch",
