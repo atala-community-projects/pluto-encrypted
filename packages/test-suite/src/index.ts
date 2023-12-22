@@ -37,6 +37,30 @@ export function runTestSuite(suite: TestSuite, testStorage: RxTestStorage) {
         })
 
         describe('creation', () => {
+
+
+            it('open many instances on the same database name', async ({ expect }) => {
+                const databaseName = randomCouchString(12);
+                const amount = 20;
+
+                for (let i = 0; i < amount; i++) {
+                    const storageInstance = await testStorage.getStorage().createStorageInstance<TestDocType>({
+                        databaseInstanceToken: randomCouchString(10),
+                        databaseName,
+                        collectionName: randomCouchString(12),
+                        schema: getPseudoSchemaForVersion<TestDocType>(0, 'key'),
+                        options: {},
+                        multiInstance: false,
+                        devMode: true,
+                        password: randomCouchString(24)
+                    })
+
+                    await storageInstance.cleanup(Infinity)
+                    await storageInstance.close();
+                }
+
+            });
+
             it('open and close', async ({ expect }) => {
                 const collectionName = randomCouchString(12);
                 const databaseName = randomCouchString(12);
@@ -52,25 +76,8 @@ export function runTestSuite(suite: TestSuite, testStorage: RxTestStorage) {
                 });
                 expect(storageInstance.collectionName).toBe(collectionName)
                 expect(storageInstance.databaseName).toBe(databaseName)
-                await storageInstance.close();
             });
-            it('open many instances on the same database name', async ({ expect }) => {
-                const databaseName = randomCouchString(12);
-                const amount = 20;
-                const instances = await Promise.all(
-                    new Array(amount).fill(0).map(() => storage.createStorageInstance<TestDocType>({
-                        databaseInstanceToken: randomCouchString(10),
-                        databaseName,
-                        collectionName: randomCouchString(12),
-                        schema: getPseudoSchemaForVersion<TestDocType>(0, 'key'),
-                        options: {},
-                        multiInstance: false,
-                        devMode: true,
-                        password: randomCouchString(24)
-                    }))
-                );
-                await Promise.all(instances.map(instance => instance.cleanup(Infinity).then(() => instance.close())));
-            });
+
             /**
              * This test ensures that people do not accidentally set
              * keyCompression: true in the schema but then forget to use

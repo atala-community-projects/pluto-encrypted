@@ -231,7 +231,7 @@ export class RxStorageIntanceLevelDB<RxDocType> implements RxStorageInstance<
 
     }
 
-    async count(preparedQuery: any): Promise<RxStorageCountResult> {
+    async count(preparedQuery: LevelDBPreparedQuery<RxDocType>): Promise<RxStorageCountResult> {
         const result = await this.query(preparedQuery);
         return {
             count: result.documents.length,
