@@ -44,20 +44,14 @@ export class RxStorageIntanceLevelDB<RxDocType> implements RxStorageInstance<
 
         const fixed = documentWrites.reduce<BulkWriteRow<RxDocType>[]>((fixedDocs, currentWriteDoc) => {
             const currentId = currentWriteDoc.document[this.primaryPath] as any;
+            const previousDocument = currentWriteDoc.previous || this.internals.documents.get(currentId)
             if (context === "data-migrator-delete") {
-                const previousDocument = currentWriteDoc.previous || documents.get(currentId)
-
-                if (previousDocument) {
-                    if (previousDocument._meta.lwt !== currentWriteDoc.document._meta.lwt) {
-                        fixedDocs.push(currentWriteDoc)
-                    }
+                if (previousDocument && previousDocument._rev === currentWriteDoc.document._rev) {
+                    fixedDocs.push(currentWriteDoc)
                 }
             } else {
-                const previousDocument = currentWriteDoc.previous
                 if (previousDocument) {
-                    if (previousDocument._meta.lwt !== currentWriteDoc.document._meta.lwt) {
-                        currentWriteDoc.previous = previousDocument
-                    }
+                    currentWriteDoc.previous = previousDocument
                 } else {
                     currentWriteDoc.previous = undefined
                 }

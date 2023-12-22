@@ -3,7 +3,7 @@
  * @module shared
  * @description Shared is used by other dependencies of pluto-encrypted to reduce code duplication.
  */
-import { MangoQuerySelector, RxDocumentData, BulkWriteRow } from "rxdb";
+import { MangoQuerySelector, RxDocumentData, BulkWriteRow, RxJsonSchema } from "rxdb";
 export type { RxDocumentMeta, PlainJsonValue, PropertyType, PlainSimpleJsonObject } from "rxdb/dist/types/types";
 export type { MangoQuerySelector, RxAttachmentDataBase, MangoQueryOperators, RxDocumentData, RxAttachmentData } from "rxdb";
 
@@ -208,4 +208,34 @@ export function fixTxPipe(str: string): string {
 
     return str;
 
+}
+
+
+export function safeIndexList<RxDocType>(schema: Readonly<RxJsonSchema<RxDocumentData<RxDocType>>>) {
+    const primaryKeyKey = typeof schema.primaryKey === "string" ? schema.primaryKey : schema.primaryKey.key;
+
+    const allIndexes: string[][] = [];
+    for (let requiredIndexes of (schema.indexes || [])) {
+        const currentIndexes: string[] = []
+        if (typeof requiredIndexes === "string") {
+            currentIndexes.push(requiredIndexes)
+        } else {
+            currentIndexes.push(...requiredIndexes)
+        }
+        if (!currentIndexes.includes(primaryKeyKey)) {
+            currentIndexes.unshift(primaryKeyKey)
+        }
+        allIndexes.push(currentIndexes)
+    }
+
+    return allIndexes
+}
+
+export function getPrivateKeyValue<RxDocType>(document: RxDocumentData<RxDocType>, schema: Readonly<RxJsonSchema<RxDocumentData<RxDocType>>>) {
+    const primaryKeyKey = typeof schema.primaryKey === "string" ? schema.primaryKey : schema.primaryKey.key;
+    if (!primaryKeyKey) {
+        throw new Error("Data must have a primaryKey defined of type string or number")
+    }
+    const id = document[primaryKeyKey] as string;
+    return id
 }

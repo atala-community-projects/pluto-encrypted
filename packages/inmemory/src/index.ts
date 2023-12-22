@@ -17,7 +17,7 @@
  * });
  * ```
  */
-import { RxStorage, RxStorageDefaultStatics, RxStorageInstance, RxStorageInstanceCreationParams } from "rxdb";
+import { RxStorage, RxStorageDefaultStatics, RxStorageInstance, RxStorageInstanceCreationParams, newRxError } from "rxdb";
 import { InMemorySettings, InMemoryStorageInternals, RxStorageInMemoryType } from "./inMemoryStorage/types";
 import { RxStorageIntanceInMemory } from "./inMemoryStorage/instance";
 import { InMemoryInternal } from "./inMemoryStorage/internal";
@@ -31,6 +31,9 @@ function getRxStorageMemory<RxDocType>(settings: InMemorySettings = {}): RxStora
         name: "in-memory",
         statics: RxStorageDefaultStatics,
         async createStorageInstance<RxDocType>(params: RxStorageInstanceCreationParams<RxDocType, InMemorySettings>): Promise<RxStorageInstance<RxDocType, InMemoryStorageInternals<RxDocType>, InMemorySettings, any>> {
+            if (params.schema.keyCompression) {
+                throw newRxError('UT5', { args: { databaseName: params.databaseName, collectionName: params.collectionName } })
+            }
             const existingInstance = internalInstance.get(params.databaseName)
             if (!existingInstance) {
                 internalInstance.set(params.databaseName, new InMemoryInternal<RxDocType>(0));

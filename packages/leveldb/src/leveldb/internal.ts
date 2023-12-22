@@ -8,6 +8,7 @@ import {
     LevelDBInternalConstructor,
     LevelDBType
 } from "./types";
+import { getPrivateKeyValue, safeIndexList } from "@pluto-encrypted/shared";
 
 function isArray(arr) {
     return Array.isArray(arr)
@@ -212,46 +213,19 @@ export class LevelDBInternal<RxDocType> implements LevelDBStorageInternals<RxDoc
         return this.db.close()
     }
 
-    private safeIndexList(schema: Readonly<RxJsonSchema<RxDocumentData<RxDocType>>>) {
-        const primaryKeyKey = typeof schema.primaryKey === "string" ? schema.primaryKey : schema.primaryKey.key;
 
-        const allIndexes: string[][] = [];
-        for (let requiredIndexes of (schema.indexes || [])) {
-            const currentIndexes: string[] = []
-            if (typeof requiredIndexes === "string") {
-                currentIndexes.push(requiredIndexes)
-            } else {
-                currentIndexes.push(...requiredIndexes)
-            }
-            if (!currentIndexes.includes(primaryKeyKey)) {
-                currentIndexes.unshift(primaryKeyKey)
-            }
-            allIndexes.push(currentIndexes)
-        }
-
-        return allIndexes
-    }
-
-    private getPrivateKeyValue(document: RxDocumentData<RxDocType>, schema: Readonly<RxJsonSchema<RxDocumentData<RxDocType>>>) {
-        const primaryKeyKey = typeof schema.primaryKey === "string" ? schema.primaryKey : schema.primaryKey.key;
-        if (!primaryKeyKey) {
-            throw new Error("Data must have a primaryKey defined of type string or number")
-        }
-        const id = document[primaryKeyKey] as string;
-        return id
-    }
 
     async bulkPut(items: RxDocumentData<RxDocType>[], collectionName: string, schema: Readonly<RxJsonSchema<RxDocumentData<RxDocType>>>) {
         try {
             const primaryKeyKey = typeof schema.primaryKey === "string" ? schema.primaryKey : schema.primaryKey.key;
-            const safeIndexList = this.safeIndexList(schema);
+            const saferIndexList = safeIndexList(schema);
 
             for (let item of items) {
 
                 const shouldDelete = item._deleted;
-                const id = this.getPrivateKeyValue(item, schema)
+                const id = getPrivateKeyValue(item, schema)
                 if (shouldDelete) {
-                    for (let requiredIndexes of safeIndexList) {
+                    for (let requiredIndexes of saferIndexList) {
                         const requiredIndex = `[${requiredIndexes.join("+")}]`
                         await this.removeFromIndex(requiredIndex, id)
                     }
@@ -260,7 +234,7 @@ export class LevelDBInternal<RxDocType> implements LevelDBStorageInternals<RxDoc
                     await this.delete(id)
                     this.documents.delete(id)
                 } else {
-                    for (let requiredIndexes of safeIndexList) {
+                    for (let requiredIndexes of saferIndexList) {
                         const requiredIndex = `[${requiredIndexes.join("+")}]`
                         await this.updateIndex(requiredIndex, id)
                     }

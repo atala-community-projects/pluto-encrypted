@@ -1,11 +1,13 @@
 
-import { RxStorageInstance, RxStorageDefaultCheckpoint, StringKeys, RxDocumentData, EventBulk, RxStorageChangeEvent, RxJsonSchema, getPrimaryFieldOfPrimaryKey, BulkWriteRow, RxStorageBulkWriteResponse, newRxError, CategorizeBulkWriteRowsOutput, categorizeBulkWriteRows, PROMISE_RESOLVE_VOID, ensureNotFalsy, now, RxDocumentDataById, RxStorageQueryResult, RxStorageCountResult, RxConflictResultionTask, RxConflictResultionTaskSolution, getQueryMatcher, getStartIndexStringFromLowerBound, getStartIndexStringFromUpperBound, MangoQuerySelector, flatClone } from "rxdb";
+import { RxStorageInstance, RxStorageDefaultCheckpoint, StringKeys, RxDocumentData, EventBulk, RxStorageChangeEvent, RxJsonSchema, getPrimaryFieldOfPrimaryKey, BulkWriteRow, RxStorageBulkWriteResponse, newRxError, CategorizeBulkWriteRowsOutput, categorizeBulkWriteRows, PROMISE_RESOLVE_VOID, ensureNotFalsy, now, RxDocumentDataById, RxStorageQueryResult, RxStorageCountResult, RxConflictResultionTask, RxConflictResultionTaskSolution, getQueryMatcher, getStartIndexStringFromLowerBound, getStartIndexStringFromUpperBound, MangoQuerySelector, flatClone, getSortComparator } from "rxdb";
 import {
     Subject, Observable
 } from "rxjs";
 
 import { InMemoryStorageInternals, InMemorySettings, RxStorageInMemoryType, InMemoryPreparedQuery } from "./types";
 import { conditionMatches } from '@pluto-encrypted/shared'
+import { fixTxPipe } from "@pluto-encrypted/shared";
+import { QueryMatcher } from "rxdb/dist/types/types";
 
 
 export class RxStorageIntanceInMemory<RxDocType> implements RxStorageInstance<
@@ -40,6 +42,7 @@ export class RxStorageIntanceInMemory<RxDocType> implements RxStorageInstance<
             error: {}
         };
 
+        const documents = this.internals.documents
         const fixed = documentWrites.reduce<BulkWriteRow<RxDocType>[]>((fixedDocs, currentWriteDoc) => {
             const currentId = currentWriteDoc.document[this.primaryPath] as any;
             const previousDocument = currentWriteDoc.previous || this.internals.documents.get(currentId)
@@ -48,7 +51,7 @@ export class RxStorageIntanceInMemory<RxDocType> implements RxStorageInstance<
                     fixedDocs.push(currentWriteDoc)
                 }
             } else {
-                if (previousDocument) {
+                if (previousDocument && previousDocument._rev !== currentWriteDoc.document._rev) {
                     currentWriteDoc.previous = previousDocument
                 } else {
                     currentWriteDoc.previous = undefined
@@ -62,7 +65,7 @@ export class RxStorageIntanceInMemory<RxDocType> implements RxStorageInstance<
         const categorized = categorizeBulkWriteRows<RxDocType>(
             this,
             primaryPath as any,
-            this.internals.documents as any,
+            documents as any,
             fixed,
             context
         );
@@ -107,34 +110,72 @@ export class RxStorageIntanceInMemory<RxDocType> implements RxStorageInstance<
     }
 
     async query(preparedQuery: InMemoryPreparedQuery<RxDocType>): Promise<RxStorageQueryResult<RxDocType>> {
-
-        const selector = preparedQuery.query.selector;
+        const { queryPlan, query } = preparedQuery;
+        const selector = query.selector;
         const selectorKeys = Object.keys(selector);
+        const skip = query.skip ? query.skip : 0;
+        const limit = query.limit ? query.limit : Infinity;
+        const skipPlusLimit = skip + limit;
+        let queryMatcher: QueryMatcher<RxDocumentData<RxDocType>> = getQueryMatcher(
+            this.schema,
+            query
+        );
 
-        const collectionIndex = `[${this.collectionName}+${preparedQuery.queryPlan.index.join("+")}]`
-        const documentIds = this.internals.index.get(collectionIndex);
+
+        const queryPlanFields: string[] = queryPlan.index;
+        let indexes: string[] = []
+        if (queryPlanFields.length === 1) {
+            indexes.push(fixTxPipe(queryPlanFields[0]!))
+        } else {
+            indexes.push(...queryPlanFields.map(field => fixTxPipe(field)))
+
+        }
+
+        const shouldAddCompoundIndexes = this.schema.indexes?.find((index) => {
+            if (typeof index === "string") {
+                return indexes.find((index2) => index2 === index)
+            } else {
+                return index.find((subIndex) => subIndex === subIndex)
+            }
+        });
+
+        if (shouldAddCompoundIndexes) {
+            indexes.splice(0, indexes.length)
+            if (typeof shouldAddCompoundIndexes === "string") {
+                indexes.push(shouldAddCompoundIndexes)
+            } else {
+                indexes.push(...shouldAddCompoundIndexes)
+            }
+
+        }
+
+        const indexName: string = `[${indexes.join('+')}]`;
+        const documentIds = this.internals.index.get(indexName);
 
         if (!documentIds) {
             return { documents: [] }
         }
 
-        const documents = documentIds.reduce<RxDocumentData<RxDocType>[]>((allDocuments, id) => {
+        let documents = documentIds.reduce<RxDocumentData<RxDocType>[]>((allDocuments, id) => {
             const document = this.internals.data.get(id);
             if (document) {
                 if (selectorKeys.length <= 0) {
                     return [...allDocuments, document]
                 }
-                for (let key of selectorKeys) {
-                    const matches = conditionMatches(selector, key, document)
-                    if (matches) {
-                        return [...allDocuments, document]
-                    }
+                const matches = queryMatcher(document)
+                if (matches) {
+                    return [...allDocuments, document]
                 }
             }
             return allDocuments
         }, [])
 
-        return { documents }
+        const sortComparator = getSortComparator(this.schema, preparedQuery.query);
+        documents = documents.sort(sortComparator);
+        documents = documents.slice(skip, skipPlusLimit);
+        return {
+            documents: documents
+        }
     }
 
     async count(preparedQuery: any): Promise<RxStorageCountResult> {
@@ -178,7 +219,6 @@ export class RxStorageIntanceInMemory<RxDocType> implements RxStorageInstance<
 
     /* istanbul ignore next */
     async remove(): Promise<void> {
-
         return Promise.resolve()
     }
 

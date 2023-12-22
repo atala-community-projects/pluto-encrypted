@@ -47,7 +47,7 @@
       "type": "node"
     },
     {
-      "cwd": "${workspaceFolder}/packages/indexdb",
+      "cwd": "${workspaceFolder}/packages/inmemory",
       "command": "npm run test",
       "name": "TEST",
       "request": "launch",

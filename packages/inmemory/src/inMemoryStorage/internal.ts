@@ -1,5 +1,6 @@
 import { RxDocumentData, RxDocumentDataById, RxJsonSchema } from "rxdb";
 import { InMemoryDataIndex, InMemoryDataStructure, InMemoryStorageInternals, IndexType } from "./types";
+import { getPrivateKeyValue, safeIndexList } from "@pluto-encrypted/shared";
 
 
 
@@ -48,38 +49,31 @@ export class InMemoryInternal<RxDocType> implements InMemoryStorageInternals<RxD
 
     async bulkPut(items: RxDocumentData<RxDocType>[], collectionName: string, schema: Readonly<RxJsonSchema<RxDocumentData<RxDocType>>>) {
         const primaryKeyKey = typeof schema.primaryKey === "string" ? schema.primaryKey : schema.primaryKey.key;
-        const indexName = `[${collectionName}+${primaryKeyKey}]`;
+        const saferIndexList = safeIndexList(schema);
 
         for (let item of items) {
+
             const shouldDelete = item._deleted;
-
-            let primaryKeyVal = item[primaryKeyKey];
-            if (!("id" in item) || !['string', 'number'].includes(typeof item.id)) {
-                if (!primaryKeyKey || !primaryKeyVal) {
-                    throw new Error("Data must have a primaryKey defined of type string or number")
+            const id = getPrivateKeyValue(item, schema)
+            if (shouldDelete) {
+                for (let requiredIndexes of saferIndexList) {
+                    const requiredIndex = `[${requiredIndexes.join("+")}]`
+                    await this.removeFromIndex(requiredIndex, id)
                 }
-                const id = item[primaryKeyKey] as any;
-                if (shouldDelete) {
-                    await this.data.delete(id)
-                    await this.removeFromIndex(indexName, id)
-                } else {
-                    await this.data.set(id, item);
-                    await this.addIndex(indexName, id)
-                }
-
+                await this.removeFromIndex(`[${primaryKeyKey}]`, id)
+                await this.removeFromIndex('[all]', id)
+                await this.data.delete(id)
+                this.documents.delete(id)
             } else {
-                const id = item.id as any;
-                if (shouldDelete) {
-                    await this.data.delete(id)
-                    await this.removeFromIndex(indexName, id)
-                } else {
-                    await this.data.set(id, item)
-                    await this.addIndex(indexName, id)
+                for (let requiredIndexes of saferIndexList) {
+                    const requiredIndex = `[${requiredIndexes.join("+")}]`
+                    await this.addIndex(requiredIndex, id)
                 }
-
-
+                await this.addIndex(`[${primaryKeyKey}]`, id)
+                await this.addIndex('[all]', id)
+                await this.data.set(id, item);
+                this.documents.set(id, item)
             }
-
         }
     }
 
