@@ -61,3 +61,8 @@ const messages = await restoredDatabase.getAllMessages();
 ```
 
 If the database is later initialised with the wrong password the "createEncrypted" async function will throw an exception and will not let you decrypt any encrypted content.
+
+## QA & Documentation
+| Statements                  | Branches                | Functions                 | Lines             |
+| --------------------------- | ----------------------- | ------------------------- | ----------------- |
+| ![Statements](https://img.shields.io/badge/statements-76.17%25-red.svg?style=flat) | ![Branches](https://img.shields.io/badge/branches-64.12%25-red.svg?style=flat) | ![Functions](https://img.shields.io/badge/functions-76.47%25-red.svg?style=flat) | ![Lines](https://img.shields.io/badge/lines-76.84%25-red.svg?style=flat) |
