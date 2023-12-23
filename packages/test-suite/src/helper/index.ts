@@ -29,7 +29,7 @@ export interface OptionalValueTestDoc { key: string, value?: string }
 export const TEST_DATA_CHARSET = '0987654321ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzäöüÖÄßÜ[]{}\''
 export const TEST_DATA_CHARSET_LAST_SORTED = ensureNotFalsy(lastOfArray(TEST_DATA_CHARSET.split('').sort()))
 // const someEmojis = '😊💩👵🍌';
-export function randomStringWithSpecialChars (length: number) {
+export function randomStringWithSpecialChars(length: number) {
   return randomString(length, TEST_DATA_CHARSET)
 }
 
@@ -37,7 +37,7 @@ export function randomStringWithSpecialChars (length: number) {
  * @returns a format of the query that can be used with the storage
  * when calling RxStorageInstance().query()
  */
-export function prepareQuery<RxDocType> (schema, mutateableQuery) {
+export function prepareQuery<RxDocType>(schema, mutateableQuery) {
   if (!mutateableQuery.sort) {
     throw newRxError('SNH', {
       query: mutateableQuery
@@ -55,7 +55,7 @@ export function prepareQuery<RxDocType> (schema, mutateableQuery) {
   }
 }
 
-export function getNestedDocSchema () {
+export function getNestedDocSchema() {
   const schema: RxJsonSchema<RxDocumentData<NestedDoc>> = fillWithDefaultSettings({
     version: 0,
     primaryKey: 'id',
@@ -89,7 +89,7 @@ export function getNestedDocSchema () {
   return schema
 }
 
-export function getWriteData (
+export function getWriteData(
   ownParams: Partial<RxDocumentData<TestDocType>> = {}
 ): RxDocumentData<TestDocType> {
   return Object.assign(
@@ -107,7 +107,7 @@ export function getWriteData (
   )
 }
 
-export function getTestDataSchema (): RxJsonSchema<RxDocumentData<TestDocType>> {
+export function getTestDataSchema(): RxJsonSchema<RxDocumentData<TestDocType>> {
   return fillWithDefaultSettings({
     version: 0,
     type: 'object',
@@ -195,7 +195,7 @@ export interface TestCorrectQueriesInput<RxDocType> {
   } | undefined>
 }
 
-export function withIndexes<RxDocType> (
+export function withIndexes<RxDocType>(
   schema: RxJsonSchema<RxDocType>,
   indexes: string[][]
 ): RxJsonSchema<RxDocType> {
@@ -204,7 +204,7 @@ export function withIndexes<RxDocType> (
   return schema
 }
 
-export function testCorrectQueries<RxDocType> (
+export function testCorrectQueries<RxDocType>(
   suite: TestSuite,
   testStorage: RxTestStorage,
   input: TestCorrectQueriesInput<RxDocType>
@@ -286,10 +286,7 @@ export function testCorrectQueries<RxDocType> (
         if (!queryForStorage.selector) {
           queryForStorage.selector = {}
         }
-        //  (queryForStorage.selector as any)._deleted = false;
-        // if (queryForStorage.index) {
-        //     (queryForStorage.index as any).unshift('_deleted');
-        // }
+
         const normalizedQuery = deepFreeze(normalizeMangoQuery(schema, queryForStorage))
         const skip = normalizedQuery.skip ? normalizedQuery.skip : 0
         const limit = normalizedQuery.limit ? normalizedQuery.limit : Infinity
@@ -311,13 +308,6 @@ export function testCorrectQueries<RxDocType> (
 
         expect(resultStaticsIds, 'expectedResultDocIds does not match').toStrictEqual(queryData.expectedResultDocIds)
 
-        // Test correct selectorSatisfiedByIndex
-        // This selectorSatisfiedByIndex and getQueryPlan is completely broken
-        // We will rely on the right storage instance implementations to mitigate this
-        // if (typeof queryData.selectorSatisfiedByIndex !== 'undefined') {
-        //     const queryPlan = getQueryPlan(schema, normalizedQuery);
-        //     expect(queryPlan.selectorSatisfiedByIndex).toBe(queryData.selectorSatisfiedByIndex);
-        // }
 
         // Test output of RxStorageInstance.query();
         const resultFromStorage = await storageInstance.query(preparedQuery)
@@ -335,13 +325,21 @@ export function testCorrectQueries<RxDocType> (
         // Test output of .count()
         if (
           !queryData.query.limit &&
-                    !queryData.query.skip
+          !queryData.query.skip
         ) {
           const countResult = await storageInstance.count(preparedQuery)
           expect(countResult.count).toStrictEqual(queryData.expectedResultDocIds.length)
         }
       }
 
+      await storageInstance.bulkWrite(
+        rawDocsData.map(document => ({
+          document: {
+            ...document, _deleted: true, _rev: "1"
+          }
+        })),
+        testQueryContext
+      )
       await storageInstance.cleanup(Infinity)
       await database.remove()
     })

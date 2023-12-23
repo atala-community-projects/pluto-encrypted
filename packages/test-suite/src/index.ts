@@ -21,7 +21,7 @@ import { randomString } from 'async-test-util'
 let storage: RxStorage<any, any>
 let storageInstance: RxStorageInstance<any, any, any, any>
 
-export function runTestSuite (suite: TestSuite, testStorage: RxTestStorage): void {
+export function runTestSuite(suite: TestSuite, testStorage: RxTestStorage): void {
   const { describe, it, beforeEach, afterEach } = suite
   describe('RxStorageInstance', () => {
     beforeEach(async () => {
@@ -979,6 +979,16 @@ export function runTestSuite (suite: TestSuite, testStorage: RxTestStorage): voi
 
         expect(first).not.toBe(undefined)
         expect(first.value).toBe('barfoo')
+
+        await storageInstance.bulkWrite(
+          [{
+            document: {
+              ...writeData2,
+              _deleted: true
+            }
+          }],
+          testContext
+        )
       })
       it('should sort in the correct order', async ({ expect }) => {
         storageInstance = await storage.createStorageInstance<{ key: string, value: string }>({
@@ -1108,7 +1118,7 @@ export function runTestSuite (suite: TestSuite, testStorage: RxTestStorage): voi
         }
         const docs = Object.values(writeResponse.success)
 
-        async function testQuery (query: FilledMangoQuery<RandomDoc>): Promise<void> {
+        async function testQuery(query: FilledMangoQuery<RandomDoc>): Promise<void> {
           const preparedQuery = prepareQuery(
             storageInstance.schema,
             query
@@ -1284,7 +1294,7 @@ export function runTestSuite (suite: TestSuite, testStorage: RxTestStorage): voi
             skip: 0
           }
         )
-        async function ensureCountIs (nr: number): Promise<void> {
+        async function ensureCountIs(nr: number): Promise<void> {
           const result = await storageInstance.count(preparedQueryAll)
           expect(result.count).toBe(nr)
         }
@@ -1506,6 +1516,31 @@ export function runTestSuite (suite: TestSuite, testStorage: RxTestStorage): voi
             'dd',
             'ee'
           ]
+        }
+      ]
+    })
+    testCorrectQueries<schemas.HumanDocumentType>(suite, testStorage, {
+      testTitle: '$lt/$lte',
+      data: [
+        human('dd', 40, 'dave'),
+        human('ee', 50, 'eve')
+      ],
+      schema: withIndexes(schemas.human, [
+        ['age'],
+      ]),
+      queries: [
+        {
+          info: 'normal $lt',
+          query: {
+            selector: {
+              age: {
+                $lt: 40
+              }
+            },
+            sort: [{ age: 'asc' }]
+          },
+          selectorSatisfiedByIndex: true,
+          expectedResultDocIds: []
         }
       ]
     })
