@@ -153,7 +153,6 @@ export class RxStorageIntanceLevelDB<RxDocType> implements RxStorageInstance<
             }
         } else {
             indexes.unshift(this.collectionName)
-            debugger;
         }
 
         const indexName: string = `[${indexes.join('+')}]`;

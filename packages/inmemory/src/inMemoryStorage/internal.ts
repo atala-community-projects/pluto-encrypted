@@ -57,19 +57,19 @@ export class InMemoryInternal<RxDocType> implements InMemoryStorageInternals<RxD
             const id = getPrivateKeyValue(item, schema)
             if (shouldDelete) {
                 for (let requiredIndexes of saferIndexList) {
-                    const requiredIndex = `[${requiredIndexes.join("+")}]`
+                    const requiredIndex = `[${collectionName}+${requiredIndexes.join("+")}]`
                     await this.removeFromIndex(requiredIndex, id)
                 }
-                await this.removeFromIndex(`[${primaryKeyKey}]`, id)
+                await this.removeFromIndex(`[${collectionName}+${primaryKeyKey}]`, id)
                 await this.removeFromIndex('[all]', id)
                 await this.data.delete(id)
                 this.documents.delete(id)
             } else {
                 for (let requiredIndexes of saferIndexList) {
-                    const requiredIndex = `[${requiredIndexes.join("+")}]`
+                    const requiredIndex = `[${collectionName}+${requiredIndexes.join("+")}]`
                     await this.addIndex(requiredIndex, id)
                 }
-                await this.addIndex(`[${primaryKeyKey}]`, id)
+                await this.addIndex(`[${collectionName}+${primaryKeyKey}]`, id)
                 await this.addIndex('[all]', id)
                 await this.data.set(id, item);
                 this.documents.set(id, item)

@@ -16,55 +16,55 @@ const defaultPassword = Buffer.from(keyData);
 
 describe("Testing suite", () => {
 
-  // it('should be able to instanciate multiple databases in the same thread', async ({ expect }) => {
-  //   if (fs.existsSync("./db1")) {
-  //     fs.rmdirSync("./db1", { recursive: true })
-  //   }
-  //   if (fs.existsSync("./db2")) {
-  //     fs.rmdirSync("./db2", { recursive: true })
-  //   }
-  //   const db = await Database.createEncrypted(
-  //     {
-  //       name: databaseName,
-  //       encryptionKey: defaultPassword,
-  //       storage: createLevelDBStorage({
-  //         dbPath: "./db1"
-  //       }),
-  //     }
-  //   );
+  it('should be able to instanciate multiple databases in the same thread', async ({ expect }) => {
+    if (fs.existsSync("./db1")) {
+      fs.rmdirSync("./db1", { recursive: true })
+    }
+    if (fs.existsSync("./db2")) {
+      fs.rmdirSync("./db2", { recursive: true })
+    }
+    const db = await Database.createEncrypted(
+      {
+        name: databaseName,
+        encryptionKey: defaultPassword,
+        storage: createLevelDBStorage({
+          dbPath: "./db1"
+        }),
+      }
+    );
 
-  //   await db.storeLinkSecret("first", "first")
+    await db.storeLinkSecret("first", "first")
 
-  //   const db2 = await Database.createEncrypted(
-  //     {
-  //       name: databaseName,
-  //       encryptionKey: defaultPassword,
-  //       storage: createLevelDBStorage({
-  //         dbPath: "./db2"
-  //       }),
-  //     }
-  //   );
+    const db2 = await Database.createEncrypted(
+      {
+        name: databaseName,
+        encryptionKey: defaultPassword,
+        storage: createLevelDBStorage({
+          dbPath: "./db2"
+        }),
+      }
+    );
 
-  //   await db2.storeLinkSecret("second", "second")
+    await db2.storeLinkSecret("second", "second")
 
-  //   const firstLinkSecret = await db.getLinkSecret();
+    const firstLinkSecret = await db.getLinkSecret();
 
-  //   const secondLinkSecret = await db2.getLinkSecret();
+    const secondLinkSecret = await db2.getLinkSecret();
 
-  //   expect(firstLinkSecret).toBe("first")
-  //   expect(secondLinkSecret).toBe("second")
+    expect(firstLinkSecret).toBe("first")
+    expect(secondLinkSecret).toBe("second")
 
-  //   await db.clear()
-  //   await db2.clear()
+    await db.clear()
+    await db2.clear()
 
 
-  //   if (fs.existsSync("./db1")) {
-  //     fs.rmdirSync("./db1", { recursive: true })
-  //   }
-  //   if (fs.existsSync("./db2")) {
-  //     fs.rmdirSync("./db2", { recursive: true })
-  //   }
-  // })
+    if (fs.existsSync("./db1")) {
+      fs.rmdirSync("./db1", { recursive: true })
+    }
+    if (fs.existsSync("./db2")) {
+      fs.rmdirSync("./db2", { recursive: true })
+    }
+  })
 
   runTestSuite({
     describe, it, beforeEach, afterEach

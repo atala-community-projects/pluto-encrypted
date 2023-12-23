@@ -47,7 +47,7 @@ export class RxStorageIntanceInMemory<RxDocType> implements RxStorageInstance<
             const currentId = currentWriteDoc.document[this.primaryPath] as any;
             const previousDocument = currentWriteDoc.previous || this.internals.documents.get(currentId)
             if (context === "data-migrator-delete") {
-                if (previousDocument && previousDocument._rev == currentWriteDoc.document._rev) {
+                if (previousDocument && previousDocument._rev === currentWriteDoc.document._rev) {
                     fixedDocs.push(currentWriteDoc)
                 }
             } else {
@@ -141,12 +141,15 @@ export class RxStorageIntanceInMemory<RxDocType> implements RxStorageInstance<
 
         if (shouldAddCompoundIndexes) {
             indexes.splice(0, indexes.length)
+            indexes.push(this.collectionName)
             if (typeof shouldAddCompoundIndexes === "string") {
                 indexes.push(shouldAddCompoundIndexes)
             } else {
                 indexes.push(...shouldAddCompoundIndexes)
             }
 
+        } else {
+            indexes.unshift(this.collectionName)
         }
 
         const indexName: string = `[${indexes.join('+')}]`;

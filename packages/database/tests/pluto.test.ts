@@ -60,7 +60,7 @@ const storages: RxStorage<any, any>[] = [
     createLevelDBStorage({
         dbPath: databasePath
     }),
-    //InMemory,
+    InMemory,
     //IndexDb,
 ]
 
