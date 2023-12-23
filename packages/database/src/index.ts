@@ -527,21 +527,6 @@ export class Database implements Domain.Pluto {
     }
   }
 
-  private async isMigrationNeeded(collection: RxCollection) {
-    if (collection.schema.version === 0) {
-      return PROMISE_RESOLVE_FALSE;
-    }
-    const dataMigrator = getFromMapOrCreate(
-      DATA_MIGRATOR_BY_COLLECTION,
-      collection,
-      () => new EncryptedDataMigrator(
-        collection.asRxCollection,
-        collection.migrationStrategies
-      )
-    );
-    return mustMigrate(dataMigrator)
-  }
-
   /**
    * Start the database and build collections
    */
