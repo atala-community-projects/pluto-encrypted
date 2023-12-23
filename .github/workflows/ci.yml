@@ -61,7 +61,9 @@ jobs:
           GITHUB_COMMITER_EMAIL: ${{ secrets.GITHUB_COMMITER_EMAIL }}
           CI: true
         with:
+          title: Test Coverage for @pluto-encrypted/database
           coverage-summary-path: packages/database/coverage/coverage-summary.json
+          create-new-comment: true
 
       - name: Coverage Comment
         uses: MishaKav/jest-coverage-comment@v1.0.23
@@ -74,7 +76,9 @@ jobs:
           GITHUB_COMMITER_EMAIL: ${{ secrets.GITHUB_COMMITER_EMAIL }}
           CI: true
         with:
+          title: Test Coverage for @pluto-encrypted/leveldb
           coverage-summary-path: packages/leveldb/coverage/coverage-summary.json
+          create-new-comment: true
 
       - name: Coverage Comment
         uses: MishaKav/jest-coverage-comment@v1.0.23
@@ -87,7 +91,9 @@ jobs:
           GITHUB_COMMITER_EMAIL: ${{ secrets.GITHUB_COMMITER_EMAIL }}
           CI: true
         with:
+          title: Test Coverage for @pluto-encrypted/inmemory
           coverage-summary-path: packages/inmemory/coverage/coverage-summary.json
+          create-new-comment: true
 
       - name: Coverage Comment
         uses: MishaKav/jest-coverage-comment@v1.0.23
@@ -100,4 +106,6 @@ jobs:
           GITHUB_COMMITER_EMAIL: ${{ secrets.GITHUB_COMMITER_EMAIL }}
           CI: true
         with:
+          title: Test Coverage for @pluto-encrypted/indexdb
           coverage-summary-path: packages/indexdb/coverage/coverage-summary.json
+          create-new-comment: true
