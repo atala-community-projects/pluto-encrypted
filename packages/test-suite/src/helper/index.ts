@@ -1,15 +1,24 @@
-import { faker } from "@faker-js/faker";
-import { clone, randomNumber, randomString } from "async-test-util";
+import { clone, randomString } from "async-test-util";
 import { MangoQuery, RxDocumentData, RxJsonSchema, RxStorage, RxStorageInstance, createRxDatabase, deepFreeze, ensureNotFalsy, fillWithDefaultSettings, getPrimaryFieldOfPrimaryKey, getQueryMatcher, getQueryPlan, getSortComparator, lastOfArray, newRxError, normalizeMangoQuery, now, randomCouchString } from "rxdb";
 import { describe, it, beforeEach, afterEach } from 'vitest';
-
+export type RandomDoc = {
+    id: string;
+    equal: string;
+    random: string;
+    increment: number;
+};
 export type TestSuite = {
     describe: typeof describe,
     it: typeof it,
     beforeEach: typeof beforeEach,
     afterEach: typeof afterEach
 }
-
+export type NestedDoc = {
+    id: string;
+    nes: {
+        ted: string;
+    };
+};
 export type TestDocType = { key: string; value: string; };
 export type OptionalValueTestDoc = { key: string; value?: string; };
 /**
@@ -44,6 +53,58 @@ export function prepareQuery<RxDocType>(schema, mutateableQuery) {
         query: mutateableQuery,
         queryPlan
     };
+}
+
+export function getNestedDocSchema() {
+    const schema: RxJsonSchema<RxDocumentData<NestedDoc>> = fillWithDefaultSettings({
+        version: 0,
+        primaryKey: 'id',
+        type: 'object',
+        properties: {
+            id: {
+                type: 'string',
+                maxLength: 100
+            },
+            nes: {
+                type: 'object',
+                properties: {
+                    ted: {
+                        type: 'string',
+                        maxLength: 100
+                    }
+                },
+                required: [
+                    'ted'
+                ]
+            }
+        },
+        indexes: [
+            ['nes.ted', 'id']
+        ],
+        required: [
+            'id',
+            'nes'
+        ]
+    });
+    return schema;
+}
+
+export function getWriteData(
+    ownParams: Partial<RxDocumentData<TestDocType>> = {}
+): RxDocumentData<TestDocType> {
+    return Object.assign(
+        {
+            key: randomString(10),
+            value: 'barfoo',
+            _deleted: false,
+            _attachments: {},
+            _meta: {
+                lwt: now()
+            },
+            _rev: EXAMPLE_REVISION_1
+        },
+        ownParams
+    );
 }
 
 export function getTestDataSchema(): RxJsonSchema<RxDocumentData<TestDocType>> {
