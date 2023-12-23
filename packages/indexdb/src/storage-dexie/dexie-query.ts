@@ -14,63 +14,16 @@
 // } from './dexie-helper';
 // import type { RxStorageInstanceDexie } from './rx-storage-instance-dexie';
 
-import { type DefaultPreparedQuery, INDEX_MIN, type RxDocumentData, type RxQueryPlan, type RxStorageQueryResult, getQueryMatcher, getSortComparator } from 'rxdb'
+import { type DefaultPreparedQuery, type RxDocumentData, type RxStorageQueryResult, getQueryMatcher, getSortComparator } from 'rxdb'
 import { type QueryMatcher, type RxJsonSchema } from 'rxdb/dist/types/types'
-import { DEXIE_DOCS_TABLE_NAME, dexieReplaceIfStartsWithPipe, fromDexieToStorage } from './dexie-helper'
+import { dexieReplaceIfStartsWithPipe, fromDexieToStorage } from './dexie-helper'
 import { type RxStorageInstanceDexie } from './rx-storage-instance-dexie'
 import { fixTxPipe } from '@pluto-encrypted/shared'
-
-export function mapKeyForKeyRange (k: any) {
-  if (k === INDEX_MIN) {
-    return -Infinity
-  } else {
-    return k
-  }
-}
-
-export function getKeyRangeByQueryPlan (
-  queryPlan: RxQueryPlan,
-  IDBKeyRange?: any
-) {
-  if (!IDBKeyRange) {
-    if (typeof window === 'undefined') {
-      throw new Error('IDBKeyRange missing')
-    } else {
-      IDBKeyRange = window.IDBKeyRange
-    }
-  }
-
-  const startKeys = queryPlan.startKeys.map(mapKeyForKeyRange)
-  const endKeys = queryPlan.endKeys.map(mapKeyForKeyRange)
-
-  let ret: any
-  /**
-     * If index has only one field,
-     * we have to pass the keys directly, not the key arrays.
-     */
-  if (queryPlan.index.length === 1) {
-    const equalKeys = startKeys[0] === endKeys[0]
-    ret = IDBKeyRange.bound(
-      startKeys[0],
-      endKeys[0],
-      equalKeys ? false : !queryPlan.inclusiveStart,
-      equalKeys ? false : !queryPlan.inclusiveEnd
-    )
-  } else {
-    ret = IDBKeyRange.bound(
-      startKeys,
-      endKeys,
-      !queryPlan.inclusiveStart,
-      !queryPlan.inclusiveEnd
-    )
-  }
-  return ret
-}
 
 /**
  * Runs mango queries over the Dexie.js database.
  */
-export async function dexieQuery<RxDocType> (
+export async function dexieQuery<RxDocType>(
   instance: RxStorageInstanceDexie<RxDocType>,
   preparedQuery: DefaultPreparedQuery<RxDocType>,
   schema: Readonly<RxJsonSchema<RxDocumentData<RxDocType>>>
@@ -136,55 +89,4 @@ export async function dexieQuery<RxDocType> (
   return {
     documents: rows
   }
-}
-
-export async function dexieCount<RxDocType> (
-  instance: RxStorageInstanceDexie<RxDocType>,
-  preparedQuery: DefaultPreparedQuery<RxDocType>
-): Promise<number> {
-  const state = await instance.internals
-  const queryPlan = preparedQuery.queryPlan
-  const queryPlanFields: string[] = queryPlan.index
-
-  const keyRange = getKeyRangeByQueryPlan(
-    queryPlan,
-    (state.dexieDb as any)._options.IDBKeyRange
-  )
-  let count: number = -1
-  await state.dexieDb.transaction(
-    'r',
-    state.dexieTable,
-    async (dexieTx) => {
-      const tx = (dexieTx as any).idbtrans
-      const store = tx.objectStore(DEXIE_DOCS_TABLE_NAME)
-      let index: any
-      if (
-        queryPlanFields.length === 1 &&
-        queryPlanFields[0] === instance.primaryPath
-      ) {
-        index = store
-      } else {
-        let indexName: string
-        if (queryPlanFields.length === 1) {
-          indexName = dexieReplaceIfStartsWithPipe(queryPlanFields[0]!)
-        } else {
-          indexName = '[' +
-            queryPlanFields
-              .map(field => dexieReplaceIfStartsWithPipe(field))
-              .join('+') +
-            ']'
-        }
-        index = store.index(indexName)
-      }
-
-      const request = index.count(keyRange)
-      count = await new Promise<number>((resolve, reject) => {
-        request.onsuccess = function () {
-          resolve(request.result)
-        }
-        request.onerror = (err: any) => { reject(err) }
-      })
-    }
-  )
-  return count
 }

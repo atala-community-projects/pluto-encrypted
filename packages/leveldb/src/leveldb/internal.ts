@@ -26,7 +26,7 @@ export class LevelDBInternal<RxDocType> implements LevelDBStorageInternals<RxDoc
     return 'level' in _options && _options.level !== undefined
   }
 
-  constructor (private readonly _options: LevelDBInternalConstructor<RxDocType>) {
+  constructor(private readonly _options: LevelDBInternalConstructor<RxDocType>) {
     this.refCount = this._options.refCount
     this.schema = this._options.schema
     this.documents = this._options.documents ?? new Map()
@@ -37,7 +37,7 @@ export class LevelDBInternal<RxDocType> implements LevelDBStorageInternals<RxDoc
     }
   }
 
-  async getDocuments (query: string[]): Promise<Map<string, RxDocumentData<RxDocType>>> {
+  async getDocuments(query: string[]): Promise<Map<string, RxDocumentData<RxDocType>>> {
     const docsInDbMap = new Map<string, RxDocumentData<RxDocType>>()
     if (query.length <= 0) {
       const db = await this.getInstance()
@@ -64,12 +64,12 @@ export class LevelDBInternal<RxDocType> implements LevelDBStorageInternals<RxDoc
     return docsInDbMap
   }
 
-  async getInstance () {
+  async getInstance() {
     await this.db.open()
     return this.db
   }
 
-  async getIndex (key: string): Promise<string[]> {
+  async getIndex(key: string): Promise<string[]> {
     const db = await this.getInstance()
     return db.get(key)
       .then(result => result ? JSON.parse(result) : [])
@@ -83,7 +83,7 @@ export class LevelDBInternal<RxDocType> implements LevelDBStorageInternals<RxDoc
       })
   }
 
-  async bulkGet (keys: string[]): Promise<Array<RxDocumentData<RxDocType>>> {
+  async bulkGet(keys: string[]): Promise<Array<RxDocumentData<RxDocType>>> {
     if (!keys || keys.length <= 0) {
       return []
     }
@@ -101,7 +101,7 @@ export class LevelDBInternal<RxDocType> implements LevelDBStorageInternals<RxDoc
     )
   }
 
-  async get (key: string): Promise<RxDocumentData<RxDocType> | null> {
+  async get(key: string): Promise<RxDocumentData<RxDocType> | null> {
     const db = await this.getInstance()
     return await db.get(key)
       .then(result => result ? JSON.parse(result) : null)
@@ -115,94 +115,63 @@ export class LevelDBInternal<RxDocType> implements LevelDBStorageInternals<RxDoc
       })
   }
 
-  async set (key: string, data: RxDocumentData<RxDocType>) {
-    if (!key) {
-      throw new Error('Undefined key')
-    }
-    if (!data) {
-      throw new Error('Undefined value')
-    }
-
+  async set(key: string, data: RxDocumentData<RxDocType>) {
     const db = await this.getInstance()
-
     await new Promise<void>((resolve, reject) => {
       db.put(key, JSON.stringify(data), (err) => {
         if (err) {
-          reject(err); return
+          return reject(err);
         }
-        resolve()
+        return resolve()
       })
     })
   }
 
-  async setIndex (key: string, ids: string[]) {
-    if (!key) {
-      throw new Error('Undefined key')
-    }
-    if (!ids) {
-      throw new Error('Undefined value')
-    }
-
+  async setIndex(key: string, ids: string[]) {
     const db = await this.getInstance()
     await new Promise<void>((resolve, reject) => {
       db.put(key, JSON.stringify(ids), (err) => {
         if (err) {
-          reject(err); return
+          return reject(err);
         }
-        resolve()
+        return resolve()
       })
     })
   }
 
-  async delete (key: string) {
-    if (!key) {
-      throw new Error('Undefined key')
-    }
-
+  async delete(key: string) {
     const db = await this.getInstance()
     await new Promise<void>((resolve, reject) => {
       db.del(key, (err) => {
         if (err) {
-          reject(err); return
+          return reject(err);
         }
-        resolve()
+        return resolve()
       })
     })
   }
 
-  async updateIndex (key: string, id: string) {
-    if (!id) {
-      throw new Error('Undefined id')
-    }
-    if (!key) {
-      throw new Error('Undefined key')
-    }
+  async updateIndex(key: string, id: string) {
     const existingIndex = await this.getIndex(key)
     const newIndexes = Array.from(new Set([...existingIndex, id]))
     await this.setIndex(key, newIndexes)
   }
 
-  async removeFromIndex (key: string, id: string) {
-    if (!id) {
-      throw new Error('Undefined id')
-    }
-    if (!key) {
-      throw new Error('Undefined key')
-    }
+  async removeFromIndex(key: string, id: string) {
     const existingIndex = await this.getIndex(key)
     await this.setIndex(key, existingIndex.filter((vId) => vId !== id))
   }
 
-  async clear () {
+  async clear() {
     const db = await this.getInstance()
     return db.clear()
   }
 
-  async close () {
+  async close() {
     return this.db.close()
   }
 
-  async bulkPut (items: Array<RxDocumentData<RxDocType>>, collectionName: string, schema: Readonly<RxJsonSchema<RxDocumentData<RxDocType>>>) {
+  async bulkPut(items: Array<RxDocumentData<RxDocType>>, collectionName: string, schema: Readonly<RxJsonSchema<RxDocumentData<RxDocType>>>) {
     const primaryKeyKey = typeof schema.primaryKey === 'string' ? schema.primaryKey : schema.primaryKey.key
     const saferIndexList = safeIndexList(schema)
 

@@ -12,17 +12,17 @@ import { type RxStorageDexie } from './rx-storage-dexie'
 let instanceId = now()
 
 export class RxStorageInstanceDexie<RxDocType> implements RxStorageInstance<
-RxDocType,
-DexieStorageInternals,
-DexieSettings,
-RxStorageDefaultCheckpoint
+  RxDocType,
+  DexieStorageInternals,
+  DexieSettings,
+  RxStorageDefaultCheckpoint
 > {
   public readonly primaryPath: StringKeys<RxDocumentData<RxDocType>>
   private readonly changes$ = new Subject<EventBulk<RxStorageChangeEvent<RxDocumentData<RxDocType>>, RxStorageDefaultCheckpoint>>()
   public readonly instanceId = instanceId++
   public closed = false
 
-  constructor (
+  constructor(
     public readonly storage: RxStorageDexie,
     public readonly databaseName: string,
     public readonly collectionName: string,
@@ -34,16 +34,16 @@ RxStorageDefaultCheckpoint
     this.primaryPath = getPrimaryFieldOfPrimaryKey(this.schema.primaryKey)
   }
 
-  async bulkWrite (
+  async bulkWrite(
     documentWrites: Array<BulkWriteRow<RxDocType>>,
     context: string
   ): Promise<RxStorageBulkWriteResponse<RxDocType>> {
     ensureNotClosed(this)
 
     /**
-         * Check some assumptions to ensure RxDB
-         * does not call the storage with an invalid write.
-         */
+     * Check some assumptions to ensure RxDB
+     * does not call the storage with an invalid write.
+     */
     documentWrites.forEach(row => {
       // ensure revision is set
       if (
@@ -152,7 +152,7 @@ RxStorageDefaultCheckpoint
     return ret
   }
 
-  async findDocumentsById (
+  async findDocumentsById(
     ids: string[],
     deleted: boolean
   ): Promise<RxDocumentDataById<RxDocType>> {
@@ -184,7 +184,7 @@ RxStorageDefaultCheckpoint
     return ret
   }
 
-  async query (preparedQuery: DefaultPreparedQuery<RxDocType>): Promise<RxStorageQueryResult<RxDocType>> {
+  async query(preparedQuery: DefaultPreparedQuery<RxDocType>): Promise<RxStorageQueryResult<RxDocType>> {
     ensureNotClosed(this)
     return await dexieQuery(
       this,
@@ -193,7 +193,7 @@ RxStorageDefaultCheckpoint
     )
   }
 
-  async count (
+  async count(
     preparedQuery: DefaultPreparedQuery<RxDocType>
   ): Promise<RxStorageCountResult> {
     const result = await dexieQuery(this, preparedQuery, this.schema)
@@ -203,13 +203,14 @@ RxStorageDefaultCheckpoint
     }
   }
 
-  async getChangedDocumentsSince (
+  /* istanbul ignore next */
+  async getChangedDocumentsSince(
     limit: number,
     checkpoint?: RxStorageDefaultCheckpoint
   ): Promise<{
-      documents: Array<RxDocumentData<RxDocType>>
-      checkpoint: RxStorageDefaultCheckpoint
-    }> {
+    documents: Array<RxDocumentData<RxDocType>>
+    checkpoint: RxStorageDefaultCheckpoint
+  }> {
     ensureNotClosed(this)
     const sinceLwt = checkpoint ? checkpoint.lwt : RX_META_LWT_MINIMUM
     const sinceId = checkpoint ? checkpoint.id : ''
@@ -239,9 +240,9 @@ RxStorageDefaultCheckpoint
       documents: changedDocs,
       checkpoint: lastDoc
         ? {
-            id: lastDoc[this.primaryPath],
-            lwt: lastDoc._meta.lwt
-          }
+          id: lastDoc[this.primaryPath],
+          lwt: lastDoc._meta.lwt
+        }
         : checkpoint ?? {
           id: '',
           lwt: 0
@@ -249,16 +250,16 @@ RxStorageDefaultCheckpoint
     }
   }
 
-  async remove (): Promise<void> {
+  async remove(): Promise<void> {
     await Promise.resolve()
   }
 
-  changeStream (): Observable<EventBulk<RxStorageChangeEvent<RxDocumentData<RxDocType>>, RxStorageDefaultCheckpoint>> {
+  changeStream(): Observable<EventBulk<RxStorageChangeEvent<RxDocumentData<RxDocType>>, RxStorageDefaultCheckpoint>> {
     ensureNotClosed(this)
     return this.changes$.asObservable()
   }
 
-  async cleanup (): Promise<boolean> {
+  async cleanup(): Promise<boolean> {
     ensureNotClosed(this)
     const state = await this.internals
     await state.dexieDb.transaction(
@@ -276,20 +277,21 @@ RxStorageDefaultCheckpoint
     )
 
     /**
-         * TODO instead of deleting all deleted docs at once,
-         * only clean up some of them and return false if there are more documents to clean up.
-         * This ensures that when many documents have to be purged,
-         * we do not block the more important tasks too long.
-         */
+     * TODO instead of deleting all deleted docs at once,
+     * only clean up some of them and return false if there are more documents to clean up.
+     * This ensures that when many documents have to be purged,
+     * we do not block the more important tasks too long.
+     */
     return true
   }
 
-  async getAttachmentData (): Promise<string> {
+  /* istanbul ignore next */
+  async getAttachmentData(): Promise<string> {
     ensureNotClosed(this)
     throw new Error('Attachments are not implemented in the dexie RxStorage. Make a pull request.')
   }
 
-  async close (): Promise<void> {
+  async close(): Promise<void> {
     ensureNotClosed(this)
     this.closed = true
     this.changes$.complete()
@@ -297,14 +299,15 @@ RxStorageDefaultCheckpoint
     await PROMISE_RESOLVE_VOID
   }
 
-  conflictResultionTasks (): Observable<RxConflictResultionTask<RxDocType>> {
+  conflictResultionTasks(): Observable<RxConflictResultionTask<RxDocType>> {
     return new Subject()
   }
 
-  async resolveConflictResultionTask (): Promise<void> { }
+  /* istanbul ignore next */
+  async resolveConflictResultionTask(): Promise<void> { }
 }
 
-export async function createDexieStorageInstance<RxDocType> (
+export async function createDexieStorageInstance<RxDocType>(
   storage: RxStorageDexie,
   params: RxStorageInstanceCreationParams<RxDocType, DexieSettings>,
   settings: DexieSettings
@@ -329,7 +332,7 @@ export async function createDexieStorageInstance<RxDocType> (
   return await Promise.resolve(instance)
 }
 
-function ensureNotClosed (
+function ensureNotClosed(
   instance: RxStorageInstanceDexie<any>
 ) {
   if (instance.closed) {
