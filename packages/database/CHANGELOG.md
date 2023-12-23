@@ -1,3 +1,10 @@
+## @pluto-encrypted/database [1.2.6](https://github.com/elribonazo/pluto-encrypted/compare/@pluto-encrypted/database@1.2.5...@pluto-encrypted/database@1.2.6) (2023-12-23)
+
+
+### Bug Fixes
+
+* docs improvement. ([16f4d56](https://github.com/elribonazo/pluto-encrypted/commit/16f4d569e08e67f3130deee413bb9717b11c2889))
+
 ## @pluto-encrypted/database [1.2.4](https://github.com/elribonazo/pluto-encrypted/compare/@pluto-encrypted/database@1.2.3...@pluto-encrypted/database@1.2.4) (2023-12-23)
 
 
