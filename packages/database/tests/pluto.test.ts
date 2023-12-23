@@ -61,7 +61,7 @@ const storages: RxStorage<any, any>[] = [
         dbPath: databasePath
     }),
     InMemory,
-    //IndexDb,
+    IndexDb,
 ]
 
 function getStorageDBName(storage: RxStorage<any, any>) {
