@@ -82,7 +82,7 @@
     "typedoc-plugin-rename-defaults": "^0.6.5",
     "typedoc-plugin-superstruct": "^1.0.0",
     "typedoc-theme-hierarchy": "^4.0.0",
-    "typescript": "^5.3.3",
+    "typescript": "^5.1.3",
     "vitest": "^1.0.4"
   },
   "dependencies": {
