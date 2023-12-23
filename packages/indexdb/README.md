@@ -25,4 +25,4 @@ const database = db = await Database.createEncrypted(
 ## QA & Documentation
 | Statements                  | Branches                | Functions                 | Lines             |
 | --------------------------- | ----------------------- | ------------------------- | ----------------- |
-| ![Statements](https://img.shields.io/badge/statements-76.17%25-red.svg?style=flat) | ![Branches](https://img.shields.io/badge/branches-64.12%25-red.svg?style=flat) | ![Functions](https://img.shields.io/badge/functions-76.47%25-red.svg?style=flat) | ![Lines](https://img.shields.io/badge/lines-76.84%25-red.svg?style=flat) |
+| ![Statements](https://img.shields.io/badge/statements-76.25%25-red.svg?style=flat) | ![Branches](https://img.shields.io/badge/branches-64.12%25-red.svg?style=flat) | ![Functions](https://img.shields.io/badge/functions-76.81%25-red.svg?style=flat) | ![Lines](https://img.shields.io/badge/lines-77%25-red.svg?style=flat) |
