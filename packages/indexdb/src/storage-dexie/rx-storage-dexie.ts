@@ -25,9 +25,6 @@ export class RxStorageDexie implements RxStorage<DexieStorageInternals, DexieSet
         ensureNoBooleanIndex(params.schema);
 
         const instance = await createDexieStorageInstance(this, params, this.settings);
-        if (instance.closed) {
-            debugger;
-        }
         return instance
     }
 }

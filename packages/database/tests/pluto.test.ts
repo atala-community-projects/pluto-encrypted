@@ -790,7 +790,6 @@ describe("Pluto encrypted testing with different storages", () => {
                                             return this.secreto;
                                         },
                                     },
-                                    autoMigrate: false,
                                     schema: {
                                         version: 1,
                                         primaryKey: "name",
@@ -915,7 +914,6 @@ describe("Pluto encrypted testing with different storages", () => {
                                             return this.secreto;
                                         },
                                     },
-                                    autoMigrate: false,
                                     schema: {
                                         version: 2,
                                         primaryKey: "test",
