@@ -48,6 +48,7 @@ jobs:
           chmod +x coverage.sh
           ./coverage.sh
           npm run build
+          npm run lint
           npm run coverage
 
       - name: Coverage Comment

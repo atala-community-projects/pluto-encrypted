@@ -4,7 +4,7 @@
  * @description This is a RXDB IndexDB storage that supports encryption middleware.
  * In order to use this in your pluto-encrypted database you must write the following code:
  * Creating a IndexDB compatible storage is very simple.
- * 
+ *
  * ```typescript
  * import IndexDB from "@pluto-encrypted/indexdb";
  * import { Database } from "@pluto-encrypted/database";
@@ -17,12 +17,12 @@
  * });
  * ```
  */
-import { wrappedKeyEncryptionStorage } from "@pluto-encrypted/encryption";
-import { RxStorage } from "rxdb";
-import { getRxStorageDexie } from "./storage-dexie";
+import { wrappedKeyEncryptionStorage } from '@pluto-encrypted/encryption'
+import { type RxStorage } from 'rxdb'
+import { getRxStorageDexie } from './storage-dexie'
 
 const storage: RxStorage<any, any> = wrappedKeyEncryptionStorage({
-    storage: getRxStorageDexie(),
+  storage: getRxStorageDexie()
 })
 
-export default storage;
+export default storage

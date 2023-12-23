@@ -1,128 +1,125 @@
-import { Domain } from "@atala/prism-wallet-sdk";
-import type { GenericORMType, Schema } from "../types";
-import { RxCollection, RxCollectionCreator, RxDocument } from "rxdb";
+import { Domain } from '@atala/prism-wallet-sdk'
+import type { Schema } from '../types'
+import { type RxCollection, type RxDocument } from 'rxdb'
 
-export type MessageSchemaType = {
-  readonly body: string;
-  readonly id: string;
-  readonly piuri: string;
-  readonly from?: string | undefined;
-  readonly to?: string | undefined;
-  readonly attachments: Domain.AttachmentDescriptor[];
-  readonly thid?: string;
-  readonly extraHeaders: string[];
-  readonly createdTime: string;
-  readonly expiresTimePlus: string;
-  readonly ack: string[];
-  readonly direction: Domain.MessageDirection;
-  readonly fromPrior?: string | undefined;
-  readonly pthid?: string | undefined;
-};
-
+export interface MessageSchemaType {
+  readonly body: string
+  readonly id: string
+  readonly piuri: string
+  readonly from?: string | undefined
+  readonly to?: string | undefined
+  readonly attachments: Domain.AttachmentDescriptor[]
+  readonly thid?: string
+  readonly extraHeaders: string[]
+  readonly createdTime: string
+  readonly expiresTimePlus: string
+  readonly ack: string[]
+  readonly direction: Domain.MessageDirection
+  readonly fromPrior?: string | undefined
+  readonly pthid?: string | undefined
+}
 
 const MessageSchema: Schema<MessageSchemaType> = {
   version: 0,
-  primaryKey: "id",
-  type: "object",
+  primaryKey: 'id',
+  type: 'object',
   properties: {
     id: {
-      type: "string",
-      maxLength: 60,
+      type: 'string',
+      maxLength: 60
     },
     body: {
-      type: "string",
+      type: 'string'
     },
     piuri: {
-      type: "string",
+      type: 'string'
     },
     attachments: {
-      type: "array",
+      type: 'array',
       items: {
-        type: "object",
+        type: 'object',
         properties: {
           id: {
-            type: "id",
-            maxLength: 60,
+            type: 'id',
+            maxLength: 60
           },
           description: {
-            type: "string",
+            type: 'string'
           },
           byteCount: {
-            type: "number",
+            type: 'number'
           },
           lastModTime: {
-            type: "string",
+            type: 'string'
           },
           format: {
-            type: "string",
+            type: 'string'
           },
           filename: {
-            type: "array",
+            type: 'array',
             items: {
-              type: "string",
-            },
+              type: 'string'
+            }
           },
           mediaType: {
-            type: "string",
+            type: 'string'
           },
           data: {
-            type: "object",
-          },
-        },
-      },
+            type: 'object'
+          }
+        }
+      }
     },
     extraHeaders: {
-      type: "array",
+      type: 'array'
     },
     createdTime: {
-      type: "string",
+      type: 'string'
     },
     expiresTimePlus: {
-      type: "string",
+      type: 'string'
     },
     ack: {
-      type: "array",
+      type: 'array'
     },
     direction: {
-      type: "number",
+      type: 'number'
     },
     from: {
-      type: "string",
+      type: 'string'
     },
     to: {
-      type: "string",
+      type: 'string'
     },
     thid: {
-      type: "string",
+      type: 'string'
     },
     fromPrior: {
-      type: "string",
+      type: 'string'
     },
     pthid: {
-      type: "string",
-    },
+      type: 'string'
+    }
   },
-  encrypted: ["thid", "attachments", "body"],
-  required: ["id"],
-};
-export type MessageDocument = RxDocument<MessageSchemaType, MessageMethodTypes>;
+  encrypted: ['thid', 'attachments', 'body'],
+  required: ['id']
+}
+export type MessageDocument = RxDocument<MessageSchemaType, MessageMethodTypes>
 
-export type MessageMethodTypes = {
-  toDomainMessage: (this: MessageDocument) => Domain.Message;
-};
+export interface MessageMethodTypes {
+  toDomainMessage: (this: MessageDocument) => Domain.Message
+}
 
 export type MessageColletion = RxCollection<
-  MessageSchemaType,
-  MessageMethodTypes,
-  MessageDocument
->;
-
-
+MessageSchemaType,
+MessageMethodTypes,
+MessageDocument
+>
 
 export const MessageMethods: MessageMethodTypes = {
-  toDomainMessage: function toDomainMessage(this: MessageDocument) {
-    return Domain.Message.fromJson(JSON.stringify(this));
-  },
-};
+  toDomainMessage: function toDomainMessage (this: MessageDocument) {
+    return Domain.Message.fromJson(JSON.stringify(this))
+  }
+}
 
-export default MessageSchema;
+export default MessageSchema

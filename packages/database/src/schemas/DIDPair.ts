@@ -1,33 +1,33 @@
-import { RxCollection, RxDocument } from "rxdb";
-import type { GenericORMType, Schema } from "../types";
+import { type RxCollection, type RxDocument } from 'rxdb'
+import type { Schema } from '../types'
 
-export type DIDPairSchemaType = {
-  hostDID: string;
-  receiverDID: string;
-  name: string;
-};
+export interface DIDPairSchemaType {
+  hostDID: string
+  receiverDID: string
+  name: string
+}
 
 const DIDPairSchema: Schema<DIDPairSchemaType> = {
   version: 0,
-  primaryKey: "name",
-  type: "object",
+  primaryKey: 'name',
+  type: 'object',
   properties: {
     hostDID: {
-      type: "string",
+      type: 'string'
     },
     name: {
-      type: "string",
-      maxLength: 60,
+      type: 'string',
+      maxLength: 60
     },
     receiverDID: {
-      type: "string",
-    },
+      type: 'string'
+    }
   },
   encrypted: [],
-  required: ["name", "hostDID", "receiverDID"],
-};
+  required: ['name', 'hostDID', 'receiverDID']
+}
 
-export type DIDPairDocument = RxDocument<DIDPairSchemaType>;
+export type DIDPairDocument = RxDocument<DIDPairSchemaType>
 export type DIDPairCollection = RxCollection<DIDPairSchemaType, any, DIDPairDocument>
 
-export default DIDPairSchema;
+export default DIDPairSchema
