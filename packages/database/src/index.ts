@@ -542,26 +542,6 @@ export class Database implements Domain.Pluto {
     return mustMigrate(dataMigrator)
   }
 
-  private async migration(database: RxDatabase<PlutoCollections, any, any>) {
-    for (let collectionName of Object.keys(database.collections)) {
-      const collection = database[collectionName].asRxCollection
-      const needed = await this.isMigrationNeeded(collection)
-      if (needed) {
-        const migrator = new EncryptedDataMigrator(
-          collection.asRxCollection,
-          collection.migrationStrategies
-        )
-        await migrator.migratePromise(10)
-
-      }
-    }
-  }
-
-  public static configureCollection(collection: RxCollectionCreator<any>) {
-    collection.autoMigrate = false
-    return collection
-  }
-
   /**
    * Start the database and build collections
    */
@@ -586,8 +566,6 @@ export class Database implements Domain.Pluto {
       ...this.getDefaultCollections(),
       ...(collections || {})
     });
-
-    await this.migration(database)
 
     this._db = database;
   }
