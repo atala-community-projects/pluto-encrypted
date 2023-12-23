@@ -62,50 +62,10 @@ jobs:
           CI: true
         with:
           title: Test Coverage for @pluto-encrypted/database
-          coverage-summary-path: packages/database/coverage/coverage-summary.json
-          create-new-comment: true
+          multiple-files:  |
+            @pluto-encrypted/database, packages/database/coverage/coverage-summary.json
+            @pluto-encrypted/indexdb, packages/indexdb/coverage/coverage-summary.json
+            @pluto-encrypted/inmemory, packages/inmemory/coverage/coverage-summary.json
+            @pluto-encrypted/leveldb, packages/leveldb/coverage/coverage-summary.json
 
-      - name: Coverage Comment
-        uses: MishaKav/jest-coverage-comment@v1.0.23
-        env:
-          GH_TOKEN: ${{ secrets.PLUTO_GITHUB }}
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-          GITHUB_AUTHOR_NAME: ${{ secrets.GITHUB_AUTHOR_NAME }}
-          GITHUB_AUTHOR_EMAIL: ${{ secrets.GITHUB_AUTHOR_EMAIL }}
-          GITHUB_COMMITER_NAME: ${{ secrets.GITHUB_COMMITER_NAME }}
-          GITHUB_COMMITER_EMAIL: ${{ secrets.GITHUB_COMMITER_EMAIL }}
-          CI: true
-        with:
-          title: Test Coverage for @pluto-encrypted/leveldb
-          coverage-summary-path: packages/leveldb/coverage/coverage-summary.json
-          create-new-comment: true
-
-      - name: Coverage Comment
-        uses: MishaKav/jest-coverage-comment@v1.0.23
-        env:
-          GH_TOKEN: ${{ secrets.PLUTO_GITHUB }}
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-          GITHUB_AUTHOR_NAME: ${{ secrets.GITHUB_AUTHOR_NAME }}
-          GITHUB_AUTHOR_EMAIL: ${{ secrets.GITHUB_AUTHOR_EMAIL }}
-          GITHUB_COMMITER_NAME: ${{ secrets.GITHUB_COMMITER_NAME }}
-          GITHUB_COMMITER_EMAIL: ${{ secrets.GITHUB_COMMITER_EMAIL }}
-          CI: true
-        with:
-          title: Test Coverage for @pluto-encrypted/inmemory
-          coverage-summary-path: packages/inmemory/coverage/coverage-summary.json
-          create-new-comment: true
-
-      - name: Coverage Comment
-        uses: MishaKav/jest-coverage-comment@v1.0.23
-        env:
-          GH_TOKEN: ${{ secrets.PLUTO_GITHUB }}
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-          GITHUB_AUTHOR_NAME: ${{ secrets.GITHUB_AUTHOR_NAME }}
-          GITHUB_AUTHOR_EMAIL: ${{ secrets.GITHUB_AUTHOR_EMAIL }}
-          GITHUB_COMMITER_NAME: ${{ secrets.GITHUB_COMMITER_NAME }}
-          GITHUB_COMMITER_EMAIL: ${{ secrets.GITHUB_COMMITER_EMAIL }}
-          CI: true
-        with:
-          title: Test Coverage for @pluto-encrypted/indexdb
-          coverage-summary-path: packages/indexdb/coverage/coverage-summary.json
-          create-new-comment: true
+    
