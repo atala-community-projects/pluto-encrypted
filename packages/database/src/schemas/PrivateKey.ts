@@ -64,7 +64,7 @@ export type PrivateKeyMethodTypes = {
 export type PrivateKeyColletion = RxCollection<
   KeySchemaType,
   PrivateKeyMethodTypes,
-  GenericORMType<PrivateKeyDocument>
+  PrivateKeyDocument
 >;
 export type PrivateKeyDocument = RxDocument<
   KeySchemaType,

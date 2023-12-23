@@ -28,6 +28,6 @@ const DIDPairSchema: Schema<DIDPairSchemaType> = {
 };
 
 export type DIDPairDocument = RxDocument<DIDPairSchemaType>;
-export type DIDPairCollection = RxCollection<DIDPairSchemaType, any, GenericORMType<DIDPairDocument>>
+export type DIDPairCollection = RxCollection<DIDPairSchemaType, any, DIDPairDocument>
 
 export default DIDPairSchema;

@@ -65,7 +65,7 @@ export const CredentialRequestMetadataMethods: CredentialRequestMetadataMethodTy
 export type CredentialRequestMetadataCollection = RxCollection<
   CredentialRequestMetadataSchemaType,
   CredentialRequestMetadataMethodTypes,
-  GenericORMType<CredentialRequestMetadataDocument>
+  CredentialRequestMetadataDocument
 >;
 
 export default CredentialRequestMetadataSchema;

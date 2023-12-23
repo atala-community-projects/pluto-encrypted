@@ -40,6 +40,6 @@ const DIDSchema: Schema<DIDSchemaType> = {
 };
 export type DIDDocument = RxDocument<DIDSchemaType>;
 
-export type DIDCollection = RxCollection<DIDSchemaType, any, GenericORMType<DIDDocument>>
+export type DIDCollection = RxCollection<DIDSchemaType, any, DIDDocument>
 
 export default DIDSchema;

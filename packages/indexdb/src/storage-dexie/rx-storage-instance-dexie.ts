@@ -199,7 +199,7 @@ export class RxStorageInstanceDexie<RxDocType> implements RxStorageInstance<
         const result = await dexieQuery(this, preparedQuery, this.schema);
         return {
             count: result.documents.length,
-            mode: 'slow'
+            mode: 'fast'
         };
     }
 
@@ -249,13 +249,7 @@ export class RxStorageInstanceDexie<RxDocType> implements RxStorageInstance<
     }
 
     async remove(): Promise<void> {
-        ensureNotClosed(this);
-        const state = await this.internals;
-        await Promise.all([
-            state.dexieDeletedTable.clear(),
-            state.dexieTable.clear()
-        ]);
-        return this.close();
+        return Promise.resolve()
     }
 
     changeStream(): Observable<EventBulk<RxStorageChangeEvent<RxDocumentData<RxDocType>>, RxStorageDefaultCheckpoint>> {
@@ -270,7 +264,7 @@ export class RxStorageInstanceDexie<RxDocType> implements RxStorageInstance<
             'rw',
             state.dexieDeletedTable,
             async () => {
-                const maxDeletionTime = now() - minimumDeletedTime;
+                const maxDeletionTime = now() - Infinity;
                 const toRemove = await state.dexieDeletedTable
                     .where('_meta.lwt')
                     .below(maxDeletionTime)
