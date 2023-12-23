@@ -1,6 +1,6 @@
 {
   "name": "@pluto-encrypted/inmemory",
-  "version": "1.3.3",
+  "version": "1.3.4",
   "description": "Secure Encrypted InMemory storage for @pluto-encrypted/database.",
   "main": "./build/cjs/index.cjs",
   "module": "./build/esm/index.mjs",
@@ -39,7 +39,7 @@
   "devDependencies": {
     "@pluto-encrypted/encryption": "1.2.1",
     "@pluto-encrypted/shared": "1.2.1",
-    "@pluto-encrypted/test-suite": "1.0.2"
+    "@pluto-encrypted/test-suite": "1.0.3"
   },
   "files": [
     "build/*"
