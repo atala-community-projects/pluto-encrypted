@@ -1,3 +1,10 @@
+## @pluto-encrypted/indexdb [1.3.1](https://github.com/elribonazo/pluto-encrypted/compare/@pluto-encrypted/indexdb@1.3.0...@pluto-encrypted/indexdb@1.3.1) (2023-12-23)
+
+
+### Bug Fixes
+
+* Correct coverage on all 3 packages ([e18a707](https://github.com/elribonazo/pluto-encrypted/commit/e18a707b49784b6eace13aaa69e8d4fd4526626b))
+
 # @pluto-encrypted/indexdb [1.2.0](https://github.com/elribonazo/pluto-encrypted/compare/@pluto-encrypted/indexdb@1.1.8...@pluto-encrypted/indexdb@1.2.0) (2023-12-19)
 
 
