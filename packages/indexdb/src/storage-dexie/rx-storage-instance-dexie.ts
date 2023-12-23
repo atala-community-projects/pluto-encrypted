@@ -4,8 +4,8 @@ import {
 } from 'rxjs';
 
 import { now, RxStorageInstance, RxStorageDefaultCheckpoint, StringKeys, RxDocumentData, EventBulk, RxStorageChangeEvent, RxJsonSchema, getPrimaryFieldOfPrimaryKey, BulkWriteRow, RxStorageBulkWriteResponse, newRxError, CategorizeBulkWriteRowsOutput, categorizeBulkWriteRows, PROMISE_RESOLVE_VOID, ensureNotFalsy, RxDocumentDataById, DefaultPreparedQuery, RxStorageQueryResult, RxStorageCountResult, RX_META_LWT_MINIMUM, appendToArray, sortDocumentsByLastWriteTime, lastOfArray, RxConflictResultionTask, RxConflictResultionTaskSolution, RxStorageInstanceCreationParams, addRxStorageMultiInstanceSupport } from "rxdb";
-import { DexieStorageInternals, DexieSettings } from "rxdb/dist/types/types";
-import { getDocsInDb, fromDexieToStorage, fromStorageToDexie, closeDexieDb, getDexieDbWithTables, RX_STORAGE_NAME_DEXIE } from "./dexie-helper";
+import { DexieSettings } from "rxdb/dist/types/types";
+import { getDocsInDb, fromDexieToStorage, fromStorageToDexie, closeDexieDb, getDexieDbWithTables, RX_STORAGE_NAME_DEXIE, DexieStorageInternals } from "./dexie-helper";
 import { dexieQuery, dexieCount } from "./dexie-query";
 import { RxStorageDexie } from "./rx-storage-dexie";
 
@@ -314,7 +314,7 @@ export async function createDexieStorageInstance<RxDocType>(
         params.collectionName,
         settings,
         params.schema
-    );
+    ) as any;
 
     const instance = new RxStorageInstanceDexie(
         storage,

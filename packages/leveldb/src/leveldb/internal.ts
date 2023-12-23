@@ -10,10 +10,6 @@ import {
 } from "./types";
 import { getPrivateKeyValue, safeIndexList } from "@pluto-encrypted/shared";
 
-function isArray(arr) {
-    return Array.isArray(arr)
-}
-
 export class LevelDBInternal<RxDocType> implements LevelDBStorageInternals<RxDocType> {
 
     public removed = false;
@@ -22,9 +18,7 @@ export class LevelDBInternal<RxDocType> implements LevelDBStorageInternals<RxDoc
     public documents: Map<string, RxDocumentData<RxDocType>>
     public schema: RxJsonSchema<RxDocumentData<RxDocType>>;
 
-    get options() {
-        return this._options
-    }
+
     static isLevelDBConstructor<RxDocType>(_options: LevelDBInternalConstructor<RxDocType>): _options is {
         level: LevelDBType,
         refCount: number,
@@ -52,7 +46,7 @@ export class LevelDBInternal<RxDocType> implements LevelDBStorageInternals<RxDoc
 
             await pull(
                 pullLevel.read(db),
-                pull.filter(row => !isArray(row.value)),
+                pull.filter(row => !Array.isArray(row.value)),
                 pull.map(row => {
                     docsInDbMap.set(row.key, row.value)
                     return
@@ -82,16 +76,12 @@ export class LevelDBInternal<RxDocType> implements LevelDBStorageInternals<RxDoc
         return db.get(key)
             .then(result => result ? JSON.parse(result) : [])
             .catch(err => {
+                /* istanbul ignore else -- @preserve */
                 if (err.message.startsWith('Key not found in database')) {
                     return []
                 } else {
                     throw err
                 }
-                // if ((err as any).code && (err as any).code === 'LEVEL_NOT_FOUND') {
-                //     throw err
-                // } else {
-                //     return []
-                // }
             });
     }
 
@@ -118,6 +108,7 @@ export class LevelDBInternal<RxDocType> implements LevelDBStorageInternals<RxDoc
         return await db.get(key)
             .then(result => result ? JSON.parse(result) : null)
             .catch(err => {
+                /* istanbul ignore else -- @preserve */
                 if (err.message.startsWith('Key not found in database')) {
                     return null
                 } else {
@@ -216,38 +207,34 @@ export class LevelDBInternal<RxDocType> implements LevelDBStorageInternals<RxDoc
 
 
     async bulkPut(items: RxDocumentData<RxDocType>[], collectionName: string, schema: Readonly<RxJsonSchema<RxDocumentData<RxDocType>>>) {
-        try {
-            const primaryKeyKey = typeof schema.primaryKey === "string" ? schema.primaryKey : schema.primaryKey.key;
-            const saferIndexList = safeIndexList(schema);
 
-            for (let item of items) {
+        const primaryKeyKey = typeof schema.primaryKey === "string" ? schema.primaryKey : schema.primaryKey.key;
+        const saferIndexList = safeIndexList(schema);
 
-                const shouldDelete = item._deleted;
-                const id = getPrivateKeyValue(item, schema)
-                if (shouldDelete) {
-                    for (let requiredIndexes of saferIndexList) {
-                        const requiredIndex = `[${collectionName}+${requiredIndexes.join("+")}]`
-                        await this.removeFromIndex(requiredIndex, id)
-                    }
-                    await this.removeFromIndex(`[${collectionName}+${primaryKeyKey}]`, id)
-                    await this.removeFromIndex('[all]', id)
-                    await this.delete(id)
-                    this.documents.delete(id)
-                } else {
-                    for (let requiredIndexes of saferIndexList) {
-                        const requiredIndex = `[${collectionName}+${requiredIndexes.join("+")}]`
-                        await this.updateIndex(requiredIndex, id)
-                    }
-                    await this.updateIndex(`[${collectionName}+${primaryKeyKey}]`, id)
-                    await this.updateIndex('[all]', id)
-                    await this.set(id, item);
-                    this.documents.set(id, item)
+        for (let item of items) {
+
+            const shouldDelete = item._deleted;
+            const id = getPrivateKeyValue(item, schema)
+            if (shouldDelete) {
+                for (let requiredIndexes of saferIndexList) {
+                    const requiredIndex = `[${collectionName}+${requiredIndexes.join("+")}]`
+                    await this.removeFromIndex(requiredIndex, id)
                 }
+                await this.removeFromIndex(`[${collectionName}+${primaryKeyKey}]`, id)
+                await this.removeFromIndex('[all]', id)
+                await this.delete(id)
+                this.documents.delete(id)
+            } else {
+                for (let requiredIndexes of saferIndexList) {
+                    const requiredIndex = `[${collectionName}+${requiredIndexes.join("+")}]`
+                    await this.updateIndex(requiredIndex, id)
+                }
+                await this.updateIndex(`[${collectionName}+${primaryKeyKey}]`, id)
+                await this.updateIndex('[all]', id)
+                await this.set(id, item);
+                this.documents.set(id, item)
             }
-        } catch (err) {
-            throw err
         }
-
     }
 }
 

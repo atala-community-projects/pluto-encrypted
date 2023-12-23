@@ -6,11 +6,6 @@ This package is compatible with Atala Prism Wallet SDK v3.2.0
 We currently support database wrappers for IndexDB, InMemory and are working together to bring you level-db with electron compatibility.
 We are not going to stop here but ensure that our SDK can be used in any platform and language.
 
-## QA & Documentation
-| Statements                  | Branches                | Functions                 | Lines             |
-| --------------------------- | ----------------------- | ------------------------- | ----------------- |
-| ![Statements](https://img.shields.io/badge/statements-100%25-brightgreen.svg?style=flat) | ![Branches](https://img.shields.io/badge/branches-100%25-brightgreen.svg?style=flat) | ![Functions](https://img.shields.io/badge/functions-100%25-brightgreen.svg?style=flat) | ![Lines](https://img.shields.io/badge/lines-100%25-brightgreen.svg?style=flat) |
-
 ### Documentation & Contribution Guidelines
 The pluto encrypted documentation is always available on all branches [HERE](https://github.com/elribonazo/pluto-encrypted/blob/master/docs/README.md) but we have also deployed an online version of documentation.
 

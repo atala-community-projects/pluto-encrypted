@@ -1,7 +1,7 @@
 import "./setup";
 
 import fs from 'fs';
-import path from 'path';
+
 import { describe, it, beforeEach, afterEach } from 'vitest';
 import { runTestSuite } from '@pluto-encrypted/test-suite';
 
@@ -66,25 +66,27 @@ describe("Testing suite", () => {
     }
   })
 
-  runTestSuite({
-    describe, it, beforeEach, afterEach
-  }, {
-    name: 'leveldb',
-    getStorage() {
-      return createLevelDBStorage({ dbPath: './db' })
-    },
-    getPerformanceStorage() {
-      return {
-        storage: createLevelDBStorage({ dbPath: './db' }),
-        description: 'any'
+  describe("Level with dbPath", () => {
+    runTestSuite({
+      describe, it, beforeEach, afterEach
+    }, {
+      name: 'leveldb',
+      getStorage() {
+        return createLevelDBStorage({ dbPath: './db' })
+      },
+      getPerformanceStorage() {
+        return {
+          storage: createLevelDBStorage({ dbPath: './db' }),
+          description: 'any'
+        }
+      },
+      hasPersistence: true,
+      hasMultiInstance: false,
+      hasAttachments: false,
+      hasBooleanIndexSupport: true,
+      async hasEncryption() {
+        return 'RandomPassword'
       }
-    },
-    hasPersistence: true,
-    hasMultiInstance: false,
-    hasAttachments: false,
-    hasBooleanIndexSupport: true,
-    async hasEncryption() {
-      return 'RandomPassword'
-    }
+    })
   })
 })
