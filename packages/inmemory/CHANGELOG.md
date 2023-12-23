@@ -1,3 +1,18 @@
+## @pluto-encrypted/inmemory [1.3.2](https://github.com/elribonazo/pluto-encrypted/compare/@pluto-encrypted/inmemory@1.3.1...@pluto-encrypted/inmemory@1.3.2) (2023-12-23)
+
+
+### Bug Fixes
+
+* Improve test coverage for test-suite with most of the needed fea… ([#66](https://github.com/elribonazo/pluto-encrypted/issues/66)) ([b90e406](https://github.com/elribonazo/pluto-encrypted/commit/b90e40670e82808f38b880456ccc0c5505b48757))
+
+
+
+
+
+### Dependencies
+
+* **@pluto-encrypted/test-suite:** upgraded to 1.0.1
+
 ## @pluto-encrypted/inmemory [1.3.1](https://github.com/elribonazo/pluto-encrypted/compare/@pluto-encrypted/inmemory@1.3.0...@pluto-encrypted/inmemory@1.3.1) (2023-12-23)
 
 

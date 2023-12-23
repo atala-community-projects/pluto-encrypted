@@ -1,3 +1,20 @@
+## @pluto-encrypted/database [1.2.4](https://github.com/elribonazo/pluto-encrypted/compare/@pluto-encrypted/database@1.2.3...@pluto-encrypted/database@1.2.4) (2023-12-23)
+
+
+### Bug Fixes
+
+* Improve test coverage for test-suite with most of the needed fea… ([#66](https://github.com/elribonazo/pluto-encrypted/issues/66)) ([b90e406](https://github.com/elribonazo/pluto-encrypted/commit/b90e40670e82808f38b880456ccc0c5505b48757))
+
+
+
+
+
+### Dependencies
+
+* **@pluto-encrypted/indexdb:** upgraded to 1.3.2
+* **@pluto-encrypted/inmemory:** upgraded to 1.3.2
+* **@pluto-encrypted/leveldb:** upgraded to 1.3.2
+
 ## @pluto-encrypted/database [1.2.2](https://github.com/elribonazo/pluto-encrypted/compare/@pluto-encrypted/database@1.2.1...@pluto-encrypted/database@1.2.2) (2023-12-23)
 
 
