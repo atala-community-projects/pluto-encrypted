@@ -362,7 +362,7 @@ export class Database implements Domain.Pluto {
   async clear() {
     const storages = Array.from(this.db.storageInstances.values())
     for (let storage of storages) {
-      await storage.cleanup(0)
+      await storage.cleanup(Infinity)
     }
     await removeRxDatabase(this.dbOptions.name, this.db.storage);
   }
@@ -418,6 +418,7 @@ export class Database implements Domain.Pluto {
         throw new Error("Invalid Authentication");
       } else {
         /* istanbul ignore next */
+
         throw err;
       }
     }
@@ -435,7 +436,7 @@ export class Database implements Domain.Pluto {
           $eq: id
         }
       }
-    });
+    }).exec();
     if (message) {
       return message.toDomainMessage();
     }
@@ -455,7 +456,7 @@ export class Database implements Domain.Pluto {
             $eq: message.id
           }
         }
-      });
+      }).exec();
     if (existing) {
       await existing.patch({
         ...message,
@@ -487,7 +488,7 @@ export class Database implements Domain.Pluto {
   * @returns [Message[]](https://input-output-hk.github.io/atala-prism-wallet-sdk-ts/classes/Domain.Message.html) 
   */
   async getAllMessages(): Promise<Domain.Message[]> {
-    const messages = await this.db.messages.find();
+    const messages = await this.db.messages.find().exec();
     return messages.map((message) => message.toDomainMessage());
   }
 
@@ -550,7 +551,7 @@ export class Database implements Domain.Pluto {
           collection.asRxCollection,
           collection.migrationStrategies
         )
-        const migration = await migrator.migratePromise(10)
+        await migrator.migratePromise(10)
 
       }
     }
@@ -589,94 +590,6 @@ export class Database implements Domain.Pluto {
     await this.migration(database)
 
     this._db = database;
-
-    const execOrmNames = ['count', 'findByIds', 'find', 'findOne', "remove"];
-    for (let ormNme of execOrmNames) {
-      for (let collectionName in this.db.collections) {
-        const collection: ValuesOf<PlutoCollections> = this.db.collections[collectionName]
-        const originalOrmMethod = collection[ormNme]
-
-        collection[ormNme] = new Proxy(originalOrmMethod, {
-          async apply(target, thisArg, args) {
-            /* istanbul ignore else -- @preserve */
-            if (target.name === ormNme) {
-              if (ormNme === "remove") {
-                const rxDocumentArray = await collection.find(...args)
-                const docsData: RxDocumentData<any>[] = [];
-                const docsMap: Map<string, RxDocumentData<any>> = new Map();
-                rxDocumentArray.forEach(rxDocument => {
-                  const data: RxDocumentData<any> = rxDocument.toMutableJSON(true) as any;
-                  docsData.push(data);
-                  docsMap.set(rxDocument.primary, data);
-                });
-
-                await Promise.all(
-                  docsData.map(doc => {
-                    const primary = (doc as any)[collection.schema.primaryPath];
-                    const rxDocument = rxDocumentArray.find((doc) => doc[collection.schema.primaryPath] === primary)
-                    return collection._runHooks('pre', 'remove', doc, rxDocument);
-                  })
-                );
-
-                const removeDocs: BulkWriteRow<any>[] = docsData.map(doc => {
-                  const writeDoc = flatClone(doc);
-                  writeDoc._deleted = true;
-                  return {
-                    previous: doc,
-                    document: writeDoc
-                  };
-                });
-
-                const results = await collection.storageInstance.bulkWrite(
-                  removeDocs,
-                  'rx-collection-bulk-remove'
-                );
-
-                const successIds: string[] = Object.keys(results.success);
-
-                await Promise.all(
-                  successIds.map(id => {
-                    return collection._runHooks(
-                      'post',
-                      'remove',
-                      docsMap.get(id),
-                      rxDocumentArray.find((doc) => doc[collection.schema.primaryPath] === id)
-                    );
-                  })
-                );
-
-                const rxDocumentMap = rxDocumentArray.reduce((map, doc) => {
-                  const primary = (doc as any)[collection.schema.primaryPath];
-                  map.set(primary, doc);
-                  return map
-                }, new Map<string, RxDocument<any>>());
-
-                const rxDocuments = successIds.map(id => getFromMapOrThrow(rxDocumentMap, id));
-                const [error] = Object.values(results.error)
-                /* istanbul ignore else -- @preserve */
-                /* istanbul ignore if -- @preserve */
-                if (error) {
-                  //TODO: Improve error handling
-                  /* istanbul ignore next -- @preserve */
-                  throw new Error(`Could not remove ${JSON.stringify(error)}`)
-                }
-                return rxDocuments;
-              }
-
-              const query = Reflect.apply(target, thisArg, args) as RxQuery;
-              return query.exec()
-            }
-
-            /* istanbul ignore next -- @preserve */
-            return Reflect.apply(target, thisArg, args);
-          }
-        })
-
-
-      }
-    }
-
-
   }
 
   /**
@@ -816,7 +729,7 @@ export class Database implements Domain.Pluto {
    */
   async getAllDidPairs(): Promise<Domain.DIDPair[]> {
     const { DID, DIDPair } = Domain;
-    const results = await this.db.didpairs.find()
+    const results = await this.db.didpairs.find().exec()
     return results.map(
       ({ hostDID, receiverDID, name }) =>
         new DIDPair(DID.fromString(hostDID), DID.fromString(receiverDID), name)
@@ -842,7 +755,7 @@ export class Database implements Domain.Pluto {
             },
           ],
         }
-      })
+      }).exec()
     return didPair
       ? new DIDPair(
         DID.fromString(didPair.hostDID),
@@ -863,7 +776,7 @@ export class Database implements Domain.Pluto {
             },
           ],
         }
-      });
+      }).exec();
 
     return didPair
       ? new DIDPair(
@@ -888,7 +801,7 @@ export class Database implements Domain.Pluto {
             $eq: did.toString()
           }
         }
-      })
+      }).exec()
     return privateKeys.map(this.getPrivateKeyFromDB);
   }
 
@@ -899,7 +812,7 @@ export class Database implements Domain.Pluto {
           $eq: id
         }
       }
-    })
+    }).exec()
     return privateKey ? this.getPrivateKeyFromDB(privateKey) : null;
   }
 
@@ -923,7 +836,7 @@ export class Database implements Domain.Pluto {
           $eq: "prism"
         }
       }
-    });
+    }).exec();
 
     const prismDIDInfo: Domain.PrismDIDInfo[] = [];
 
@@ -955,7 +868,7 @@ export class Database implements Domain.Pluto {
         selector: {
           did: did.toString()
         }
-      });
+      }).exec();
 
     if (didDB) {
       const privateKeys = await this.getDIDPrivateKeysByDID(
@@ -988,7 +901,7 @@ export class Database implements Domain.Pluto {
           $eq: alias
         }
       }
-    });
+    }).exec();
     const prismDIDInfo: Domain.PrismDIDInfo[] = [];
     for (let did of dids) {
       const didPrivateKeys = await this.getDIDPrivateKeysByDID(
@@ -1021,7 +934,7 @@ export class Database implements Domain.Pluto {
             },
           ],
         }
-      })
+      }).exec()
 
     return messages.map((message) => message.toDomainMessage());
   }
@@ -1036,7 +949,7 @@ export class Database implements Domain.Pluto {
             },
           ],
         }
-      })
+      }).exec()
 
     return messages.map((message) => message.toDomainMessage());
   }
@@ -1051,7 +964,7 @@ export class Database implements Domain.Pluto {
             },
           ],
         }
-      })
+      }).exec()
 
     return messages.map((message) => message.toDomainMessage());
   }
@@ -1069,7 +982,7 @@ export class Database implements Domain.Pluto {
             },
           ],
         }
-      })
+      }).exec()
     return messages.map((message) => message.toDomainMessage());
   }
 
@@ -1086,7 +999,7 @@ export class Database implements Domain.Pluto {
             },
           ],
         }
-      });
+      }).exec();
     return messages.map((message) => message.toDomainMessage());
   }
 
@@ -1116,7 +1029,7 @@ export class Database implements Domain.Pluto {
         selector: {
           $and: query,
         }
-      })
+      }).exec()
 
     return messages.map((message) => message.toDomainMessage());
   }
@@ -1137,7 +1050,7 @@ export class Database implements Domain.Pluto {
             },
           ],
         }
-      })
+      }).exec()
 
     return messages.map((message) => message.toDomainMessage());
   }
@@ -1166,7 +1079,7 @@ export class Database implements Domain.Pluto {
           $eq: 'peer'
         }
       }
-    });
+    }).exec();
     for (let did of dids) {
       const peerDID = Domain.DID.fromString(did.did);
       const keys = await this.getDIDPrivateKeysByDID(peerDID);
@@ -1197,12 +1110,12 @@ export class Database implements Domain.Pluto {
   }
 
   async getAllMediators(): Promise<Domain.Mediator[]> {
-    const mediators = await this.db.mediators.find()
+    const mediators = await this.db.mediators.find().exec()
     return mediators.map((mediator) => mediator.toDomainMediator());
   }
 
   async getAllCredentials(): Promise<Domain.Credential[]> {
-    const credentials = await this.db.credentials.find()
+    const credentials = await this.db.credentials.find().exec()
     return credentials.map(
       (verifiableCredential) => verifiableCredential.toDomainCredential()
     );
@@ -1221,7 +1134,7 @@ export class Database implements Domain.Pluto {
       } : {}
 
     const linkSecret = await this.db.linksecrets
-      .findOne(query);
+      .findOne(query).exec();
 
     if (linkSecret) {
       return linkSecret.toDomainLinkSecret();
@@ -1261,7 +1174,7 @@ export class Database implements Domain.Pluto {
             $eq: linkSecretName
           }
         }
-      });
+      }).exec();
 
     if (credentialRequestMetadata) {
       return credentialRequestMetadata.toDomainCredentialRequestMetadata();

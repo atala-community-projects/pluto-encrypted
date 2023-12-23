@@ -61,6 +61,6 @@ export type RxStorageLevelDBType<RxDocType> = RxStorage<RxDocType, LevelDBSettin
 export type LevelDBSettings = {
     dbPath: string,
 } | {
-    level: LevelDBType
+    level: LevelDBType,
 }
 

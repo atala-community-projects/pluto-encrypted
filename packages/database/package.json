@@ -21,7 +21,7 @@
     "test:watch": "NODE_ENV=debug vitest tests/*.test.ts --pool threads --poolOptions.threads.singleThread",
     "test:debug": "NODE_ENV=debug vitest tests/*.test.ts --inspect-brk --pool threads --poolOptions.threads.singleThread",
     "build": "rm -rf build && npx rollup -c rollup/rollup.mjs",
-    "coverage": "npx vitest run --coverage && npx istanbul-badges-readme --readmeDir=\"../../\"",
+    "coverage": "npx vitest run --coverage && npx istanbul-badges-readme",
     "docs": "npx typedoc --options ./typedoc.markdown.cjs --hideGenerator",
     "docs-html": "npx typedoc --options ./typedoc.html.cjs --hideGenerator"
   },
@@ -51,6 +51,7 @@
     "@atala/prism-wallet-sdk": "^3.2.0",
     "@pluto-encrypted/encryption": "^1.0.1",
     "rxdb": "^14.17.0",
+    "rxjs": "7.8.1",
     "uuid": "^9.0.1"
   },
   "files": [

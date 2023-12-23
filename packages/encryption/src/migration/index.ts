@@ -6,10 +6,6 @@ import {
     shareReplay,
     switchMap
 } from 'rxjs/operators';
-import {
-    Subject,
-
-} from 'rxjs';
 import { INTERNAL_CONTEXT_COLLECTION, InternalStoreCollectionDocType, NumberFunctionMap, PROMISE_RESOLVE_NULL, RxDocumentData, RxJsonSchema, RxSchema, RxStorageInstance, RxStorageInstanceCreationParams, WithAttachmentsData, clone, createRevision, createRxSchema, deepEqual, flatClone, getDefaultRxDocumentMeta, getPreviousVersions, getPrimaryKeyOfInternalDocument, getWrappedStorageInstance, newRxError, normalizeMangoQuery, now, overwritable, runAsyncPluginHooks, runPluginHooks, toPromise } from 'rxdb';
 
 import { MigrationState, RxStorage } from 'rxdb';
@@ -215,7 +211,7 @@ export function runStrategyIfNotNull(
     }
 }
 
-export function getBatchOfOldCollection(
+export async function getBatchOfOldCollection(
     oldCollection: OldRxCollection,
     batchSize: number,
     notMatching: any[]
@@ -234,17 +230,12 @@ export function getBatchOfOldCollection(
             selector: query,
             sort: [{ [oldCollection.schema.primaryPath]: 'asc' } as any],
             limit: batchSize,
-            skip: 0
+            skip: notMatching.length
         }
     );
-    return storageInstance
-        .query(preparedQuery)
-        .then(result => result.documents
-            .map(doc => {
-                doc = flatClone(doc);
-                return doc;
-            })
-        );
+    const results = await storageInstance.query(preparedQuery);
+    const documents = results.documents.map((doc) => flatClone(doc))
+    return documents;
 }
 
 /**

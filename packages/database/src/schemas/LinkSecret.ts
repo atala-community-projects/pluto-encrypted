@@ -37,7 +37,7 @@ export type LinkSecretMethodTypes = {
 export type LinkSecretColletion = RxCollection<
   LinkSecretSchemaType,
   LinkSecretMethodTypes,
-  GenericORMType<LinkSecretDocument>
+  LinkSecretDocument
 >;
 
 export const LinkSecretMethods: LinkSecretMethodTypes = {

@@ -1,0 +1,4 @@
+coverage/**/*.html
+coverage/**/*.css
+coverage/**/*.js
+coverage/**/*.png

@@ -39,7 +39,7 @@ export type MediatorMethodTypes = {
 export type MediatorCollection = RxCollection<
   MediatorSchemaType,
   MediatorMethodTypes,
-  GenericORMType<MediatorDocument>
+  MediatorDocument
 >;
 
 export const MediatorMethods: MediatorMethodTypes = {

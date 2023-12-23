@@ -28,6 +28,7 @@ import {
     RxAttachmentWriteData,
     RxDocumentData,
     RxDocumentWriteData,
+    RxError,
     RxJsonSchema,
     RxStorage,
     RxStorageInstanceCreationParams,
@@ -60,7 +61,13 @@ export function encryptString(chacha: CipherWithOutput, value: string): string {
         const encrypted = chacha.encrypt(Buffer.from(value));
         return Buffer.from(encrypted).toString('hex');
     } catch (err) {
-        throw new Error("Invalid Authentication")
+        if ((err as RxError).code === "DB1" || (err as RxError).message === "invalid tag") {
+            throw new Error("Invalid Authentication");
+        } else {
+            /* istanbul ignore next */
+
+            throw err;
+        }
     }
 }
 
@@ -82,7 +89,13 @@ export function decryptString(chacha: CipherWithOutput, cipherText: string): str
         const ret = Buffer.from(decrypted).toString();
         return ret;
     } catch (err) {
-        throw new Error("Invalid Authentication")
+        if ((err as RxError).code === "DB1" || (err as RxError).message === "invalid tag") {
+            throw new Error("Invalid Authentication");
+        } else {
+            /* istanbul ignore next */
+
+            throw err;
+        }
     }
 }
 
@@ -182,7 +195,13 @@ export function wrappedKeyEncryptionStorage<Internals, InstanceCreationOptions>(
                             }
                             return docData;
                         } catch (err) {
-                            throw new Error("Invalid Authentication")
+                            if ((err as RxError).code === "DB1" || (err as RxError).message === "invalid tag") {
+                                throw new Error("Invalid Authentication");
+                            } else {
+                                /* istanbul ignore next */
+
+                                throw err;
+                            }
                         }
                     }
                     function modifyFromStorage(docData: RxDocumentData<any>): Promise<RxDocumentData<RxDocType>> {
@@ -200,7 +219,13 @@ export function wrappedKeyEncryptionStorage<Internals, InstanceCreationOptions>(
                                 });
                             return docData;
                         } catch (err) {
-                            throw new Error("Invalid Authentication")
+                            if ((err as RxError).code === "DB1" || (err as RxError).message === "invalid tag") {
+                                throw new Error("Invalid Authentication");
+                            } else {
+                                /* istanbul ignore next */
+
+                                throw err;
+                            }
                         }
                     }
 
@@ -216,7 +241,13 @@ export function wrappedKeyEncryptionStorage<Internals, InstanceCreationOptions>(
                                 return attachmentData;
                             }
                         } catch (err) {
-                            throw new Error("Invalid Authentication")
+                            if ((err as RxError).code === "DB1" || (err as RxError).message === "invalid tag") {
+                                throw new Error("Invalid Authentication");
+                            } else {
+                                /* istanbul ignore next */
+
+                                throw err;
+                            }
                         }
                     }
 
@@ -228,7 +259,13 @@ export function wrappedKeyEncryptionStorage<Internals, InstanceCreationOptions>(
                         modifyAttachmentFromStorage
                     );
                 } catch (err) {
-                    throw new Error("Invalid Authentication")
+                    if ((err as RxError).code === "DB1" || (err as RxError).message === "invalid tag") {
+                        throw new Error("Invalid Authentication");
+                    } else {
+                        /* istanbul ignore next */
+
+                        throw err;
+                    }
                 }
             }
         }

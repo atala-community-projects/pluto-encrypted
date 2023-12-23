@@ -1,11 +1,13 @@
 
-import { RxStorageInstance, RxStorageDefaultCheckpoint, StringKeys, RxDocumentData, EventBulk, RxStorageChangeEvent, RxJsonSchema, getPrimaryFieldOfPrimaryKey, BulkWriteRow, RxStorageBulkWriteResponse, newRxError, CategorizeBulkWriteRowsOutput, categorizeBulkWriteRows, PROMISE_RESOLVE_VOID, ensureNotFalsy, now, RxDocumentDataById, RxStorageQueryResult, RxStorageCountResult, RxConflictResultionTask, RxConflictResultionTaskSolution, getQueryMatcher, getStartIndexStringFromLowerBound, getStartIndexStringFromUpperBound, MangoQuerySelector, flatClone } from "rxdb";
+import { RxStorageInstance, RxStorageDefaultCheckpoint, StringKeys, RxDocumentData, EventBulk, RxStorageChangeEvent, RxJsonSchema, getPrimaryFieldOfPrimaryKey, BulkWriteRow, RxStorageBulkWriteResponse, newRxError, CategorizeBulkWriteRowsOutput, categorizeBulkWriteRows, PROMISE_RESOLVE_VOID, ensureNotFalsy, now, RxDocumentDataById, RxStorageQueryResult, RxStorageCountResult, RxConflictResultionTask, RxConflictResultionTaskSolution, getQueryMatcher, getStartIndexStringFromLowerBound, getStartIndexStringFromUpperBound, MangoQuerySelector, flatClone, getSortComparator } from "rxdb";
 import {
     Subject, Observable
 } from "rxjs";
 
 import { LevelDBStorageInternals, LevelDBSettings, RxStorageLevelDBType, LevelDBPreparedQuery } from "./types";
-import { conditionMatches } from '@pluto-encrypted/shared'
+import { QueryMatcher } from "rxdb/dist/types/types";
+import { fixTxPipe } from "@pluto-encrypted/shared";
+
 export class RxStorageIntanceLevelDB<RxDocType> implements RxStorageInstance<
     RxDocType,
     LevelDBStorageInternals<RxDocType>,
@@ -42,13 +44,13 @@ export class RxStorageIntanceLevelDB<RxDocType> implements RxStorageInstance<
 
         const fixed = documentWrites.reduce<BulkWriteRow<RxDocType>[]>((fixedDocs, currentWriteDoc) => {
             const currentId = currentWriteDoc.document[this.primaryPath] as any;
-            const previousDocument = currentWriteDoc.previous || documents.get(currentId)
+            const previousDocument = currentWriteDoc.previous || this.internals.documents.get(currentId)
             if (context === "data-migrator-delete") {
                 if (previousDocument && previousDocument._rev === currentWriteDoc.document._rev) {
                     fixedDocs.push(currentWriteDoc)
                 }
             } else {
-                if (previousDocument) {
+                if (previousDocument && previousDocument._rev !== currentWriteDoc.document._rev) {
                     currentWriteDoc.previous = previousDocument
                 } else {
                     currentWriteDoc.previous = undefined
@@ -112,30 +114,120 @@ export class RxStorageIntanceLevelDB<RxDocType> implements RxStorageInstance<
     }
 
     async query(preparedQuery: LevelDBPreparedQuery<RxDocType>): Promise<RxStorageQueryResult<RxDocType>> {
-        const selector = preparedQuery.query.selector;
+        const { queryPlan, query } = preparedQuery;
+        const selector = query.selector;
         const selectorKeys = Object.keys(selector);
-        const collectionIndex = `[${this.collectionName}+${preparedQuery.queryPlan.index.join("+")}]`
-        const documentIds = await this.internals.getIndex(collectionIndex);
-        const documents: RxDocumentData<RxDocType>[] = await this.internals.bulkGet(documentIds);
-        const filteredDocuments = documents.filter((document) => {
+        const skip = query.skip ? query.skip : 0;
+        const limit = query.limit ? query.limit : Infinity;
+        const skipPlusLimit = skip + limit;
+        let queryMatcher: QueryMatcher<RxDocumentData<RxDocType>> = getQueryMatcher(
+            this.schema,
+            query
+        );
+
+
+        const queryPlanFields: string[] = queryPlan.index;
+        let indexes: string[] = []
+        if (queryPlanFields.length === 1) {
+            indexes.push(fixTxPipe(queryPlanFields[0]!))
+        } else {
+            indexes.push(...queryPlanFields.map(field => fixTxPipe(field)))
+
+        }
+
+        const shouldAddCompoundIndexes = this.schema.indexes?.find((index) => {
+            if (typeof index === "string") {
+                return indexes.find((index2) => index2 === index)
+            } else {
+                return index.find((subIndex) => subIndex === subIndex)
+            }
+        });
+
+        if (shouldAddCompoundIndexes) {
+            indexes.splice(0, indexes.length)
+            indexes.push(this.collectionName)
+            if (typeof shouldAddCompoundIndexes === "string") {
+                indexes.push(shouldAddCompoundIndexes)
+            } else {
+                indexes.push(...shouldAddCompoundIndexes)
+            }
+        } else {
+            indexes.unshift(this.collectionName)
+        }
+
+        const indexName: string = `[${indexes.join('+')}]`;
+        const docsWithIndex = await this.internals.getIndex(indexName);
+        const documents: RxDocumentData<RxDocType>[] = await this.internals.bulkGet(docsWithIndex);
+        let filteredDocuments = documents.filter((document) => {
             if (selectorKeys.length <= 0) {
                 return true
             } else {
-                for (let key of selectorKeys) {
-                    const matches = conditionMatches(selector, key, document)
-                    if (matches) {
-                        return true;
-                    }
-                }
+                return queryMatcher(document)
             }
-            return false
         })
+
+        const sortComparator = getSortComparator(this.schema, preparedQuery.query);
+        filteredDocuments = filteredDocuments.sort(sortComparator);
+
+        filteredDocuments = filteredDocuments.slice(skip, skipPlusLimit);
         return {
             documents: filteredDocuments
         }
+        // let indexOfLower = (queryPlan.inclusiveStart ? boundGE : boundGT)(
+        //     docsWithIndex,
+        //     {
+        //         indexString: lowerBoundString
+        //     } as any,
+        //     compareDocsWithIndex
+        // );
+        // const indexOfUpper = (queryPlan.inclusiveEnd ? boundLE : boundLT)(
+        //     docsWithIndex,
+        //     {
+        //         indexString: upperBoundString
+        //     } as any,
+        //     compareDocsWithIndex
+        // );
+
+        // let rows: RxDocumentData<RxDocType>[] = [];
+        // let done = false;
+        // while (!done) {
+        //     const currentRow = docsWithIndex[indexOfLower] as any;
+        //     if (
+        //         !currentRow ||
+        //         indexOfLower > indexOfUpper
+        //     ) {
+        //         break;
+        //     }
+        //     const currentDoc = currentRow.doc;
+
+        //     if (!queryMatcher || queryMatcher(currentDoc)) {
+        //         rows.push(currentDoc);
+        //     }
+
+        //     if (
+        //         (rows.length >= skipPlusLimit && !mustManuallyResort) ||
+        //         indexOfLower >= docsWithIndex.length
+        //     ) {
+        //         done = true;
+        //     }
+
+        //     indexOfLower++;
+        // }
+
+        // if (mustManuallyResort) {
+        //     const sortComparator = getSortComparator(this.schema, preparedQuery.query);
+        //     rows = rows.sort(sortComparator);
+        // }
+
+        // // apply skip and limit boundaries.
+        // rows = rows.slice(skip, skipPlusLimit);
+        // return Promise.resolve({
+        //     documents: rows
+        // })
+
     }
 
-    async count(preparedQuery: any): Promise<RxStorageCountResult> {
+    async count(preparedQuery: LevelDBPreparedQuery<RxDocType>): Promise<RxStorageCountResult> {
         const result = await this.query(preparedQuery);
         return {
             count: result.documents.length,
@@ -166,8 +258,9 @@ export class RxStorageIntanceLevelDB<RxDocType> implements RxStorageInstance<
     /* istanbul ignore next */
     async close(): Promise<void> {
         if (this.closed) {
-            return Promise.reject(new Error('already closed'));
+            return Promise.resolve()
         }
+
         await this.internals.close()
         this.changes$.complete();
         this.closed = true;

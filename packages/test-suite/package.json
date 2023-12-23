@@ -1,0 +1,39 @@
+{
+  "name": "@pluto-encrypted/test-suite",
+  "version": "0.0.1",
+  "description": "This is a RXDB test-suite that works out of the box without cloning rxdb repo or submodule.",
+  "main": "./build/cjs/index.cjs",
+  "module": "./build/esm/index.mjs",
+  "types": "./build/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./build/esm/index.mjs",
+      "require": "./build/cjs/index.cjs"
+    }
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "prepublishOnly": "npm run build",
+    "clean-packages": "rm -rf node_modules && rm -rf build",
+    "build": "rm -rf build && npx rollup -c rollup/rollup.mjs"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/elribonazo/pluto-encrypted.git"
+  },
+  "author": "elribonazo@gmail.com",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "@faker-js/faker": "^8.3.1",
+    "async-test-util": "^2.2.1",
+    "rxdb": "^14.17.0",
+    "uuid": "^9.0.1",
+    "vitest": "^1.0.4"
+  },
+  "files": [
+    "build/*"
+  ],
+  "gitHead": "6aa4ce8bbb9938fc4c4e790efffa5b902631362c"
+}

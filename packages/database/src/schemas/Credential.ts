@@ -110,7 +110,7 @@ export const CredentialMethods: CredentialMethodTypes = {
 export type CredentialCollection = RxCollection<
   CredentialSchemaType,
   CredentialMethodTypes,
-  GenericORMType<CredentialDocument>
+  CredentialDocument
 >;
 
 export default CredentialSchema;

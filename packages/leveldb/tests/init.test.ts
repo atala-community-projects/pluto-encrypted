@@ -1,59 +1,34 @@
 import "./setup";
 
+import fs from 'fs';
+
 import { describe, it, beforeEach, afterEach } from 'vitest';
-import path from 'path';
+import { runTestSuite } from '@pluto-encrypted/test-suite';
+
 
 import { createLevelDBStorage } from '../src'
-
 import { Database } from "../../database/src";
 
 const keyData = new Uint8Array(32);
 
 const databaseName = "prism-db";
-const databasePath = path.resolve(process.cwd(), databaseName);
 const defaultPassword = Buffer.from(keyData);
 
-describe("LevelDb init", () => {
-  let db: Database;
-
-  afterEach(async () => {
-    // jest.useRealTimers();
-    // sandbox.restore();
-  });
-
-  beforeEach(async () => {
-    // jest.useFakeTimers();
-    // sandbox = sinon.createSandbox();
-  });
-
-  it('should start up fine', async () => {
-    const storage = createLevelDBStorage({
-      dbPath: databasePath
-    })
-
-    const db = await Database.createEncrypted(
-      {
-        name: databaseName,
-        encryptionKey: defaultPassword,
-        storage: storage,
-      }
-    )
-      .catch(err => {
-        console.log(err)
-        throw err
-      });
-
-    // await db.close()
-  })
+describe("Testing suite", () => {
 
   it('should be able to instanciate multiple databases in the same thread', async ({ expect }) => {
-
+    if (fs.existsSync("./db1")) {
+      fs.rmdirSync("./db1", { recursive: true })
+    }
+    if (fs.existsSync("./db2")) {
+      fs.rmdirSync("./db2", { recursive: true })
+    }
     const db = await Database.createEncrypted(
       {
         name: databaseName,
         encryptionKey: defaultPassword,
         storage: createLevelDBStorage({
-          dbPath: "./db"
+          dbPath: "./db1"
         }),
       }
     );
@@ -83,6 +58,35 @@ describe("LevelDb init", () => {
     await db2.clear()
 
 
+    if (fs.existsSync("./db1")) {
+      fs.rmdirSync("./db1", { recursive: true })
+    }
+    if (fs.existsSync("./db2")) {
+      fs.rmdirSync("./db2", { recursive: true })
+    }
+  })
 
+  describe("Level with dbPath", () => {
+    runTestSuite({
+      describe, it, beforeEach, afterEach
+    }, {
+      name: 'leveldb',
+      getStorage() {
+        return createLevelDBStorage({ dbPath: './db' })
+      },
+      getPerformanceStorage() {
+        return {
+          storage: createLevelDBStorage({ dbPath: './db' }),
+          description: 'any'
+        }
+      },
+      hasPersistence: true,
+      hasMultiInstance: false,
+      hasAttachments: false,
+      hasBooleanIndexSupport: true,
+      async hasEncryption() {
+        return 'RandomPassword'
+      }
+    })
   })
 })

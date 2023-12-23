@@ -114,7 +114,7 @@ export type MessageMethodTypes = {
 export type MessageColletion = RxCollection<
   MessageSchemaType,
   MessageMethodTypes,
-  GenericORMType<MessageDocument>
+  MessageDocument
 >;
 
 

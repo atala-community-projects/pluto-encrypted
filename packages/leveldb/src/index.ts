@@ -20,7 +20,7 @@
  * });
  * ```
  */
-import { RxStorage, RxStorageDefaultStatics, RxStorageInstance, RxStorageInstanceCreationParams } from "rxdb";
+import { RxStorage, RxStorageDefaultStatics, RxStorageInstance, RxStorageInstanceCreationParams, newRxError } from "rxdb";
 import { LevelDBInternalConstructor, LevelDBSettings, LevelDBStorageInternals, RxStorageLevelDBType } from "./leveldb/types";
 
 import { RxStorageIntanceLevelDB } from "./leveldb/instance";
@@ -52,6 +52,10 @@ function getRxStorageLevel<RxDocType>(settings: LevelDBSettings): RxStorageLevel
         name: RX_STORAGE_NAME_LEVELDB,
         statics: RxStorageDefaultStatics,
         async createStorageInstance<RxDocType>(params: RxStorageInstanceCreationParams<RxDocType, LevelDBSettings>): Promise<RxStorageInstance<RxDocType, LevelDBStorageInternals<RxDocType>, LevelDBSettings, any>> {
+            if (params.schema.keyCompression) {
+                throw newRxError('UT5', { args: { databaseName: params.databaseName, collectionName: params.collectionName } })
+            }
+
             const levelDBConstructorProps: LevelDBInternalConstructor<RxDocType> = "level" in settings ?
                 {
                     level: settings.level,
@@ -66,7 +70,7 @@ function getRxStorageLevel<RxDocType>(settings: LevelDBSettings): RxStorageLevel
                 };
 
             const databasePath = "level" in levelDBConstructorProps ?
-                levelDBConstructorProps.level.db.location :
+                levelDBConstructorProps.level.location :
                 levelDBConstructorProps.dbPath;
 
             const existingInstance = internalInstance.get(databasePath);
@@ -96,8 +100,7 @@ function getRxStorageLevel<RxDocType>(settings: LevelDBSettings): RxStorageLevel
 
 
 export function createLevelDBStorage(settings: LevelDBSettings) {
-    const storage: RxStorage<any, any> = wrappedKeyEncryptionStorage({
+    return wrappedKeyEncryptionStorage({
         storage: getRxStorageLevel(settings)
     })
-    return storage
 }
