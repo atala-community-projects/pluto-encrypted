@@ -236,11 +236,8 @@ export class LevelDBInternal<RxDocType> implements LevelDBStorageInternals<RxDoc
                 } else {
                     for (let requiredIndexes of saferIndexList) {
                         const requiredIndex = `[${collectionName}+${requiredIndexes.join("+")}]`
-                        console.log("update index", requiredIndex)
                         await this.updateIndex(requiredIndex, id)
                     }
-                    console.log("update index", `[${collectionName}+${primaryKeyKey}]`)
-
                     await this.updateIndex(`[${collectionName}+${primaryKeyKey}]`, id)
                     await this.updateIndex('[all]', id)
                     await this.set(id, item);

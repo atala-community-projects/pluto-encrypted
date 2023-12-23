@@ -135,7 +135,7 @@ describe("Pluto encrypted testing with different storages", () => {
             });
 
             afterEach(async () => {
-                if (db) {
+                if (db && (storage.name === "in-memory" || storage.name === "leveldb")) {
                     await db.clear()
                 }
             })

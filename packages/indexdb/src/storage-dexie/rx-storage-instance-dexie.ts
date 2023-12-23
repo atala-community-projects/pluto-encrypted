@@ -326,12 +326,6 @@ export async function createDexieStorageInstance<RxDocType>(
         settings
     );
 
-    addRxStorageMultiInstanceSupport(
-        RX_STORAGE_NAME_DEXIE,
-        params,
-        instance
-    );
-
     return Promise.resolve(instance);
 }
 
