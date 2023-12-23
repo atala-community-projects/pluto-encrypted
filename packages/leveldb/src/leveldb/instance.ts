@@ -145,12 +145,15 @@ export class RxStorageIntanceLevelDB<RxDocType> implements RxStorageInstance<
 
         if (shouldAddCompoundIndexes) {
             indexes.splice(0, indexes.length)
+            indexes.push(this.collectionName)
             if (typeof shouldAddCompoundIndexes === "string") {
                 indexes.push(shouldAddCompoundIndexes)
             } else {
                 indexes.push(...shouldAddCompoundIndexes)
             }
-
+        } else {
+            indexes.unshift(this.collectionName)
+            debugger;
         }
 
         const indexName: string = `[${indexes.join('+')}]`;

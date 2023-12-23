@@ -226,19 +226,22 @@ export class LevelDBInternal<RxDocType> implements LevelDBStorageInternals<RxDoc
                 const id = getPrivateKeyValue(item, schema)
                 if (shouldDelete) {
                     for (let requiredIndexes of saferIndexList) {
-                        const requiredIndex = `[${requiredIndexes.join("+")}]`
+                        const requiredIndex = `[${collectionName}+${requiredIndexes.join("+")}]`
                         await this.removeFromIndex(requiredIndex, id)
                     }
-                    await this.removeFromIndex(`[${primaryKeyKey}]`, id)
+                    await this.removeFromIndex(`[${collectionName}+${primaryKeyKey}]`, id)
                     await this.removeFromIndex('[all]', id)
                     await this.delete(id)
                     this.documents.delete(id)
                 } else {
                     for (let requiredIndexes of saferIndexList) {
-                        const requiredIndex = `[${requiredIndexes.join("+")}]`
+                        const requiredIndex = `[${collectionName}+${requiredIndexes.join("+")}]`
+                        console.log("update index", requiredIndex)
                         await this.updateIndex(requiredIndex, id)
                     }
-                    await this.updateIndex(`[${primaryKeyKey}]`, id)
+                    console.log("update index", `[${collectionName}+${primaryKeyKey}]`)
+
+                    await this.updateIndex(`[${collectionName}+${primaryKeyKey}]`, id)
                     await this.updateIndex('[all]', id)
                     await this.set(id, item);
                     this.documents.set(id, item)

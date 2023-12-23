@@ -47,7 +47,7 @@
       "type": "node"
     },
     {
-      "cwd": "${workspaceFolder}/packages/database",
+      "cwd": "${workspaceFolder}/packages/leveldb",
       "command": "npm run test",
       "name": "TEST",
       "request": "launch",
