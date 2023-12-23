@@ -11,11 +11,12 @@
 //     simpleHumanV3,
 //     SimpleHumanV3DocumentType
 // } from '../helper/schema-objects.ts';
-import { RxDocumentData, RxDocumentWriteData, RxSchema, RxStorage, RxStorageInstance, RxStorageInstanceCreationParams, clone, createRevision, ensureNotFalsy, flatCloneDocWithMeta, getPseudoSchemaForVersion, newRxError, now, parseRevision, randomCouchString } from "rxdb";
-import { EXAMPLE_REVISION_1, EXAMPLE_REVISION_2, EXAMPLE_REVISION_3, EXAMPLE_REVISION_4, OptionalValueTestDoc, RxTestStorage, TestDocType, TestSuite, getTestDataSchema, testContext, testCorrectQueries, withIndexes } from "./helper";
+import { FilledMangoQuery, RxDocumentData, RxDocumentWriteData, RxJsonSchema, RxSchema, RxStorage, RxStorageBulkWriteResponse, RxStorageInstance, RxStorageInstanceCreationParams, clone, createRevision, ensureNotFalsy, fillWithDefaultSettings, flatCloneDocWithMeta, getPseudoSchemaForVersion, getQueryMatcher, getSortComparator, newRxError, now, parseRevision, randomCouchString, shuffleArray } from "rxdb";
+import { EXAMPLE_REVISION_1, EXAMPLE_REVISION_2, EXAMPLE_REVISION_3, EXAMPLE_REVISION_4, NestedDoc, OptionalValueTestDoc, RandomDoc, RxTestStorage, TestDocType, TestSuite, getNestedDocSchema, getTestDataSchema, getWriteData, prepareQuery, testContext, testCorrectQueries, withIndexes } from "./helper";
 import * as schemas from './helper/schemas';
 import { HeroArrayDocumentType, NestedHumanDocumentType, SimpleHumanV3DocumentType, human, nestedHuman, simpleHumanV3 } from "./helper/schema-objects";
 import { HumanDocumentType } from "./helper/schemas";
+import { randomString } from "async-test-util";
 
 let storage: RxStorage<any, any>;
 let storageInstance: RxStorageInstance<any, any, any, any>;
@@ -688,6 +689,712 @@ export function runTestSuite(suite: TestSuite, testStorage: RxTestStorage) {
 
         });
 
+        describe('.getSortComparator()', () => {
+            it('should sort in the correct order', async ({ expect }) => {
+                storageInstance = await storage.createStorageInstance<{
+                    _id: string;
+                    age: number;
+                }>({
+                    databaseInstanceToken: randomCouchString(10),
+                    databaseName: randomCouchString(12),
+                    collectionName: randomCouchString(12),
+                    schema: fillWithDefaultSettings({
+                        version: 0,
+                        type: 'object',
+                        primaryKey: '_id',
+                        properties: {
+                            _id: {
+                                type: 'string',
+                                maxLength: 100
+                            },
+                            age: {
+                                type: 'number'
+                            }
+                        },
+                        required: [
+                            '_id',
+                            'age'
+                        ]
+                    }),
+                    options: {},
+                    multiInstance: false,
+                    devMode: true
+                });
+
+                const query: FilledMangoQuery<any> = {
+                    selector: {},
+                    limit: 1000,
+                    sort: [
+                        { age: 'asc' }
+                    ],
+                    skip: 0
+                };
+                const comparator = getSortComparator(
+                    storageInstance.schema,
+                    query
+                );
+
+                const doc1: any = human();
+                doc1._id = 'aa';
+                doc1.age = 1;
+                const doc2: any = human();
+                doc2._id = 'bb';
+                doc2.age = 100;
+
+                // should sort in the correct order
+                expect([doc1, doc2]).toStrictEqual([doc1, doc2].sort(comparator))
+            });
+            it('should still sort in correct order when docs do not match the selector', async ({ expect }) => {
+                const storageInstance = await storage.createStorageInstance<TestDocType>({
+                    databaseInstanceToken: randomCouchString(10),
+                    databaseName: randomCouchString(12),
+                    collectionName: randomCouchString(12),
+                    schema: getTestDataSchema(),
+                    options: {},
+                    multiInstance: false,
+                    devMode: true
+                });
+
+                const matchingValue = 'foobar';
+                const query: FilledMangoQuery<TestDocType> = {
+                    selector: {
+                        value: {
+                            $eq: matchingValue
+                        }
+                    },
+                    sort: [
+                        { key: 'asc' }
+                    ],
+                    skip: 0
+                };
+
+                const comparator = getSortComparator(
+                    storageInstance.schema,
+                    query
+                );
+
+                const docs: TestDocType[] = [
+                    {
+                        value: matchingValue,
+                        key: 'aaa'
+                    },
+                    {
+                        value: 'barfoo',
+                        key: 'bbb'
+                    }
+                ];
+
+                const result = comparator(
+                    docs[0]!,
+                    docs[1]!
+
+                );
+
+                expect(result).toStrictEqual(-1)
+            });
+            it('should work with a more complex query', async ({ expect }) => {
+                const storageInstance = await storage.createStorageInstance<TestDocType>({
+                    databaseInstanceToken: randomCouchString(10),
+                    databaseName: randomCouchString(12),
+                    collectionName: randomCouchString(12),
+                    schema: getTestDataSchema(),
+                    options: {},
+                    multiInstance: false,
+                    devMode: true
+                });
+
+                const matchingValue = 'aaa';
+                const query: FilledMangoQuery<TestDocType> = {
+                    selector: {
+                        $or: [
+                            {
+                                value: matchingValue,
+                                key: matchingValue
+                            },
+                            {
+                                value: 'barfoo',
+                                key: 'barfoo'
+                            }
+                        ],
+                        key: matchingValue
+                    },
+                    sort: [
+                        { key: 'asc' }
+                    ],
+                    skip: 0
+                };
+
+                const comparator = getSortComparator(
+                    storageInstance.schema,
+                    query
+                );
+
+                const docs: TestDocType[] = [
+                    {
+                        value: matchingValue,
+                        key: matchingValue
+                    },
+                    {
+                        value: 'bbb',
+                        key: 'bbb'
+                    }
+                ];
+
+                const result = comparator(
+                    docs[0]!,
+                    docs[1]!
+
+                );
+
+                expect(result).toStrictEqual(-1)
+            });
+        });
+
+        describe('.getQueryMatcher()', () => {
+            it('should match the right docs', async ({ expect }) => {
+                storageInstance = await storage.createStorageInstance<schemas.HumanDocumentType>({
+                    databaseInstanceToken: randomCouchString(10),
+                    databaseName: randomCouchString(12),
+                    collectionName: randomCouchString(12),
+                    schema: getPseudoSchemaForVersion(0, '_id' as any),
+                    options: {},
+                    multiInstance: false,
+                    devMode: true
+                });
+
+                const query: FilledMangoQuery<schemas.HumanDocumentType> = {
+                    selector: {
+                        age: {
+                            $gt: 10,
+                            $ne: 50
+                        }
+                    },
+                    sort: [
+                        { _id: 'asc' }
+                    ],
+                    skip: 0
+                };
+
+                const queryMatcher = getQueryMatcher(
+                    storageInstance.schema,
+                    query
+                );
+
+                const doc1: any = human();
+                doc1._id = 'aa';
+                doc1.age = 1;
+                const doc2: any = human();
+                doc2._id = 'bb';
+                doc2.age = 100;
+
+                expect(queryMatcher(doc1)).toStrictEqual(false)
+                expect(queryMatcher(doc2)).toStrictEqual(true)
+            });
+            it('should match the nested document', ({ expect }) => {
+                const schema = getNestedDocSchema();
+                const query: FilledMangoQuery<NestedDoc> = {
+                    selector: {
+                        'nes.ted': {
+                            $eq: 'barfoo'
+                        }
+                    },
+                    sort: [
+                        { id: 'asc' }
+                    ],
+                    skip: 0
+                };
+
+                const queryMatcher = getQueryMatcher(
+                    schema,
+                    query
+                );
+
+                const notMatchingDoc = {
+                    id: 'foobar',
+                    nes: {
+                        ted: 'xxx'
+                    },
+                    _deleted: false,
+                    _attachments: {},
+                    _rev: EXAMPLE_REVISION_1,
+                    _meta: {
+                        lwt: now()
+                    }
+                };
+                const matchingDoc = {
+                    id: 'foobar',
+                    nes: {
+                        ted: 'barfoo'
+                    },
+                    _deleted: false,
+                    _attachments: {},
+                    _rev: EXAMPLE_REVISION_1,
+                    _meta: {
+                        lwt: now()
+                    }
+                };
+
+                expect(queryMatcher(notMatchingDoc)).toStrictEqual(false)
+                expect(queryMatcher(matchingDoc)).toStrictEqual(true)
+
+            });
+        });
+
+        describe('.query()', () => {
+            it('should find all documents', async ({ expect }) => {
+                storageInstance = await storage.createStorageInstance<{ key: string; value: string; }>({
+                    databaseInstanceToken: randomCouchString(10),
+                    databaseName: randomCouchString(12),
+                    collectionName: randomCouchString(12),
+                    schema: getPseudoSchemaForVersion<{ key: string; value: string; }>(0, 'key'),
+                    options: {},
+                    multiInstance: false,
+                    devMode: true
+                });
+
+                const writeData = {
+                    key: 'foobar',
+                    value: 'barfoo',
+                    _deleted: false,
+                    _attachments: {},
+                    _rev: EXAMPLE_REVISION_1,
+                    _meta: {
+                        lwt: now()
+                    }
+                };
+
+                await storageInstance.bulkWrite(
+                    [{
+                        document: writeData
+                    }],
+                    testContext
+                );
+
+
+                const writeData2 = {
+                    key: 'foobar2',
+                    value: 'barfoo2',
+                    _deleted: false,
+                    _attachments: {},
+                    _rev: EXAMPLE_REVISION_1,
+                    _meta: {
+                        lwt: now()
+                    }
+                };
+                await storageInstance.bulkWrite(
+                    [{
+                        document: writeData2
+                    }],
+                    testContext
+                );
+
+                const preparedQuery = prepareQuery(
+                    storageInstance.schema,
+                    {
+                        selector: {
+                            _deleted: false
+                        },
+                        sort: [{ key: 'asc' }],
+                        skip: 0
+                    }
+                );
+                const allDocs = await storageInstance.query(preparedQuery);
+                const first = allDocs.documents[0];
+
+                expect(first).not.toBe(undefined)
+                expect(first.value).toBe('barfoo')
+
+            });
+            it('should sort in the correct order', async ({ expect }) => {
+                storageInstance = await storage.createStorageInstance<{ key: string; value: string; }>({
+                    databaseInstanceToken: randomCouchString(10),
+                    databaseName: randomCouchString(12),
+                    collectionName: randomCouchString(12),
+                    schema: getTestDataSchema(),
+                    options: {},
+                    multiInstance: false,
+                    devMode: true
+                });
+
+                await storageInstance.bulkWrite([
+                    {
+                        document: getWriteData({ value: 'a' })
+                    },
+                    {
+                        document: getWriteData({ value: 'b' })
+                    },
+                    {
+                        document: getWriteData({ value: 'c' })
+                    },
+                ], testContext);
+
+                const preparedQuery = prepareQuery(
+                    storageInstance.schema,
+                    {
+                        selector: {},
+                        sort: [
+                            { value: 'desc' }
+                        ],
+                        skip: 0
+                    }
+                );
+                const allDocs = await storageInstance.query(preparedQuery);
+
+                expect(allDocs.documents.length).toBe(3)
+                expect(allDocs.documents[0].value).toBe('c')
+                expect(allDocs.documents[1].value).toBe('b')
+                expect(allDocs.documents[2].value).toBe('a')
+
+            });
+
+            /**
+             * For event-reduce to work,
+             * we must ensure we there is always a deterministic sort order.
+             */
+            it('should have the same deterministic order of .query() and .getSortComparator()', async ({ expect }) => {
+                const schema: RxJsonSchema<RxDocumentData<RandomDoc>> = fillWithDefaultSettings({
+                    version: 0,
+                    primaryKey: 'id',
+                    type: 'object',
+                    properties: {
+                        id: {
+                            type: 'string',
+                            maxLength: 100
+                        },
+                        equal: {
+                            type: 'string',
+                            maxLength: 20,
+                            enum: ['foobar']
+                        },
+                        increment: {
+                            type: 'number',
+                            minimum: 0,
+                            maximum: 1000,
+                            multipleOf: 1
+                        },
+                        random: {
+                            type: 'string',
+                            maxLength: 100
+                        }
+                    },
+                    indexes: [
+                        /**
+                         * RxDB will always append the primaryKey to an index
+                         * if the primaryKey was not used in the index before.
+                         * This ensures we have a deterministic sorting when querying documents
+                         * from that index.
+                         */
+                        ['equal', 'id'],
+                        ['increment', 'id'],
+                        ['random', 'id'],
+                        [
+                            'equal',
+                            'increment',
+                            'id'
+                        ]
+                    ],
+                    required: [
+                        'id',
+                        'equal',
+                        'increment',
+                        'random'
+                    ]
+                });
+                storageInstance = await storage.createStorageInstance<RandomDoc>({
+                    databaseInstanceToken: randomCouchString(10),
+                    databaseName: randomCouchString(12),
+                    collectionName: randomCouchString(12),
+                    schema,
+                    options: {},
+                    multiInstance: false,
+                    devMode: true
+                });
+
+                const docsAmount = 6;
+                const docData: RxDocumentWriteData<RandomDoc>[] = new Array(docsAmount)
+                    .fill(0)
+                    .map((_x, idx) => ({
+                        id: randomString(10),
+                        equal: 'foobar',
+                        random: randomString(10),
+                        increment: idx + 1,
+                        _deleted: false,
+                        _attachments: {},
+                        _rev: EXAMPLE_REVISION_1,
+                        _meta: {
+                            lwt: now()
+                        }
+                    }));
+                const writeResponse: RxStorageBulkWriteResponse<RandomDoc> = await storageInstance.bulkWrite(
+                    docData.map(d => ({ document: d })),
+                    testContext
+                );
+                if (Object.keys(writeResponse.error).length > 0) {
+                    throw new Error('could not save');
+                }
+                const docs = Object.values(writeResponse.success);
+
+                async function testQuery(query: FilledMangoQuery<RandomDoc>): Promise<void> {
+                    const preparedQuery = prepareQuery(
+                        storageInstance.schema,
+                        query
+                    );
+                    const docsViaQuery = (await storageInstance.query(preparedQuery)).documents;
+                    if (docsViaQuery.length !== docsAmount) {
+                        throw new Error('docs missing');
+                    }
+                    const sortComparator = getSortComparator(
+                        (storageInstance as any).schema,
+                        query
+                    );
+                    const docsViaSort = shuffleArray(docs).sort(sortComparator);
+                    expect(docsViaQuery).toStrictEqual(docsViaSort)
+                }
+                const queries: FilledMangoQuery<RandomDoc>[] = [
+                    {
+                        selector: {},
+                        sort: [
+                            { id: 'asc' }
+                        ],
+                        skip: 0
+                    },
+                    {
+                        selector: {},
+                        sort: [
+                            { equal: 'asc' },
+                            /**
+                             * RxDB will always append the primaryKey as last sort parameter
+                             * if the primary key is not used in the sorting before.
+                             */
+                            { id: 'asc' }
+                        ],
+                        skip: 0
+                    },
+                    {
+                        selector: {},
+                        sort: [
+                            { increment: 'desc' },
+                            { id: 'asc' }
+                        ],
+                        skip: 0
+                    },
+                    {
+                        selector: {},
+                        sort: [
+                            { equal: 'asc' },
+                            { increment: 'desc' },
+                            { id: 'asc' }
+                        ],
+                        skip: 0
+                    }
+                ];
+                for (const query of queries) {
+                    await testQuery(query);
+                }
+
+            });
+            it('should be able to search over a nested object', async ({ expect }) => {
+                const schema = getNestedDocSchema();
+                storageInstance = await storage.createStorageInstance<NestedDoc>({
+                    databaseInstanceToken: randomCouchString(10),
+                    databaseName: randomCouchString(12),
+                    collectionName: randomCouchString(12),
+                    schema,
+                    options: {},
+                    multiInstance: false,
+                    devMode: true
+                });
+                const insertResult = await storageInstance.bulkWrite([
+                    {
+                        document: {
+                            id: 'foobar',
+                            nes: {
+                                ted: 'barfoo'
+                            },
+                            _deleted: false,
+                            _attachments: {},
+                            _rev: EXAMPLE_REVISION_1,
+                            _meta: {
+                                lwt: now()
+                            }
+                        }
+                    }
+                ], testContext);
+
+                expect(insertResult.error).toStrictEqual({})
+
+                const preparedQuery = prepareQuery<NestedDoc>(
+                    schema,
+                    {
+                        selector: {
+                            'nes.ted': {
+                                $eq: 'barfoo'
+                            }
+                        },
+                        sort: [
+                            { 'nes.ted': 'asc' },
+                            { id: 'asc' }
+                        ],
+                        skip: 0
+                    }
+                );
+
+                const results = await storageInstance.query(preparedQuery);
+
+                expect(results.documents.length).toBe(1)
+
+            });
+            /**
+             * This failed on some storages when there are more
+             * documents then the batchSize of the RxStorage
+             */
+            it('querying many documents should work', async ({ expect }) => {
+                const schema = getTestDataSchema();
+                storageInstance = await storage.createStorageInstance<TestDocType>({
+                    databaseInstanceToken: randomCouchString(10),
+                    databaseName: randomCouchString(12),
+                    collectionName: randomCouchString(12),
+                    schema,
+                    options: {},
+                    multiInstance: false,
+                    devMode: true
+                });
+
+                const amount = 100;
+
+                await storageInstance.bulkWrite(
+                    new Array(amount)
+                        .fill(0)
+                        .map((_v, idx) => ({
+                            document: getWriteData({
+                                key: idx.toString().padStart(5, '0') + '-' + randomString(10),
+                                value: idx + ''
+                            })
+                        })),
+                    testContext
+                );
+
+                const preparedQuery = prepareQuery<TestDocType>(
+                    schema,
+                    {
+                        selector: {},
+                        skip: 0,
+                        sort: [
+                            { key: 'asc' }
+                        ]
+                    }
+                );
+                const results = await storageInstance.query(preparedQuery);
+
+                expect(results.documents.length).toBe(amount)
+
+            });
+        });
+
+        describe('.count()', () => {
+            it('should count the correct amount', async ({ expect }) => {
+                const schema = getTestDataSchema();
+                storageInstance = await storage.createStorageInstance<TestDocType>({
+                    databaseInstanceToken: randomCouchString(10),
+                    databaseName: randomCouchString(12),
+                    collectionName: randomCouchString(12),
+                    schema,
+                    options: {},
+                    multiInstance: false,
+                    devMode: true
+                });
+                const preparedQueryAll = prepareQuery<TestDocType>(
+                    schema,
+                    {
+                        selector: {},
+                        sort: [
+                            { key: 'asc' }
+                        ],
+                        skip: 0
+                    }
+                );
+                async function ensureCountIs(nr: number) {
+                    const result = await storageInstance.count(preparedQueryAll);
+                    expect(result.count).toBe(nr)
+                }
+                await ensureCountIs(0);
+
+
+                await storageInstance.bulkWrite([{ document: getWriteData() }], testContext);
+                await ensureCountIs(1);
+
+                const writeData = getWriteData();
+                await storageInstance.bulkWrite([{ document: writeData }], testContext);
+                await ensureCountIs(2);
+            });
+        });
+        describe('.findDocumentsById()', () => {
+            it('should find the documents', async ({ expect }) => {
+                storageInstance = await storage.createStorageInstance<TestDocType>({
+                    databaseInstanceToken: randomCouchString(10),
+                    databaseName: randomCouchString(12),
+                    collectionName: randomCouchString(12),
+                    schema: getPseudoSchemaForVersion<TestDocType>(0, 'key'),
+                    options: {},
+                    multiInstance: false,
+                    devMode: true
+                });
+
+                const pkey = 'foobar'
+                const docData = {
+                    key: pkey,
+                    value: 'barfoo',
+                    _deleted: false,
+                    _attachments: {},
+                    _rev: EXAMPLE_REVISION_1,
+                    _meta: {
+                        lwt: now()
+                    }
+                };
+                await storageInstance.bulkWrite(
+                    [{
+                        document: docData
+                    }],
+                    testContext
+                );
+
+                const found = await storageInstance.findDocumentsById(['foobar'], false);
+                const foundDoc = found[pkey];
+
+                expect(foundDoc).toStrictEqual(docData)
+            });
+
+            /**
+             * Some storage implementations ran into some limits
+             * like SQLite SQLITE_MAX_VARIABLE_NUMBER etc.
+             * Writing many documents must just work and the storage itself
+             * has to workaround any problems with that.
+             */
+            it('should be able to insert and fetch many documents', async ({ expect }) => {
+                storageInstance = await storage.createStorageInstance<TestDocType>({
+                    databaseInstanceToken: randomCouchString(10),
+                    databaseName: randomCouchString(12),
+                    collectionName: randomCouchString(12),
+                    schema: getTestDataSchema(),
+                    options: {},
+                    multiInstance: false,
+                    devMode: true
+                });
+
+                const amount = 10000;
+                const writeRows = new Array(amount)
+                    .fill(0)
+                    .map(() => ({ document: getWriteData() }));
+
+                // insert
+                const writeResult = await storageInstance.bulkWrite(writeRows, 'insert-many-' + amount);
+                expect(writeResult.error).toStrictEqual({})
+
+                // fetch again
+                const fetchResult = await storageInstance.findDocumentsById(writeRows.map(r => r.document.key), false);
+                expect(Object.keys(fetchResult).length).toStrictEqual(amount)
+            }, { timeout: 30000 });
+        });
 
     });
 
