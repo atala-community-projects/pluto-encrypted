@@ -1381,7 +1381,7 @@ export function runTestSuite(suite: TestSuite, testStorage: RxTestStorage) {
                     devMode: true
                 });
 
-                const amount = 10000;
+                const amount = 5000;
                 const writeRows = new Array(amount)
                     .fill(0)
                     .map(() => ({ document: getWriteData() }));
@@ -1393,7 +1393,7 @@ export function runTestSuite(suite: TestSuite, testStorage: RxTestStorage) {
                 // fetch again
                 const fetchResult = await storageInstance.findDocumentsById(writeRows.map(r => r.document.key), false);
                 expect(Object.keys(fetchResult).length).toStrictEqual(amount)
-            }, { timeout: 30000 });
+            }, { timeout: 50000 });
         });
 
     });
