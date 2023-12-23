@@ -739,224 +739,224 @@ describe("Pluto encrypted testing with different storages", () => {
                 }
             })
 
-            // it(storageName + "Should be able to request remove orm method on credential model", async ({ expect }) => {
-            //     const payload = Fixtures.createAnonCredsPayload();
-            //     const result = new AnonCredsCredential({
-            //         ...payload,
-            //         values: {
-            //             ...(payload.values.map(([varname, val]) => ({
-            //                 [varname]: val,
-            //             })) as any),
-            //         },
-            //     });
-            //     result.recoveryId = "demo";
-            //     await db.storeCredential(result);
+            it(storageName + "Should be able to request remove orm method on credential model", async ({ expect }) => {
+                const payload = Fixtures.createAnonCredsPayload();
+                const result = new AnonCredsCredential({
+                    ...payload,
+                    values: {
+                        ...(payload.values.map(([varname, val]) => ({
+                            [varname]: val,
+                        })) as any),
+                    },
+                });
+                result.recoveryId = "demo";
+                await db.storeCredential(result);
 
-            //     const storedCredential = await db.credentials.findOne({
-            //         selector: {
-            //             recoveryId: {
-            //                 $eq: result.recoveryId
-            //             }
-            //         }
-            //     }).exec();
+                const storedCredential = await db.credentials.findOne({
+                    selector: {
+                        recoveryId: {
+                            $eq: result.recoveryId
+                        }
+                    }
+                }).exec();
 
-            //     const removed = await storedCredential?.remove()
-            //     expect(removed?.deleted).toBe(true)
-            // });
+                const removed = await storedCredential?.remove()
+                expect(removed?.deleted).toBe(true)
+            });
 
-            // it(storageName + "Should run migration once the schema version has changed and user had existing data", async ({ expect }) => {
+            it(storageName + "Should run migration once the schema version has changed and user had existing data", async ({ expect }) => {
 
-            //         const forceDatabaseName = `${databaseName}${randomUUID()}`
-            //         const db = await Database.createEncrypted(
-            //             {
-            //                 name: forceDatabaseName,
-            //                 encryptionKey: defaultPassword,
-            //                 storage,
-            //             }
-            //         );
+                const forceDatabaseName = `${databaseName}${randomUUID()}`
+                const db = await Database.createEncrypted(
+                    {
+                        name: forceDatabaseName,
+                        encryptionKey: defaultPassword,
+                        storage,
+                    }
+                );
 
-            //         await db.storeLinkSecret("demo123", "demo321");
+                await db.storeLinkSecret("demo123", "demo321");
 
-            //         const migrationDB = await Database.createEncrypted(
-            //             {
-            //                 name: forceDatabaseName,
-            //                 encryptionKey: defaultPassword,
-            //                 storage,
-            //                 collections: {
-            //                     linksecrets: Database.configureCollection(
-            //                         {
-            //                             methods: {
-            //                                 toDomainLinkSecret: function toDomainLinkSecret(this: any) {
-            //                                     return this.secreto;
-            //                                 },
-            //                             },
-            //                             autoMigrate: false,
-            //                             schema: {
-            //                                 version: 1,
-            //                                 primaryKey: "name",
-            //                                 type: "object",
-            //                                 properties: {
-            //                                     name: {
-            //                                         type: "string",
-            //                                         maxLength: 60,
-            //                                     },
-            //                                     secreto: {
-            //                                         type: "string",
-            //                                     }
-            //                                 },
-            //                                 encrypted: ["secreto"],
-            //                                 required: ["name", "secreto"],
-            //                             },
-            //                             migrationStrategies: {
-            //                                 // 1 means, this transforms data from version 0 to version 1
-            //                                 1: async function (oldDoc) {
-            //                                     oldDoc.secreto = oldDoc.secret;
-            //                                     delete oldDoc.secret
-            //                                     return oldDoc;
-            //                                 }
-            //                             }
-            //                         }
-            //                     )
-            //                 }
-            //             }
-            //         );
+                const migrationDB = await Database.createEncrypted(
+                    {
+                        name: forceDatabaseName,
+                        encryptionKey: defaultPassword,
+                        storage,
+                        collections: {
+                            linksecrets: Database.configureCollection(
+                                {
+                                    methods: {
+                                        toDomainLinkSecret: function toDomainLinkSecret(this: any) {
+                                            return this.secreto;
+                                        },
+                                    },
+                                    autoMigrate: false,
+                                    schema: {
+                                        version: 1,
+                                        primaryKey: "name",
+                                        type: "object",
+                                        properties: {
+                                            name: {
+                                                type: "string",
+                                                maxLength: 60,
+                                            },
+                                            secreto: {
+                                                type: "string",
+                                            }
+                                        },
+                                        encrypted: ["secreto"],
+                                        required: ["name", "secreto"],
+                                    },
+                                    migrationStrategies: {
+                                        // 1 means, this transforms data from version 0 to version 1
+                                        1: async function (oldDoc) {
+                                            oldDoc.secreto = oldDoc.secret;
+                                            delete oldDoc.secret
+                                            return oldDoc;
+                                        }
+                                    }
+                                }
+                            )
+                        }
+                    }
+                );
 
-            //         const linkSecret = await migrationDB.getLinkSecret()
-            //         expect(linkSecret).toBe("demo123")
+                const linkSecret = await migrationDB.getLinkSecret()
+                expect(linkSecret).toBe("demo123")
 
-            //     });
+            });
 
-            //     it(storageName + "Should run migration once the schema version has changed its primaryKey and user had existing data", async ({ expect }) => {
+            it(storageName + "Should run migration once the schema version has changed its primaryKey and user had existing data", async ({ expect }) => {
 
-            //         const forceDatabaseName = `${databaseName}${randomUUID()}`
-            //         const db = await Database.createEncrypted(
-            //             {
-            //                 name: forceDatabaseName,
-            //                 encryptionKey: defaultPassword,
-            //                 storage,
-            //             }
-            //         );
+                const forceDatabaseName = `${databaseName}${randomUUID()}`
+                const db = await Database.createEncrypted(
+                    {
+                        name: forceDatabaseName,
+                        encryptionKey: defaultPassword,
+                        storage,
+                    }
+                );
 
-            //         await db.storeLinkSecret("demo123", "demo321");
+                await db.storeLinkSecret("demo123", "demo321");
 
-            //         const migrationDB = await Database.createEncrypted(
-            //             {
-            //                 name: forceDatabaseName,
-            //                 encryptionKey: defaultPassword,
-            //                 storage,
-            //                 collections: {
-            //                     linksecrets: Database.configureCollection(
-            //                         {
-            //                             methods: {
-            //                                 toDomainLinkSecret: function toDomainLinkSecret(this: any) {
-            //                                     return this.secreto;
-            //                                 },
-            //                             },
-            //                             schema: {
-            //                                 version: 1,
-            //                                 primaryKey: "name2",
-            //                                 type: "object",
-            //                                 properties: {
-            //                                     name2: {
-            //                                         type: "string",
-            //                                         maxLength: 60,
-            //                                     },
-            //                                     secreto: {
-            //                                         type: "string",
-            //                                     }
-            //                                 },
-            //                                 encrypted: ["secreto"],
-            //                                 required: ["name2", "secreto"],
-            //                             },
-            //                             migrationStrategies: {
-            //                                 // 1 means, this transforms data from version 0 to version 1
-            //                                 1: async function (oldDoc) {
-            //                                     oldDoc.secreto = oldDoc.secret;
-            //                                     oldDoc.name2 = oldDoc.name;
-            //                                     delete oldDoc.secret
-            //                                     delete oldDoc.name
-            //                                     return oldDoc;
-            //                                 }
-            //                             }
-            //                         }
-            //                     )
-            //                 }
-            //             }
-            //         );
+                const migrationDB = await Database.createEncrypted(
+                    {
+                        name: forceDatabaseName,
+                        encryptionKey: defaultPassword,
+                        storage,
+                        collections: {
+                            linksecrets: Database.configureCollection(
+                                {
+                                    methods: {
+                                        toDomainLinkSecret: function toDomainLinkSecret(this: any) {
+                                            return this.secreto;
+                                        },
+                                    },
+                                    schema: {
+                                        version: 1,
+                                        primaryKey: "name2",
+                                        type: "object",
+                                        properties: {
+                                            name2: {
+                                                type: "string",
+                                                maxLength: 60,
+                                            },
+                                            secreto: {
+                                                type: "string",
+                                            }
+                                        },
+                                        encrypted: ["secreto"],
+                                        required: ["name2", "secreto"],
+                                    },
+                                    migrationStrategies: {
+                                        // 1 means, this transforms data from version 0 to version 1
+                                        1: async function (oldDoc) {
+                                            oldDoc.secreto = oldDoc.secret;
+                                            oldDoc.name2 = oldDoc.name;
+                                            delete oldDoc.secret
+                                            delete oldDoc.name
+                                            return oldDoc;
+                                        }
+                                    }
+                                }
+                            )
+                        }
+                    }
+                );
 
-            //         const linkSecret = await migrationDB.getLinkSecret()
-            //         expect(linkSecret).toBe("demo123")
+                const linkSecret = await migrationDB.getLinkSecret()
+                expect(linkSecret).toBe("demo123")
 
-            //     });
+            });
 
-            //     it(storageName + "Should run migration once the schema version has changed and user had existing data over time, with multiple versions", async ({ expect }) => {
+            it(storageName + "Should run migration once the schema version has changed and user had existing data over time, with multiple versions", async ({ expect }) => {
 
-            //         const forceDatabaseName = `${databaseName}${randomUUID()}`
-            //         const db = await Database.createEncrypted(
-            //             {
-            //                 name: forceDatabaseName,
-            //                 encryptionKey: defaultPassword,
-            //                 storage,
-            //             }
-            //         );
+                const forceDatabaseName = `${databaseName}${randomUUID()}`
+                const db = await Database.createEncrypted(
+                    {
+                        name: forceDatabaseName,
+                        encryptionKey: defaultPassword,
+                        storage,
+                    }
+                );
 
-            //         await db.storeLinkSecret("demo123", "demo321");
+                await db.storeLinkSecret("demo123", "demo321");
 
-            //         const migrationDB = await Database.createEncrypted(
-            //             {
-            //                 name: forceDatabaseName,
-            //                 encryptionKey: defaultPassword,
-            //                 storage,
-            //                 collections: {
-            //                     linksecrets: Database.configureCollection(
-            //                         {
-            //                             methods: {
-            //                                 toDomainLinkSecret: function toDomainLinkSecret(this: any) {
-            //                                     return this.secreto;
-            //                                 },
-            //                             },
-            //                             autoMigrate: false,
-            //                             schema: {
-            //                                 version: 2,
-            //                                 primaryKey: "test",
-            //                                 type: "object",
-            //                                 properties: {
-            //                                     test: {
-            //                                         type: "string",
-            //                                         maxLength: 60,
-            //                                     },
-            //                                     secreto: {
-            //                                         type: "string",
-            //                                     }
-            //                                 },
-            //                                 encrypted: ["secreto"],
-            //                                 required: ["test", "secreto"],
-            //                             },
-            //                             migrationStrategies: {
-            //                                 // 1 means, this transforms data from version 0 to version 1
-            //                                 1: async function (oldDoc) {
-            //                                     oldDoc.secreto = oldDoc.secret;
-            //                                     delete oldDoc.secret
-            //                                     return oldDoc;
-            //                                 },
-            //                                 2: async function (oldDoc) {
-            //                                     if (!oldDoc.test) {
-            //                                         oldDoc.test = oldDoc.name;
-            //                                         delete oldDoc.name
-            //                                     }
-            //                                     return oldDoc;
-            //                                 }
-            //                             }
-            //                         }
-            //                     )
-            //                 }
-            //             }
-            //         );
+                const migrationDB = await Database.createEncrypted(
+                    {
+                        name: forceDatabaseName,
+                        encryptionKey: defaultPassword,
+                        storage,
+                        collections: {
+                            linksecrets: Database.configureCollection(
+                                {
+                                    methods: {
+                                        toDomainLinkSecret: function toDomainLinkSecret(this: any) {
+                                            return this.secreto;
+                                        },
+                                    },
+                                    autoMigrate: false,
+                                    schema: {
+                                        version: 2,
+                                        primaryKey: "test",
+                                        type: "object",
+                                        properties: {
+                                            test: {
+                                                type: "string",
+                                                maxLength: 60,
+                                            },
+                                            secreto: {
+                                                type: "string",
+                                            }
+                                        },
+                                        encrypted: ["secreto"],
+                                        required: ["test", "secreto"],
+                                    },
+                                    migrationStrategies: {
+                                        // 1 means, this transforms data from version 0 to version 1
+                                        1: async function (oldDoc) {
+                                            oldDoc.secreto = oldDoc.secret;
+                                            delete oldDoc.secret
+                                            return oldDoc;
+                                        },
+                                        2: async function (oldDoc) {
+                                            if (!oldDoc.test) {
+                                                oldDoc.test = oldDoc.name;
+                                                delete oldDoc.name
+                                            }
+                                            return oldDoc;
+                                        }
+                                    }
+                                }
+                            )
+                        }
+                    }
+                );
 
-            //         const linkSecret = await migrationDB.getLinkSecret()
-            //         expect(linkSecret).toBe("demo123")
+                const linkSecret = await migrationDB.getLinkSecret()
+                expect(linkSecret).toBe("demo123")
 
-            //     });
+            });
 
         });
     })
