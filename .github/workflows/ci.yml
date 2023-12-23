@@ -44,7 +44,7 @@ jobs:
           GITHUB_COMMITER_EMAIL: ${{ secrets.GITHUB_COMMITER_EMAIL }}
           CI: true
         run: |
-          npm install
+          npm install --force
           chmod +x coverage.sh
           ./coverage.sh
           npm run build
