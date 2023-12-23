@@ -2,72 +2,64 @@
  * @packageDocumentation
  * @module database
  */
-import { Domain } from "@atala/prism-wallet-sdk";
+import { Domain } from '@atala/prism-wallet-sdk'
 import {
-  MangoQuerySelector, PROMISE_RESOLVE_FALSE, RxCollectionCreator,
-  RxDatabase,
-  RxDatabaseCreator,
-  RxDumpDatabase,
-  RxError,
-  RxQuery,
-  RxStorage,
+  type MangoQuerySelector, type RxCollectionCreator,
+  type RxDatabase,
+  type RxDatabaseCreator,
+  type RxDumpDatabase,
+  type RxError,
+  type RxStorage,
   addRxPlugin,
   createRxDatabase,
-  flatClone,
-  getFromMapOrCreate,
-  getFromMapOrThrow,
   removeRxDatabase
-} from "rxdb";
-import { RxDBEncryptedMigrationPlugin } from "@pluto-encrypted/encryption";
-import { BulkWriteRow, RxCollection, RxDocument, RxDocumentData } from "rxdb/dist/types/types";
-import { RxDBJsonDumpPlugin } from "rxdb/plugins/json-dump";
-import { RxDBQueryBuilderPlugin } from "rxdb/plugins/query-builder";
-import { v4 as uuidv4 } from "uuid";
+} from 'rxdb'
+import { RxDBEncryptedMigrationPlugin } from '@pluto-encrypted/encryption'
+import { RxDBJsonDumpPlugin } from 'rxdb/plugins/json-dump'
+import { RxDBQueryBuilderPlugin } from 'rxdb/plugins/query-builder'
+import { v4 as uuidv4 } from 'uuid'
 import CredentialSchema, {
-  CredentialCollection,
+  type CredentialCollection,
   CredentialMethods
-} from "./schemas/Credential";
+} from './schemas/Credential'
 import CredentialRequestMetadataSchema, {
-  CredentialRequestMetadataCollection,
+  type CredentialRequestMetadataCollection,
   CredentialRequestMetadataMethods
-} from "./schemas/CredentialRequestMetadata";
-import DIDSchema, { DIDCollection } from "./schemas/DID";
-import DIDPairSchema, { DIDPairCollection } from "./schemas/DIDPair";
+} from './schemas/CredentialRequestMetadata'
+import DIDSchema, { type DIDCollection } from './schemas/DID'
+import DIDPairSchema, { type DIDPairCollection } from './schemas/DIDPair'
 import LinkSecretSchema, {
-  LinkSecretColletion,
+  type LinkSecretColletion,
   LinkSecretMethods
-} from "./schemas/LinkSecret";
+} from './schemas/LinkSecret'
 import MediatorSchema, {
-  MediatorCollection,
+  type MediatorCollection,
   MediatorMethods
-} from "./schemas/Mediator";
+} from './schemas/Mediator'
 import MessageSchema, {
-  MessageColletion,
+  type MessageColletion,
   MessageMethods,
-  MessageSchemaType
-} from "./schemas/Message";
+  type MessageSchemaType
+} from './schemas/Message'
 import PrivateKeySchema, {
-  KeySpec, PrivateKeyColletion, PrivateKeyDocument,
+  type KeySpec, type PrivateKeyColletion, type PrivateKeyDocument,
   PrivateKeyMethods
-} from "./schemas/PrivateKey";
-import { PlutoCollections } from "./types";
-import { DATA_MIGRATOR_BY_COLLECTION } from "@pluto-encrypted/encryption";
-import { EncryptedDataMigrator } from "@pluto-encrypted/encryption";
-import { mustMigrate } from "@pluto-encrypted/encryption";
+} from './schemas/PrivateKey'
+import { type PlutoCollections } from './types'
 
-export * from "./schemas/Credential";
-export * from "./schemas/CredentialRequestMetadata";
-export * from "./schemas/DID";
-export * from "./schemas/DIDPair";
-export * from "./schemas/LinkSecret";
-export * from "./schemas/Mediator";
-export * from "./schemas/Message";
-export * from "./schemas/PrivateKey";
+export * from './schemas/Credential'
+export * from './schemas/CredentialRequestMetadata'
+export * from './schemas/DID'
+export * from './schemas/DIDPair'
+export * from './schemas/LinkSecret'
+export * from './schemas/Mediator'
+export * from './schemas/Message'
+export * from './schemas/PrivateKey'
 export type * from './types'
 export type { Domain as WALLET_SDK_DOMAIN } from '@atala/prism-wallet-sdk'
 
-export type ValuesOf<T> = T[keyof T];
-export type PlutoDatabase = RxDatabase<PlutoCollections>;
+export type ValuesOf<T> = T[keyof T]
+export type PlutoDatabase = RxDatabase<PlutoCollections>
 
 /**
  * Pluto is a storage interface describing storage requirements of the edge agents
@@ -76,43 +68,43 @@ export type PlutoDatabase = RxDatabase<PlutoCollections>;
  *
  */
 export class Database implements Domain.Pluto {
-  private _db!: RxDatabase<PlutoCollections, any, any>;
+  private _db!: RxDatabase<PlutoCollections, any, any>
 
-  protected get db() {
+  protected get db () {
     if (!this._db) {
-      throw new Error("Start Pluto first.");
+      throw new Error('Start Pluto first.')
     }
-    return this._db;
+    return this._db
   }
 
-  constructor(private dbOptions: RxDatabaseCreator) {
-    addRxPlugin(RxDBQueryBuilderPlugin);
-    addRxPlugin(RxDBJsonDumpPlugin);
-    addRxPlugin(RxDBEncryptedMigrationPlugin);
+  constructor (private readonly dbOptions: RxDatabaseCreator) {
+    addRxPlugin(RxDBQueryBuilderPlugin)
+    addRxPlugin(RxDBJsonDumpPlugin)
+    addRxPlugin(RxDBEncryptedMigrationPlugin)
   }
 
-  async backup() {
-    return this.db.exportJSON();
+  async backup () {
+    return await this.db.exportJSON()
   }
 
-  get collections(): PlutoCollections {
+  get collections (): PlutoCollections {
     return this.db.collections
   }
 
   /**
    * CredentialRequestMetadatas
    * Stores anoncreds credential metadata + exposes orm functions
-   * 
+   *
    * Count all Credential Metadatas with optional query
    * ```ts
    * await db.credentialmetadatas.count({selector: {id: {$eq: 1}}}) //Query is optional
    * ```
-   * 
+   *
    * Find all credential metadatas matching the query
    * ```ts
    * await db.credentialmetadatas.find({selector: {id: {$eq: 1}}}) //Query is optional
    * ```
-   * 
+   *
    * Find all credential metadatas by id
    * ```ts
    * await db.credentialmetadatas.findByIds([id])
@@ -121,30 +113,30 @@ export class Database implements Domain.Pluto {
    * ```ts
    * await db.credentialmetadatas.findOne({selector: {id: {$eq: 1}}}) //Query is optional
    * ```
-   * 
+   *
    * Remove any credential metadatas matching the query
    * ```ts
    * await db.credentialmetadatas.remove({selector: {id: {$eq: 1}}})
    * ```
    */
-  get credentialrequestmetadatas(): CredentialRequestMetadataCollection {
+  get credentialrequestmetadatas (): CredentialRequestMetadataCollection {
     return this.db.collections.credentialrequestmetadatas
   }
 
   /**
-   * LinkSecrets 
+   * LinkSecrets
    * Stores anoncreds link secrets + exposes orm functions
-   * 
+   *
    * Count all LinkSecrets with optional query
    * ```ts
    * await db.linksecrets.count({selector: {id: {$eq: 1}}}) //Query is optional
    * ```
-   * 
+   *
    * Find all LinkSecrets matching the query
    * ```ts
    * await db.linksecrets.find({selector: {id: {$eq: 1}}}) //Query is optional
    * ```
-   * 
+   *
    * Find all LinkSecrets by id
    * ```ts
    * await db.linksecrets.findByIds([id])
@@ -153,30 +145,30 @@ export class Database implements Domain.Pluto {
    * ```ts
    * await db.linksecrets.findOne({selector: {id: {$eq: 1}}}) //Query is optional
    * ```
-   * 
+   *
    * Remove any LinkSecrets matching the query
    * ```ts
    * await db.linksecrets.remove({selector: {id: {$eq: 1}}})
    * ```
    */
-  get linksecrets(): LinkSecretColletion {
+  get linksecrets (): LinkSecretColletion {
     return this.db.collections.linksecrets
   }
 
   /**
-   * DIDPairs 
+   * DIDPairs
    * Stores groups of dids, also known as connections + exposes orm functions
-   * 
+   *
    * Count all DIDPairs with optional query
    * ```ts
    * await db.didpairs.count({selector: {id: {$eq: 1}}}) //Query is optional
    * ```
-   * 
+   *
    * Find all DIDPairs matching the query
    * ```ts
    * await db.didpairs.find({selector: {id: {$eq: 1}}}) //Query is optional
    * ```
-   * 
+   *
    * Find all DIDPairs by id
    * ```ts
    * await db.didpairs.findByIds([id])
@@ -185,30 +177,30 @@ export class Database implements Domain.Pluto {
    * ```ts
    * await db.didpairs.findOne({selector: {id: {$eq: 1}}}) //Query is optional
    * ```
-   * 
+   *
    * Remove any DIDPairs matching the query
    * ```ts
    * await db.didpairs.remove({selector: {id: {$eq: 1}}})
    * ```
    */
-  get didpairs(): DIDPairCollection {
+  get didpairs (): DIDPairCollection {
     return this.db.collections.didpairs
   }
 
   /**
-   * Credentials 
+   * Credentials
    * Stores credentials, both anoncreda and prism/jwt + exposes orm functions
-   * 
+   *
    * Count all Credentials with optional query
    * ```ts
    * await db.credentials.count({selector: {id: {$eq: 1}}}) //Query is optional
    * ```
-   * 
+   *
    * Find all Credentials matching the query
    * ```ts
    * await db.credentials.find({selector: {id: {$eq: 1}}}) //Query is optional
    * ```
-   * 
+   *
    * Find all Credentials by id
    * ```ts
    * await db.credentials.findByIds([id])
@@ -217,30 +209,30 @@ export class Database implements Domain.Pluto {
    * ```ts
    * await db.credentials.findOne({selector: {id: {$eq: 1}}}) //Query is optional
    * ```
-   * 
+   *
    * Remove any Credentials matching the query
    * ```ts
    * await db.credentials.remove({selector: {id: {$eq: 1}}})
    * ```
    */
-  get credentials(): CredentialCollection {
+  get credentials (): CredentialCollection {
     return this.db.collections.credentials
   }
 
   /**
-   * Mediators 
+   * Mediators
    * Stores mediators + exposes orm functions
-   * 
+   *
    * Count all Mediators with optional query
    * ```ts
    * await db.mediators.count({selector: {id: {$eq: 1}}}) //Query is optional
    * ```
-   * 
+   *
    * Find all Mediators matching the query
    * ```ts
    * await db.mediators.find({selector: {id: {$eq: 1}}}) //Query is optional
    * ```
-   * 
+   *
    * Find all Mediators by id
    * ```ts
    * await db.mediators.findByIds([id])
@@ -249,30 +241,30 @@ export class Database implements Domain.Pluto {
    * ```ts
    * await db.mediators.findOne({selector: {id: {$eq: 1}}}) //Query is optional
    * ```
-   * 
+   *
    * Remove any Mediators matching the query
    * ```ts
    * await db.mediators.remove({selector: {id: {$eq: 1}}})
    * ```
    */
-  get mediators(): MediatorCollection {
+  get mediators (): MediatorCollection {
     return this.db.collections.mediators
   }
 
   /**
-    * DIDs 
+    * DIDs
     * Stores dids + exposes orm functions
-    * 
+    *
     * Count all DIDS with optional query
     * ```ts
     * await db.dids.count({selector: {id: {$eq: 1}}}) //Query is optional
     * ```
-    * 
+    *
     * Find all DIDS matching the query
     * ```ts
     * await db.dids.find({selector: {id: {$eq: 1}}}) //Query is optional
     * ```
-    * 
+    *
     * Find all DIDS by id
     * ```ts
     * await db.dids.findByIds([id])
@@ -281,30 +273,30 @@ export class Database implements Domain.Pluto {
     * ```ts
     * await db.dids.findOne({selector: {id: {$eq: 1}}}) //Query is optional
     * ```
-    * 
+    *
     * Remove any DIDS matching the query
     * ```ts
     * await db.dids.remove({selector: {id: {$eq: 1}}})
     * ```
     */
-  get dids(): DIDCollection {
+  get dids (): DIDCollection {
     return this.db.collections.dids
   }
 
   /**
-    * PrivateKeys 
+    * PrivateKeys
     * Stores privateKeys + exposes orm functions
-    * 
+    *
     * Count all PrivateKeys with optional query
     * ```ts
     * await db.privatekeys.count({selector: {id: {$eq: 1}}}) //Query is optional
     * ```
-    * 
+    *
     * Find all PrivateKeys matching the query
     * ```ts
     * await db.privatekeys.find({selector: {id: {$eq: 1}}}) //Query is optional
     * ```
-    * 
+    *
     * Find all PrivateKeys by id
     * ```ts
     * await db.privatekeys.findByIds([id])
@@ -313,30 +305,30 @@ export class Database implements Domain.Pluto {
     * ```ts
     * await db.privatekeys.findOne({selector: {id: {$eq: 1}}}) //Query is optional
     * ```
-    * 
+    *
     * Remove any PrivateKeys matching the query
     * ```ts
     * await db.privatekeys.remove({selector: {id: {$eq: 1}}})
     * ```
     */
-  get privatekeys(): PrivateKeyColletion {
+  get privatekeys (): PrivateKeyColletion {
     return this.db.collections.privatekeys
   }
 
   /**
-    * Messages 
+    * Messages
     * Stores Messages + exposes orm functions
-    * 
+    *
     * Count all Messages with optional query
     * ```ts
     * await db.messages.count({selector: {id: {$eq: 1}}}) //Query is optional
     * ```
-    * 
+    *
     * Find all Messages matching the query
     * ```ts
     * await db.messages.find({selector: {id: {$eq: 1}}}) //Query is optional
     * ```
-    * 
+    *
     * Find all Messages by id
     * ```ts
     * await db.messages.findByIds([id])
@@ -345,13 +337,13 @@ export class Database implements Domain.Pluto {
     * ```ts
     * await db.messages.findOne({selector: {id: {$eq: 1}}}) //Query is optional
     * ```
-    * 
+    *
     * Remove any Messages matching the query
     * ```ts
     * await db.messages.remove({selector: {id: {$eq: 1}}})
     * ```
     */
-  get messages(): MessageColletion {
+  get messages (): MessageColletion {
     return this.db.collections.messages
   }
 
@@ -359,96 +351,96 @@ export class Database implements Domain.Pluto {
    * Use with caution, this will remove all entries from database
    * and then destroy the database itself.
    */
-  async clear() {
+  async clear () {
     const storages = Array.from(this.db.storageInstances.values())
-    for (let storage of storages) {
+    for (const storage of storages) {
       await storage.cleanup(Infinity)
     }
-    await removeRxDatabase(this.dbOptions.name, this.db.storage);
+    await removeRxDatabase(this.dbOptions.name, this.db.storage)
   }
 
   /**
    * Creates a database instance.
-   * @param options 
+   * @param options
    * @returns Database
    */
-  static async createEncrypted(
+  static async createEncrypted (
     options: {
-      name: string,
-      encryptionKey: Uint8Array,
-      importData?: RxDumpDatabase<PlutoCollections>,
-      storage: RxStorage<any, any>,
-      autoStart?: boolean,
+      name: string
+      encryptionKey: Uint8Array
+      importData?: RxDumpDatabase<PlutoCollections>
+      storage: RxStorage<any, any>
+      autoStart?: boolean
       collections?: Partial<{
-        messages: RxCollectionCreator<any>;
-        dids: RxCollectionCreator<any>;
-        didpairs: RxCollectionCreator<any>;
-        mediators: RxCollectionCreator<any>;
-        privatekeys: RxCollectionCreator<any>;
-        credentials: RxCollectionCreator<any>;
-        credentialrequestmetadatas: RxCollectionCreator<any>;
-        linksecrets: RxCollectionCreator<any>;
+        messages: RxCollectionCreator<any>
+        dids: RxCollectionCreator<any>
+        didpairs: RxCollectionCreator<any>
+        mediators: RxCollectionCreator<any>
+        privatekeys: RxCollectionCreator<any>
+        credentials: RxCollectionCreator<any>
+        credentialrequestmetadatas: RxCollectionCreator<any>
+        linksecrets: RxCollectionCreator<any>
       }>
     }
   ) {
     try {
-      const { name, storage, encryptionKey, importData, autoStart = true, collections } = options;
+      const { name, storage, encryptionKey, importData, autoStart = true, collections } = options
       if (!storage) {
-        throw new Error("Please provide a valid storage.");
+        throw new Error('Please provide a valid storage.')
       }
       const database = new Database({
         ignoreDuplicate: true,
-        name: name,
-        storage: storage,
-        password: Buffer.from(encryptionKey).toString('hex'),
-      });
+        name,
+        storage,
+        password: Buffer.from(encryptionKey).toString('hex')
+      })
 
       if (autoStart) {
         await database.start(collections)
       }
 
       if (importData) {
-        await database.db.importJSON(importData);
+        await database.db.importJSON(importData)
       }
 
-      return database;
+      return database
     } catch (err) {
       /* istanbul ignore else */
-      if ((err as RxError).code === "DB1") {
-        throw new Error("Invalid Authentication");
+      if ((err as RxError).code === 'DB1') {
+        throw new Error('Invalid Authentication')
       } else {
         /* istanbul ignore next */
 
-        throw err;
+        throw err
       }
     }
   }
 
   /**
    * Get a Message by its id
-   * @param id 
+   * @param id
    * @returns [Message](https://input-output-hk.github.io/atala-prism-wallet-sdk-ts/classes/Domain.Message.html)
    */
-  async getMessage(id: string): Promise<Domain.Message | null> {
+  async getMessage (id: string): Promise<Domain.Message | null> {
     const message = await this.db.messages.findOne({
       selector: {
         id: {
           $eq: id
         }
       }
-    }).exec();
+    }).exec()
     if (message) {
-      return message.toDomainMessage();
+      return message.toDomainMessage()
     }
-    return null;
+    return null
   }
 
   /**
    * Stores a message
-   * @param [Message](https://input-output-hk.github.io/atala-prism-wallet-sdk-ts/classes/Domain.Message.html) 
+   * @param [Message](https://input-output-hk.github.io/atala-prism-wallet-sdk-ts/classes/Domain.Message.html)
    * @returns void
    */
-  async storeMessage(message: Domain.Message): Promise<void> {
+  async storeMessage (message: Domain.Message): Promise<void> {
     const existing = await this.db.messages
       .findOne({
         selector: {
@@ -456,43 +448,43 @@ export class Database implements Domain.Pluto {
             $eq: message.id
           }
         }
-      }).exec();
+      }).exec()
     if (existing) {
       await existing.patch({
         ...message,
         to: message.to?.toString(),
-        from: message.from?.toString(),
-      });
+        from: message.from?.toString()
+      })
     } else {
       await this.db.messages.insert({
         ...message,
         to: message.to?.toString(),
-        from: message.from?.toString(),
-      });
+        from: message.from?.toString()
+      })
     }
   }
 
   /**
    * Stores multiple messages in 1 call
-   * @param [Message[]](https://input-output-hk.github.io/atala-prism-wallet-sdk-ts/classes/Domain.Message.html) 
+   * @param [Message[]](https://input-output-hk.github.io/atala-prism-wallet-sdk-ts/classes/Domain.Message.html)
    * @returns void
    */
-  async storeMessages(messages: Domain.Message[]): Promise<void> {
-    for (let message of messages) {
+  async storeMessages (messages: Domain.Message[]): Promise<void> {
+    for (const message of messages) {
       await this.storeMessage(message)
     }
   }
 
   /**
   * Get all the stored messages
-  * @returns [Message[]](https://input-output-hk.github.io/atala-prism-wallet-sdk-ts/classes/Domain.Message.html) 
+  * @returns [Message[]](https://input-output-hk.github.io/atala-prism-wallet-sdk-ts/classes/Domain.Message.html)
   */
-  async getAllMessages(): Promise<Domain.Message[]> {
-    const messages = await this.db.messages.find().exec();
-    return messages.map((message) => message.toDomainMessage());
+  async getAllMessages (): Promise<Domain.Message[]> {
+    const messages = await this.db.messages.find().exec()
+    return messages.map((message) => message.toDomainMessage())
   }
 
-  private getDefaultCollections() {
+  private getDefaultCollections () {
     return {
       messages: {
         schema: MessageSchema,
@@ -523,47 +515,47 @@ export class Database implements Domain.Pluto {
       linksecrets: {
         schema: LinkSecretSchema,
         methods: LinkSecretMethods
-      },
+      }
     }
   }
 
   /**
    * Start the database and build collections
    */
-  async start(collections?: Partial<{
-    messages: RxCollectionCreator<any>;
-    dids: RxCollectionCreator<any>;
-    didpairs: RxCollectionCreator<any>;
-    mediators: RxCollectionCreator<any>;
-    privatekeys: RxCollectionCreator<any>;
-    credentials: RxCollectionCreator<any>;
-    credentialrequestmetadatas: RxCollectionCreator<any>;
-    linksecrets: RxCollectionCreator<any>;
+  async start (collections?: Partial<{
+    messages: RxCollectionCreator<any>
+    dids: RxCollectionCreator<any>
+    didpairs: RxCollectionCreator<any>
+    mediators: RxCollectionCreator<any>
+    privatekeys: RxCollectionCreator<any>
+    credentials: RxCollectionCreator<any>
+    credentialrequestmetadatas: RxCollectionCreator<any>
+    linksecrets: RxCollectionCreator<any>
   }>): Promise<void> {
-    const { dbOptions } = this;
+    const { dbOptions } = this
 
     const database = await createRxDatabase<PlutoCollections>({
       ...dbOptions,
       multiInstance: false
-    });
+    })
 
     await database.addCollections({
       ...this.getDefaultCollections(),
-      ...(collections || {})
-    });
+      ...(collections ?? {}) as any
+    })
 
-    this._db = database;
+    this._db = database
   }
 
   /**
    * Stores a prismDID and its privateKey
-   * @param did 
-   * @param keyPathIndex 
-   * @param privateKey 
-   * @param privateKeyMetaId 
-   * @param alias 
+   * @param did
+   * @param keyPathIndex
+   * @param privateKey
+   * @param privateKeyMetaId
+   * @param alias
    */
-  async storePrismDID(
+  async storePrismDID (
     did: Domain.DID,
     keyPathIndex: number,
     privateKey: Domain.PrivateKey,
@@ -575,22 +567,22 @@ export class Database implements Domain.Pluto {
       method: did.method,
       methodId: did.methodId,
       schema: did.schema,
-      alias: alias,
-    });
+      alias
+    })
     await this.storePrivateKeys(
       privateKey,
       did,
       keyPathIndex,
       privateKeyMetaId ?? null
-    );
+    )
   }
 
   /**
    * Stores a peerdid with its privateKeys
-   * @param did 
-   * @param privateKeys 
+   * @param did
+   * @param privateKeys
    */
-  async storePeerDID(
+  async storePeerDID (
     did: Domain.DID,
     privateKeys: Domain.PrivateKey[]
   ): Promise<void> {
@@ -598,41 +590,41 @@ export class Database implements Domain.Pluto {
       did: did.toString(),
       method: did.method,
       methodId: did.methodId,
-      schema: did.schema,
-    });
-    for (let prv of privateKeys) {
+      schema: did.schema
+    })
+    for (const prv of privateKeys) {
       await this.db.privatekeys.insert({
         id: uuidv4(),
         did: did.toString(),
         type: prv.type,
-        keySpecification: Array.from(prv.keySpecification).reduce(
+        keySpecification: Array.from(prv.keySpecification).reduce<KeySpec[]>(
           (all, [key, value]) => [
             ...all,
             {
-              type: "string",
+              type: 'string',
               name: key,
-              value: `${value}`,
-            },
+              value: `${value}`
+            }
           ],
           [
             {
-              type: "string",
-              name: "raw",
-              value: Buffer.from(prv.raw).toString("hex"),
-            },
-          ] as KeySpec[]
-        ),
+              type: 'string',
+              name: 'raw',
+              value: Buffer.from(prv.raw).toString('hex')
+            }
+          ]
+        )
       })
     }
   }
 
   /**
    * Stores a didpair
-   * @param host 
-   * @param receiver 
-   * @param name 
+   * @param host
+   * @param receiver
+   * @param name
    */
-  async storeDIDPair(
+  async storeDIDPair (
     host: Domain.DID,
     receiver: Domain.DID,
     name: string
@@ -640,83 +632,82 @@ export class Database implements Domain.Pluto {
     await this.db.didpairs.insert({
       hostDID: host.toString(),
       receiverDID: receiver.toString(),
-      name,
-    });
+      name
+    })
   }
 
   /**
    * Stores privateKeys references to an existing DID
-   * @param privateKey 
-   * @param did 
-   * @param keyPathIndex 
-   * @param _metaId 
+   * @param privateKey
+   * @param did
+   * @param keyPathIndex
+   * @param _metaId
    */
-  async storePrivateKeys(
+  async storePrivateKeys (
     privateKey: Domain.PrivateKey,
     did: Domain.DID,
-    keyPathIndex: number,
-    _metaId?: string | null
+    keyPathIndex: number
   ): Promise<void> {
     await this.db.privatekeys.insert({
       id: uuidv4(),
       did: did.toString(),
       type: privateKey.type,
-      keySpecification: Array.from(privateKey.keySpecification).reduce(
+      keySpecification: Array.from(privateKey.keySpecification).reduce<KeySpec[]>(
         (all, [key, value]) => [
           ...all,
           {
-            type: "string",
+            type: 'string',
             name: key,
-            value: `${value}`,
-          },
+            value: `${value}`
+          }
         ],
         [
           {
-            type: "string",
-            name: "raw",
-            value: Buffer.from(privateKey.raw).toString("hex"),
+            type: 'string',
+            name: 'raw',
+            value: Buffer.from(privateKey.raw).toString('hex')
           },
           {
-            type: "number",
-            name: "index",
-            value: `${keyPathIndex}`,
-          },
-        ] as KeySpec[]
-      ),
-    });
+            type: 'number',
+            name: 'index',
+            value: `${keyPathIndex}`
+          }
+        ]
+      )
+    })
   }
 
   /**
    * Gets all the stores didPairs
    * @returns [Domain.DIDPair[]](https://input-output-hk.github.io/atala-prism-wallet-sdk-ts/classes/Domain.DIDPair.html)
    */
-  async getAllDidPairs(): Promise<Domain.DIDPair[]> {
-    const { DID, DIDPair } = Domain;
+  async getAllDidPairs (): Promise<Domain.DIDPair[]> {
+    const { DID, DIDPair } = Domain
     const results = await this.db.didpairs.find().exec()
     return results.map(
       ({ hostDID, receiverDID, name }) =>
         new DIDPair(DID.fromString(hostDID), DID.fromString(receiverDID), name)
-    );
+    )
   }
 
   /**
    * Get a did pair (connection) by one of its dids
-   * @param did 
+   * @param did
    * @returns [Domain.DIDPair](https://input-output-hk.github.io/atala-prism-wallet-sdk-ts/classes/Domain.DIDPair.html)
    */
-  async getPairByDID(did: Domain.DID): Promise<Domain.DIDPair | null> {
-    const { DID, DIDPair } = Domain;
+  async getPairByDID (did: Domain.DID): Promise<Domain.DIDPair | null> {
+    const { DID, DIDPair } = Domain
     const didPair = await this.db.didpairs
       .findOne({
         selector: {
           $or: [
             {
-              hostDID: did.toString(),
+              hostDID: did.toString()
             },
             {
-              receiverDID: did.toString(),
-            },
-          ],
+              receiverDID: did.toString()
+            }
+          ]
         }
       }).exec()
     return didPair
@@ -725,21 +716,21 @@ export class Database implements Domain.Pluto {
         DID.fromString(didPair.receiverDID),
         didPair.name
       )
-      : null;
+      : null
   }
 
-  async getPairByName(name: string): Promise<Domain.DIDPair | null> {
-    const { DID, DIDPair } = Domain;
+  async getPairByName (name: string): Promise<Domain.DIDPair | null> {
+    const { DID, DIDPair } = Domain
     const didPair = await this.db.didpairs
       .findOne({
         selector: {
           $and: [
             {
-              name,
-            },
-          ],
+              name
+            }
+          ]
         }
-      }).exec();
+      }).exec()
 
     return didPair
       ? new DIDPair(
@@ -747,16 +738,16 @@ export class Database implements Domain.Pluto {
         DID.fromString(didPair.receiverDID),
         didPair.name
       )
-      : null;
+      : null
   }
 
-  private getPrivateKeyFromDB(
+  private getPrivateKeyFromDB (
     privateKey: PrivateKeyDocument
   ): Domain.PrivateKey {
-    return privateKey.toDomainPrivateKey();
+    return privateKey.toDomainPrivateKey()
   }
 
-  async getDIDPrivateKeysByDID(did: Domain.DID): Promise<Domain.PrivateKey[]> {
+  async getDIDPrivateKeysByDID (did: Domain.DID): Promise<Domain.PrivateKey[]> {
     const privateKeys = await this.db.privatekeys
       .find({
         selector: {
@@ -765,10 +756,12 @@ export class Database implements Domain.Pluto {
           }
         }
       }).exec()
-    return privateKeys.map(this.getPrivateKeyFromDB);
+    return privateKeys.map((privateKey) => {
+      return this.getPrivateKeyFromDB(privateKey)
+    })
   }
 
-  async getDIDPrivateKeyByID(id: string): Promise<Domain.PrivateKey | null> {
+  async getDIDPrivateKeyByID (id: string): Promise<Domain.PrivateKey | null> {
     const privateKey = await this.db.privatekeys.findOne({
       selector: {
         id: {
@@ -776,10 +769,10 @@ export class Database implements Domain.Pluto {
         }
       }
     }).exec()
-    return privateKey ? this.getPrivateKeyFromDB(privateKey) : null;
+    return privateKey ? this.getPrivateKeyFromDB(privateKey) : null
   }
 
-  async storeMediator(
+  async storeMediator (
     mediator: Domain.DID,
     host: Domain.DID,
     routing: Domain.DID
@@ -788,28 +781,28 @@ export class Database implements Domain.Pluto {
       id: uuidv4(),
       mediatorDID: mediator.toString(),
       hostDID: host.toString(),
-      routingDID: routing.toString(),
-    });
+      routingDID: routing.toString()
+    })
   }
 
-  async getAllPrismDIDs(): Promise<Domain.PrismDIDInfo[]> {
+  async getAllPrismDIDs (): Promise<Domain.PrismDIDInfo[]> {
     const dids = await this.db.dids.find({
       selector: {
         method: {
-          $eq: "prism"
+          $eq: 'prism'
         }
       }
-    }).exec();
+    }).exec()
 
-    const prismDIDInfo: Domain.PrismDIDInfo[] = [];
+    const prismDIDInfo: Domain.PrismDIDInfo[] = []
 
-    for (let did of dids) {
+    for (const did of dids) {
       const didPrivateKeys = await this.getDIDPrivateKeysByDID(
         Domain.DID.fromString(did.did)
-      );
+      )
 
-      for (let privateKey of didPrivateKeys) {
-        const indexProp = privateKey.getProperty(Domain.KeyProperties.index)!;
+      for (const privateKey of didPrivateKeys) {
+        const indexProp = privateKey.getProperty(Domain.KeyProperties.index)!
 
         prismDIDInfo.push(
           new Domain.PrismDIDInfo(
@@ -817,187 +810,186 @@ export class Database implements Domain.Pluto {
             parseInt(indexProp),
             did.alias
           )
-        );
+        )
       }
     }
 
-    return prismDIDInfo;
+    return prismDIDInfo
   }
 
-  async getDIDInfoByDID(did: Domain.DID): Promise<Domain.PrismDIDInfo | null> {
-
+  async getDIDInfoByDID (did: Domain.DID): Promise<Domain.PrismDIDInfo | null> {
     const didDB = await this.db.dids
       .findOne({
         selector: {
           did: did.toString()
         }
-      }).exec();
+      }).exec()
 
     if (didDB) {
       const privateKeys = await this.getDIDPrivateKeysByDID(
         Domain.DID.fromString(didDB.did)
-      );
+      )
       /* istanbul ignore if */
-      if (!privateKeys.length) {
+      if (privateKeys.length === 0) {
         throw new Error(
-          "Imposible to recover PrismDIDInfo without its privateKey data."
-        );
+          'Imposible to recover PrismDIDInfo without its privateKey data.'
+        )
       }
       const indexProp = privateKeys
         .at(0)!
-        .getProperty(Domain.KeyProperties.index);
-      const index = indexProp ? parseInt(indexProp) : undefined;
+        .getProperty(Domain.KeyProperties.index)
+      const index = indexProp ? parseInt(indexProp) : undefined
       return new Domain.PrismDIDInfo(
         Domain.DID.fromString(didDB.did),
         index,
         didDB.alias
-      );
+      )
     }
 
-    return null;
+    return null
   }
 
-  async getDIDInfoByAlias(alias: string): Promise<Domain.PrismDIDInfo[]> {
+  async getDIDInfoByAlias (alias: string): Promise<Domain.PrismDIDInfo[]> {
     const dids = await this.db.dids.find({
       selector: {
         alias: {
           $eq: alias
         }
       }
-    }).exec();
-    const prismDIDInfo: Domain.PrismDIDInfo[] = [];
-    for (let did of dids) {
+    }).exec()
+    const prismDIDInfo: Domain.PrismDIDInfo[] = []
+    for (const did of dids) {
       const didPrivateKeys = await this.getDIDPrivateKeysByDID(
         Domain.DID.fromString(did.did)
-      );
-      for (let privateKey of didPrivateKeys) {
-        const indexProp = privateKey.getProperty(Domain.KeyProperties.index)!;
+      )
+      for (const privateKey of didPrivateKeys) {
+        const indexProp = privateKey.getProperty(Domain.KeyProperties.index)!
         prismDIDInfo.push(
           new Domain.PrismDIDInfo(
             Domain.DID.fromString(did.did),
             parseInt(indexProp),
             did.alias
           )
-        );
+        )
       }
     }
-    return prismDIDInfo;
+    return prismDIDInfo
   }
 
-  async getAllMessagesByDID(did: Domain.DID): Promise<Domain.Message[]> {
+  async getAllMessagesByDID (did: Domain.DID): Promise<Domain.Message[]> {
     const messages = await this.db.messages
       .find({
         selector: {
           $or: [
             {
-              to: did.toString(),
+              to: did.toString()
             },
             {
-              from: did.toString(),
-            },
-          ],
+              from: did.toString()
+            }
+          ]
         }
       }).exec()
 
-    return messages.map((message) => message.toDomainMessage());
+    return messages.map((message) => message.toDomainMessage())
   }
 
-  async getAllMessagesSent(): Promise<Domain.Message[]> {
+  async getAllMessagesSent (): Promise<Domain.Message[]> {
     const messages = await this.db.messages
       .find({
         selector: {
           $or: [
             {
-              direction: Domain.MessageDirection.SENT,
-            },
-          ],
+              direction: Domain.MessageDirection.SENT
+            }
+          ]
         }
       }).exec()
 
-    return messages.map((message) => message.toDomainMessage());
+    return messages.map((message) => message.toDomainMessage())
   }
 
-  async getAllMessagesReceived(): Promise<Domain.Message[]> {
+  async getAllMessagesReceived (): Promise<Domain.Message[]> {
     const messages = await this.db.messages
       .find({
         selector: {
           $or: [
             {
-              direction: Domain.MessageDirection.RECEIVED,
-            },
-          ],
+              direction: Domain.MessageDirection.RECEIVED
+            }
+          ]
         }
       }).exec()
 
-    return messages.map((message) => message.toDomainMessage());
+    return messages.map((message) => message.toDomainMessage())
   }
 
-  async getAllMessagesSentTo(did: Domain.DID): Promise<Domain.Message[]> {
+  async getAllMessagesSentTo (did: Domain.DID): Promise<Domain.Message[]> {
     const messages = await this.db.messages
       .find({
         selector: {
           $and: [
             {
-              to: did.toString(),
+              to: did.toString()
             },
             {
-              direction: Domain.MessageDirection.SENT,
-            },
-          ],
+              direction: Domain.MessageDirection.SENT
+            }
+          ]
         }
       }).exec()
-    return messages.map((message) => message.toDomainMessage());
+    return messages.map((message) => message.toDomainMessage())
   }
 
-  async getAllMessagesReceivedFrom(did: Domain.DID): Promise<Domain.Message[]> {
+  async getAllMessagesReceivedFrom (did: Domain.DID): Promise<Domain.Message[]> {
     const messages = await this.db.messages
       .find({
         selector: {
           $and: [
             {
-              from: did.toString(),
+              from: did.toString()
             },
             {
-              direction: Domain.MessageDirection.RECEIVED,
-            },
-          ],
+              direction: Domain.MessageDirection.RECEIVED
+            }
+          ]
         }
-      }).exec();
-    return messages.map((message) => message.toDomainMessage());
+      }).exec()
+    return messages.map((message) => message.toDomainMessage())
   }
 
-  async getAllMessagesOfType(
+  async getAllMessagesOfType (
     type: string,
     relatedWithDID?: Domain.DID | undefined
   ): Promise<Domain.Message[]> {
-    const query: MangoQuerySelector<MessageSchemaType>[] = [
+    const query: Array<MangoQuerySelector<MessageSchemaType>> = [
       {
-        piuri: type,
-      },
-    ];
+        piuri: type
+      }
+    ]
     if (relatedWithDID) {
       query.push({
         $or: [
           {
-            from: relatedWithDID.toString(),
+            from: relatedWithDID.toString()
           },
           {
-            to: relatedWithDID.toString(),
-          },
-        ],
-      });
+            to: relatedWithDID.toString()
+          }
+        ]
+      })
     }
     const messages = await this.db.messages
       .find({
         selector: {
-          $and: query,
+          $and: query
         }
       }).exec()
 
-    return messages.map((message) => message.toDomainMessage());
+    return messages.map((message) => message.toDomainMessage())
   }
 
-  async getAllMessagesByFromToDID(
+  async getAllMessagesByFromToDID (
     from: Domain.DID,
     to: Domain.DID
   ): Promise<Domain.Message[]> {
@@ -1006,128 +998,129 @@ export class Database implements Domain.Pluto {
         selector: {
           $or: [
             {
-              from: from.toString(),
+              from: from.toString()
             },
             {
-              to: to.toString(),
-            },
-          ],
+              to: to.toString()
+            }
+          ]
         }
       }).exec()
 
-    return messages.map((message) => message.toDomainMessage());
+    return messages.map((message) => message.toDomainMessage())
   }
 
-  async getPrismDIDKeyPathIndex(did: Domain.DID): Promise<number | null> {
-    const [key] = await this.getDIDPrivateKeysByDID(did);
+  async getPrismDIDKeyPathIndex (did: Domain.DID): Promise<number | null> {
+    const [key] = await this.getDIDPrivateKeysByDID(did)
     if (!key) {
-      return null;
+      return null
     }
-    return parseInt(key.index);
+    return parseInt(key.index)
   }
 
-  async getPrismLastKeyPathIndex(): Promise<number> {
-    const results = await this.getAllPrismDIDs();
+  async getPrismLastKeyPathIndex (): Promise<number> {
+    const results = await this.getAllPrismDIDs()
     if (!results || results.length === 0) {
-      return 0;
+      return 0
     }
-    return Math.max(...results.map((result) => result.keyPathIndex));
+    return Math.max(...results.map((result) => result.keyPathIndex))
   }
 
-  async getAllPeerDIDs(): Promise<Domain.PeerDID[]> {
-    const peerDIDs: Domain.PeerDID[] = [];
+  async getAllPeerDIDs (): Promise<Domain.PeerDID[]> {
+    const peerDIDs: Domain.PeerDID[] = []
     const dids = await this.db.dids.find({
       selector: {
         method: {
           $eq: 'peer'
         }
       }
-    }).exec();
-    for (let did of dids) {
-      const peerDID = Domain.DID.fromString(did.did);
-      const keys = await this.getDIDPrivateKeysByDID(peerDID);
+    }).exec()
+    for (const did of dids) {
+      const peerDID = Domain.DID.fromString(did.did)
+      const keys = await this.getDIDPrivateKeysByDID(peerDID)
       peerDIDs.push(
         new Domain.PeerDID(
           peerDID,
           keys.map((key) => ({
             keyCurve: {
-              curve: key.curve as any,
+              curve: key.curve as any
             },
-            value: key.raw,
+            value: key.raw
           }))
         )
-      );
+      )
     }
-    return peerDIDs;
+    return peerDIDs
   }
 
-  async storeCredential(credential: Domain.Credential): Promise<void> {
+  async storeCredential (credential: Domain.Credential): Promise<void> {
     if (!credential.isStorable || !credential.isStorable()) {
-      throw new Error("Credential is not storable");
+      throw new Error('Credential is not storable')
     }
-    const storable = credential.toStorable();
+    const storable = credential.toStorable()
     /* istanbul ignore else -- @preserve */
-    if (!storable.id) storable.id = uuidv4();
+    if (!storable.id) storable.id = uuidv4()
 
-    await this.db.credentials.insert(storable);
+    await this.db.credentials.insert(storable)
   }
 
-  async getAllMediators(): Promise<Domain.Mediator[]> {
+  async getAllMediators (): Promise<Domain.Mediator[]> {
     const mediators = await this.db.mediators.find().exec()
-    return mediators.map((mediator) => mediator.toDomainMediator());
+    return mediators.map((mediator) => mediator.toDomainMediator())
   }
 
-  async getAllCredentials(): Promise<Domain.Credential[]> {
+  async getAllCredentials (): Promise<Domain.Credential[]> {
     const credentials = await this.db.credentials.find().exec()
     return credentials.map(
       (verifiableCredential) => verifiableCredential.toDomainCredential()
-    );
+    )
   }
 
-  async getLinkSecret(
+  async getLinkSecret (
     linkSecretName?: string | undefined
   ): Promise<string | null> {
-    const query = linkSecretName ?
-      {
-        selector: {
-          name: {
-            $eq: linkSecretName
+    const query = linkSecretName
+      ? {
+          selector: {
+            name: {
+              $eq: linkSecretName
+            }
           }
         }
-      } : {}
+      : {}
 
     const linkSecret = await this.db.linksecrets
-      .findOne(query).exec();
+      .findOne(query).exec()
 
     if (linkSecret) {
-      return linkSecret.toDomainLinkSecret();
+      return linkSecret.toDomainLinkSecret()
     }
 
-    return null;
+    return null
   }
 
-  async storeLinkSecret(
+  async storeLinkSecret (
     linkSecret: string,
     linkSecretName: string
   ): Promise<void> {
     await this.db.linksecrets.insert({
       name: linkSecretName,
-      secret: linkSecret,
-    });
+      secret: linkSecret
+    })
   }
 
-  async storeCredentialMetadata(
+  async storeCredentialMetadata (
     metadata: Domain.Anoncreds.CredentialRequestMeta,
     linkSecret: string
   ): Promise<void> {
     await this.db.credentialrequestmetadatas.insert({
       ...metadata,
       id: uuidv4(),
-      link_secret_name: linkSecret,
-    });
+      link_secret_name: linkSecret
+    })
   }
 
-  async fetchCredentialMetadata(
+  async fetchCredentialMetadata (
     linkSecretName: string
   ): Promise<Domain.Anoncreds.CredentialRequestMeta | null> {
     const credentialRequestMetadata = await this.db.credentialrequestmetadatas
@@ -1137,11 +1130,11 @@ export class Database implements Domain.Pluto {
             $eq: linkSecretName
           }
         }
-      }).exec();
+      }).exec()
 
     if (credentialRequestMetadata) {
-      return credentialRequestMetadata.toDomainCredentialRequestMetadata();
+      return credentialRequestMetadata.toDomainCredentialRequestMetadata()
     }
-    return null;
+    return null
   }
 }

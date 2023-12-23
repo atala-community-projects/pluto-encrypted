@@ -52,7 +52,7 @@ jobs:
           GITHUB_COMMITER_EMAIL: ${{ secrets.GITHUB_COMMITER_EMAIL }}
           CI: true
         run: |
-          npm install
+          npm install --force
           npm run build
           npm run release
           npm run docs

@@ -1,71 +1,70 @@
 import {
-  Domain
-} from "@atala/prism-wallet-sdk";
-import type { GenericORMType, Schema } from "../types";
-import { RxCollection, RxDocument } from "rxdb";
+  type Domain
+} from '@atala/prism-wallet-sdk'
+import type { Schema } from '../types'
+import { type RxCollection, type RxDocument } from 'rxdb'
 
-export type CredentialRequestMetadataSchemaType = {
-  id: string;
+export interface CredentialRequestMetadataSchemaType {
+  id: string
   link_secret_blinding_data: {
-    v_prime: string;
-  };
-  link_secret_name: string;
-  nonce: string;
-};
-
+    v_prime: string
+  }
+  link_secret_name: string
+  nonce: string
+}
 
 const CredentialRequestMetadataSchema: Schema<CredentialRequestMetadataSchemaType> =
 {
   version: 0,
-  primaryKey: "id",
-  type: "object",
+  primaryKey: 'id',
+  type: 'object',
   properties: {
     id: {
-      type: "string",
-      maxLength: 60,
+      type: 'string',
+      maxLength: 60
     },
     link_secret_blinding_data: {
-      type: "object",
+      type: 'object',
       properties: {
         v_prime: {
-          type: "string",
-        },
-      },
+          type: 'string'
+        }
+      }
     },
     link_secret_name: {
-      type: "string",
+      type: 'string'
     },
     nonce: {
-      type: "string",
-    },
+      type: 'string'
+    }
   },
-  encrypted: ["link_secret_blinding_data", "nonce"],
-  required: ["id", "link_secret_blinding_data", "link_secret_name", "nonce"],
-};
+  encrypted: ['link_secret_blinding_data', 'nonce'],
+  required: ['id', 'link_secret_blinding_data', 'link_secret_name', 'nonce']
+}
 
 export type CredentialRequestMetadataDocument =
-  RxDocument<CredentialRequestMetadataSchemaType>;
+  RxDocument<CredentialRequestMetadataSchemaType>
 
-export type CredentialRequestMetadataMethodTypes = {
+export interface CredentialRequestMetadataMethodTypes {
   toDomainCredentialRequestMetadata: (
     this: CredentialRequestMetadataSchemaType
-  ) => Domain.Anoncreds.CredentialRequestMeta;
-};
+  ) => Domain.Anoncreds.CredentialRequestMeta
+}
 
 export const CredentialRequestMetadataMethods: CredentialRequestMetadataMethodTypes =
 {
   toDomainCredentialRequestMetadata:
-    function toDomainCredentialRequestMetadata(
+    function toDomainCredentialRequestMetadata (
       this: CredentialRequestMetadataSchemaType
     ) {
-      return this;
-    },
-};
+      return this
+    }
+}
 
 export type CredentialRequestMetadataCollection = RxCollection<
-  CredentialRequestMetadataSchemaType,
-  CredentialRequestMetadataMethodTypes,
-  CredentialRequestMetadataDocument
->;
+CredentialRequestMetadataSchemaType,
+CredentialRequestMetadataMethodTypes,
+CredentialRequestMetadataDocument
+>
 
-export default CredentialRequestMetadataSchema;
+export default CredentialRequestMetadataSchema

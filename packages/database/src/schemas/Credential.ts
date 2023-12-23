@@ -2,94 +2,94 @@ import {
   AnonCredsCredential,
   AnonCredsCredentialProperties,
   AnonCredsRecoveryId,
-  Domain,
+  type Domain,
   JWTCredential,
-  JWTVerifiableCredentialRecoveryId,
-} from "@atala/prism-wallet-sdk";
-import type { GenericORMType, Schema } from "../types";
-import { RxCollection, RxDocument } from "rxdb";
+  JWTVerifiableCredentialRecoveryId
+} from '@atala/prism-wallet-sdk'
+import type { Schema } from '../types'
+import { type RxCollection, type RxDocument } from 'rxdb'
 
-export type CredentialSubjectType = {
-  type: string;
-  name: string;
-  value: string;
-};
+export interface CredentialSubjectType {
+  type: string
+  name: string
+  value: string
+}
 
-export type CredentialSchemaType = {
-  id: string;
-  recoveryId: string;
-  credentialData: string;
-  issuer?: string;
-  subject?: string;
-  credentialCreated?: string;
-  credentialUpdated?: string;
-  credentialSchema?: string;
-  validUntil?: string;
-  revoked?: boolean;
-  availableClaims?: string[];
-};
+export interface CredentialSchemaType {
+  id: string
+  recoveryId: string
+  credentialData: string
+  issuer?: string
+  subject?: string
+  credentialCreated?: string
+  credentialUpdated?: string
+  credentialSchema?: string
+  validUntil?: string
+  revoked?: boolean
+  availableClaims?: string[]
+}
 
 const CredentialSchema: Schema<CredentialSchemaType> = {
   version: 0,
-  primaryKey: "id",
-  type: "object",
+  primaryKey: 'id',
+  type: 'object',
   properties: {
     id: {
-      type: "string",
-      maxLength: 60,
+      type: 'string',
+      maxLength: 60
     },
     recoveryId: {
-      type: "string",
+      type: 'string'
     },
     credentialData: {
-      type: "string",
+      type: 'string'
     },
     issuer: {
-      type: "string",
+      type: 'string'
     },
     subject: {
-      type: "string",
+      type: 'string'
     },
     credentialCreated: {
-      type: "string",
+      type: 'string'
     },
     credentialUpdated: {
-      type: "string",
+      type: 'string'
     },
     credentialSchema: {
-      type: "string",
+      type: 'string'
     },
     validUntil: {
-      type: "string",
+      type: 'string'
     },
     revoked: {
-      type: "boolean",
+      type: 'boolean'
     },
     availableClaims: {
-      type: "array",
+      type: 'array',
       items: {
-        type: "string",
-      },
-    },
+        type: 'string'
+      }
+    }
   },
-  encrypted: ["credentialData"],
-  required: ["id", "recoveryId", "credentialData"],
-};
+  encrypted: ['credentialData'],
+  required: ['id', 'recoveryId', 'credentialData']
+}
 
-export type CredentialDocument = RxDocument<CredentialSchemaType>;
-export type CredentialMethodTypes = {
-  toDomainCredential: (this: CredentialSchemaType) => Domain.Credential;
-};
+export type CredentialDocument = RxDocument<CredentialSchemaType>
+export interface CredentialMethodTypes {
+  toDomainCredential: (this: CredentialSchemaType) => Domain.Credential
+}
 
 export const CredentialMethods: CredentialMethodTypes = {
-  toDomainCredential: function toDomainCredential(this: CredentialSchemaType) {
+  toDomainCredential: function toDomainCredential (this: CredentialSchemaType) {
     if (this.recoveryId === JWTVerifiableCredentialRecoveryId) {
-      const jwtString = Buffer.from(this.credentialData).toString();
-      const jwtObj = JSON.parse(jwtString);
-      return JWTCredential.fromJWT(jwtObj, jwtString);
+      const jwtString = Buffer.from(this.credentialData).toString()
+      const jwtObj = JSON.parse(jwtString)
+      return JWTCredential.fromJWT(jwtObj, jwtString)
     } else if (this.recoveryId === AnonCredsRecoveryId) {
-      const credentialData = Buffer.from(this.credentialData).toString();
-      const credentialJson = JSON.parse(credentialData);
+      const credentialData = Buffer.from(this.credentialData).toString()
+      const credentialJson = JSON.parse(credentialData)
       return new AnonCredsCredential({
         schema_id: credentialJson[AnonCredsCredentialProperties.schemaId],
         cred_def_id:
@@ -98,19 +98,19 @@ export const CredentialMethods: CredentialMethodTypes = {
         signature: credentialJson[AnonCredsCredentialProperties.signasture],
         signature_correctness_proof:
           credentialJson[
-          AnonCredsCredentialProperties.signatureCorrectnessProof
-          ],
-      });
+            AnonCredsCredentialProperties.signatureCorrectnessProof
+          ]
+      })
     } else {
-      throw new Error("Unsupported key type from db storage");
+      throw new Error('Unsupported key type from db storage')
     }
-  },
-};
+  }
+}
 
 export type CredentialCollection = RxCollection<
-  CredentialSchemaType,
-  CredentialMethodTypes,
-  CredentialDocument
->;
+CredentialSchemaType,
+CredentialMethodTypes,
+CredentialDocument
+>
 
-export default CredentialSchema;
+export default CredentialSchema

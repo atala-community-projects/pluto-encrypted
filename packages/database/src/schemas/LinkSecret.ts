@@ -1,48 +1,47 @@
-import { Domain } from "@atala/prism-wallet-sdk";
-import type { GenericORMType, Schema } from "../types";
-import { RxCollection, RxDocument } from "rxdb";
+import { type Domain } from '@atala/prism-wallet-sdk'
+import type { Schema } from '../types'
+import { type RxCollection, type RxDocument } from 'rxdb'
 
-export type LinkSecretSchemaType = {
-  readonly name: string;
-  readonly secret: string;
-};
-
+export interface LinkSecretSchemaType {
+  readonly name: string
+  readonly secret: string
+}
 
 const LinkSecretSchema: Schema<LinkSecretSchemaType> = {
   version: 0,
-  primaryKey: "name",
-  type: "object",
+  primaryKey: 'name',
+  type: 'object',
   properties: {
     name: {
-      type: "string",
-      maxLength: 60,
+      type: 'string',
+      maxLength: 60
     },
     secret: {
-      type: "string",
-    },
+      type: 'string'
+    }
   },
-  encrypted: ["secret"],
-  required: ["name", "secret"],
-};
+  encrypted: ['secret'],
+  required: ['name', 'secret']
+}
 
 export type LinkSecretDocument = RxDocument<
-  LinkSecretSchemaType,
-  LinkSecretMethodTypes
->;
+LinkSecretSchemaType,
+LinkSecretMethodTypes
+>
 
-export type LinkSecretMethodTypes = {
-  toDomainLinkSecret: (this: LinkSecretDocument) => Domain.Anoncreds.LinkSecret;
-};
+export interface LinkSecretMethodTypes {
+  toDomainLinkSecret: (this: LinkSecretDocument) => Domain.Anoncreds.LinkSecret
+}
 
 export type LinkSecretColletion = RxCollection<
-  LinkSecretSchemaType,
-  LinkSecretMethodTypes,
-  LinkSecretDocument
->;
+LinkSecretSchemaType,
+LinkSecretMethodTypes,
+LinkSecretDocument
+>
 
 export const LinkSecretMethods: LinkSecretMethodTypes = {
-  toDomainLinkSecret: function toDomainLinkSecret(this: LinkSecretDocument) {
-    return this.secret;
-  },
-};
-export default LinkSecretSchema;
+  toDomainLinkSecret: function toDomainLinkSecret (this: LinkSecretDocument) {
+    return this.secret
+  }
+}
+export default LinkSecretSchema
