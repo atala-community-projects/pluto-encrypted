@@ -1,6 +1,6 @@
 {
   "name": "@pluto-encrypted/indexdb",
-  "version": "1.3.2",
+  "version": "1.3.3",
   "description": "Secure Encrypted IndexDB storage for @pluto-encrypted/database.",
   "main": "./build/cjs/index.cjs",
   "module": "./build/esm/index.mjs",
@@ -37,9 +37,9 @@
     "array-push-at-sort-position": "^4.0.1"
   },
   "devDependencies": {
-    "@pluto-encrypted/encryption": "1.2.0",
-    "@pluto-encrypted/shared": "1.2.0",
-    "@pluto-encrypted/test-suite": "1.0.1"
+    "@pluto-encrypted/encryption": "1.2.1",
+    "@pluto-encrypted/shared": "1.2.1",
+    "@pluto-encrypted/test-suite": "1.0.2"
   },
   "files": [
     "build/*"
