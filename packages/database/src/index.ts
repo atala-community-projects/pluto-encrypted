@@ -70,24 +70,24 @@ export type PlutoDatabase = RxDatabase<PlutoCollections>
 export class Database implements Domain.Pluto {
   private _db!: RxDatabase<PlutoCollections, any, any>
 
-  protected get db () {
+  protected get db() {
     if (!this._db) {
       throw new Error('Start Pluto first.')
     }
     return this._db
   }
 
-  constructor (private readonly dbOptions: RxDatabaseCreator) {
+  constructor(private readonly dbOptions: RxDatabaseCreator) {
     addRxPlugin(RxDBQueryBuilderPlugin)
     addRxPlugin(RxDBJsonDumpPlugin)
     addRxPlugin(RxDBEncryptedMigrationPlugin)
   }
 
-  async backup () {
+  async backup() {
     return await this.db.exportJSON()
   }
 
-  get collections (): PlutoCollections {
+  get collections(): PlutoCollections {
     return this.db.collections
   }
 
@@ -119,7 +119,7 @@ export class Database implements Domain.Pluto {
    * await db.credentialmetadatas.remove({selector: {id: {$eq: 1}}})
    * ```
    */
-  get credentialrequestmetadatas (): CredentialRequestMetadataCollection {
+  get credentialrequestmetadatas(): CredentialRequestMetadataCollection {
     return this.db.collections.credentialrequestmetadatas
   }
 
@@ -151,7 +151,7 @@ export class Database implements Domain.Pluto {
    * await db.linksecrets.remove({selector: {id: {$eq: 1}}})
    * ```
    */
-  get linksecrets (): LinkSecretColletion {
+  get linksecrets(): LinkSecretColletion {
     return this.db.collections.linksecrets
   }
 
@@ -183,7 +183,7 @@ export class Database implements Domain.Pluto {
    * await db.didpairs.remove({selector: {id: {$eq: 1}}})
    * ```
    */
-  get didpairs (): DIDPairCollection {
+  get didpairs(): DIDPairCollection {
     return this.db.collections.didpairs
   }
 
@@ -215,7 +215,7 @@ export class Database implements Domain.Pluto {
    * await db.credentials.remove({selector: {id: {$eq: 1}}})
    * ```
    */
-  get credentials (): CredentialCollection {
+  get credentials(): CredentialCollection {
     return this.db.collections.credentials
   }
 
@@ -247,7 +247,7 @@ export class Database implements Domain.Pluto {
    * await db.mediators.remove({selector: {id: {$eq: 1}}})
    * ```
    */
-  get mediators (): MediatorCollection {
+  get mediators(): MediatorCollection {
     return this.db.collections.mediators
   }
 
@@ -279,7 +279,7 @@ export class Database implements Domain.Pluto {
     * await db.dids.remove({selector: {id: {$eq: 1}}})
     * ```
     */
-  get dids (): DIDCollection {
+  get dids(): DIDCollection {
     return this.db.collections.dids
   }
 
@@ -311,7 +311,7 @@ export class Database implements Domain.Pluto {
     * await db.privatekeys.remove({selector: {id: {$eq: 1}}})
     * ```
     */
-  get privatekeys (): PrivateKeyColletion {
+  get privatekeys(): PrivateKeyColletion {
     return this.db.collections.privatekeys
   }
 
@@ -343,7 +343,7 @@ export class Database implements Domain.Pluto {
     * await db.messages.remove({selector: {id: {$eq: 1}}})
     * ```
     */
-  get messages (): MessageColletion {
+  get messages(): MessageColletion {
     return this.db.collections.messages
   }
 
@@ -351,7 +351,7 @@ export class Database implements Domain.Pluto {
    * Use with caution, this will remove all entries from database
    * and then destroy the database itself.
    */
-  async clear () {
+  async clear() {
     const storages = Array.from(this.db.storageInstances.values())
     for (const storage of storages) {
       await storage.cleanup(Infinity)
@@ -364,7 +364,7 @@ export class Database implements Domain.Pluto {
    * @param options
    * @returns Database
    */
-  static async createEncrypted (
+  static async createEncrypted(
     options: {
       name: string
       encryptionKey: Uint8Array
@@ -421,7 +421,7 @@ export class Database implements Domain.Pluto {
    * @param id
    * @returns [Message](https://input-output-hk.github.io/atala-prism-wallet-sdk-ts/classes/Domain.Message.html)
    */
-  async getMessage (id: string): Promise<Domain.Message | null> {
+  async getMessage(id: string): Promise<Domain.Message | null> {
     const message = await this.db.messages.findOne({
       selector: {
         id: {
@@ -440,7 +440,7 @@ export class Database implements Domain.Pluto {
    * @param [Message](https://input-output-hk.github.io/atala-prism-wallet-sdk-ts/classes/Domain.Message.html)
    * @returns void
    */
-  async storeMessage (message: Domain.Message): Promise<void> {
+  async storeMessage(message: Domain.Message): Promise<void> {
     const existing = await this.db.messages
       .findOne({
         selector: {
@@ -469,7 +469,7 @@ export class Database implements Domain.Pluto {
    * @param [Message[]](https://input-output-hk.github.io/atala-prism-wallet-sdk-ts/classes/Domain.Message.html)
    * @returns void
    */
-  async storeMessages (messages: Domain.Message[]): Promise<void> {
+  async storeMessages(messages: Domain.Message[]): Promise<void> {
     for (const message of messages) {
       await this.storeMessage(message)
     }
@@ -479,12 +479,12 @@ export class Database implements Domain.Pluto {
   * Get all the stored messages
   * @returns [Message[]](https://input-output-hk.github.io/atala-prism-wallet-sdk-ts/classes/Domain.Message.html)
   */
-  async getAllMessages (): Promise<Domain.Message[]> {
+  async getAllMessages(): Promise<Domain.Message[]> {
     const messages = await this.db.messages.find().exec()
     return messages.map((message) => message.toDomainMessage())
   }
 
-  private getDefaultCollections () {
+  private getDefaultCollections() {
     return {
       messages: {
         schema: MessageSchema,
@@ -522,7 +522,7 @@ export class Database implements Domain.Pluto {
   /**
    * Start the database and build collections
    */
-  async start (collections?: Partial<{
+  async start(collections?: Partial<{
     messages: RxCollectionCreator<any>
     dids: RxCollectionCreator<any>
     didpairs: RxCollectionCreator<any>
@@ -555,11 +555,11 @@ export class Database implements Domain.Pluto {
    * @param privateKeyMetaId
    * @param alias
    */
-  async storePrismDID (
+  async storePrismDID(
     did: Domain.DID,
     keyPathIndex: number,
     privateKey: Domain.PrivateKey,
-    privateKeyMetaId?: string | null,
+    _privateKeyMetaId?: string | null,
     alias?: string | undefined
   ): Promise<void> {
     await this.db.dids.insert({
@@ -572,8 +572,7 @@ export class Database implements Domain.Pluto {
     await this.storePrivateKeys(
       privateKey,
       did,
-      keyPathIndex,
-      privateKeyMetaId ?? null
+      keyPathIndex
     )
   }
 
@@ -582,7 +581,7 @@ export class Database implements Domain.Pluto {
    * @param did
    * @param privateKeys
    */
-  async storePeerDID (
+  async storePeerDID(
     did: Domain.DID,
     privateKeys: Domain.PrivateKey[]
   ): Promise<void> {
@@ -624,7 +623,7 @@ export class Database implements Domain.Pluto {
    * @param receiver
    * @param name
    */
-  async storeDIDPair (
+  async storeDIDPair(
     host: Domain.DID,
     receiver: Domain.DID,
     name: string
@@ -643,7 +642,7 @@ export class Database implements Domain.Pluto {
    * @param keyPathIndex
    * @param _metaId
    */
-  async storePrivateKeys (
+  async storePrivateKeys(
     privateKey: Domain.PrivateKey,
     did: Domain.DID,
     keyPathIndex: number
@@ -681,7 +680,7 @@ export class Database implements Domain.Pluto {
    * Gets all the stores didPairs
    * @returns [Domain.DIDPair[]](https://input-output-hk.github.io/atala-prism-wallet-sdk-ts/classes/Domain.DIDPair.html)
    */
-  async getAllDidPairs (): Promise<Domain.DIDPair[]> {
+  async getAllDidPairs(): Promise<Domain.DIDPair[]> {
     const { DID, DIDPair } = Domain
     const results = await this.db.didpairs.find().exec()
     return results.map(
@@ -695,7 +694,7 @@ export class Database implements Domain.Pluto {
    * @param did
    * @returns [Domain.DIDPair](https://input-output-hk.github.io/atala-prism-wallet-sdk-ts/classes/Domain.DIDPair.html)
    */
-  async getPairByDID (did: Domain.DID): Promise<Domain.DIDPair | null> {
+  async getPairByDID(did: Domain.DID): Promise<Domain.DIDPair | null> {
     const { DID, DIDPair } = Domain
     const didPair = await this.db.didpairs
       .findOne({
@@ -719,7 +718,7 @@ export class Database implements Domain.Pluto {
       : null
   }
 
-  async getPairByName (name: string): Promise<Domain.DIDPair | null> {
+  async getPairByName(name: string): Promise<Domain.DIDPair | null> {
     const { DID, DIDPair } = Domain
     const didPair = await this.db.didpairs
       .findOne({
@@ -741,13 +740,13 @@ export class Database implements Domain.Pluto {
       : null
   }
 
-  private getPrivateKeyFromDB (
+  private getPrivateKeyFromDB(
     privateKey: PrivateKeyDocument
   ): Domain.PrivateKey {
     return privateKey.toDomainPrivateKey()
   }
 
-  async getDIDPrivateKeysByDID (did: Domain.DID): Promise<Domain.PrivateKey[]> {
+  async getDIDPrivateKeysByDID(did: Domain.DID): Promise<Domain.PrivateKey[]> {
     const privateKeys = await this.db.privatekeys
       .find({
         selector: {
@@ -761,7 +760,7 @@ export class Database implements Domain.Pluto {
     })
   }
 
-  async getDIDPrivateKeyByID (id: string): Promise<Domain.PrivateKey | null> {
+  async getDIDPrivateKeyByID(id: string): Promise<Domain.PrivateKey | null> {
     const privateKey = await this.db.privatekeys.findOne({
       selector: {
         id: {
@@ -772,7 +771,7 @@ export class Database implements Domain.Pluto {
     return privateKey ? this.getPrivateKeyFromDB(privateKey) : null
   }
 
-  async storeMediator (
+  async storeMediator(
     mediator: Domain.DID,
     host: Domain.DID,
     routing: Domain.DID
@@ -785,7 +784,7 @@ export class Database implements Domain.Pluto {
     })
   }
 
-  async getAllPrismDIDs (): Promise<Domain.PrismDIDInfo[]> {
+  async getAllPrismDIDs(): Promise<Domain.PrismDIDInfo[]> {
     const dids = await this.db.dids.find({
       selector: {
         method: {
@@ -817,7 +816,7 @@ export class Database implements Domain.Pluto {
     return prismDIDInfo
   }
 
-  async getDIDInfoByDID (did: Domain.DID): Promise<Domain.PrismDIDInfo | null> {
+  async getDIDInfoByDID(did: Domain.DID): Promise<Domain.PrismDIDInfo | null> {
     const didDB = await this.db.dids
       .findOne({
         selector: {
@@ -849,7 +848,7 @@ export class Database implements Domain.Pluto {
     return null
   }
 
-  async getDIDInfoByAlias (alias: string): Promise<Domain.PrismDIDInfo[]> {
+  async getDIDInfoByAlias(alias: string): Promise<Domain.PrismDIDInfo[]> {
     const dids = await this.db.dids.find({
       selector: {
         alias: {
@@ -876,7 +875,7 @@ export class Database implements Domain.Pluto {
     return prismDIDInfo
   }
 
-  async getAllMessagesByDID (did: Domain.DID): Promise<Domain.Message[]> {
+  async getAllMessagesByDID(did: Domain.DID): Promise<Domain.Message[]> {
     const messages = await this.db.messages
       .find({
         selector: {
@@ -894,7 +893,7 @@ export class Database implements Domain.Pluto {
     return messages.map((message) => message.toDomainMessage())
   }
 
-  async getAllMessagesSent (): Promise<Domain.Message[]> {
+  async getAllMessagesSent(): Promise<Domain.Message[]> {
     const messages = await this.db.messages
       .find({
         selector: {
@@ -909,7 +908,7 @@ export class Database implements Domain.Pluto {
     return messages.map((message) => message.toDomainMessage())
   }
 
-  async getAllMessagesReceived (): Promise<Domain.Message[]> {
+  async getAllMessagesReceived(): Promise<Domain.Message[]> {
     const messages = await this.db.messages
       .find({
         selector: {
@@ -924,7 +923,7 @@ export class Database implements Domain.Pluto {
     return messages.map((message) => message.toDomainMessage())
   }
 
-  async getAllMessagesSentTo (did: Domain.DID): Promise<Domain.Message[]> {
+  async getAllMessagesSentTo(did: Domain.DID): Promise<Domain.Message[]> {
     const messages = await this.db.messages
       .find({
         selector: {
@@ -941,7 +940,7 @@ export class Database implements Domain.Pluto {
     return messages.map((message) => message.toDomainMessage())
   }
 
-  async getAllMessagesReceivedFrom (did: Domain.DID): Promise<Domain.Message[]> {
+  async getAllMessagesReceivedFrom(did: Domain.DID): Promise<Domain.Message[]> {
     const messages = await this.db.messages
       .find({
         selector: {
@@ -958,7 +957,7 @@ export class Database implements Domain.Pluto {
     return messages.map((message) => message.toDomainMessage())
   }
 
-  async getAllMessagesOfType (
+  async getAllMessagesOfType(
     type: string,
     relatedWithDID?: Domain.DID | undefined
   ): Promise<Domain.Message[]> {
@@ -989,7 +988,7 @@ export class Database implements Domain.Pluto {
     return messages.map((message) => message.toDomainMessage())
   }
 
-  async getAllMessagesByFromToDID (
+  async getAllMessagesByFromToDID(
     from: Domain.DID,
     to: Domain.DID
   ): Promise<Domain.Message[]> {
@@ -1010,7 +1009,7 @@ export class Database implements Domain.Pluto {
     return messages.map((message) => message.toDomainMessage())
   }
 
-  async getPrismDIDKeyPathIndex (did: Domain.DID): Promise<number | null> {
+  async getPrismDIDKeyPathIndex(did: Domain.DID): Promise<number | null> {
     const [key] = await this.getDIDPrivateKeysByDID(did)
     if (!key) {
       return null
@@ -1018,7 +1017,7 @@ export class Database implements Domain.Pluto {
     return parseInt(key.index)
   }
 
-  async getPrismLastKeyPathIndex (): Promise<number> {
+  async getPrismLastKeyPathIndex(): Promise<number> {
     const results = await this.getAllPrismDIDs()
     if (!results || results.length === 0) {
       return 0
@@ -1026,7 +1025,7 @@ export class Database implements Domain.Pluto {
     return Math.max(...results.map((result) => result.keyPathIndex))
   }
 
-  async getAllPeerDIDs (): Promise<Domain.PeerDID[]> {
+  async getAllPeerDIDs(): Promise<Domain.PeerDID[]> {
     const peerDIDs: Domain.PeerDID[] = []
     const dids = await this.db.dids.find({
       selector: {
@@ -1053,7 +1052,7 @@ export class Database implements Domain.Pluto {
     return peerDIDs
   }
 
-  async storeCredential (credential: Domain.Credential): Promise<void> {
+  async storeCredential(credential: Domain.Credential): Promise<void> {
     if (!credential.isStorable || !credential.isStorable()) {
       throw new Error('Credential is not storable')
     }
@@ -1064,29 +1063,29 @@ export class Database implements Domain.Pluto {
     await this.db.credentials.insert(storable)
   }
 
-  async getAllMediators (): Promise<Domain.Mediator[]> {
+  async getAllMediators(): Promise<Domain.Mediator[]> {
     const mediators = await this.db.mediators.find().exec()
     return mediators.map((mediator) => mediator.toDomainMediator())
   }
 
-  async getAllCredentials (): Promise<Domain.Credential[]> {
+  async getAllCredentials(): Promise<Domain.Credential[]> {
     const credentials = await this.db.credentials.find().exec()
     return credentials.map(
       (verifiableCredential) => verifiableCredential.toDomainCredential()
     )
   }
 
-  async getLinkSecret (
+  async getLinkSecret(
     linkSecretName?: string | undefined
   ): Promise<string | null> {
     const query = linkSecretName
       ? {
-          selector: {
-            name: {
-              $eq: linkSecretName
-            }
+        selector: {
+          name: {
+            $eq: linkSecretName
           }
         }
+      }
       : {}
 
     const linkSecret = await this.db.linksecrets
@@ -1099,7 +1098,7 @@ export class Database implements Domain.Pluto {
     return null
   }
 
-  async storeLinkSecret (
+  async storeLinkSecret(
     linkSecret: string,
     linkSecretName: string
   ): Promise<void> {
@@ -1109,7 +1108,7 @@ export class Database implements Domain.Pluto {
     })
   }
 
-  async storeCredentialMetadata (
+  async storeCredentialMetadata(
     metadata: Domain.Anoncreds.CredentialRequestMeta,
     linkSecret: string
   ): Promise<void> {
@@ -1120,7 +1119,7 @@ export class Database implements Domain.Pluto {
     })
   }
 
-  async fetchCredentialMetadata (
+  async fetchCredentialMetadata(
     linkSecretName: string
   ): Promise<Domain.Anoncreds.CredentialRequestMeta | null> {
     const credentialRequestMetadata = await this.db.credentialrequestmetadatas
