@@ -1,6 +1,6 @@
 {
   "name": "@pluto-encrypted/test-suite",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "This is a RXDB test-suite that works out of the box without cloning rxdb repo or submodule.",
   "main": "./build/cjs/index.cjs",
   "module": "./build/esm/index.mjs",
