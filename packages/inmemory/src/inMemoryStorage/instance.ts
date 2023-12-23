@@ -47,7 +47,7 @@ export class RxStorageIntanceInMemory<RxDocType> implements RxStorageInstance<
             const currentId = currentWriteDoc.document[this.primaryPath] as any;
             const previousDocument = currentWriteDoc.previous || this.internals.documents.get(currentId)
             if (context === "data-migrator-delete") {
-                if (previousDocument && previousDocument._rev === currentWriteDoc.document._rev) {
+                if (previousDocument && previousDocument._rev == currentWriteDoc.document._rev) {
                     fixedDocs.push(currentWriteDoc)
                 }
             } else {

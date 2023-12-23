@@ -50,7 +50,7 @@ export class RxStorageIntanceLevelDB<RxDocType> implements RxStorageInstance<
                     fixedDocs.push(currentWriteDoc)
                 }
             } else {
-                if (previousDocument) {
+                if (previousDocument && previousDocument._rev !== currentWriteDoc.document._rev) {
                     currentWriteDoc.previous = previousDocument
                 } else {
                     currentWriteDoc.previous = undefined
