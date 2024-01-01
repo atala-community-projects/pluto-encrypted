@@ -1,3 +1,10 @@
+## @pluto-encrypted/encryption [1.2.3](https://github.com/atala-community-projects/pluto-encrypted/compare/@pluto-encrypted/encryption@1.2.2...@pluto-encrypted/encryption@1.2.3) (2024-01-01)
+
+
+### Bug Fixes
+
+* add homepage to all npm packages. ([f0dcd0a](https://github.com/atala-community-projects/pluto-encrypted/commit/f0dcd0a90ff8cf5278de1158a6e90298d25d43c4))
+
 ## @pluto-encrypted/encryption [1.2.2](https://github.com/atala-community-projects/pluto-encrypted/compare/@pluto-encrypted/encryption@1.2.1...@pluto-encrypted/encryption@1.2.2) (2024-01-01)
 
 

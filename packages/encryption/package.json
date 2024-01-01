@@ -1,7 +1,7 @@
 {
   "name": "@pluto-encrypted/encryption",
-  "version": "1.2.2",
-  "description": "Encryption layer for pluto encrypted db engines.",
+  "version": "1.2.5",
+  "description": "Encryption layer for pluto encrypted database engines.",
   "main": "./build/cjs/index.cjs",
   "module": "./build/esm/index.mjs",
   "types": "./build/index.d.ts",
@@ -11,6 +11,7 @@
       "require": "./build/cjs/index.cjs"
     }
   },
+  "homepage": "https://atala-community-projects.github.io/pluto-encrypted",
   "publishConfig": {
     "access": "public"
   },

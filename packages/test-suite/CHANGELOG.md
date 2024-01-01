@@ -1,3 +1,10 @@
+## @pluto-encrypted/test-suite [1.0.5](https://github.com/atala-community-projects/pluto-encrypted/compare/@pluto-encrypted/test-suite@1.0.4...@pluto-encrypted/test-suite@1.0.5) (2024-01-01)
+
+
+### Bug Fixes
+
+* add homepage to all npm packages. ([f0dcd0a](https://github.com/atala-community-projects/pluto-encrypted/commit/f0dcd0a90ff8cf5278de1158a6e90298d25d43c4))
+
 ## @pluto-encrypted/test-suite [1.0.4](https://github.com/atala-community-projects/pluto-encrypted/compare/@pluto-encrypted/test-suite@1.0.3...@pluto-encrypted/test-suite@1.0.4) (2024-01-01)
 
 

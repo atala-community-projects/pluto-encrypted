@@ -1,7 +1,7 @@
 {
   "name": "@pluto-encrypted/indexdb",
-  "version": "1.3.5",
-  "description": "Secure Encrypted IndexDB storage for @pluto-encrypted/database.",
+  "version": "1.3.8",
+  "description": "Secure Encrypted IndexDB storage for @pluto-encrypted/database database package.",
   "main": "./build/cjs/index.cjs",
   "module": "./build/esm/index.mjs",
   "types": "./build/index.d.ts",
@@ -14,6 +14,7 @@
   "publishConfig": {
     "access": "public"
   },
+  "homepage": "https://atala-community-projects.github.io/pluto-encrypted",
   "scripts": {
     "prepublishOnly": "npm run build",
     "clean-packages": "rm -rf node_modules && rm -rf build",
@@ -32,14 +33,14 @@
   "dependencies": {
     "rxdb": "^14.17.0",
     "uuid": "^9.0.1",
-    "@pluto-encrypted/encryption": "^1.0.1",
-    "@pluto-encrypted/shared": "^1.0.2",
+    "@pluto-encrypted/encryption": "1.2.3",
+    "@pluto-encrypted/shared": "1.2.3",
     "array-push-at-sort-position": "^4.0.1"
   },
   "devDependencies": {
-    "@pluto-encrypted/encryption": "1.2.2",
-    "@pluto-encrypted/shared": "1.2.2",
-    "@pluto-encrypted/test-suite": "1.0.4"
+    "@pluto-encrypted/encryption": "1.2.3",
+    "@pluto-encrypted/shared": "1.2.3",
+    "@pluto-encrypted/test-suite": "1.0.5"
   },
   "files": [
     "build/*"

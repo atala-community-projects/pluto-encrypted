@@ -1,3 +1,20 @@
+## @pluto-encrypted/database [1.2.9](https://github.com/atala-community-projects/pluto-encrypted/compare/@pluto-encrypted/database@1.2.8...@pluto-encrypted/database@1.2.9) (2024-01-01)
+
+
+### Bug Fixes
+
+* add homepage to all npm packages. ([f0dcd0a](https://github.com/atala-community-projects/pluto-encrypted/commit/f0dcd0a90ff8cf5278de1158a6e90298d25d43c4))
+
+
+
+
+
+### Dependencies
+
+* **@pluto-encrypted/indexdb:** upgraded to 1.3.6
+* **@pluto-encrypted/inmemory:** upgraded to 1.3.6
+* **@pluto-encrypted/leveldb:** upgraded to 1.3.6
+
 ## @pluto-encrypted/database [1.2.8](https://github.com/atala-community-projects/pluto-encrypted/compare/@pluto-encrypted/database@1.2.7...@pluto-encrypted/database@1.2.8) (2024-01-01)
 
 

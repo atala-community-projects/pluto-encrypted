@@ -1,7 +1,7 @@
 {
   "name": "@pluto-encrypted/test-suite",
-  "version": "1.0.4",
-  "description": "This is a RXDB test-suite that works out of the box without cloning rxdb repo or submodule.",
+  "version": "1.0.15",
+  "description": "This is a test-suite that works out of the box without cloning rxdb repo or submodule.",
   "main": "./build/cjs/index.cjs",
   "module": "./build/esm/index.mjs",
   "types": "./build/index.d.ts",
@@ -14,6 +14,7 @@
   "publishConfig": {
     "access": "public"
   },
+  "homepage": "https://atala-community-projects.github.io/pluto-encrypted",
   "scripts": {
     "prepublishOnly": "npm run build",
     "clean-packages": "rm -rf node_modules && rm -rf build",
