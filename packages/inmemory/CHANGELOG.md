@@ -1,3 +1,20 @@
+## @pluto-encrypted/inmemory [1.3.5](https://github.com/atala-community-projects/pluto-encrypted/compare/@pluto-encrypted/inmemory@1.3.4...@pluto-encrypted/inmemory@1.3.5) (2024-01-01)
+
+
+### Bug Fixes
+
+* replace npm package repositories. ([c7c4bb9](https://github.com/atala-community-projects/pluto-encrypted/commit/c7c4bb9e5ab55762ac44bc9caa1b98094088647d))
+
+
+
+
+
+### Dependencies
+
+* **@pluto-encrypted/encryption:** upgraded to 1.2.2
+* **@pluto-encrypted/shared:** upgraded to 1.2.2
+* **@pluto-encrypted/test-suite:** upgraded to 1.0.4
+
 ## @pluto-encrypted/inmemory [1.3.4](https://github.com/elribonazo/pluto-encrypted/compare/@pluto-encrypted/inmemory@1.3.3...@pluto-encrypted/inmemory@1.3.4) (2023-12-23)
 
 

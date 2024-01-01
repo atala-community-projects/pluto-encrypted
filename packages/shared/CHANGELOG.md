@@ -1,3 +1,10 @@
+## @pluto-encrypted/shared [1.2.2](https://github.com/atala-community-projects/pluto-encrypted/compare/@pluto-encrypted/shared@1.2.1...@pluto-encrypted/shared@1.2.2) (2024-01-01)
+
+
+### Bug Fixes
+
+* replace npm package repositories. ([c7c4bb9](https://github.com/atala-community-projects/pluto-encrypted/commit/c7c4bb9e5ab55762ac44bc9caa1b98094088647d))
+
 # @pluto-encrypted/shared [1.1.0](https://github.com/elribonazo/pluto-encrypted/compare/@pluto-encrypted/shared@1.0.4...@pluto-encrypted/shared@1.1.0) (2023-12-19)
 
 

@@ -1,3 +1,10 @@
+## @pluto-encrypted/test-suite [1.0.4](https://github.com/atala-community-projects/pluto-encrypted/compare/@pluto-encrypted/test-suite@1.0.3...@pluto-encrypted/test-suite@1.0.4) (2024-01-01)
+
+
+### Bug Fixes
+
+* replace npm package repositories. ([c7c4bb9](https://github.com/atala-community-projects/pluto-encrypted/commit/c7c4bb9e5ab55762ac44bc9caa1b98094088647d))
+
 ## @pluto-encrypted/test-suite [1.0.3](https://github.com/elribonazo/pluto-encrypted/compare/@pluto-encrypted/test-suite@1.0.2...@pluto-encrypted/test-suite@1.0.3) (2023-12-23)
 
 
