@@ -1,4 +1,5 @@
 /**
+ * 
  * @packageDocumentation
  * @module shared
  * @description Shared is used by other dependencies of pluto-encrypted to reduce code duplication.
@@ -13,7 +14,7 @@ export interface DocWithIndexString<RxDocType> {
   indexString: string
 }
 
-export function compareDocsWithIndex<RxDocType> (
+export function compareDocsWithIndex<RxDocType>(
   a: DocWithIndexString<RxDocType>,
   b: DocWithIndexString<RxDocType>
 ): 1 | 0 | -1 {
@@ -26,7 +27,7 @@ export function compareDocsWithIndex<RxDocType> (
   }
 }
 
-export function conditionMatches<RxDocType> (selector: MangoQuerySelector<RxDocType>, key: string, document: RxDocumentData<RxDocType>) {
+export function conditionMatches<RxDocType>(selector: MangoQuerySelector<RxDocType>, key: string, document: RxDocumentData<RxDocType>) {
   if (key === '$and') {
     const matchingSelector = selector[key]!
     const matches = Object.values(matchingSelector).every((condition) => {
@@ -98,7 +99,7 @@ export function conditionMatches<RxDocType> (selector: MangoQuerySelector<RxDocT
 
 type Compare<T> = ((a: T, b: T) => number | null | undefined)
 
-function ge<T> (a: T[], y: T, c: Compare<T>, l?: any, h?: any): number {
+function ge<T>(a: T[], y: T, c: Compare<T>, l?: any, h?: any): number {
   let i: number = h + 1
   while (l <= h) {
     const m = (l + h) >>> 1
@@ -113,7 +114,7 @@ function ge<T> (a: T[], y: T, c: Compare<T>, l?: any, h?: any): number {
   return i
 }
 
-function gt<T> (a: T[], y: T, c: Compare<T>, l?: any, h?: any): number {
+function gt<T>(a: T[], y: T, c: Compare<T>, l?: any, h?: any): number {
   let i = h + 1
   while (l <= h) {
     const m = (l + h) >>> 1
@@ -128,7 +129,7 @@ function gt<T> (a: T[], y: T, c: Compare<T>, l?: any, h?: any): number {
   return i
 }
 
-function lt<T> (a: T[], y: T, c: Compare<T>, l?: any, h?: any): number {
+function lt<T>(a: T[], y: T, c: Compare<T>, l?: any, h?: any): number {
   let i = l - 1
   while (l <= h) {
     const m = (l + h) >>> 1; const x = a[m]
@@ -142,7 +143,7 @@ function lt<T> (a: T[], y: T, c: Compare<T>, l?: any, h?: any): number {
   return i
 }
 
-function le<T> (a: T[], y: T, c: Compare<T>, l?: any, h?: any): number {
+function le<T>(a: T[], y: T, c: Compare<T>, l?: any, h?: any): number {
   let i = l - 1
   while (l <= h) {
     const m = (l + h) >>> 1; const x = a[m]
@@ -156,7 +157,7 @@ function le<T> (a: T[], y: T, c: Compare<T>, l?: any, h?: any): number {
   return i
 }
 
-function eq<T> (a: T[], y: T, c: Compare<T>, l?: any, h?: any): number {
+function eq<T>(a: T[], y: T, c: Compare<T>, l?: any, h?: any): number {
   while (l <= h) {
     const m = (l + h) >>> 1; const x = a[m]
     const p: any = (c !== undefined) ? c(x!, y) : ((x as any) - (y as any))
@@ -172,30 +173,30 @@ function eq<T> (a: T[], y: T, c: Compare<T>, l?: any, h?: any): number {
   return -1
 }
 
-function norm<T> (a: T[], y: T, c: Compare<T>, l: any, h: any, f: any) {
+function norm<T>(a: T[], y: T, c: Compare<T>, l: any, h: any, f: any) {
   if (typeof c === 'function') {
     return f(a, y, c, (l === undefined) ? 0 : l | 0, (h === undefined) ? a.length - 1 : h | 0)
   }
   return f(a, y, undefined, (c === undefined) ? 0 : c | 0, (l === undefined) ? a.length - 1 : l | 0)
 }
 
-export function boundGE<T> (a: T[], y: T, c: Compare<T>, l?: any, h?: any) {
+export function boundGE<T>(a: T[], y: T, c: Compare<T>, l?: any, h?: any) {
   return norm(a, y, c, l, h, ge)
 }
-export function boundGT<T> (a: T[], y: T, c: Compare<T>, l?: any, h?: any) {
+export function boundGT<T>(a: T[], y: T, c: Compare<T>, l?: any, h?: any) {
   return norm(a, y, c, l, h, gt)
 }
-export function boundLT<T> (a: T[], y: T, c: Compare<T>, l?: any, h?: any) {
+export function boundLT<T>(a: T[], y: T, c: Compare<T>, l?: any, h?: any) {
   return norm(a, y, c, l, h, lt)
 }
-export function boundLE<T> (a: T[], y: T, c: Compare<T>, l?: any, h?: any) {
+export function boundLE<T>(a: T[], y: T, c: Compare<T>, l?: any, h?: any) {
   return norm(a, y, c, l, h, le)
 }
-export function boundEQ<T> (a: T[], y: T, c: Compare<T>, l?: any, h?: any) {
+export function boundEQ<T>(a: T[], y: T, c: Compare<T>, l?: any, h?: any) {
   return norm(a, y, c, l, h, eq)
 }
 
-export function fixTxPipe (str: string): string {
+export function fixTxPipe(str: string): string {
   const split = str.split('.')
   if (split.length > 1) {
     return split.map(part => fixTxPipe(part)).join('.')
@@ -204,7 +205,7 @@ export function fixTxPipe (str: string): string {
   return str
 }
 
-export function safeIndexList<RxDocType> (schema: Readonly<RxJsonSchema<RxDocumentData<RxDocType>>>) {
+export function safeIndexList<RxDocType>(schema: Readonly<RxJsonSchema<RxDocumentData<RxDocType>>>) {
   const primaryKeyKey = typeof schema.primaryKey === 'string' ? schema.primaryKey : schema.primaryKey.key
 
   const allIndexes: string[][] = []
@@ -224,7 +225,7 @@ export function safeIndexList<RxDocType> (schema: Readonly<RxJsonSchema<RxDocume
   return allIndexes
 }
 
-export function getPrivateKeyValue<RxDocType> (document: RxDocumentData<RxDocType>, schema: Readonly<RxJsonSchema<RxDocumentData<RxDocType>>>) {
+export function getPrivateKeyValue<RxDocType>(document: RxDocumentData<RxDocType>, schema: Readonly<RxJsonSchema<RxDocumentData<RxDocType>>>) {
   const primaryKeyKey = typeof schema.primaryKey === 'string' ? schema.primaryKey : schema.primaryKey.key
   if (!primaryKeyKey) {
     throw new Error('Data must have a primaryKey defined of type string or number')

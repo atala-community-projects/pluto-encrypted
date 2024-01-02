@@ -65,7 +65,6 @@ export type PlutoDatabase = RxDatabase<PlutoCollections>
  * Pluto is a storage interface describing storage requirements of the edge agents
  * which will be implemented using this SDK. Implement this interface using your
  * preferred underlying storage technology, most appropriate for your use case.
- *
  */
 export class Database implements Domain.Pluto {
   private _db!: RxDatabase<PlutoCollections, any, any>

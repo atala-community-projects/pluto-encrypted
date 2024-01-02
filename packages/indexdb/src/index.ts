@@ -5,6 +5,7 @@
  * In order to use this in your pluto-encrypted database you must write the following code:
  * Creating a IndexDB compatible storage is very simple.
  *
+ * 
  * ```typescript
  * import IndexDB from "@pluto-encrypted/indexdb";
  * import { Database } from "@pluto-encrypted/database";

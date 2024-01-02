@@ -1,16 +1,3 @@
-// import { faker } from "@faker-js/faker";
-// import { randomNumber, randomString } from "async-test-util";
-// import { MangoQuery, RxDocumentData, RxDocumentWriteData, RxJsonSchema, RxSchema, RxStorage, RxStorageInstance, RxStorageInstanceCreationParams, clone, createRevision, createRxDatabase, deepFreeze, ensureNotFalsy, fillWithDefaultSettings, flatCloneDocWithMeta, getPrimaryFieldOfPrimaryKey, getPseudoSchemaForVersion, getQueryMatcher, getQueryPlan, getSortComparator, lastOfArray, newRxError, normalizeMangoQuery, now, parseRevision, randomCouchString } from "rxdb";
-
-// import * as schemas from './helper/schemas';
-// import {
-//     HeroArrayDocumentType,
-//     human,
-//     nestedHuman,
-//     NestedHumanDocumentType,
-//     simpleHumanV3,
-//     SimpleHumanV3DocumentType
-// } from '../helper/schema-objects.ts';
 import { type FilledMangoQuery, type RxDocumentData, type RxDocumentWriteData, type RxJsonSchema, type RxStorage, type RxStorageBulkWriteResponse, type RxStorageInstance, type RxStorageInstanceCreationParams, clone, createRevision, ensureNotFalsy, fillWithDefaultSettings, flatCloneDocWithMeta, getPseudoSchemaForVersion, getQueryMatcher, getSortComparator, newRxError, now, parseRevision, randomCouchString, shuffleArray } from 'rxdb'
 import { EXAMPLE_REVISION_1, EXAMPLE_REVISION_2, EXAMPLE_REVISION_3, EXAMPLE_REVISION_4, type NestedDoc, type OptionalValueTestDoc, type RandomDoc, type RxTestStorage, type TestDocType, type TestSuite, getNestedDocSchema, getTestDataSchema, getWriteData, prepareQuery, testContext, testCorrectQueries, withIndexes } from './helper'
 import * as schemas from './helper/schemas'

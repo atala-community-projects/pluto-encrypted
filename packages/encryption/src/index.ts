@@ -5,6 +5,7 @@
  * The package can be used outside or Pluto as its fully compatible with RXDB.
  * @examples In order to use this package in any RXDB environment type the following code.
  * Install the package with npm
+ * 
  * ```bash
  * npm i @pluto-encrypted/encryption --save
  * ```
@@ -56,7 +57,7 @@ export const MINIMUM_PASSWORD_LENGTH: 8 = 8
 // We must keep nonce static to be able to restore the database later, user only has the password
 const nonce = Buffer.from('b47e1d4e5f7377c2e80a19b8', 'hex')
 
-export function encryptString (chacha: CipherWithOutput, value: string): string {
+export function encryptString(chacha: CipherWithOutput, value: string): string {
   try {
     const encrypted = chacha.encrypt(Buffer.from(value))
     return Buffer.from(encrypted).toString('hex')
@@ -71,7 +72,7 @@ export function encryptString (chacha: CipherWithOutput, value: string): string 
   }
 }
 
-export function decryptString (chacha: CipherWithOutput, cipherText: string): string {
+export function decryptString(chacha: CipherWithOutput, cipherText: string): string {
   try {
     /**
          * Trying to decrypt non-strings
@@ -112,7 +113,7 @@ export interface EncryptableStorageType<Internals, InstanceCreationOptions> {
  * @param args {  storage: RxStorage<Internals, InstanceCreationOptions>;  }
  * @returns RxStorage<Internals, InstanceCreationOptions>
  */
-export function wrappedKeyEncryptionStorage<Internals, InstanceCreationOptions> (
+export function wrappedKeyEncryptionStorage<Internals, InstanceCreationOptions>(
   args: EncryptableStorageType<Internals, InstanceCreationOptions>
 ): RxStorage<Internals, InstanceCreationOptions> {
   return Object.assign(
@@ -161,7 +162,7 @@ export function wrappedKeyEncryptionStorage<Internals, InstanceCreationOptions> 
             )
           )
 
-          function modifyToStorage (docData: RxDocumentWriteData<RxDocType>) {
+          function modifyToStorage(docData: RxDocumentWriteData<RxDocType>) {
             try {
               docData = cloneWithoutAttachments(docData)
               ensureNotFalsy(params.schema.encrypted)
@@ -179,7 +180,7 @@ export function wrappedKeyEncryptionStorage<Internals, InstanceCreationOptions> 
               // handle attachments
               if (
                 params.schema.attachments &&
-                                params.schema.attachments.encrypted
+                params.schema.attachments.encrypted
               ) {
                 const newAttachments: typeof docData._attachments = {}
                 Object.entries(docData._attachments).forEach(([id, attachment]) => {
@@ -203,7 +204,7 @@ export function wrappedKeyEncryptionStorage<Internals, InstanceCreationOptions> 
               }
             }
           }
-          async function modifyFromStorage (docData: RxDocumentData<any>): Promise<RxDocumentData<RxDocType>> {
+          async function modifyFromStorage(docData: RxDocumentData<any>): Promise<RxDocumentData<RxDocType>> {
             try {
               docData = cloneWithoutAttachments(docData)
               ensureNotFalsy(params.schema.encrypted)
@@ -228,11 +229,11 @@ export function wrappedKeyEncryptionStorage<Internals, InstanceCreationOptions> 
             }
           }
 
-          function modifyAttachmentFromStorage (attachmentData: string): string {
+          function modifyAttachmentFromStorage(attachmentData: string): string {
             try {
               if (
                 params.schema.attachments &&
-                                params.schema.attachments.encrypted
+                params.schema.attachments.encrypted
               ) {
                 const decrypted = decryptString(chacha, b64DecodeUnicode(attachmentData))
                 return decrypted
@@ -270,7 +271,7 @@ export function wrappedKeyEncryptionStorage<Internals, InstanceCreationOptions> 
   )
 }
 
-function cloneWithoutAttachments<T> (data: RxDocumentWriteData<T>): RxDocumentData<T> {
+function cloneWithoutAttachments<T>(data: RxDocumentWriteData<T>): RxDocumentData<T> {
   const attachments = data._attachments
   data = flatClone(data)
   delete (data as any)._attachments
@@ -279,7 +280,7 @@ function cloneWithoutAttachments<T> (data: RxDocumentWriteData<T>): RxDocumentDa
   return data as any
 }
 
-function validatePassword (password: string) {
+function validatePassword(password: string) {
   if (typeof password !== 'string') {
     throw newRxTypeError('EN1', {
       password

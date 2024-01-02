@@ -5,6 +5,7 @@
  * In order to use this in your pluto-encrypted database you must write the following code:
  * Creating a LevelDB compatible storage is very simple.
  *
+ * 
  * ```typescript
  * import { createLevelDBStorage } from "@pluto-encrypted/leveldb";
  * import { Database } from "@pluto-encrypted/database";
@@ -34,7 +35,7 @@ export type { DefaultPreparedQuery, RxJsonSchema, FilledMangoQuery, CompressionM
 export type { Level } from 'level'
 export const RX_STORAGE_NAME_LEVELDB = 'leveldb'
 
-async function preloadData<RxDocType> (constructorProps: LevelDBInternalConstructor<RxDocType>) {
+async function preloadData<RxDocType>(constructorProps: LevelDBInternalConstructor<RxDocType>) {
   const internalStorage = new LevelDBInternal<RxDocType>(constructorProps)
   await internalStorage.getDocuments([])
   return internalStorage
@@ -42,7 +43,7 @@ async function preloadData<RxDocType> (constructorProps: LevelDBInternalConstruc
 
 const internalInstance = new Map<string, LevelDBInternal<any>>()
 
-function getRxStorageLevel<RxDocType> (settings: LevelDBSettings): RxStorageLevelDBType<RxDocType> {
+function getRxStorageLevel<RxDocType>(settings: LevelDBSettings): RxStorageLevelDBType<RxDocType> {
   const instance: RxStorageLevelDBType<any> = {
     name: RX_STORAGE_NAME_LEVELDB,
     statics: RxStorageDefaultStatics,
@@ -53,15 +54,15 @@ function getRxStorageLevel<RxDocType> (settings: LevelDBSettings): RxStorageLeve
 
       const levelDBConstructorProps: LevelDBInternalConstructor<RxDocType> = 'level' in settings
         ? {
-            level: settings.level,
-            refCount: 1,
-            schema: params.schema
-          }
+          level: settings.level,
+          refCount: 1,
+          schema: params.schema
+        }
         : {
-            dbPath: settings.dbPath,
-            refCount: 1,
-            schema: params.schema
-          }
+          dbPath: settings.dbPath,
+          refCount: 1,
+          schema: params.schema
+        }
 
       const databasePath = 'level' in levelDBConstructorProps
         ? levelDBConstructorProps.level.location
@@ -92,7 +93,7 @@ function getRxStorageLevel<RxDocType> (settings: LevelDBSettings): RxStorageLeve
   return instance
 }
 
-export function createLevelDBStorage (settings: LevelDBSettings) {
+export function createLevelDBStorage(settings: LevelDBSettings) {
   return wrappedKeyEncryptionStorage({
     storage: getRxStorageLevel(settings)
   })

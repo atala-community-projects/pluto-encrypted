@@ -5,6 +5,7 @@
  * In order to use this in your pluto-encrypted database you must write the following code:
  * Creating a InMemory compatible storage is very simple.
  *
+ * 
  * ```typescript
  * import InMemory from "@pluto-encrypted/inmemory";
  * import { Database } from "@pluto-encrypted/database";
@@ -25,7 +26,7 @@ import { wrappedKeyEncryptionStorage } from '@pluto-encrypted/encryption'
 
 const internalInstance = new Map<string, InMemoryInternal<any>>()
 
-function getRxStorageMemory<RxDocType> (settings: InMemorySettings = {}): RxStorageInMemoryType<RxDocType> {
+function getRxStorageMemory<RxDocType>(settings: InMemorySettings = {}): RxStorageInMemoryType<RxDocType> {
   const inMemoryInstance: RxStorageInMemoryType<any> = {
     name: 'in-memory',
     statics: RxStorageDefaultStatics,
