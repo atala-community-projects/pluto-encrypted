@@ -9,7 +9,7 @@ We are not going to stop here but ensure that our SDK can be used in any platfor
 ### Documentation & Contribution Guidelines
 The pluto encrypted documentation is always available on all branches [HERE](https://github.com/elribonazo/pluto-encrypted/blob/master/docs/README.md) but we have also deployed an online version of documentation.
 
-Go to documentation portal [here](https://elribonazo.github.io/pluto-encrypted/)
+Go to documentation portal [here](https://atala-community-projects.github.io/pluto-encrypted)
 
 Pull requests are WELCOME!! please check the [Contribution guidelines](https://github.com/elribonazo/pluto-encrypted/blob/master/CONTRIBUTION-GUIDELINES.md) first
 
