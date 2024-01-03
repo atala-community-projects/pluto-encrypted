@@ -1,3 +1,10 @@
+## @pluto-encrypted/encryption [1.2.7](https://github.com/atala-community-projects/pluto-encrypted/compare/@pluto-encrypted/encryption@1.2.6...@pluto-encrypted/encryption@1.2.7) (2024-01-03)
+
+
+### Bug Fixes
+
+* buffer include ([9309853](https://github.com/atala-community-projects/pluto-encrypted/commit/9309853aaa913c4614f54b1838eefd13e4a39af7))
+
 ## @pluto-encrypted/encryption [1.2.6](https://github.com/atala-community-projects/pluto-encrypted/compare/@pluto-encrypted/encryption@1.2.5...@pluto-encrypted/encryption@1.2.6) (2024-01-03)
 
 
