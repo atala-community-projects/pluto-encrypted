@@ -4,6 +4,7 @@ import cleanup from "rollup-plugin-cleanup";
 import ignore from "rollup-plugin-ignore";
 import json from "@rollup/plugin-json";
 import commonjs from "@rollup/plugin-commonjs";
+import nodeResolve from "@rollup/plugin-node-resolve";
 
 const externals = [
     "dexie",
@@ -45,6 +46,9 @@ export default function CreateConfig(buildPath, plugins = [], extraInputs = []) 
                 entryFileNames: "[name].cjs"
             },
             plugins: [
+                nodeResolve({
+                    preferBuiltins: true,
+                }),
                 ignore(externals),
                 json(),
                 typescript({
@@ -71,6 +75,9 @@ export default function CreateConfig(buildPath, plugins = [], extraInputs = []) 
                 entryFileNames: "[name].mjs"
             },
             plugins: [
+                nodeResolve({
+                    preferBuiltins: true,
+                }),
                 ignore(externals),
                 json(),
                 typescript({
