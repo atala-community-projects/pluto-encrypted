@@ -1,3 +1,13 @@
+## @pluto-encrypted/indexdb [1.3.9](https://github.com/atala-community-projects/pluto-encrypted/compare/@pluto-encrypted/indexdb@1.3.8...@pluto-encrypted/indexdb@1.3.9) (2024-01-03)
+
+
+
+
+
+### Dependencies
+
+* **@pluto-encrypted/encryption:** upgraded to 1.2.6
+
 ## @pluto-encrypted/indexdb [1.3.8](https://github.com/atala-community-projects/pluto-encrypted/compare/@pluto-encrypted/indexdb@1.3.7...@pluto-encrypted/indexdb@1.3.8) (2024-01-02)
 
 
