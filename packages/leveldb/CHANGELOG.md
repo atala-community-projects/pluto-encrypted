@@ -1,3 +1,13 @@
+## @pluto-encrypted/leveldb [1.3.11](https://github.com/atala-community-projects/pluto-encrypted/compare/@pluto-encrypted/leveldb@1.3.10...@pluto-encrypted/leveldb@1.3.11) (2024-01-03)
+
+
+
+
+
+### Dependencies
+
+* **@pluto-encrypted/encryption:** upgraded to 1.2.8
+
 ## @pluto-encrypted/leveldb [1.3.10](https://github.com/atala-community-projects/pluto-encrypted/compare/@pluto-encrypted/leveldb@1.3.9...@pluto-encrypted/leveldb@1.3.10) (2024-01-03)
 
 

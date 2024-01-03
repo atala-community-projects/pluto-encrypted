@@ -1,3 +1,10 @@
+## @pluto-encrypted/encryption [1.2.8](https://github.com/atala-community-projects/pluto-encrypted/compare/@pluto-encrypted/encryption@1.2.7...@pluto-encrypted/encryption@1.2.8) (2024-01-03)
+
+
+### Bug Fixes
+
+* encrypted include buffer wrapper ([42603cf](https://github.com/atala-community-projects/pluto-encrypted/commit/42603cf8f3b01f73e5546f5100cd0d8a881b9569))
+
 ## @pluto-encrypted/encryption [1.2.7](https://github.com/atala-community-projects/pluto-encrypted/compare/@pluto-encrypted/encryption@1.2.6...@pluto-encrypted/encryption@1.2.7) (2024-01-03)
 
 

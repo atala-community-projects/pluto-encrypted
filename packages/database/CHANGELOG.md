@@ -1,3 +1,15 @@
+## @pluto-encrypted/database [1.2.14](https://github.com/atala-community-projects/pluto-encrypted/compare/@pluto-encrypted/database@1.2.13...@pluto-encrypted/database@1.2.14) (2024-01-03)
+
+
+
+
+
+### Dependencies
+
+* **@pluto-encrypted/indexdb:** upgraded to 1.3.11
+* **@pluto-encrypted/inmemory:** upgraded to 1.3.11
+* **@pluto-encrypted/leveldb:** upgraded to 1.3.11
+
 ## @pluto-encrypted/database [1.2.13](https://github.com/atala-community-projects/pluto-encrypted/compare/@pluto-encrypted/database@1.2.12...@pluto-encrypted/database@1.2.13) (2024-01-03)
 
 
