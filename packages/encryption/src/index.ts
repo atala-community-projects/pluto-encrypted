@@ -4,6 +4,7 @@
  * @description This package is an rxdb encryption layer, a replacement for the vulnerable crypto-js dependency provided by the free version of rxDB.
  * The package can be used outside or Pluto as its fully compatible with RXDB.
  * 
+ * 
  * @examples In order to use this package in any RXDB environment type the following code.
  * Install the package with npm
  * 

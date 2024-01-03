@@ -47,7 +47,7 @@ export default function CreateConfig(buildPath, plugins = [], extraInputs = []) 
             },
             plugins: [
                 nodeResolve({
-                    preferBuiltins: true,
+                    preferBuiltins: false,
                 }),
                 ignore(externals),
                 json(),
@@ -76,7 +76,7 @@ export default function CreateConfig(buildPath, plugins = [], extraInputs = []) 
             },
             plugins: [
                 nodeResolve({
-                    preferBuiltins: true,
+                    preferBuiltins: false,
                 }),
                 ignore(externals),
                 json(),
