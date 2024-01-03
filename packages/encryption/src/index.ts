@@ -26,6 +26,7 @@
  * export default storage;
  * ```
  */
+import "./globals";
 import {
   type InternalStoreDocType,
   type RxAttachmentWriteData,
