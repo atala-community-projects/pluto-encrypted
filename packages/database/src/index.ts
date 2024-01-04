@@ -2,7 +2,7 @@
  * @packageDocumentation
  * @module database
  */
-import { Domain } from '@atala/prism-wallet-sdk'
+import { Domain, PeerDID } from '@atala/prism-wallet-sdk'
 import {
   type MangoQuerySelector, type RxCollectionCreator,
   type RxDatabase,
@@ -1013,7 +1013,7 @@ export class Database implements Domain.Pluto {
     if (!key) {
       return null
     }
-    return parseInt(key.index)
+    return key.index || 0
   }
 
   async getPrismLastKeyPathIndex(): Promise<number> {
@@ -1024,8 +1024,8 @@ export class Database implements Domain.Pluto {
     return Math.max(...results.map((result) => result.keyPathIndex))
   }
 
-  async getAllPeerDIDs(): Promise<Domain.PeerDID[]> {
-    const peerDIDs: Domain.PeerDID[] = []
+  async getAllPeerDIDs(): Promise<PeerDID[]> {
+    const peerDIDs: PeerDID[] = []
     const dids = await this.db.dids.find({
       selector: {
         method: {
@@ -1037,7 +1037,7 @@ export class Database implements Domain.Pluto {
       const peerDID = Domain.DID.fromString(did.did)
       const keys = await this.getDIDPrivateKeysByDID(peerDID)
       peerDIDs.push(
-        new Domain.PeerDID(
+        new PeerDID(
           peerDID,
           keys.map((key) => ({
             keyCurve: {

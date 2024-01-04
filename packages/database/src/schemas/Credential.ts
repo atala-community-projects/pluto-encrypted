@@ -82,7 +82,7 @@ export interface CredentialMethodTypes {
 }
 
 export const CredentialMethods: CredentialMethodTypes = {
-  toDomainCredential: function toDomainCredential (this: CredentialSchemaType) {
+  toDomainCredential: function toDomainCredential(this: CredentialSchemaType) {
     if (this.recoveryId === JWTVerifiableCredentialRecoveryId) {
       const jwtString = Buffer.from(this.credentialData).toString()
       const jwtObj = JSON.parse(jwtString)
@@ -95,10 +95,10 @@ export const CredentialMethods: CredentialMethodTypes = {
         cred_def_id:
           credentialJson[AnonCredsCredentialProperties.credentialDefinitionId],
         values: credentialJson[AnonCredsCredentialProperties.values],
-        signature: credentialJson[AnonCredsCredentialProperties.signasture],
+        signature: credentialJson[AnonCredsCredentialProperties.signature],
         signature_correctness_proof:
           credentialJson[
-            AnonCredsCredentialProperties.signatureCorrectnessProof
+          AnonCredsCredentialProperties.signatureCorrectnessProof
           ]
       })
     } else {
@@ -108,9 +108,9 @@ export const CredentialMethods: CredentialMethodTypes = {
 }
 
 export type CredentialCollection = RxCollection<
-CredentialSchemaType,
-CredentialMethodTypes,
-CredentialDocument
+  CredentialSchemaType,
+  CredentialMethodTypes,
+  CredentialDocument
 >
 
 export default CredentialSchema
