@@ -1,11 +1,4 @@
-import {
-  AnonCredsCredential,
-  AnonCredsCredentialProperties,
-  AnonCredsRecoveryId,
-  type Domain,
-  JWTCredential,
-  JWTVerifiableCredentialRecoveryId
-} from '@atala/prism-wallet-sdk'
+import SDK from '@atala/prism-wallet-sdk'
 import type { Schema } from '../types'
 import { type RxCollection, type RxDocument } from 'rxdb'
 
@@ -78,27 +71,27 @@ const CredentialSchema: Schema<CredentialSchemaType> = {
 
 export type CredentialDocument = RxDocument<CredentialSchemaType>
 export interface CredentialMethodTypes {
-  toDomainCredential: (this: CredentialSchemaType) => Domain.Credential
+  toDomainCredential: (this: CredentialSchemaType) => SDK.Domain.Credential
 }
 
 export const CredentialMethods: CredentialMethodTypes = {
   toDomainCredential: function toDomainCredential(this: CredentialSchemaType) {
-    if (this.recoveryId === JWTVerifiableCredentialRecoveryId) {
+    if (this.recoveryId === SDK.JWTVerifiableCredentialRecoveryId) {
       const jwtString = Buffer.from(this.credentialData).toString()
       const jwtObj = JSON.parse(jwtString)
-      return JWTCredential.fromJWT(jwtObj, jwtString)
-    } else if (this.recoveryId === AnonCredsRecoveryId) {
+      return SDK.JWTCredential.fromJWT(jwtObj, jwtString)
+    } else if (this.recoveryId === SDK.AnonCredsRecoveryId) {
       const credentialData = Buffer.from(this.credentialData).toString()
       const credentialJson = JSON.parse(credentialData)
-      return new AnonCredsCredential({
-        schema_id: credentialJson[AnonCredsCredentialProperties.schemaId],
+      return new SDK.AnonCredsCredential({
+        schema_id: credentialJson[SDK.AnonCredsCredentialProperties.schemaId],
         cred_def_id:
-          credentialJson[AnonCredsCredentialProperties.credentialDefinitionId],
-        values: credentialJson[AnonCredsCredentialProperties.values],
-        signature: credentialJson[AnonCredsCredentialProperties.signature],
+          credentialJson[SDK.AnonCredsCredentialProperties.credentialDefinitionId],
+        values: credentialJson[SDK.AnonCredsCredentialProperties.values],
+        signature: credentialJson[SDK.AnonCredsCredentialProperties.signature],
         signature_correctness_proof:
           credentialJson[
-          AnonCredsCredentialProperties.signatureCorrectnessProof
+          SDK.AnonCredsCredentialProperties.signatureCorrectnessProof
           ]
       })
     } else {
