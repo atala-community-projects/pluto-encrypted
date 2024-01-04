@@ -1,4 +1,5 @@
-import {
+import SDK from "@atala/prism-wallet-sdk";
+const {
   Ed25519KeyPair,
   Ed25519PrivateKey,
   Secp256k1KeyPair,
@@ -6,7 +7,8 @@ import {
   X25519KeyPair,
   X25519PrivateKey,
   Domain,
-} from "@atala/prism-wallet-sdk";
+} = SDK;
+
 const secpPrivateKey = new Secp256k1PrivateKey(
   new Uint8Array([
     45, 182, 188, 189, 107, 229, 136, 180, 199, 177, 110, 84, 98, 140, 121, 84,
