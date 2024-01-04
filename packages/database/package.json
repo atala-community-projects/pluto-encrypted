@@ -1,6 +1,6 @@
 {
   "name": "@pluto-encrypted/database",
-  "version": "1.2.15-rc.1",
+  "version": "1.2.15-rc.2",
   "description": "Encrypted database engine for Atala Prism SDK that supports multiple databases, IndexDB, LevelDB and InMemory.",
   "main": "./build/cjs/index.cjs",
   "module": "./build/esm/index.mjs",
