@@ -3,7 +3,7 @@ name: Release Pluto encrypted
 on:
   push:
     branches:
-      - master
+      - rc
   workflow_dispatch:
 
 permissions:
@@ -11,15 +11,9 @@ permissions:
   pages: write
   id-token: write
 
-concurrency:
-  group: "pages"
-  cancel-in-progress: false
-
 jobs:
   release:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+   
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Code
@@ -81,30 +75,3 @@ jobs:
           commit_author: "Javier Ribó <elribonazo@gmail.com>"
           commit_user_name: "Javier Ribó"
           commit_user_email: "elribonazo@gmail.com"
-          
-      - name: Setup Pages
-        uses: actions/configure-pages@v4
-
-      - name: Deploy html docs
-        env:
-          GH_TOKEN: ${{ secrets.PLUTO_GITHUB }}
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-          GIT_AUTHOR_NAME: ${{ secrets.GIT_AUTHOR_NAME }}
-          GIT_AUTHOR_EMAIL: ${{ secrets.GIT_AUTHOR_EMAIL }}
-          GIT_COMMITTER_NAME: ${{ secrets.GIT_COMMITTER_NAME }}
-          GIT_COMMITTER_EMAIL: ${{ secrets.GIT_COMMITTER_EMAIL }}
-          GITHUB_AUTHOR_NAME: ${{ secrets.GIT_AUTHOR_NAME }}
-          GITHUB_AUTHOR_EMAIL: ${{ secrets.GIT_AUTHOR_EMAIL }}
-          GITHUB_COMMITER_NAME: ${{ secrets.GIT_COMMITTER_NAME }}
-          GITHUB_COMMITER_EMAIL: ${{ secrets.GIT_COMMITTER_EMAIL }}
-        run: |
-          npm run docs-html
-
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v2
-        with:
-          path: './docs-html'
-
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v3
