@@ -1,6 +1,8 @@
 /**
  * @packageDocumentation
  * @module database
+ * 
+ * 
  */
 import { Domain, PeerDID } from '@atala/prism-wallet-sdk'
 import {
