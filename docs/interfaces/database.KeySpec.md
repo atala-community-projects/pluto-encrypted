@@ -20,7 +20,7 @@
 
 #### Defined in
 
-[packages/database/src/schemas/PrivateKey.ts:7](https://github.com/atala-community-projects/pluto-encrypted/blob/66783ae/packages/database/src/schemas/PrivateKey.ts#L7)
+[packages/database/src/schemas/PrivateKey.ts:7](https://github.com/atala-community-projects/pluto-encrypted/blob/8e8b549/packages/database/src/schemas/PrivateKey.ts#L7)
 
 ___
 
@@ -30,7 +30,7 @@ ___
 
 #### Defined in
 
-[packages/database/src/schemas/PrivateKey.ts:8](https://github.com/atala-community-projects/pluto-encrypted/blob/66783ae/packages/database/src/schemas/PrivateKey.ts#L8)
+[packages/database/src/schemas/PrivateKey.ts:8](https://github.com/atala-community-projects/pluto-encrypted/blob/8e8b549/packages/database/src/schemas/PrivateKey.ts#L8)
 
 ___
 
@@ -40,4 +40,4 @@ ___
 
 #### Defined in
 
-[packages/database/src/schemas/PrivateKey.ts:9](https://github.com/atala-community-projects/pluto-encrypted/blob/66783ae/packages/database/src/schemas/PrivateKey.ts#L9)
+[packages/database/src/schemas/PrivateKey.ts:9](https://github.com/atala-community-projects/pluto-encrypted/blob/8e8b549/packages/database/src/schemas/PrivateKey.ts#L9)
