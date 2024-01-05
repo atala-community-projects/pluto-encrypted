@@ -1,7 +1,7 @@
 {
   "name": "@pluto-encrypted/test-suite",
   "version": "1.6.2",
-  "description": "This is a test-suite that works out of the box without cloning rxdb repo or submodule, it does not support replication!!",
+  "description": "[@pluto-encrypted] This is a test-suite that works out of the box without cloning rxdb repo or submodule, it does not support replication!!",
   "main": "./build/cjs/index.cjs",
   "module": "./build/esm/index.mjs",
   "types": "./build/index.d.ts",
