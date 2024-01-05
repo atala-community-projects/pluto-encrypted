@@ -6,7 +6,7 @@
 
 ### Modules
 
-- [database](modules/database.md)
+- [database/src](modules/database_src.md)
 - [encryption](modules/encryption.md)
 - [indexdb](modules/indexdb.md)
 - [inmemory](modules/inmemory.md)
