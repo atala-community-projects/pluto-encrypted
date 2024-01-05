@@ -3,7 +3,7 @@ branches:
   - name: '@pluto-encrypted/*/v+([0-9]).([0-9]).X'
   - name: '@pluto-encrypted/*/v+([0-9]).X.X'
   - name: '@pluto-encrypted/*/v+([0-9])'
-  - name: 'release/*'
+  - name: 'develop'
     prerelease: 'rc'
 
 plugins:
