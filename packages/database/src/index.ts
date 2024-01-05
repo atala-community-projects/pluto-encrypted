@@ -1,7 +1,6 @@
 /**
  * @packageDocumentation
  * @module database
- * Compatible with Prism >=4.0.0
  */
 import SDK from '@atala/prism-wallet-sdk'
 import {

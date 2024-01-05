@@ -24,7 +24,7 @@
  * })
  * export default storage;
  * ```
- * Compatible with Prism >=4.0.0
+
  */
 import "./globals";
 import {
