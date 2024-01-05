@@ -1,6 +1,6 @@
 {
   "name": "@pluto-encrypted/database",
-  "version": "1.6.2",
+  "version": "1.7.0",
   "description": "Encrypted database for Edge Wallet SDK that supports multiple db, IndexDB, LevelDB and InMemory.",
   "main": "./build/cjs/index.cjs",
   "module": "./build/esm/index.mjs",
@@ -36,13 +36,13 @@
     "@atala/prism-wallet-sdk": "^4.0.0-rc.1"
   },
   "optionalDependencies": {
-    "@pluto-encrypted/indexdb": "1.6.2",
+    "@pluto-encrypted/indexdb": "1.6.3",
     "@pluto-encrypted/inmemory": "1.6.2",
     "@pluto-encrypted/leveldb": "1.6.2"
   },
   "devDependencies": {
     "@pluto-encrypted/encryption": "1.6.2",
-    "@pluto-encrypted/indexdb": "1.6.2",
+    "@pluto-encrypted/indexdb": "1.6.3",
     "@pluto-encrypted/inmemory": "1.6.2",
     "@pluto-encrypted/leveldb": "1.6.2",
     "@vitest/coverage-v8": "^1.0.4",

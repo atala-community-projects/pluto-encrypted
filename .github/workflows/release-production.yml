@@ -1,11 +1,13 @@
-name: Release Pluto encrypted
+name: Release PRODUCTION
 
 on:
   push:
     branches:
       - master
-  workflow_dispatch:
 
+  workflow_call:
+  workflow_dispatch:
+        
 permissions:
   contents: read
   pages: write
@@ -41,8 +43,8 @@ jobs:
           passphrase: ${{ secrets.GPG_PASSPHRASE }}
           git_user_signingkey: true
           git_commit_gpgsign: true
-          
-      - name: Release
+
+      - name: INSTALL
         env:
           GH_TOKEN: ${{ secrets.PLUTO_GITHUB }}
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
@@ -57,11 +59,42 @@ jobs:
           CI: true
         run: |
           npm install
+
+      - name: Release
+        env:
+          GH_TOKEN: ${{ secrets.PLUTO_GITHUB }}
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          GIT_AUTHOR_NAME: "${{ secrets.GIT_AUTHOR_NAME }}"
+          GIT_AUTHOR_EMAIL: ${{ secrets.GIT_AUTHOR_EMAIL }}
+          GIT_COMMITTER_NAME: ${{ secrets.GIT_COMMITTER_NAME }}
+          GIT_COMMITTER_EMAIL: ${{ secrets.GIT_COMMITTER_EMAIL }}
+          GITHUB_AUTHOR_NAME: ${{ secrets.GIT_AUTHOR_NAME }}
+          GITHUB_AUTHOR_EMAIL: ${{ secrets.GIT_AUTHOR_EMAIL }}
+          GITHUB_COMMITER_NAME: ${{ secrets.GIT_COMMITTER_NAME }}
+          GITHUB_COMMITER_EMAIL: ${{ secrets.GIT_COMMITTER_EMAIL }}
+          CI: true
+        run: |
+          npm run release
+
+      - name: DOCS
+        env:
+          GH_TOKEN: ${{ secrets.PLUTO_GITHUB }}
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          GIT_AUTHOR_NAME: "${{ secrets.GIT_AUTHOR_NAME }}"
+          GIT_AUTHOR_EMAIL: ${{ secrets.GIT_AUTHOR_EMAIL }}
+          GIT_COMMITTER_NAME: ${{ secrets.GIT_COMMITTER_NAME }}
+          GIT_COMMITTER_EMAIL: ${{ secrets.GIT_COMMITTER_EMAIL }}
+          GITHUB_AUTHOR_NAME: ${{ secrets.GIT_AUTHOR_NAME }}
+          GITHUB_AUTHOR_EMAIL: ${{ secrets.GIT_AUTHOR_EMAIL }}
+          GITHUB_COMMITER_NAME: ${{ secrets.GIT_COMMITTER_NAME }}
+          GITHUB_COMMITER_EMAIL: ${{ secrets.GIT_COMMITTER_EMAIL }}
+          CI: true
+        run: |
           npm run build
           npm run docs
           chmod +x coverage.sh
           ./coverage.sh
-      
+          
       - uses: stefanzweifel/git-auto-commit-action@v5
         env:
           GH_TOKEN: ${{ secrets.PLUTO_GITHUB }}
