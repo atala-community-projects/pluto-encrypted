@@ -93,7 +93,7 @@ preferred underlying storage technology, most appropriate for your use case.
 
 #### Defined in
 
-[packages/database/src/index.ts:80](https://github.com/atala-community-projects/pluto-encrypted/blob/e1a007b7/packages/database/src/index.ts#L80)
+[packages/database/src/index.ts:80](https://github.com/atala-community-projects/pluto-encrypted/blob/6ccfad9/packages/database/src/index.ts#L80)
 
 ## Properties
 
@@ -103,7 +103,7 @@ preferred underlying storage technology, most appropriate for your use case.
 
 #### Defined in
 
-[packages/database/src/index.ts:71](https://github.com/atala-community-projects/pluto-encrypted/blob/e1a007b7/packages/database/src/index.ts#L71)
+[packages/database/src/index.ts:71](https://github.com/atala-community-projects/pluto-encrypted/blob/6ccfad9/packages/database/src/index.ts#L71)
 
 ___
 
@@ -113,7 +113,7 @@ ___
 
 #### Defined in
 
-[packages/database/src/index.ts:80](https://github.com/atala-community-projects/pluto-encrypted/blob/e1a007b7/packages/database/src/index.ts#L80)
+[packages/database/src/index.ts:80](https://github.com/atala-community-projects/pluto-encrypted/blob/6ccfad9/packages/database/src/index.ts#L80)
 
 ## Accessors
 
@@ -127,7 +127,7 @@ ___
 
 #### Defined in
 
-[packages/database/src/index.ts:90](https://github.com/atala-community-projects/pluto-encrypted/blob/e1a007b7/packages/database/src/index.ts#L90)
+[packages/database/src/index.ts:90](https://github.com/atala-community-projects/pluto-encrypted/blob/6ccfad9/packages/database/src/index.ts#L90)
 
 ___
 
@@ -168,7 +168,7 @@ await db.credentialmetadatas.remove({selector: {id: {$eq: 1}}})
 
 #### Defined in
 
-[packages/database/src/index.ts:122](https://github.com/atala-community-projects/pluto-encrypted/blob/e1a007b7/packages/database/src/index.ts#L122)
+[packages/database/src/index.ts:122](https://github.com/atala-community-projects/pluto-encrypted/blob/6ccfad9/packages/database/src/index.ts#L122)
 
 ___
 
@@ -209,7 +209,7 @@ await db.credentials.remove({selector: {id: {$eq: 1}}})
 
 #### Defined in
 
-[packages/database/src/index.ts:218](https://github.com/atala-community-projects/pluto-encrypted/blob/e1a007b7/packages/database/src/index.ts#L218)
+[packages/database/src/index.ts:218](https://github.com/atala-community-projects/pluto-encrypted/blob/6ccfad9/packages/database/src/index.ts#L218)
 
 ___
 
@@ -223,7 +223,7 @@ ___
 
 #### Defined in
 
-[packages/database/src/index.ts:73](https://github.com/atala-community-projects/pluto-encrypted/blob/e1a007b7/packages/database/src/index.ts#L73)
+[packages/database/src/index.ts:73](https://github.com/atala-community-projects/pluto-encrypted/blob/6ccfad9/packages/database/src/index.ts#L73)
 
 ___
 
@@ -264,7 +264,7 @@ await db.didpairs.remove({selector: {id: {$eq: 1}}})
 
 #### Defined in
 
-[packages/database/src/index.ts:186](https://github.com/atala-community-projects/pluto-encrypted/blob/e1a007b7/packages/database/src/index.ts#L186)
+[packages/database/src/index.ts:186](https://github.com/atala-community-projects/pluto-encrypted/blob/6ccfad9/packages/database/src/index.ts#L186)
 
 ___
 
@@ -305,7 +305,7 @@ await db.dids.remove({selector: {id: {$eq: 1}}})
 
 #### Defined in
 
-[packages/database/src/index.ts:282](https://github.com/atala-community-projects/pluto-encrypted/blob/e1a007b7/packages/database/src/index.ts#L282)
+[packages/database/src/index.ts:282](https://github.com/atala-community-projects/pluto-encrypted/blob/6ccfad9/packages/database/src/index.ts#L282)
 
 ___
 
@@ -346,7 +346,7 @@ await db.linksecrets.remove({selector: {id: {$eq: 1}}})
 
 #### Defined in
 
-[packages/database/src/index.ts:154](https://github.com/atala-community-projects/pluto-encrypted/blob/e1a007b7/packages/database/src/index.ts#L154)
+[packages/database/src/index.ts:154](https://github.com/atala-community-projects/pluto-encrypted/blob/6ccfad9/packages/database/src/index.ts#L154)
 
 ___
 
@@ -387,7 +387,7 @@ await db.mediators.remove({selector: {id: {$eq: 1}}})
 
 #### Defined in
 
-[packages/database/src/index.ts:250](https://github.com/atala-community-projects/pluto-encrypted/blob/e1a007b7/packages/database/src/index.ts#L250)
+[packages/database/src/index.ts:250](https://github.com/atala-community-projects/pluto-encrypted/blob/6ccfad9/packages/database/src/index.ts#L250)
 
 ___
 
@@ -428,7 +428,7 @@ await db.messages.remove({selector: {id: {$eq: 1}}})
 
 #### Defined in
 
-[packages/database/src/index.ts:346](https://github.com/atala-community-projects/pluto-encrypted/blob/e1a007b7/packages/database/src/index.ts#L346)
+[packages/database/src/index.ts:346](https://github.com/atala-community-projects/pluto-encrypted/blob/6ccfad9/packages/database/src/index.ts#L346)
 
 ___
 
@@ -469,7 +469,7 @@ await db.privatekeys.remove({selector: {id: {$eq: 1}}})
 
 #### Defined in
 
-[packages/database/src/index.ts:314](https://github.com/atala-community-projects/pluto-encrypted/blob/e1a007b7/packages/database/src/index.ts#L314)
+[packages/database/src/index.ts:314](https://github.com/atala-community-projects/pluto-encrypted/blob/6ccfad9/packages/database/src/index.ts#L314)
 
 ## Methods
 
@@ -483,7 +483,7 @@ await db.privatekeys.remove({selector: {id: {$eq: 1}}})
 
 #### Defined in
 
-[packages/database/src/index.ts:86](https://github.com/atala-community-projects/pluto-encrypted/blob/e1a007b7/packages/database/src/index.ts#L86)
+[packages/database/src/index.ts:86](https://github.com/atala-community-projects/pluto-encrypted/blob/6ccfad9/packages/database/src/index.ts#L86)
 
 ___
 
@@ -500,7 +500,7 @@ and then destroy the database itself.
 
 #### Defined in
 
-[packages/database/src/index.ts:354](https://github.com/atala-community-projects/pluto-encrypted/blob/e1a007b7/packages/database/src/index.ts#L354)
+[packages/database/src/index.ts:354](https://github.com/atala-community-projects/pluto-encrypted/blob/6ccfad9/packages/database/src/index.ts#L354)
 
 ___
 
@@ -526,7 +526,7 @@ Fetch the AnonCreds Credential Metadata by its linkSecret name
 
 #### Defined in
 
-[packages/database/src/index.ts:1119](https://github.com/atala-community-projects/pluto-encrypted/blob/e1a007b7/packages/database/src/index.ts#L1119)
+[packages/database/src/index.ts:1119](https://github.com/atala-community-projects/pluto-encrypted/blob/6ccfad9/packages/database/src/index.ts#L1119)
 
 ___
 
@@ -546,7 +546,7 @@ Retrieve all the stored credentials
 
 #### Defined in
 
-[packages/database/src/index.ts:1068](https://github.com/atala-community-projects/pluto-encrypted/blob/e1a007b7/packages/database/src/index.ts#L1068)
+[packages/database/src/index.ts:1068](https://github.com/atala-community-projects/pluto-encrypted/blob/6ccfad9/packages/database/src/index.ts#L1068)
 
 ___
 
@@ -568,7 +568,7 @@ Gets all the stores didPairs
 
 #### Defined in
 
-[packages/database/src/index.ts:683](https://github.com/atala-community-projects/pluto-encrypted/blob/e1a007b7/packages/database/src/index.ts#L683)
+[packages/database/src/index.ts:683](https://github.com/atala-community-projects/pluto-encrypted/blob/6ccfad9/packages/database/src/index.ts#L683)
 
 ___
 
@@ -588,7 +588,7 @@ Retrieve all stored mediators.
 
 #### Defined in
 
-[packages/database/src/index.ts:1063](https://github.com/atala-community-projects/pluto-encrypted/blob/e1a007b7/packages/database/src/index.ts#L1063)
+[packages/database/src/index.ts:1063](https://github.com/atala-community-projects/pluto-encrypted/blob/6ccfad9/packages/database/src/index.ts#L1063)
 
 ___
 
@@ -610,7 +610,7 @@ Get all the stored messages
 
 #### Defined in
 
-[packages/database/src/index.ts:482](https://github.com/atala-community-projects/pluto-encrypted/blob/e1a007b7/packages/database/src/index.ts#L482)
+[packages/database/src/index.ts:482](https://github.com/atala-community-projects/pluto-encrypted/blob/6ccfad9/packages/database/src/index.ts#L482)
 
 ___
 
@@ -636,7 +636,7 @@ Retrieve all stored DIDComm messages, received from or sent to a given DID
 
 #### Defined in
 
-[packages/database/src/index.ts:875](https://github.com/atala-community-projects/pluto-encrypted/blob/e1a007b7/packages/database/src/index.ts#L875)
+[packages/database/src/index.ts:875](https://github.com/atala-community-projects/pluto-encrypted/blob/6ccfad9/packages/database/src/index.ts#L875)
 
 ___
 
@@ -663,7 +663,7 @@ Retrieve all DIDComm messages containing given "from" AND "to" DIDs.
 
 #### Defined in
 
-[packages/database/src/index.ts:988](https://github.com/atala-community-projects/pluto-encrypted/blob/e1a007b7/packages/database/src/index.ts#L988)
+[packages/database/src/index.ts:988](https://github.com/atala-community-projects/pluto-encrypted/blob/6ccfad9/packages/database/src/index.ts#L988)
 
 ___
 
@@ -692,7 +692,7 @@ contain a given DID in either "from" or "to" field.
 
 #### Defined in
 
-[packages/database/src/index.ts:957](https://github.com/atala-community-projects/pluto-encrypted/blob/e1a007b7/packages/database/src/index.ts#L957)
+[packages/database/src/index.ts:957](https://github.com/atala-community-projects/pluto-encrypted/blob/6ccfad9/packages/database/src/index.ts#L957)
 
 ___
 
@@ -712,7 +712,7 @@ Retrieve all stored, received DIDComm messages.
 
 #### Defined in
 
-[packages/database/src/index.ts:908](https://github.com/atala-community-projects/pluto-encrypted/blob/e1a007b7/packages/database/src/index.ts#L908)
+[packages/database/src/index.ts:908](https://github.com/atala-community-projects/pluto-encrypted/blob/6ccfad9/packages/database/src/index.ts#L908)
 
 ___
 
@@ -738,7 +738,7 @@ Retrieve all stored DIDComm messages, received from a given DID.
 
 #### Defined in
 
-[packages/database/src/index.ts:940](https://github.com/atala-community-projects/pluto-encrypted/blob/e1a007b7/packages/database/src/index.ts#L940)
+[packages/database/src/index.ts:940](https://github.com/atala-community-projects/pluto-encrypted/blob/6ccfad9/packages/database/src/index.ts#L940)
 
 ___
 
@@ -758,7 +758,7 @@ Retrieve all stored, sent DIDComm messages.
 
 #### Defined in
 
-[packages/database/src/index.ts:893](https://github.com/atala-community-projects/pluto-encrypted/blob/e1a007b7/packages/database/src/index.ts#L893)
+[packages/database/src/index.ts:893](https://github.com/atala-community-projects/pluto-encrypted/blob/6ccfad9/packages/database/src/index.ts#L893)
 
 ___
 
@@ -784,7 +784,7 @@ Retrieve all stored DIDComm messages, sent to a given DID.
 
 #### Defined in
 
-[packages/database/src/index.ts:923](https://github.com/atala-community-projects/pluto-encrypted/blob/e1a007b7/packages/database/src/index.ts#L923)
+[packages/database/src/index.ts:923](https://github.com/atala-community-projects/pluto-encrypted/blob/6ccfad9/packages/database/src/index.ts#L923)
 
 ___
 
@@ -804,7 +804,7 @@ Retrieve all stored Peer DIDs.
 
 #### Defined in
 
-[packages/database/src/index.ts:1025](https://github.com/atala-community-projects/pluto-encrypted/blob/e1a007b7/packages/database/src/index.ts#L1025)
+[packages/database/src/index.ts:1025](https://github.com/atala-community-projects/pluto-encrypted/blob/6ccfad9/packages/database/src/index.ts#L1025)
 
 ___
 
@@ -824,7 +824,7 @@ Retrieve all stored PRISM DIDs.
 
 #### Defined in
 
-[packages/database/src/index.ts:784](https://github.com/atala-community-projects/pluto-encrypted/blob/e1a007b7/packages/database/src/index.ts#L784)
+[packages/database/src/index.ts:784](https://github.com/atala-community-projects/pluto-encrypted/blob/6ccfad9/packages/database/src/index.ts#L784)
 
 ___
 
@@ -850,7 +850,7 @@ Retrieve DID information for a given DID alias.
 
 #### Defined in
 
-[packages/database/src/index.ts:848](https://github.com/atala-community-projects/pluto-encrypted/blob/e1a007b7/packages/database/src/index.ts#L848)
+[packages/database/src/index.ts:848](https://github.com/atala-community-projects/pluto-encrypted/blob/6ccfad9/packages/database/src/index.ts#L848)
 
 ___
 
@@ -876,7 +876,7 @@ Retrieve DID information for a given DID.
 
 #### Defined in
 
-[packages/database/src/index.ts:816](https://github.com/atala-community-projects/pluto-encrypted/blob/e1a007b7/packages/database/src/index.ts#L816)
+[packages/database/src/index.ts:816](https://github.com/atala-community-projects/pluto-encrypted/blob/6ccfad9/packages/database/src/index.ts#L816)
 
 ___
 
@@ -902,7 +902,7 @@ Retrieve private key for a given key ID.
 
 #### Defined in
 
-[packages/database/src/index.ts:760](https://github.com/atala-community-projects/pluto-encrypted/blob/e1a007b7/packages/database/src/index.ts#L760)
+[packages/database/src/index.ts:760](https://github.com/atala-community-projects/pluto-encrypted/blob/6ccfad9/packages/database/src/index.ts#L760)
 
 ___
 
@@ -928,7 +928,7 @@ Retrieve available private keys for a given DID.
 
 #### Defined in
 
-[packages/database/src/index.ts:746](https://github.com/atala-community-projects/pluto-encrypted/blob/e1a007b7/packages/database/src/index.ts#L746)
+[packages/database/src/index.ts:746](https://github.com/atala-community-projects/pluto-encrypted/blob/6ccfad9/packages/database/src/index.ts#L746)
 
 ___
 
@@ -967,7 +967,7 @@ ___
 
 #### Defined in
 
-[packages/database/src/index.ts:487](https://github.com/atala-community-projects/pluto-encrypted/blob/e1a007b7/packages/database/src/index.ts#L487)
+[packages/database/src/index.ts:487](https://github.com/atala-community-projects/pluto-encrypted/blob/6ccfad9/packages/database/src/index.ts#L487)
 
 ___
 
@@ -993,7 +993,7 @@ Retrieve the anoncreds stored link secret by its name
 
 #### Defined in
 
-[packages/database/src/index.ts:1075](https://github.com/atala-community-projects/pluto-encrypted/blob/e1a007b7/packages/database/src/index.ts#L1075)
+[packages/database/src/index.ts:1075](https://github.com/atala-community-projects/pluto-encrypted/blob/6ccfad9/packages/database/src/index.ts#L1075)
 
 ___
 
@@ -1021,7 +1021,7 @@ Get a Message by its id
 
 #### Defined in
 
-[packages/database/src/index.ts:424](https://github.com/atala-community-projects/pluto-encrypted/blob/e1a007b7/packages/database/src/index.ts#L424)
+[packages/database/src/index.ts:424](https://github.com/atala-community-projects/pluto-encrypted/blob/6ccfad9/packages/database/src/index.ts#L424)
 
 ___
 
@@ -1049,7 +1049,7 @@ Get a did pair (connection) by one of its dids
 
 #### Defined in
 
-[packages/database/src/index.ts:696](https://github.com/atala-community-projects/pluto-encrypted/blob/e1a007b7/packages/database/src/index.ts#L696)
+[packages/database/src/index.ts:696](https://github.com/atala-community-projects/pluto-encrypted/blob/6ccfad9/packages/database/src/index.ts#L696)
 
 ___
 
@@ -1075,7 +1075,7 @@ Retrieve a DID pair by a given pair name.
 
 #### Defined in
 
-[packages/database/src/index.ts:719](https://github.com/atala-community-projects/pluto-encrypted/blob/e1a007b7/packages/database/src/index.ts#L719)
+[packages/database/src/index.ts:719](https://github.com/atala-community-projects/pluto-encrypted/blob/6ccfad9/packages/database/src/index.ts#L719)
 
 ___
 
@@ -1101,7 +1101,7 @@ Retrieve a PRISM DID key path index for a given DID.
 
 #### Defined in
 
-[packages/database/src/index.ts:1009](https://github.com/atala-community-projects/pluto-encrypted/blob/e1a007b7/packages/database/src/index.ts#L1009)
+[packages/database/src/index.ts:1009](https://github.com/atala-community-projects/pluto-encrypted/blob/6ccfad9/packages/database/src/index.ts#L1009)
 
 ___
 
@@ -1121,7 +1121,7 @@ Get the last used PRISM key path index.
 
 #### Defined in
 
-[packages/database/src/index.ts:1017](https://github.com/atala-community-projects/pluto-encrypted/blob/e1a007b7/packages/database/src/index.ts#L1017)
+[packages/database/src/index.ts:1017](https://github.com/atala-community-projects/pluto-encrypted/blob/6ccfad9/packages/database/src/index.ts#L1017)
 
 ___
 
@@ -1141,7 +1141,7 @@ ___
 
 #### Defined in
 
-[packages/database/src/index.ts:740](https://github.com/atala-community-projects/pluto-encrypted/blob/e1a007b7/packages/database/src/index.ts#L740)
+[packages/database/src/index.ts:740](https://github.com/atala-community-projects/pluto-encrypted/blob/6ccfad9/packages/database/src/index.ts#L740)
 
 ___
 
@@ -1167,7 +1167,7 @@ Start the database and build collections
 
 #### Defined in
 
-[packages/database/src/index.ts:525](https://github.com/atala-community-projects/pluto-encrypted/blob/e1a007b7/packages/database/src/index.ts#L525)
+[packages/database/src/index.ts:525](https://github.com/atala-community-projects/pluto-encrypted/blob/6ccfad9/packages/database/src/index.ts#L525)
 
 ___
 
@@ -1193,7 +1193,7 @@ Store a Credential into the Database
 
 #### Defined in
 
-[packages/database/src/index.ts:1052](https://github.com/atala-community-projects/pluto-encrypted/blob/e1a007b7/packages/database/src/index.ts#L1052)
+[packages/database/src/index.ts:1052](https://github.com/atala-community-projects/pluto-encrypted/blob/6ccfad9/packages/database/src/index.ts#L1052)
 
 ___
 
@@ -1220,7 +1220,7 @@ Store the AnonCreds Credential Metadata referencing its linkSecret name
 
 #### Defined in
 
-[packages/database/src/index.ts:1108](https://github.com/atala-community-projects/pluto-encrypted/blob/e1a007b7/packages/database/src/index.ts#L1108)
+[packages/database/src/index.ts:1108](https://github.com/atala-community-projects/pluto-encrypted/blob/6ccfad9/packages/database/src/index.ts#L1108)
 
 ___
 
@@ -1248,7 +1248,7 @@ Stores a didpair
 
 #### Defined in
 
-[packages/database/src/index.ts:626](https://github.com/atala-community-projects/pluto-encrypted/blob/e1a007b7/packages/database/src/index.ts#L626)
+[packages/database/src/index.ts:626](https://github.com/atala-community-projects/pluto-encrypted/blob/6ccfad9/packages/database/src/index.ts#L626)
 
 ___
 
@@ -1275,7 +1275,7 @@ Store a new anoncreds linkSecret
 
 #### Defined in
 
-[packages/database/src/index.ts:1098](https://github.com/atala-community-projects/pluto-encrypted/blob/e1a007b7/packages/database/src/index.ts#L1098)
+[packages/database/src/index.ts:1098](https://github.com/atala-community-projects/pluto-encrypted/blob/6ccfad9/packages/database/src/index.ts#L1098)
 
 ___
 
@@ -1303,7 +1303,7 @@ Store a mediator information.
 
 #### Defined in
 
-[packages/database/src/index.ts:771](https://github.com/atala-community-projects/pluto-encrypted/blob/e1a007b7/packages/database/src/index.ts#L771)
+[packages/database/src/index.ts:771](https://github.com/atala-community-projects/pluto-encrypted/blob/6ccfad9/packages/database/src/index.ts#L771)
 
 ___
 
@@ -1331,7 +1331,7 @@ void
 
 #### Defined in
 
-[packages/database/src/index.ts:443](https://github.com/atala-community-projects/pluto-encrypted/blob/e1a007b7/packages/database/src/index.ts#L443)
+[packages/database/src/index.ts:443](https://github.com/atala-community-projects/pluto-encrypted/blob/6ccfad9/packages/database/src/index.ts#L443)
 
 ___
 
@@ -1359,7 +1359,7 @@ void
 
 #### Defined in
 
-[packages/database/src/index.ts:472](https://github.com/atala-community-projects/pluto-encrypted/blob/e1a007b7/packages/database/src/index.ts#L472)
+[packages/database/src/index.ts:472](https://github.com/atala-community-projects/pluto-encrypted/blob/6ccfad9/packages/database/src/index.ts#L472)
 
 ___
 
@@ -1386,7 +1386,7 @@ Stores a peerdid with its privateKeys
 
 #### Defined in
 
-[packages/database/src/index.ts:584](https://github.com/atala-community-projects/pluto-encrypted/blob/e1a007b7/packages/database/src/index.ts#L584)
+[packages/database/src/index.ts:584](https://github.com/atala-community-projects/pluto-encrypted/blob/6ccfad9/packages/database/src/index.ts#L584)
 
 ___
 
@@ -1416,7 +1416,7 @@ Stores a prismDID and its privateKey
 
 #### Defined in
 
-[packages/database/src/index.ts:558](https://github.com/atala-community-projects/pluto-encrypted/blob/e1a007b7/packages/database/src/index.ts#L558)
+[packages/database/src/index.ts:558](https://github.com/atala-community-projects/pluto-encrypted/blob/6ccfad9/packages/database/src/index.ts#L558)
 
 ___
 
@@ -1444,7 +1444,7 @@ Stores privateKeys references to an existing DID
 
 #### Defined in
 
-[packages/database/src/index.ts:645](https://github.com/atala-community-projects/pluto-encrypted/blob/e1a007b7/packages/database/src/index.ts#L645)
+[packages/database/src/index.ts:645](https://github.com/atala-community-projects/pluto-encrypted/blob/6ccfad9/packages/database/src/index.ts#L645)
 
 ___
 
@@ -1474,4 +1474,4 @@ Database
 
 #### Defined in
 
-[packages/database/src/index.ts:367](https://github.com/atala-community-projects/pluto-encrypted/blob/e1a007b7/packages/database/src/index.ts#L367)
+[packages/database/src/index.ts:367](https://github.com/atala-community-projects/pluto-encrypted/blob/6ccfad9/packages/database/src/index.ts#L367)

@@ -1,3 +1,13 @@
+## @pluto-encrypted/inmemory [1.9.4](https://github.com/atala-community-projects/pluto-encrypted/compare/@pluto-encrypted/inmemory@1.9.3...@pluto-encrypted/inmemory@1.9.4) (2024-01-05)
+
+
+
+
+
+### Dependencies
+
+* **@pluto-encrypted/test-suite:** upgraded to 1.9.4
+
 ## @pluto-encrypted/inmemory [1.9.3](https://github.com/atala-community-projects/pluto-encrypted/compare/@pluto-encrypted/inmemory@1.9.2...@pluto-encrypted/inmemory@1.9.3) (2024-01-05)
 
 

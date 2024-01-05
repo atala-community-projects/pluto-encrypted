@@ -1,3 +1,10 @@
+## @pluto-encrypted/test-suite [1.9.4](https://github.com/atala-community-projects/pluto-encrypted/compare/@pluto-encrypted/test-suite@1.9.3...@pluto-encrypted/test-suite@1.9.4) (2024-01-05)
+
+
+### Bug Fixes
+
+* improve test-suite documentation ([96f3346](https://github.com/atala-community-projects/pluto-encrypted/commit/96f33460eccc965980c03d832ac4d6deafcfdad0))
+
 ## @pluto-encrypted/test-suite [1.9.3](https://github.com/atala-community-projects/pluto-encrypted/compare/@pluto-encrypted/test-suite@1.9.2...@pluto-encrypted/test-suite@1.9.3) (2024-01-05)
 
 
