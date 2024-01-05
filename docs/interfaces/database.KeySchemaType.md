@@ -21,7 +21,7 @@
 
 #### Defined in
 
-[packages/database/src/schemas/PrivateKey.ts:15](https://github.com/atala-community-projects/pluto-encrypted/blob/6657898/packages/database/src/schemas/PrivateKey.ts#L15)
+[packages/database/src/schemas/PrivateKey.ts:15](https://github.com/atala-community-projects/pluto-encrypted/blob/f87ceb2/packages/database/src/schemas/PrivateKey.ts#L15)
 
 ___
 
@@ -31,7 +31,7 @@ ___
 
 #### Defined in
 
-[packages/database/src/schemas/PrivateKey.ts:13](https://github.com/atala-community-projects/pluto-encrypted/blob/6657898/packages/database/src/schemas/PrivateKey.ts#L13)
+[packages/database/src/schemas/PrivateKey.ts:13](https://github.com/atala-community-projects/pluto-encrypted/blob/f87ceb2/packages/database/src/schemas/PrivateKey.ts#L13)
 
 ___
 
@@ -41,7 +41,7 @@ ___
 
 #### Defined in
 
-[packages/database/src/schemas/PrivateKey.ts:16](https://github.com/atala-community-projects/pluto-encrypted/blob/6657898/packages/database/src/schemas/PrivateKey.ts#L16)
+[packages/database/src/schemas/PrivateKey.ts:16](https://github.com/atala-community-projects/pluto-encrypted/blob/f87ceb2/packages/database/src/schemas/PrivateKey.ts#L16)
 
 ___
 
@@ -51,4 +51,4 @@ ___
 
 #### Defined in
 
-[packages/database/src/schemas/PrivateKey.ts:14](https://github.com/atala-community-projects/pluto-encrypted/blob/6657898/packages/database/src/schemas/PrivateKey.ts#L14)
+[packages/database/src/schemas/PrivateKey.ts:14](https://github.com/atala-community-projects/pluto-encrypted/blob/f87ceb2/packages/database/src/schemas/PrivateKey.ts#L14)

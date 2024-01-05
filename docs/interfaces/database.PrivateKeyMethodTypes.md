@@ -32,4 +32,4 @@
 
 #### Defined in
 
-[packages/database/src/schemas/PrivateKey.ts:57](https://github.com/atala-community-projects/pluto-encrypted/blob/6657898/packages/database/src/schemas/PrivateKey.ts#L57)
+[packages/database/src/schemas/PrivateKey.ts:57](https://github.com/atala-community-projects/pluto-encrypted/blob/f87ceb2/packages/database/src/schemas/PrivateKey.ts#L57)

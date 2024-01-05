@@ -25,4 +25,4 @@
 
 #### Defined in
 
-[packages/encryption/src/index.ts:110](https://github.com/atala-community-projects/pluto-encrypted/blob/6657898/packages/encryption/src/index.ts#L110)
+[packages/encryption/src/index.ts:110](https://github.com/atala-community-projects/pluto-encrypted/blob/f87ceb2/packages/encryption/src/index.ts#L110)

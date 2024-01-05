@@ -158,7 +158,7 @@ Index of a table can be a string or a number
 
 #### Defined in
 
-[packages/leveldb/src/leveldb/types.ts:7](https://github.com/atala-community-projects/pluto-encrypted/blob/6657898/packages/leveldb/src/leveldb/types.ts#L7)
+[packages/leveldb/src/leveldb/types.ts:7](https://github.com/atala-community-projects/pluto-encrypted/blob/f87ceb2/packages/leveldb/src/leveldb/types.ts#L7)
 
 ___
 
@@ -172,7 +172,7 @@ informed
 
 #### Defined in
 
-[packages/leveldb/src/leveldb/types.ts:18](https://github.com/atala-community-projects/pluto-encrypted/blob/6657898/packages/leveldb/src/leveldb/types.ts#L18)
+[packages/leveldb/src/leveldb/types.ts:18](https://github.com/atala-community-projects/pluto-encrypted/blob/f87ceb2/packages/leveldb/src/leveldb/types.ts#L18)
 
 ___
 
@@ -191,7 +191,7 @@ and RxDocumentData from RXDB
 
 #### Defined in
 
-[packages/leveldb/src/leveldb/types.ts:12](https://github.com/atala-community-projects/pluto-encrypted/blob/6657898/packages/leveldb/src/leveldb/types.ts#L12)
+[packages/leveldb/src/leveldb/types.ts:12](https://github.com/atala-community-projects/pluto-encrypted/blob/f87ceb2/packages/leveldb/src/leveldb/types.ts#L12)
 
 ___
 
@@ -207,7 +207,7 @@ ___
 
 #### Defined in
 
-[packages/leveldb/src/leveldb/types.ts:24](https://github.com/atala-community-projects/pluto-encrypted/blob/6657898/packages/leveldb/src/leveldb/types.ts#L24)
+[packages/leveldb/src/leveldb/types.ts:24](https://github.com/atala-community-projects/pluto-encrypted/blob/f87ceb2/packages/leveldb/src/leveldb/types.ts#L24)
 
 ___
 
@@ -223,7 +223,7 @@ ___
 
 #### Defined in
 
-[packages/leveldb/src/leveldb/types.ts:23](https://github.com/atala-community-projects/pluto-encrypted/blob/6657898/packages/leveldb/src/leveldb/types.ts#L23)
+[packages/leveldb/src/leveldb/types.ts:23](https://github.com/atala-community-projects/pluto-encrypted/blob/f87ceb2/packages/leveldb/src/leveldb/types.ts#L23)
 
 ___
 
@@ -233,7 +233,7 @@ ___
 
 #### Defined in
 
-[packages/leveldb/src/leveldb/types.ts:60](https://github.com/atala-community-projects/pluto-encrypted/blob/6657898/packages/leveldb/src/leveldb/types.ts#L60)
+[packages/leveldb/src/leveldb/types.ts:60](https://github.com/atala-community-projects/pluto-encrypted/blob/f87ceb2/packages/leveldb/src/leveldb/types.ts#L60)
 
 ___
 
@@ -245,7 +245,7 @@ Query type for LevelDB
 
 #### Defined in
 
-[packages/leveldb/src/leveldb/types.ts:22](https://github.com/atala-community-projects/pluto-encrypted/blob/6657898/packages/leveldb/src/leveldb/types.ts#L22)
+[packages/leveldb/src/leveldb/types.ts:22](https://github.com/atala-community-projects/pluto-encrypted/blob/f87ceb2/packages/leveldb/src/leveldb/types.ts#L22)
 
 ___
 
@@ -435,7 +435,7 @@ ___
 
 #### Defined in
 
-[packages/leveldb/src/leveldb/types.ts:58](https://github.com/atala-community-projects/pluto-encrypted/blob/6657898/packages/leveldb/src/leveldb/types.ts#L58)
+[packages/leveldb/src/leveldb/types.ts:58](https://github.com/atala-community-projects/pluto-encrypted/blob/f87ceb2/packages/leveldb/src/leveldb/types.ts#L58)
 
 ___
 
@@ -484,4 +484,4 @@ node_modules/rxdb/dist/types/types/util.d.ts:50
 
 #### Defined in
 
-[packages/leveldb/src/index.ts:96](https://github.com/atala-community-projects/pluto-encrypted/blob/6657898/packages/leveldb/src/index.ts#L96)
+[packages/leveldb/src/index.ts:96](https://github.com/atala-community-projects/pluto-encrypted/blob/f87ceb2/packages/leveldb/src/index.ts#L96)
