@@ -1,3 +1,20 @@
+## @pluto-encrypted/inmemory [1.9.1](https://github.com/atala-community-projects/pluto-encrypted/compare/@pluto-encrypted/inmemory@1.9.0...@pluto-encrypted/inmemory@1.9.1) (2024-01-05)
+
+
+### Bug Fixes
+
+* pkg author email change. ([1550d5f](https://github.com/atala-community-projects/pluto-encrypted/commit/1550d5f968caac92add817fb79716a6a54ab4bc3))
+
+
+
+
+
+### Dependencies
+
+* **@pluto-encrypted/encryption:** upgraded to 1.9.1
+* **@pluto-encrypted/shared:** upgraded to 1.9.1
+* **@pluto-encrypted/test-suite:** upgraded to 1.9.1
+
 # @pluto-encrypted/inmemory [1.9.0](https://github.com/atala-community-projects/pluto-encrypted/compare/@pluto-encrypted/inmemory@1.8.0...@pluto-encrypted/inmemory@1.9.0) (2024-01-05)
 
 

@@ -193,7 +193,7 @@ node_modules/rxdb/dist/types/types/rx-document.d.ts:33
 
 #### Defined in
 
-[packages/shared/src/index.ts:196](https://github.com/atala-community-projects/pluto-encrypted/blob/dac22454/packages/shared/src/index.ts#L196)
+[packages/shared/src/index.ts:196](https://github.com/atala-community-projects/pluto-encrypted/blob/66783ae/packages/shared/src/index.ts#L196)
 
 ___
 
@@ -223,7 +223,7 @@ ___
 
 #### Defined in
 
-[packages/shared/src/index.ts:184](https://github.com/atala-community-projects/pluto-encrypted/blob/dac22454/packages/shared/src/index.ts#L184)
+[packages/shared/src/index.ts:184](https://github.com/atala-community-projects/pluto-encrypted/blob/66783ae/packages/shared/src/index.ts#L184)
 
 ___
 
@@ -253,7 +253,7 @@ ___
 
 #### Defined in
 
-[packages/shared/src/index.ts:187](https://github.com/atala-community-projects/pluto-encrypted/blob/dac22454/packages/shared/src/index.ts#L187)
+[packages/shared/src/index.ts:187](https://github.com/atala-community-projects/pluto-encrypted/blob/66783ae/packages/shared/src/index.ts#L187)
 
 ___
 
@@ -283,7 +283,7 @@ ___
 
 #### Defined in
 
-[packages/shared/src/index.ts:193](https://github.com/atala-community-projects/pluto-encrypted/blob/dac22454/packages/shared/src/index.ts#L193)
+[packages/shared/src/index.ts:193](https://github.com/atala-community-projects/pluto-encrypted/blob/66783ae/packages/shared/src/index.ts#L193)
 
 ___
 
@@ -313,7 +313,7 @@ ___
 
 #### Defined in
 
-[packages/shared/src/index.ts:190](https://github.com/atala-community-projects/pluto-encrypted/blob/dac22454/packages/shared/src/index.ts#L190)
+[packages/shared/src/index.ts:190](https://github.com/atala-community-projects/pluto-encrypted/blob/66783ae/packages/shared/src/index.ts#L190)
 
 ___
 
@@ -340,7 +340,7 @@ ___
 
 #### Defined in
 
-[packages/shared/src/index.ts:18](https://github.com/atala-community-projects/pluto-encrypted/blob/dac22454/packages/shared/src/index.ts#L18)
+[packages/shared/src/index.ts:18](https://github.com/atala-community-projects/pluto-encrypted/blob/66783ae/packages/shared/src/index.ts#L18)
 
 ___
 
@@ -368,7 +368,7 @@ ___
 
 #### Defined in
 
-[packages/shared/src/index.ts:31](https://github.com/atala-community-projects/pluto-encrypted/blob/dac22454/packages/shared/src/index.ts#L31)
+[packages/shared/src/index.ts:31](https://github.com/atala-community-projects/pluto-encrypted/blob/66783ae/packages/shared/src/index.ts#L31)
 
 ___
 
@@ -388,7 +388,7 @@ ___
 
 #### Defined in
 
-[packages/shared/src/index.ts:200](https://github.com/atala-community-projects/pluto-encrypted/blob/dac22454/packages/shared/src/index.ts#L200)
+[packages/shared/src/index.ts:200](https://github.com/atala-community-projects/pluto-encrypted/blob/66783ae/packages/shared/src/index.ts#L200)
 
 ___
 
@@ -415,7 +415,7 @@ ___
 
 #### Defined in
 
-[packages/shared/src/index.ts:229](https://github.com/atala-community-projects/pluto-encrypted/blob/dac22454/packages/shared/src/index.ts#L229)
+[packages/shared/src/index.ts:229](https://github.com/atala-community-projects/pluto-encrypted/blob/66783ae/packages/shared/src/index.ts#L229)
 
 ___
 
@@ -441,4 +441,4 @@ ___
 
 #### Defined in
 
-[packages/shared/src/index.ts:209](https://github.com/atala-community-projects/pluto-encrypted/blob/dac22454/packages/shared/src/index.ts#L209)
+[packages/shared/src/index.ts:209](https://github.com/atala-community-projects/pluto-encrypted/blob/66783ae/packages/shared/src/index.ts#L209)
