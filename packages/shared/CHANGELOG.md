@@ -1,3 +1,10 @@
+## @pluto-encrypted/shared [1.9.3](https://github.com/atala-community-projects/pluto-encrypted/compare/@pluto-encrypted/shared@1.9.2...@pluto-encrypted/shared@1.9.3) (2024-01-05)
+
+
+### Bug Fixes
+
+* packages docs ([6f5c375](https://github.com/atala-community-projects/pluto-encrypted/commit/6f5c375f198ac4fb09aa6f15af08881e779a7b0d))
+
 ## @pluto-encrypted/shared [1.9.2](https://github.com/atala-community-projects/pluto-encrypted/compare/@pluto-encrypted/shared@1.9.1...@pluto-encrypted/shared@1.9.2) (2024-01-05)
 
 

@@ -12,4 +12,4 @@
 - [inmemory](modules/inmemory.md)
 - [leveldb](modules/leveldb.md)
 - [shared](modules/shared.md)
-- [test-suite/src](modules/test_suite_src.md)
+- [test-suite](modules/test_suite.md)

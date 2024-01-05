@@ -20,7 +20,7 @@
 
 #### Defined in
 
-[packages/database/src/schemas/DIDPair.ts:5](https://github.com/atala-community-projects/pluto-encrypted/blob/8e8b549/packages/database/src/schemas/DIDPair.ts#L5)
+[packages/database/src/schemas/DIDPair.ts:5](https://github.com/atala-community-projects/pluto-encrypted/blob/e1a007b7/packages/database/src/schemas/DIDPair.ts#L5)
 
 ___
 
@@ -30,7 +30,7 @@ ___
 
 #### Defined in
 
-[packages/database/src/schemas/DIDPair.ts:7](https://github.com/atala-community-projects/pluto-encrypted/blob/8e8b549/packages/database/src/schemas/DIDPair.ts#L7)
+[packages/database/src/schemas/DIDPair.ts:7](https://github.com/atala-community-projects/pluto-encrypted/blob/e1a007b7/packages/database/src/schemas/DIDPair.ts#L7)
 
 ___
 
@@ -40,4 +40,4 @@ ___
 
 #### Defined in
 
-[packages/database/src/schemas/DIDPair.ts:6](https://github.com/atala-community-projects/pluto-encrypted/blob/8e8b549/packages/database/src/schemas/DIDPair.ts#L6)
+[packages/database/src/schemas/DIDPair.ts:6](https://github.com/atala-community-projects/pluto-encrypted/blob/e1a007b7/packages/database/src/schemas/DIDPair.ts#L6)
