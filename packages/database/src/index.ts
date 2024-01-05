@@ -3,7 +3,7 @@
  * @module database
  * Database package
  * 
- * fix for 1.9.x :)
+ * fix for 1.9.2 :)
  */
 import SDK from '@atala/prism-wallet-sdk'
 import {
