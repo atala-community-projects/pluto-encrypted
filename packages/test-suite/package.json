@@ -24,7 +24,7 @@
     "type": "git",
     "url": "https://github.com/atala-community-projects/pluto-encrypted.git"
   },
-  "author": "elribonazo@djack.email",
+  "author": "elribonazo@gmail.com",
   "license": "Apache-2.0",
   "dependencies": {
     "@faker-js/faker": "^8.3.1",
