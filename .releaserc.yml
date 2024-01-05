@@ -1,5 +1,11 @@
 branches:
-  - name: '+([0-9])?(.{+([0-9]),x}).x'
+  - name: '@pluto-encrypted/test-suite/+([0-9])?(.*([0-9])|x).x'
+  - name: '@pluto-encrypted/shared/+([0-9])?(.*([0-9])|x).x'
+  - name: '@pluto-encrypted/leveldb/+([0-9])?(.*([0-9])|x).x'
+  - name: '@pluto-encrypted/inmemory/+([0-9])?(.*([0-9])|x).x'
+  - name: '@pluto-encrypted/indexdb/+([0-9])?(.*([0-9])|x).x'
+  - name: '@pluto-encrypted/encryption/+([0-9])?(.*([0-9])|x).x'
+  - name: '@pluto-encrypted/database/+([0-9])?(.*([0-9])|x).x'
   - name: 'master'
   - name: 'release/*'
     prerelease: 'rc'
