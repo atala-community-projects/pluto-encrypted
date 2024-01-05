@@ -3,13 +3,7 @@ name: Release Maintenance & Release candidate
 on:
   push:
     branches:
-      - '@pluto-encrypted/database/v*'     
-      - '@pluto-encrypted/test-suite/v*'
-      - '@pluto-encrypted/shared/v*'
-      - '@pluto-encrypted/leveldb/v*'
-      - '@pluto-encrypted/inmemory/v*'
-      - '@pluto-encrypted/indexdb/v*'
-      - '@pluto-encrypted/encryption/v*'     
+      - '@pluto-encrypted/*/v*' 
       - develop
   workflow_call:
   workflow_dispatch:
