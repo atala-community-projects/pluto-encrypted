@@ -17,7 +17,7 @@
  *          storage: InMemory,
  * });
  * ```
-
+ *
  */
 import { type RxStorage, RxStorageDefaultStatics, type RxStorageInstance, type RxStorageInstanceCreationParams, newRxError } from 'rxdb'
 import { type InMemorySettings, type InMemoryStorageInternals, type RxStorageInMemoryType } from './inMemoryStorage/types'

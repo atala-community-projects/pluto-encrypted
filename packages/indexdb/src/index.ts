@@ -16,7 +16,7 @@
  *          storage: IndexDB,
  * });
  * ```
-
+ *
  */
 import { wrappedKeyEncryptionStorage } from '@pluto-encrypted/encryption'
 import { type RxStorage } from 'rxdb'

@@ -3,7 +3,7 @@
  * 
  * @module shared
  * @description Shared is used by other dependencies of pluto-encrypted to reduce code duplication.
-
+ *
  */
 import { type MangoQuerySelector, type RxDocumentData, type RxJsonSchema } from 'rxdb'
 export type { RxDocumentMeta, PlainJsonValue, PropertyType, PlainSimpleJsonObject } from 'rxdb/dist/types/types'

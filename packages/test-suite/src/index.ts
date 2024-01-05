@@ -1,5 +1,6 @@
 /**
-
+ * @packageDocumentation
+ * @module test-suite
  */
 import { type FilledMangoQuery, type RxDocumentData, type RxDocumentWriteData, type RxJsonSchema, type RxStorage, type RxStorageBulkWriteResponse, type RxStorageInstance, type RxStorageInstanceCreationParams, clone, createRevision, ensureNotFalsy, fillWithDefaultSettings, flatCloneDocWithMeta, getPseudoSchemaForVersion, getQueryMatcher, getSortComparator, newRxError, now, parseRevision, randomCouchString, shuffleArray } from 'rxdb'
 import { EXAMPLE_REVISION_1, EXAMPLE_REVISION_2, EXAMPLE_REVISION_3, EXAMPLE_REVISION_4, type NestedDoc, type OptionalValueTestDoc, type RandomDoc, type RxTestStorage, type TestDocType, type TestSuite, getNestedDocSchema, getTestDataSchema, getWriteData, prepareQuery, testContext, testCorrectQueries, withIndexes } from './helper'
