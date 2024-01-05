@@ -32,4 +32,4 @@
 
 #### Defined in
 
-[packages/database/src/schemas/Message.ts:110](https://github.com/atala-community-projects/pluto-encrypted/blob/b57641f/packages/database/src/schemas/Message.ts#L110)
+[packages/database/src/schemas/Message.ts:110](https://github.com/atala-community-projects/pluto-encrypted/blob/6657898/packages/database/src/schemas/Message.ts#L110)
