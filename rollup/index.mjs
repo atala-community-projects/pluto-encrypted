@@ -35,64 +35,53 @@ const externals = [
 ];
 
 export default function CreateConfig(buildPath, plugins = [], extraInputs = []) {
+    const allPlugins = [
+        ...plugins,
+        nodeResolve({
+            preferBuiltins: false,
+        }),
+        ignore(externals),
+        json(),
+        typescript({
+            useTsconfigDeclarationDir: true,
+            tsconfigOverride: {
+                compilerOptions: {
+                    emitDeclarationOnly: false,
+                },
+            },
+        }),
+        commonjs({ transformMixedEsModules: true }),
+        cleanup({
+            comments: ["all"],
+            compactComments: false
+        }),
+    ]
     return [
         {
             input: [`src/index.ts`, ...extraInputs],
             output: {
                 sourcemap: false,
                 dir: buildPath ? `build/${buildPath}` : `build/cjs`,
-                //file: `${buildPath ? `build/${buildPath}` : `build/cjs`}/index.cjs`,
                 format: "cjs",
                 entryFileNames: "[name].cjs"
             },
-            plugins: [
-                nodeResolve({
-                    preferBuiltins: false,
-                }),
-                ignore(externals),
-                json(),
-                typescript({
-                    useTsconfigDeclarationDir: true,
-                    tsconfigOverride: {
-                        compilerOptions: {
-                            emitDeclarationOnly: false,
-                        },
-                    },
-                }),
-                ...plugins,
-                commonjs({ transformMixedEsModules: true }),
-                cleanup(),
-            ],
+            plugins: allPlugins,
             external: externals,
+            treeshake: false
+
         },
         {
             input: [`src/index.ts`, ...extraInputs],
             output: {
                 sourcemap: false,
                 dir: buildPath ? `build/${buildPath}` : `build/esm`,
-                //file: `${buildPath ? `build/${buildPath}` : `build/esm`}/index.mjs`,
                 format: "es",
                 entryFileNames: "[name].mjs"
             },
-            plugins: [
-                nodeResolve({
-                    preferBuiltins: false,
-                }),
-                ignore(externals),
-                json(),
-                typescript({
-                    useTsconfigDeclarationDir: true,
-                    tsconfigOverride: {
-                        compilerOptions: {
-                            emitDeclarationOnly: false,
-                        },
-                    },
-                }),
-                ...plugins,
-                commonjs({ transformMixedEsModules: true }),
-                cleanup(),
-            ],
+            plugins: allPlugins,
             external: externals,
+            treeshake: false
+
         }
     ];
 }
