@@ -32,4 +32,4 @@
 
 #### Defined in
 
-[packages/database/src/schemas/CredentialRequestMetadata.ts:47](https://github.com/atala-community-projects/pluto-encrypted/blob/f4fe0b5/packages/database/src/schemas/CredentialRequestMetadata.ts#L47)
+[packages/database/src/schemas/CredentialRequestMetadata.ts:47](https://github.com/atala-community-projects/pluto-encrypted/blob/12959ad3/packages/database/src/schemas/CredentialRequestMetadata.ts#L47)

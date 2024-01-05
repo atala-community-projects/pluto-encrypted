@@ -32,4 +32,4 @@
 
 #### Defined in
 
-[packages/database/src/schemas/Mediator.ts:37](https://github.com/atala-community-projects/pluto-encrypted/blob/f4fe0b5/packages/database/src/schemas/Mediator.ts#L37)
+[packages/database/src/schemas/Mediator.ts:37](https://github.com/atala-community-projects/pluto-encrypted/blob/12959ad3/packages/database/src/schemas/Mediator.ts#L37)

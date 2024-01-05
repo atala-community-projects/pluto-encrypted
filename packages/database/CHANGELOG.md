@@ -1,3 +1,10 @@
+## @pluto-encrypted/database [1.11.1](https://github.com/atala-community-projects/pluto-encrypted/compare/@pluto-encrypted/database@1.11.0...@pluto-encrypted/database@1.11.1) (2024-01-05)
+
+
+### Bug Fixes
+
+* port changes ([#73](https://github.com/atala-community-projects/pluto-encrypted/issues/73)) ([d225f3b](https://github.com/atala-community-projects/pluto-encrypted/commit/d225f3b7de907fb6932faff1e7dda4b31d10f6cd))
+
 # @pluto-encrypted/database [1.11.0](https://github.com/atala-community-projects/pluto-encrypted/compare/@pluto-encrypted/database@1.10.4...@pluto-encrypted/database@1.11.0) (2024-01-05)
 
 
