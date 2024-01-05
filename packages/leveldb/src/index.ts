@@ -1,7 +1,6 @@
 /**
  * @packageDocumentation
  * @module leveldb
- * Compatible with Edge SDK Version >=4.0.0-rc.1
  * @description This is a RXDB LevelDB storage that supports encryption middleware.
  * In order to use this in your pluto-encrypted database you must write the following code:
  * Creating a LevelDB compatible storage is very simple.

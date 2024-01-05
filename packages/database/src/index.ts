@@ -1,8 +1,6 @@
 /**
  * @packageDocumentation
  * @module database
- * 
- * Compatible with Edge SDK Version >=4.0.0-rc.1
  */
 import SDK from '@atala/prism-wallet-sdk'
 import {
