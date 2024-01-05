@@ -1,17 +1,6 @@
 branches:
-  - name: '@pluto-encrypted/database/v+([0-9])?(.*([0-9])|X).X'
-
-  - name: '@pluto-encrypted/test-suite/v+([0-9])?(.*([0-9])|X).X'
-
-  - name: '@pluto-encrypted/shared/v+([0-9])?(.*([0-9])|X).X'
-
-  - name: '@pluto-encrypted/leveldb/v+([0-9])?(.*([0-9])|X).X'
-
-  - name: '@pluto-encrypted/inmemory/v+([0-9])?(.*([0-9])|X).X'
-
-  - name: '@pluto-encrypted/indexdb/v+([0-9])?(.*([0-9])|X).X'
-
-  - name: '@pluto-encrypted/encryption/v+([0-9])?(.*([0-9])|X).X'
+  - name: '@pluto-encrypted/*/v+([0-9])?.([0-9]).X'
+  - name: '@pluto-encrypted/*/v+([0-9])?.X.X'
 
   - name: 'master'
   - name: 'release/*'
