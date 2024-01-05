@@ -28,7 +28,7 @@
 
 #### Defined in
 
-[packages/database/src/schemas/Credential.ts:22](https://github.com/atala-community-projects/pluto-encrypted/blob/e1a007b7/packages/database/src/schemas/Credential.ts#L22)
+[packages/database/src/schemas/Credential.ts:22](https://github.com/atala-community-projects/pluto-encrypted/blob/6ccfad9/packages/database/src/schemas/Credential.ts#L22)
 
 ___
 
@@ -38,7 +38,7 @@ ___
 
 #### Defined in
 
-[packages/database/src/schemas/Credential.ts:17](https://github.com/atala-community-projects/pluto-encrypted/blob/e1a007b7/packages/database/src/schemas/Credential.ts#L17)
+[packages/database/src/schemas/Credential.ts:17](https://github.com/atala-community-projects/pluto-encrypted/blob/6ccfad9/packages/database/src/schemas/Credential.ts#L17)
 
 ___
 
@@ -48,7 +48,7 @@ ___
 
 #### Defined in
 
-[packages/database/src/schemas/Credential.ts:14](https://github.com/atala-community-projects/pluto-encrypted/blob/e1a007b7/packages/database/src/schemas/Credential.ts#L14)
+[packages/database/src/schemas/Credential.ts:14](https://github.com/atala-community-projects/pluto-encrypted/blob/6ccfad9/packages/database/src/schemas/Credential.ts#L14)
 
 ___
 
@@ -58,7 +58,7 @@ ___
 
 #### Defined in
 
-[packages/database/src/schemas/Credential.ts:19](https://github.com/atala-community-projects/pluto-encrypted/blob/e1a007b7/packages/database/src/schemas/Credential.ts#L19)
+[packages/database/src/schemas/Credential.ts:19](https://github.com/atala-community-projects/pluto-encrypted/blob/6ccfad9/packages/database/src/schemas/Credential.ts#L19)
 
 ___
 
@@ -68,7 +68,7 @@ ___
 
 #### Defined in
 
-[packages/database/src/schemas/Credential.ts:18](https://github.com/atala-community-projects/pluto-encrypted/blob/e1a007b7/packages/database/src/schemas/Credential.ts#L18)
+[packages/database/src/schemas/Credential.ts:18](https://github.com/atala-community-projects/pluto-encrypted/blob/6ccfad9/packages/database/src/schemas/Credential.ts#L18)
 
 ___
 
@@ -78,7 +78,7 @@ ___
 
 #### Defined in
 
-[packages/database/src/schemas/Credential.ts:12](https://github.com/atala-community-projects/pluto-encrypted/blob/e1a007b7/packages/database/src/schemas/Credential.ts#L12)
+[packages/database/src/schemas/Credential.ts:12](https://github.com/atala-community-projects/pluto-encrypted/blob/6ccfad9/packages/database/src/schemas/Credential.ts#L12)
 
 ___
 
@@ -88,7 +88,7 @@ ___
 
 #### Defined in
 
-[packages/database/src/schemas/Credential.ts:15](https://github.com/atala-community-projects/pluto-encrypted/blob/e1a007b7/packages/database/src/schemas/Credential.ts#L15)
+[packages/database/src/schemas/Credential.ts:15](https://github.com/atala-community-projects/pluto-encrypted/blob/6ccfad9/packages/database/src/schemas/Credential.ts#L15)
 
 ___
 
@@ -98,7 +98,7 @@ ___
 
 #### Defined in
 
-[packages/database/src/schemas/Credential.ts:13](https://github.com/atala-community-projects/pluto-encrypted/blob/e1a007b7/packages/database/src/schemas/Credential.ts#L13)
+[packages/database/src/schemas/Credential.ts:13](https://github.com/atala-community-projects/pluto-encrypted/blob/6ccfad9/packages/database/src/schemas/Credential.ts#L13)
 
 ___
 
@@ -108,7 +108,7 @@ ___
 
 #### Defined in
 
-[packages/database/src/schemas/Credential.ts:21](https://github.com/atala-community-projects/pluto-encrypted/blob/e1a007b7/packages/database/src/schemas/Credential.ts#L21)
+[packages/database/src/schemas/Credential.ts:21](https://github.com/atala-community-projects/pluto-encrypted/blob/6ccfad9/packages/database/src/schemas/Credential.ts#L21)
 
 ___
 
@@ -118,7 +118,7 @@ ___
 
 #### Defined in
 
-[packages/database/src/schemas/Credential.ts:16](https://github.com/atala-community-projects/pluto-encrypted/blob/e1a007b7/packages/database/src/schemas/Credential.ts#L16)
+[packages/database/src/schemas/Credential.ts:16](https://github.com/atala-community-projects/pluto-encrypted/blob/6ccfad9/packages/database/src/schemas/Credential.ts#L16)
 
 ___
 
@@ -128,4 +128,4 @@ ___
 
 #### Defined in
 
-[packages/database/src/schemas/Credential.ts:20](https://github.com/atala-community-projects/pluto-encrypted/blob/e1a007b7/packages/database/src/schemas/Credential.ts#L20)
+[packages/database/src/schemas/Credential.ts:20](https://github.com/atala-community-projects/pluto-encrypted/blob/6ccfad9/packages/database/src/schemas/Credential.ts#L20)

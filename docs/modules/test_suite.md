@@ -2,6 +2,10 @@
 
 # Module: test-suite
 
+**`Description`**
+
+This package can be used as a compliance test to validate a new storage created by you or the community.
+
 ## Table of contents
 
 ### Functions
@@ -27,4 +31,4 @@
 
 #### Defined in
 
-[packages/test-suite/src/index.ts:15](https://github.com/atala-community-projects/pluto-encrypted/blob/e1a007b7/packages/test-suite/src/index.ts#L15)
+[packages/test-suite/src/index.ts:16](https://github.com/atala-community-projects/pluto-encrypted/blob/6ccfad9/packages/test-suite/src/index.ts#L16)
