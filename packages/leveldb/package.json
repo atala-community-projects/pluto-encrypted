@@ -1,6 +1,6 @@
 {
   "name": "@pluto-encrypted/leveldb",
-  "version": "1.5.0",
+  "version": "1.6.0-rc.1",
   "description": "Secure Encrypted LevelDB storage for @pluto-encrypted/database",
   "main": "./build/cjs/index.cjs",
   "module": "./build/esm/index.mjs",
@@ -31,8 +31,8 @@
   "author": "elribonazo@gmail.com",
   "license": "Apache-2.0",
   "dependencies": {
-    "@pluto-encrypted/encryption": "^1.4.0",
-    "@pluto-encrypted/shared": "^1.4.0",
+    "@pluto-encrypted/encryption": "1.5.0-rc.1",
+    "@pluto-encrypted/shared": "1.5.0-rc.1",
     "array-push-at-sort-position": "^4.0.1",
     "level": "^6.0.1",
     "module-error": "^1.0.2",
@@ -42,9 +42,9 @@
     "uuid": "^9.0.1"
   },
   "devDependencies": {
-    "@pluto-encrypted/encryption": "^1.4.0",
-    "@pluto-encrypted/shared": "^1.4.0",
-    "@pluto-encrypted/test-suite": "1.4.0"
+    "@pluto-encrypted/encryption": "1.5.0-rc.1",
+    "@pluto-encrypted/shared": "1.5.0-rc.1",
+    "@pluto-encrypted/test-suite": "1.5.0-rc.1"
   },
   "files": [
     "build/*"
