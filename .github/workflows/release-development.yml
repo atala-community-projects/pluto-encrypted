@@ -3,7 +3,12 @@ name: Release Maintenance & Release candidate
 on:
   push:
     branches:
-      - '@pluto-encrypted/*/v([0-9]+)(\.+([0-9]|x)+)*\.+x'
+      - '@pluto-encrypted/test-suite/v+([0-9])?(.*([0-9])|x).x'
+      - '@pluto-encrypted/shared/v+([0-9])?(.*([0-9])|x).x'
+      - '@pluto-encrypted/leveldb/v+([0-9])?(.*([0-9])|x).x'
+      - '@pluto-encrypted/inmemory/v+([0-9])?(.*([0-9])|x).x'
+      - '@pluto-encrypted/indexdb/v+([0-9])?(.*([0-9])|x).x'
+      - '@pluto-encrypted/encryption/v+([0-9])?(.*([0-9])|x).x'     
       - develop
   workflow_call:
   workflow_dispatch:
