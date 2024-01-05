@@ -1,6 +1,6 @@
 {
   "name": "@pluto-encrypted/inmemory",
-  "version": "1.6.2",
+  "version": "1.7.0",
   "description": "Secure Encrypted InMemory storage for @pluto-encrypted/database",
   "main": "./build/cjs/index.cjs",
   "module": "./build/esm/index.mjs",
@@ -31,15 +31,15 @@
   "author": "elribonazo@gmail.com",
   "license": "Apache-2.0",
   "dependencies": {
-    "@pluto-encrypted/encryption": "1.6.2",
-    "@pluto-encrypted/shared": "1.6.2",
+    "@pluto-encrypted/encryption": "1.7.0",
+    "@pluto-encrypted/shared": "1.7.0",
     "array-push-at-sort-position": "^4.0.1",
     "rxdb": "^14.17.0",
     "uuid": "^9.0.1"
   },
   "devDependencies": {
-    "@pluto-encrypted/encryption": "1.6.2",
-    "@pluto-encrypted/shared": "1.6.2",
+    "@pluto-encrypted/encryption": "1.7.0",
+    "@pluto-encrypted/shared": "1.7.0",
     "@pluto-encrypted/test-suite": "1.7.0"
   },
   "files": [
