@@ -16,6 +16,7 @@
  *          storage: IndexDB,
  * });
  * ```
+ * Compatible with Prism >=4.0.0
  */
 import { wrappedKeyEncryptionStorage } from '@pluto-encrypted/encryption'
 import { type RxStorage } from 'rxdb'

@@ -20,6 +20,7 @@
  *       })
  * });
  * ```
+ * Compatible with Prism >=4.0.0
  */
 import { RxStorageDefaultStatics, type RxStorageInstance, type RxStorageInstanceCreationParams, newRxError } from 'rxdb'
 import { type LevelDBInternalConstructor, type LevelDBSettings, type LevelDBStorageInternals, type RxStorageLevelDBType } from './leveldb/types'

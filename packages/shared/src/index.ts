@@ -3,6 +3,7 @@
  * 
  * @module shared
  * @description Shared is used by other dependencies of pluto-encrypted to reduce code duplication.
+ * Compatible with Prism >=4.0.0
  */
 import { type MangoQuerySelector, type RxDocumentData, type RxJsonSchema } from 'rxdb'
 export type { RxDocumentMeta, PlainJsonValue, PropertyType, PlainSimpleJsonObject } from 'rxdb/dist/types/types'
