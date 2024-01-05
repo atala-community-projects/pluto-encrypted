@@ -1,7 +1,7 @@
 {
   "name": "@pluto-encrypted/leveldb",
   "version": "1.5.0",
-  "description": "[@pluto-encrypted] Secure Encrypted LevelDB storage for @pluto-encrypted/database",
+  "description": "Secure Encrypted LevelDB storage for @pluto-encrypted/database",
   "main": "./build/cjs/index.cjs",
   "module": "./build/esm/index.mjs",
   "types": "./build/index.d.ts",
