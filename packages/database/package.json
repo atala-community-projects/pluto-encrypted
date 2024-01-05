@@ -1,6 +1,6 @@
 {
   "name": "@pluto-encrypted/database",
-  "version": "1.11.0-rc.1",
+  "version": "1.12.0-rc.1",
   "description": "Encrypted database for Edge Wallet SDK that supports multiple db, IndexDB, LevelDB and InMemory",
   "main": "./build/cjs/index.cjs",
   "module": "./build/esm/index.mjs",
