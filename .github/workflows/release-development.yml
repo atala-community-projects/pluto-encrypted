@@ -3,7 +3,7 @@ name: Release Maintenance & Release candidate
 on:
   push:
     branches:
-      - +([0-9])?(.{+([0-9]),x}).x
+      - @pluto-encrypted/+([0-9])?(.{+([0-9]),x}).x
       - develop
   workflow_call:
   workflow_dispatch:
