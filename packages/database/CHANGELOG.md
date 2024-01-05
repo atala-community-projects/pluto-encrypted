@@ -1,3 +1,10 @@
+# @pluto-encrypted/database [1.11.0](https://github.com/atala-community-projects/pluto-encrypted/compare/@pluto-encrypted/database@1.10.4...@pluto-encrypted/database@1.11.0) (2024-01-05)
+
+
+### Features
+
+* database docs update. ([cdd1b8e](https://github.com/atala-community-projects/pluto-encrypted/commit/cdd1b8ed4cd6591919e921b4479b01020b5cdbbd))
+
 ## @pluto-encrypted/database [1.10.4](https://github.com/atala-community-projects/pluto-encrypted/compare/@pluto-encrypted/database@1.10.3...@pluto-encrypted/database@1.10.4) (2024-01-05)
 
 

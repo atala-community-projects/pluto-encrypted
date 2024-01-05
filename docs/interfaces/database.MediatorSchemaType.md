@@ -21,7 +21,7 @@
 
 #### Defined in
 
-[packages/database/src/schemas/Mediator.ts:8](https://github.com/atala-community-projects/pluto-encrypted/blob/6ccfad9/packages/database/src/schemas/Mediator.ts#L8)
+[packages/database/src/schemas/Mediator.ts:8](https://github.com/atala-community-projects/pluto-encrypted/blob/5082617/packages/database/src/schemas/Mediator.ts#L8)
 
 ___
 
@@ -31,7 +31,7 @@ ___
 
 #### Defined in
 
-[packages/database/src/schemas/Mediator.ts:6](https://github.com/atala-community-projects/pluto-encrypted/blob/6ccfad9/packages/database/src/schemas/Mediator.ts#L6)
+[packages/database/src/schemas/Mediator.ts:6](https://github.com/atala-community-projects/pluto-encrypted/blob/5082617/packages/database/src/schemas/Mediator.ts#L6)
 
 ___
 
@@ -41,7 +41,7 @@ ___
 
 #### Defined in
 
-[packages/database/src/schemas/Mediator.ts:7](https://github.com/atala-community-projects/pluto-encrypted/blob/6ccfad9/packages/database/src/schemas/Mediator.ts#L7)
+[packages/database/src/schemas/Mediator.ts:7](https://github.com/atala-community-projects/pluto-encrypted/blob/5082617/packages/database/src/schemas/Mediator.ts#L7)
 
 ___
 
@@ -51,4 +51,4 @@ ___
 
 #### Defined in
 
-[packages/database/src/schemas/Mediator.ts:9](https://github.com/atala-community-projects/pluto-encrypted/blob/6ccfad9/packages/database/src/schemas/Mediator.ts#L9)
+[packages/database/src/schemas/Mediator.ts:9](https://github.com/atala-community-projects/pluto-encrypted/blob/5082617/packages/database/src/schemas/Mediator.ts#L9)
