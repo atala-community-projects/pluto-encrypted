@@ -8,7 +8,7 @@ module.exports = (plugins) => ({
     ],
     "excludeExternals": false,
     "entryPointStrategy": "packages",
-    "out": "./docs-html",
+    "out": "./docs",
     "tsconfig": "tsconfig.json",
     "name": "@pluto-encrypted",
     "useTsLinkResolution": true,

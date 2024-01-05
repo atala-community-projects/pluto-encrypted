@@ -1,12 +1,13 @@
-import {
+import SDK from "@atala/prism-wallet-sdk";
+const {
   Ed25519KeyPair,
   Ed25519PrivateKey,
   Secp256k1KeyPair,
   Secp256k1PrivateKey,
   X25519KeyPair,
   X25519PrivateKey,
-  Domain,
-} from "@atala/prism-wallet-sdk";
+} = SDK;
+
 const secpPrivateKey = new Secp256k1PrivateKey(
   new Uint8Array([
     45, 182, 188, 189, 107, 229, 136, 180, 199, 177, 110, 84, 98, 140, 121, 84,
@@ -34,10 +35,10 @@ export const x25519 = new X25519KeyPair(
   x25519PrivateKey.publicKey()
 );
 
-export const linkSecret: Domain.Anoncreds.LinkSecret =
+export const linkSecret: SDK.Domain.Anoncreds.LinkSecret =
   "11713282333014162675185775227133916651856831195832037281552411830422122210216";
 
-export const schema: Domain.Anoncreds.Schema = {
+export const schema: SDK.Domain.Anoncreds.Schema = {
   name: "schema name",
   version: "1.0",
   attrNames: ["name", "age"],
@@ -48,7 +49,7 @@ export const schemaId = "did:web:xyz/resource/schema";
 export const schemas = { [schemaId]: schema };
 export const credDefId = "did:web:xyz/resource/cred-def";
 
-export const credOffer: Domain.Anoncreds.CredentialOffer = {
+export const credOffer: SDK.Domain.Anoncreds.CredentialOffer = {
   schema_id: schemaId,
   cred_def_id: "did:web:xyz/resource/cred-def",
   key_correctness_proof: {
@@ -74,7 +75,7 @@ export const credOffer: Domain.Anoncreds.CredentialOffer = {
   method_name: "anoncreds",
 };
 
-export const credDef: Domain.Anoncreds.CredentialDefinition = {
+export const credDef: SDK.Domain.Anoncreds.CredentialDefinition = {
   schemaId: schemaId,
   issuerId: "did:web:xyz",
   type: "CL",
@@ -109,7 +110,7 @@ export const credDefs = { [credDefId]: credDef };
 export const createJWTPayload = (
   id: string,
   proof: string,
-  credentialType: Domain.CredentialType
+  credentialType: SDK.Domain.CredentialType
 ) => {
   const vc = {
     id,
@@ -124,7 +125,7 @@ export const createJWTPayload = (
     },
     expirationDate: new Date().toISOString(),
     issuanceDate: new Date().toISOString(),
-    issuer: new Domain.DID(
+    issuer: new SDK.Domain.DID(
       "did",
       "peer",
       "2.Ez6LSms555YhFthn1WV8ciDBpZm86hK9tp83WojJUmxPGk1hZ.Vz6MkmdBjMyB4TS5UbbQw54szm8yvMMf1ftGV2sQVYAxaeWhE.SeyJpZCI6Im5ldy1pZCIsInQiOiJkbSIsInMiOiJodHRwczovL21lZGlhdG9yLnJvb3RzaWQuY2xvdWQiLCJhIjpbImRpZGNvbW0vdjIiXX0"
@@ -168,7 +169,7 @@ export const createJWTPayload = (
 
   return jwtPayload;
 };
-export const credRequestMeta: Domain.Anoncreds.CredentialRequestMeta = {
+export const credRequestMeta: SDK.Domain.Anoncreds.CredentialRequestMeta = {
   link_secret_blinding_data: {
     v_prime:
       "77955816791910907008648197625607251151043985904464685610589268755863823710042524325116894319321593903274621305101429675982328480929558765668395477286044036175023571135951855240427212072392115346223990606637530234412828281763675277786130736667970888577953183545724972075795470500481480587504146888168295548415330994692518385699942377815143595346327569474696881929936106990569016082555989993978175098221779656764883735585641835663445021379504408712254130562797706300716047105206280868009518894051808092685428634143160521444146484478798980767637798519834481411563284127214784285274598304432830695507876151369513892826498610123007743998318639",
@@ -177,7 +178,7 @@ export const credRequestMeta: Domain.Anoncreds.CredentialRequestMeta = {
   link_secret_name: "link-secret-id",
 };
 
-export const credentialIssued: Domain.Anoncreds.CredentialIssued = {
+export const credentialIssued: SDK.Domain.Anoncreds.CredentialIssued = {
   schema_id: schemaId,
   cred_def_id: "did:web:xyz/resource/cred-def",
   values: [

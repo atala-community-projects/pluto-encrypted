@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ## @pluto-encrypted/encryption [1.2.9](https://github.com/atala-community-projects/pluto-encrypted/compare/@pluto-encrypted/encryption@1.2.8...@pluto-encrypted/encryption@1.2.9) (2024-01-04)
 
 
@@ -5,6 +6,8 @@
 
 * encrypted change in docs ([#69](https://github.com/atala-community-projects/pluto-encrypted/issues/69)) ([eebfacd](https://github.com/atala-community-projects/pluto-encrypted/commit/eebfacd3b0536600d77e0517a7eb8775826baa82))
 
+=======
+>>>>>>> 6480b7b (fix: restore versions [skip ci])
 ## @pluto-encrypted/encryption [1.2.9-rc.1](https://github.com/atala-community-projects/pluto-encrypted/compare/@pluto-encrypted/encryption@1.2.8...@pluto-encrypted/encryption@1.2.9-rc.1) (2024-01-04)
 
 

@@ -1,18 +1,3 @@
-## @pluto-encrypted/indexdb [1.3.12](https://github.com/atala-community-projects/pluto-encrypted/compare/@pluto-encrypted/indexdb@1.3.11...@pluto-encrypted/indexdb@1.3.12) (2024-01-04)
-
-
-### Bug Fixes
-
-* encrypted change in docs ([#69](https://github.com/atala-community-projects/pluto-encrypted/issues/69)) ([eebfacd](https://github.com/atala-community-projects/pluto-encrypted/commit/eebfacd3b0536600d77e0517a7eb8775826baa82))
-
-
-
-
-
-### Dependencies
-
-* **@pluto-encrypted/encryption:** upgraded to 1.2.9
-
 ## @pluto-encrypted/indexdb [1.3.12-rc.1](https://github.com/atala-community-projects/pluto-encrypted/compare/@pluto-encrypted/indexdb@1.3.11...@pluto-encrypted/indexdb@1.3.12-rc.1) (2024-01-04)
 
 

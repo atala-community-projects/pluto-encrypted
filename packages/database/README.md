@@ -6,12 +6,7 @@ To install simply run
 
 ```bash
 npm i pluto-encrypted --save
-```
-
-or with yarn
-
-```bash
-yarn add pluto-encrypted
+# or with yarnyarn add pluto-encrypted
 ```
 
 ## Usage

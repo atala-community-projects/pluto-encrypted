@@ -1,4 +1,4 @@
-import { Domain } from '@atala/prism-wallet-sdk'
+import SDK from '@atala/prism-wallet-sdk'
 import type { Schema } from '../types'
 import { type RxCollection, type RxDocument } from 'rxdb'
 
@@ -8,13 +8,13 @@ export interface MessageSchemaType {
   readonly piuri: string
   readonly from?: string | undefined
   readonly to?: string | undefined
-  readonly attachments: Domain.AttachmentDescriptor[]
+  readonly attachments: SDK.Domain.AttachmentDescriptor[]
   readonly thid?: string
   readonly extraHeaders: string[]
   readonly createdTime: string
   readonly expiresTimePlus: string
   readonly ack: string[]
-  readonly direction: Domain.MessageDirection
+  readonly direction: SDK.Domain.MessageDirection
   readonly fromPrior?: string | undefined
   readonly pthid?: string | undefined
 }
@@ -107,18 +107,18 @@ const MessageSchema: Schema<MessageSchemaType> = {
 export type MessageDocument = RxDocument<MessageSchemaType, MessageMethodTypes>
 
 export interface MessageMethodTypes {
-  toDomainMessage: (this: MessageDocument) => Domain.Message
+  toDomainMessage: (this: MessageDocument) => SDK.Domain.Message
 }
 
 export type MessageColletion = RxCollection<
-MessageSchemaType,
-MessageMethodTypes,
-MessageDocument
+  MessageSchemaType,
+  MessageMethodTypes,
+  MessageDocument
 >
 
 export const MessageMethods: MessageMethodTypes = {
-  toDomainMessage: function toDomainMessage (this: MessageDocument) {
-    return Domain.Message.fromJson(JSON.stringify(this))
+  toDomainMessage: function toDomainMessage(this: MessageDocument) {
+    return SDK.Domain.Message.fromJson(JSON.stringify(this))
   }
 }
 

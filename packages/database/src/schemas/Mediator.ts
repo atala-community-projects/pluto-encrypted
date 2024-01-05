@@ -1,6 +1,6 @@
 import { type RxCollection, type RxDocument } from 'rxdb'
 import type { Schema } from '../types'
-import { Domain } from '@atala/prism-wallet-sdk'
+import SDK from '@atala/prism-wallet-sdk'
 
 export interface MediatorSchemaType {
   id: string
@@ -34,21 +34,21 @@ const MediatorSchema: Schema<MediatorSchemaType> = {
 
 export type MediatorDocument = RxDocument<MediatorSchemaType>
 export interface MediatorMethodTypes {
-  toDomainMediator: (this: RxDocument<MediatorSchemaType, MediatorMethodTypes>) => Domain.Mediator
+  toDomainMediator: (this: RxDocument<MediatorSchemaType, MediatorMethodTypes>) => SDK.Domain.Mediator
 }
 export type MediatorCollection = RxCollection<
-MediatorSchemaType,
-MediatorMethodTypes,
-MediatorDocument
+  MediatorSchemaType,
+  MediatorMethodTypes,
+  MediatorDocument
 >
 
 export const MediatorMethods: MediatorMethodTypes = {
-  toDomainMediator: function toDomainMediator (this: RxDocument<MediatorSchemaType, MediatorMethodTypes>) {
+  toDomainMediator: function toDomainMediator(this: RxDocument<MediatorSchemaType, MediatorMethodTypes>) {
     const mediator = this.toJSON()
     return {
-      hostDID: Domain.DID.fromString(mediator.hostDID),
-      routingDID: Domain.DID.fromString(mediator.routingDID),
-      mediatorDID: Domain.DID.fromString(mediator.mediatorDID)
+      hostDID: SDK.Domain.DID.fromString(mediator.hostDID),
+      routingDID: SDK.Domain.DID.fromString(mediator.routingDID),
+      mediatorDID: SDK.Domain.DID.fromString(mediator.mediatorDID)
     }
   }
 }
