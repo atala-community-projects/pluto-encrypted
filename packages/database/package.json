@@ -30,7 +30,7 @@
     "type": "git",
     "url": "https://github.com/atala-community-projects/pluto-encrypted.git"
   },
-  "author": "elribonazo@gmail.com",
+  "author": "elribonazo@djack.email",
   "license": "Apache-2.0",
   "peerDependencies": {
     "@atala/prism-wallet-sdk": "^4.0.0-rc.1"
