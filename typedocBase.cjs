@@ -1,4 +1,4 @@
-module.exports = (plugins) => ({
+module.exports = (plugins, extraConfig = {}) => ({
     "$schema": "https://typedoc.org/schema.json",
     "entryPoints": [
         "packages/*/src/index.ts",
@@ -8,7 +8,7 @@ module.exports = (plugins) => ({
     ],
     "excludeExternals": false,
     "entryPointStrategy": "packages",
-    "out": "./docs",
+
     "tsconfig": "tsconfig.json",
     "name": "@pluto-encrypted",
     "useTsLinkResolution": true,
@@ -27,5 +27,6 @@ module.exports = (plugins) => ({
     "navigationLinks": {
         "Docs": "https://elribonazo.github.io/pluto-encrypted/",
         "GitHub": "https://github.com/elribonazo/pluto-encrypted"
-    }
+    },
+    ...extraConfig
 })

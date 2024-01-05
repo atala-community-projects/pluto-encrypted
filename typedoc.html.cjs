@@ -6,4 +6,6 @@ module.exports = base([
     "typedoc-plugin-external-module-map",
     "typedoc-plugin-superstruct",
     "@bndynet/typedoc-theme"
-])
+], {
+    "out": "./docs-html"
+})

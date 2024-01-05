@@ -6,4 +6,6 @@ module.exports = base([
     "typedoc-plugin-external-module-map",
     "typedoc-plugin-superstruct",
     "typedoc-plugin-markdown"
-])
+], {
+    "out": "./docs"
+})
