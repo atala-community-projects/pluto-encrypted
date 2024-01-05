@@ -53,7 +53,7 @@ Main storage interface for LevelDBStorage
 
 #### Defined in
 
-[packages/leveldb/src/leveldb/types.ts:52](https://github.com/atala-community-projects/pluto-encrypted/blob/44f9334/packages/leveldb/src/leveldb/types.ts#L52)
+[packages/leveldb/src/leveldb/types.ts:52](https://github.com/atala-community-projects/pluto-encrypted/blob/dac22454/packages/leveldb/src/leveldb/types.ts#L52)
 
 ___
 
@@ -79,7 +79,7 @@ ___
 
 #### Defined in
 
-[packages/leveldb/src/leveldb/types.ts:44](https://github.com/atala-community-projects/pluto-encrypted/blob/44f9334/packages/leveldb/src/leveldb/types.ts#L44)
+[packages/leveldb/src/leveldb/types.ts:44](https://github.com/atala-community-projects/pluto-encrypted/blob/dac22454/packages/leveldb/src/leveldb/types.ts#L44)
 
 ___
 
@@ -97,7 +97,7 @@ ___
 
 #### Defined in
 
-[packages/leveldb/src/leveldb/types.ts:49](https://github.com/atala-community-projects/pluto-encrypted/blob/44f9334/packages/leveldb/src/leveldb/types.ts#L49)
+[packages/leveldb/src/leveldb/types.ts:49](https://github.com/atala-community-projects/pluto-encrypted/blob/dac22454/packages/leveldb/src/leveldb/types.ts#L49)
 
 ___
 
@@ -115,7 +115,7 @@ ___
 
 #### Defined in
 
-[packages/leveldb/src/leveldb/types.ts:48](https://github.com/atala-community-projects/pluto-encrypted/blob/44f9334/packages/leveldb/src/leveldb/types.ts#L48)
+[packages/leveldb/src/leveldb/types.ts:48](https://github.com/atala-community-projects/pluto-encrypted/blob/dac22454/packages/leveldb/src/leveldb/types.ts#L48)
 
 ___
 
@@ -125,7 +125,7 @@ ___
 
 #### Defined in
 
-[packages/leveldb/src/leveldb/types.ts:40](https://github.com/atala-community-projects/pluto-encrypted/blob/44f9334/packages/leveldb/src/leveldb/types.ts#L40)
+[packages/leveldb/src/leveldb/types.ts:40](https://github.com/atala-community-projects/pluto-encrypted/blob/dac22454/packages/leveldb/src/leveldb/types.ts#L40)
 
 ___
 
@@ -149,7 +149,7 @@ ___
 
 #### Defined in
 
-[packages/leveldb/src/leveldb/types.ts:50](https://github.com/atala-community-projects/pluto-encrypted/blob/44f9334/packages/leveldb/src/leveldb/types.ts#L50)
+[packages/leveldb/src/leveldb/types.ts:50](https://github.com/atala-community-projects/pluto-encrypted/blob/dac22454/packages/leveldb/src/leveldb/types.ts#L50)
 
 ___
 
@@ -173,7 +173,7 @@ ___
 
 #### Defined in
 
-[packages/leveldb/src/leveldb/types.ts:39](https://github.com/atala-community-projects/pluto-encrypted/blob/44f9334/packages/leveldb/src/leveldb/types.ts#L39)
+[packages/leveldb/src/leveldb/types.ts:39](https://github.com/atala-community-projects/pluto-encrypted/blob/dac22454/packages/leveldb/src/leveldb/types.ts#L39)
 
 ___
 
@@ -197,7 +197,7 @@ ___
 
 #### Defined in
 
-[packages/leveldb/src/leveldb/types.ts:51](https://github.com/atala-community-projects/pluto-encrypted/blob/44f9334/packages/leveldb/src/leveldb/types.ts#L51)
+[packages/leveldb/src/leveldb/types.ts:51](https://github.com/atala-community-projects/pluto-encrypted/blob/dac22454/packages/leveldb/src/leveldb/types.ts#L51)
 
 ___
 
@@ -207,7 +207,7 @@ ___
 
 #### Defined in
 
-[packages/leveldb/src/leveldb/types.ts:42](https://github.com/atala-community-projects/pluto-encrypted/blob/44f9334/packages/leveldb/src/leveldb/types.ts#L42)
+[packages/leveldb/src/leveldb/types.ts:42](https://github.com/atala-community-projects/pluto-encrypted/blob/dac22454/packages/leveldb/src/leveldb/types.ts#L42)
 
 ___
 
@@ -217,7 +217,7 @@ ___
 
 #### Defined in
 
-[packages/leveldb/src/leveldb/types.ts:41](https://github.com/atala-community-projects/pluto-encrypted/blob/44f9334/packages/leveldb/src/leveldb/types.ts#L41)
+[packages/leveldb/src/leveldb/types.ts:41](https://github.com/atala-community-projects/pluto-encrypted/blob/dac22454/packages/leveldb/src/leveldb/types.ts#L41)
 
 ___
 
@@ -227,7 +227,7 @@ ___
 
 #### Defined in
 
-[packages/leveldb/src/leveldb/types.ts:43](https://github.com/atala-community-projects/pluto-encrypted/blob/44f9334/packages/leveldb/src/leveldb/types.ts#L43)
+[packages/leveldb/src/leveldb/types.ts:43](https://github.com/atala-community-projects/pluto-encrypted/blob/dac22454/packages/leveldb/src/leveldb/types.ts#L43)
 
 ___
 
@@ -252,7 +252,7 @@ ___
 
 #### Defined in
 
-[packages/leveldb/src/leveldb/types.ts:53](https://github.com/atala-community-projects/pluto-encrypted/blob/44f9334/packages/leveldb/src/leveldb/types.ts#L53)
+[packages/leveldb/src/leveldb/types.ts:53](https://github.com/atala-community-projects/pluto-encrypted/blob/dac22454/packages/leveldb/src/leveldb/types.ts#L53)
 
 ___
 
@@ -277,7 +277,7 @@ ___
 
 #### Defined in
 
-[packages/leveldb/src/leveldb/types.ts:54](https://github.com/atala-community-projects/pluto-encrypted/blob/44f9334/packages/leveldb/src/leveldb/types.ts#L54)
+[packages/leveldb/src/leveldb/types.ts:54](https://github.com/atala-community-projects/pluto-encrypted/blob/dac22454/packages/leveldb/src/leveldb/types.ts#L54)
 
 ___
 
@@ -302,4 +302,4 @@ ___
 
 #### Defined in
 
-[packages/leveldb/src/leveldb/types.ts:55](https://github.com/atala-community-projects/pluto-encrypted/blob/44f9334/packages/leveldb/src/leveldb/types.ts#L55)
+[packages/leveldb/src/leveldb/types.ts:55](https://github.com/atala-community-projects/pluto-encrypted/blob/dac22454/packages/leveldb/src/leveldb/types.ts#L55)

@@ -32,4 +32,4 @@
 
 #### Defined in
 
-[packages/database/src/schemas/LinkSecret.ts:33](https://github.com/atala-community-projects/pluto-encrypted/blob/44f9334/packages/database/src/schemas/LinkSecret.ts#L33)
+[packages/database/src/schemas/LinkSecret.ts:33](https://github.com/atala-community-projects/pluto-encrypted/blob/dac22454/packages/database/src/schemas/LinkSecret.ts#L33)

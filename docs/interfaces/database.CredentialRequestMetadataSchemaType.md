@@ -21,7 +21,7 @@
 
 #### Defined in
 
-[packages/database/src/schemas/CredentialRequestMetadata.ts:6](https://github.com/atala-community-projects/pluto-encrypted/blob/44f9334/packages/database/src/schemas/CredentialRequestMetadata.ts#L6)
+[packages/database/src/schemas/CredentialRequestMetadata.ts:6](https://github.com/atala-community-projects/pluto-encrypted/blob/dac22454/packages/database/src/schemas/CredentialRequestMetadata.ts#L6)
 
 ___
 
@@ -37,7 +37,7 @@ ___
 
 #### Defined in
 
-[packages/database/src/schemas/CredentialRequestMetadata.ts:7](https://github.com/atala-community-projects/pluto-encrypted/blob/44f9334/packages/database/src/schemas/CredentialRequestMetadata.ts#L7)
+[packages/database/src/schemas/CredentialRequestMetadata.ts:7](https://github.com/atala-community-projects/pluto-encrypted/blob/dac22454/packages/database/src/schemas/CredentialRequestMetadata.ts#L7)
 
 ___
 
@@ -47,7 +47,7 @@ ___
 
 #### Defined in
 
-[packages/database/src/schemas/CredentialRequestMetadata.ts:10](https://github.com/atala-community-projects/pluto-encrypted/blob/44f9334/packages/database/src/schemas/CredentialRequestMetadata.ts#L10)
+[packages/database/src/schemas/CredentialRequestMetadata.ts:10](https://github.com/atala-community-projects/pluto-encrypted/blob/dac22454/packages/database/src/schemas/CredentialRequestMetadata.ts#L10)
 
 ___
 
@@ -57,4 +57,4 @@ ___
 
 #### Defined in
 
-[packages/database/src/schemas/CredentialRequestMetadata.ts:11](https://github.com/atala-community-projects/pluto-encrypted/blob/44f9334/packages/database/src/schemas/CredentialRequestMetadata.ts#L11)
+[packages/database/src/schemas/CredentialRequestMetadata.ts:11](https://github.com/atala-community-projects/pluto-encrypted/blob/dac22454/packages/database/src/schemas/CredentialRequestMetadata.ts#L11)

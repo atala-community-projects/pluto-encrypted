@@ -19,7 +19,7 @@
 
 #### Defined in
 
-[packages/encryption/src/migration/index.ts:441](https://github.com/atala-community-projects/pluto-encrypted/blob/44f9334/packages/encryption/src/migration/index.ts#L441)
+[packages/encryption/src/migration/index.ts:441](https://github.com/atala-community-projects/pluto-encrypted/blob/dac22454/packages/encryption/src/migration/index.ts#L441)
 
 ___
 
@@ -29,4 +29,4 @@ ___
 
 #### Defined in
 
-[packages/encryption/src/migration/index.ts:442](https://github.com/atala-community-projects/pluto-encrypted/blob/44f9334/packages/encryption/src/migration/index.ts#L442)
+[packages/encryption/src/migration/index.ts:442](https://github.com/atala-community-projects/pluto-encrypted/blob/dac22454/packages/encryption/src/migration/index.ts#L442)
