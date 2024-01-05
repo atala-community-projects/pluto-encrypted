@@ -1,6 +1,7 @@
 /**
  * @packageDocumentation
  * @module database
+ * Database package
  */
 import SDK from '@atala/prism-wallet-sdk'
 import {
