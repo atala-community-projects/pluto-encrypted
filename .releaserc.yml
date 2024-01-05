@@ -1,6 +1,5 @@
 branches:
-  - name: '@pluto-encrypted/.*/v[0-9]+\.x\.x'
-  - name: '@pluto-encrypted/.*/v[0-9]+\.[0-9]+\.x'
+  - name: '@pluto-encrypted/.*/v+([0-9])?(.{+([0-9]),x}).x'
   - name: 'master'
   - name: 'release/*'
     prerelease: 'rc'
