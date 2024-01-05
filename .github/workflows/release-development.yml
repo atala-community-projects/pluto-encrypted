@@ -4,7 +4,7 @@ on:
   push:
     branches:
       - +([0-9])?(.{+([0-9]),x}).x
-      - release/*
+      - develop
   workflow_call:
   workflow_dispatch:
         
