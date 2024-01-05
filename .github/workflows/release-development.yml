@@ -4,7 +4,7 @@ on:
   push:
     branches:
       - '@pluto-encrypted/*/v*' 
-      - develop
+      - 'develop'
   workflow_call:
   workflow_dispatch:
         
