@@ -1,10 +1,6 @@
 name: Release Maintenance & Release candidate
 
 on:
-  push:
-    branches:
-      - '@pluto-encrypted/*/v*' 
-      - 'develop'
   workflow_call:
   workflow_dispatch:
         
