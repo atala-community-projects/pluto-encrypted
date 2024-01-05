@@ -27,4 +27,4 @@
 
 #### Defined in
 
-[packages/test-suite/src/index.ts:14](https://github.com/atala-community-projects/pluto-encrypted/blob/f75084b/packages/test-suite/src/index.ts#L14)
+[packages/test-suite/src/index.ts:14](https://github.com/atala-community-projects/pluto-encrypted/blob/44f9334/packages/test-suite/src/index.ts#L14)

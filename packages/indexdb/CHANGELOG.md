@@ -1,3 +1,20 @@
+# @pluto-encrypted/indexdb [1.9.0](https://github.com/atala-community-projects/pluto-encrypted/compare/@pluto-encrypted/indexdb@1.8.0...@pluto-encrypted/indexdb@1.9.0) (2024-01-05)
+
+
+### Features
+
+* packages ([88e569b](https://github.com/atala-community-projects/pluto-encrypted/commit/88e569b05129d1b0f586f5aded5d8dd645cd285f))
+
+
+
+
+
+### Dependencies
+
+* **@pluto-encrypted/encryption:** upgraded to 1.9.0
+* **@pluto-encrypted/shared:** upgraded to 1.9.0
+* **@pluto-encrypted/test-suite:** upgraded to 1.9.0
+
 ## @pluto-encrypted/indexdb [1.3.12-rc.1](https://github.com/atala-community-projects/pluto-encrypted/compare/@pluto-encrypted/indexdb@1.3.11...@pluto-encrypted/indexdb@1.3.12-rc.1) (2024-01-04)
 
 

@@ -1,3 +1,10 @@
+# @pluto-encrypted/encryption [1.9.0](https://github.com/atala-community-projects/pluto-encrypted/compare/@pluto-encrypted/encryption@1.8.0...@pluto-encrypted/encryption@1.9.0) (2024-01-05)
+
+
+### Features
+
+* packages ([88e569b](https://github.com/atala-community-projects/pluto-encrypted/commit/88e569b05129d1b0f586f5aded5d8dd645cd285f))
+
 ## @pluto-encrypted/encryption [1.2.9-rc.1](https://github.com/atala-community-projects/pluto-encrypted/compare/@pluto-encrypted/encryption@1.2.8...@pluto-encrypted/encryption@1.2.9-rc.1) (2024-01-04)
 
 

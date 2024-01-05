@@ -19,7 +19,6 @@ const database = db = await Database.createEncrypted({
          storage: InMemory,
 });
 ```
-Compatible with Prism >=4.0.0
 
 ## Table of contents
 
@@ -41,4 +40,4 @@ Use this as storage in our RXDB database. For now there is no initialisation set
 
 #### Defined in
 
-[packages/inmemory/src/index.ts:62](https://github.com/atala-community-projects/pluto-encrypted/blob/f75084b/packages/inmemory/src/index.ts#L62)
+[packages/inmemory/src/index.ts:62](https://github.com/atala-community-projects/pluto-encrypted/blob/44f9334/packages/inmemory/src/index.ts#L62)

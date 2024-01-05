@@ -19,4 +19,3 @@ const database = db = await Database.createEncrypted({
          storage: IndexDB,
 });
 ```
-Compatible with Prism >=4.0.0
