@@ -1,4 +1,4 @@
-import { type Domain } from '@atala/prism-wallet-sdk'
+import SDK from '@atala/prism-wallet-sdk'
 import type { Schema } from '../types'
 import { type RxCollection, type RxDocument } from 'rxdb'
 
@@ -25,22 +25,22 @@ const LinkSecretSchema: Schema<LinkSecretSchemaType> = {
 }
 
 export type LinkSecretDocument = RxDocument<
-LinkSecretSchemaType,
-LinkSecretMethodTypes
+  LinkSecretSchemaType,
+  LinkSecretMethodTypes
 >
 
 export interface LinkSecretMethodTypes {
-  toDomainLinkSecret: (this: LinkSecretDocument) => Domain.Anoncreds.LinkSecret
+  toDomainLinkSecret: (this: LinkSecretDocument) => SDK.Domain.Anoncreds.LinkSecret
 }
 
 export type LinkSecretColletion = RxCollection<
-LinkSecretSchemaType,
-LinkSecretMethodTypes,
-LinkSecretDocument
+  LinkSecretSchemaType,
+  LinkSecretMethodTypes,
+  LinkSecretDocument
 >
 
 export const LinkSecretMethods: LinkSecretMethodTypes = {
-  toDomainLinkSecret: function toDomainLinkSecret (this: LinkSecretDocument) {
+  toDomainLinkSecret: function toDomainLinkSecret(this: LinkSecretDocument) {
     return this.secret
   }
 }

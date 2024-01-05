@@ -1,16 +1,10 @@
 import "./setup";
 
-import { describe, it, vi, beforeEach, afterEach } from 'vitest';
+import { describe, it, beforeEach, afterEach } from 'vitest';
 import fs from 'fs';
 import path from 'path';
 import { randomUUID } from "crypto";
-import {
-    AnonCredsCredential,
-    Apollo,
-    Castor,
-    Domain,
-    Pollux,
-} from "@atala/prism-wallet-sdk";
+import SDK from "@atala/prism-wallet-sdk";
 import * as sinon from "sinon";
 import { RxStorage } from "rxdb";
 import InMemory from "../../inmemory/src";
@@ -19,6 +13,13 @@ import { createLevelDBStorage } from '../../leveldb/src'
 
 import * as Fixtures from "./fixtures";
 import { Database, PrivateKeyMethods } from "../src";
+
+const {
+    AnonCredsCredential,
+    Apollo,
+    Castor,
+    Pollux,
+} = SDK;
 
 const pollux = new Pollux(new Castor(new Apollo()));
 const keyData = new Uint8Array(32);
@@ -29,11 +30,11 @@ const jwtParts = [
 ];
 const messageType = "https://didcomm.org/basicmessage/2.0/message";
 const createMessage = (
-    from?: Domain.DID,
-    to?: Domain.DID,
-    direction: Domain.MessageDirection = Domain.MessageDirection.SENT
+    from?: SDK.Domain.DID,
+    to?: SDK.Domain.DID,
+    direction: SDK.Domain.MessageDirection = SDK.Domain.MessageDirection.SENT
 ) => {
-    const message = new Domain.Message(
+    const message = new SDK.Domain.Message(
         "{}",
         randomUUID(),
         messageType,
@@ -103,7 +104,7 @@ describe("Pluto encrypted testing with different storages", () => {
                     }
                 );
                 await db.getAllPrismDIDs()
-                const did = Domain.DID.fromString(
+                const did = SDK.Domain.DID.fromString(
                     "did:prism:733e594871d7700d35e6116011a08fc11e88ff9d366d8b5571ffc1aa18d249ea:Ct8BCtwBEnQKH2F1dGhlbnRpY2F0aW9uYXV0aGVudGljYXRpb25LZXkQBEJPCglzZWNwMjU2azESIDS5zeYUkLCSAJLI6aLXRTPRxstCLPUEI6TgBrAVCHkwGiDk-ffklrHIFW7pKkT8i-YksXi-XXi5h31czUMaVClcpxJkCg9tYXN0ZXJtYXN0ZXJLZXkQAUJPCglzZWNwMjU2azESIDS5zeYUkLCSAJLI6aLXRTPRxstCLPUEI6TgBrAVCHkwGiDk-ffklrHIFW7pKkT8i-YksXi-XXi5h31czUMaVClcpw"
                 );
                 const privateKey = Fixtures.secp256K1.privateKey;
@@ -173,13 +174,13 @@ describe("Pluto encrypted testing with different storages", () => {
 
             it(storageName + "Should store a new Prism DID and its privateKeys", async ({ expect }) => {
                 expect(await db.getPrismLastKeyPathIndex()).toBe(0);
-                const did = Domain.DID.fromString(
+                const did = SDK.Domain.DID.fromString(
                     "did:prism:733e594871d7700d35e6116011a08fc11e88ff9d366d8b5571ffc1aa18d249ea:Ct8BCtwBEnQKH2F1dGhlbnRpY2F0aW9uYXV0aGVudGljYXRpb25LZXkQBEJPCglzZWNwMjU2azESIDS5zeYUkLCSAJLI6aLXRTPRxstCLPUEI6TgBrAVCHkwGiDk-ffklrHIFW7pKkT8i-YksXi-XXi5h31czUMaVClcpxJkCg9tYXN0ZXJtYXN0ZXJLZXkQAUJPCglzZWNwMjU2azESIDS5zeYUkLCSAJLI6aLXRTPRxstCLPUEI6TgBrAVCHkwGiDk-ffklrHIFW7pKkT8i-YksXi-XXi5h31czUMaVClcpw"
                 );
-                const did2 = Domain.DID.fromString(
+                const did2 = SDK.Domain.DID.fromString(
                     "did:prism:733e594871d7700d35e6116011a08fc11e88ff9d366d8b5571ffc1aa18d249ea:Ct8BCtwBEnQKH2F1dGhlbnRpY2F0aW9uYXV0aGVudGljYXRpb25LZXkQBEJPCglzZWNwMjU2azESIDS5zeYUkLCSAJLI6aLXRTPRxstCLPUEI6TgBrAVCHkwGiDk-ffklrHIFW7pKkT8i-YksXi-XXi5h31czUMaVClcpxJkCg9tYXN0ZXJtYXN0ZXJLZXkQAUJPCglzZWNwMjU2azESIDS5zeYUkLCSAJLI6aLXRTPRxstCLPUEI6TgBrAVCHkwGiDk-ffklrHIFW7pKkT8i-YksXi-XXi5h31czUMaVClcpw1"
                 );
-                const did3 = Domain.DID.fromString(
+                const did3 = SDK.Domain.DID.fromString(
                     "did:prism:733e594871d7700d35e6116011a08fc11e88ff9d366d8b5571ffc1aa18d249ea:Ct8BCtwBEnQKH2F1dGhlbnRpY2F0aW9uYXV0aGVudGljYXRpb25LZXkQBEJPCglzZWNwMjU2azESIDS5zeYUkLCSAJLI6aLXRTPRxstCLPUEI6TgBrAVCHkwGiDk-ffklrHIFW7pKkT8i-YksXi-XXi5h31czUMaVClcpxJkCg9tYXN0ZXJtYXN0ZXJLZXkQAUJPCglzZWNwMjU2azESIDS5zeYUkLCSAJLI6aLXRTPRxstCLPUEI6TgBrAVCHkwGiDk-ffklrHIFW7pKkT8i-YksXi-XXi5h31czUMaVClcpw2"
                 );
                 const privateKey = Fixtures.secp256K1.privateKey;
@@ -213,7 +214,7 @@ describe("Pluto encrypted testing with different storages", () => {
                 }).toThrowError(new Error(`Invalid KeyType sds`));
 
                 const wrongKey3: any = {
-                    type: Domain.KeyTypes.Curve25519,
+                    type: SDK.Domain.KeyTypes.Curve25519,
                     keySpecification: [],
                     toDomainPrivateKey: PrivateKeyMethods.toDomainPrivateKey,
                 };
@@ -222,10 +223,10 @@ describe("Pluto encrypted testing with different storages", () => {
                 }).toThrowError(new Error("Undefined key curve"));
 
                 const wrongKey4: any = {
-                    type: Domain.KeyTypes.Curve25519,
+                    type: SDK.Domain.KeyTypes.Curve25519,
                     keySpecification: [
                         {
-                            name: Domain.KeyProperties.curve,
+                            name: SDK.Domain.KeyProperties.curve,
                             type: "string",
                             value: "asd",
                         },
@@ -237,12 +238,12 @@ describe("Pluto encrypted testing with different storages", () => {
                 }).toThrowError(new Error("Invalid key curve asd"));
 
                 const wrongKey5: any = {
-                    type: Domain.KeyTypes.Curve25519,
+                    type: SDK.Domain.KeyTypes.Curve25519,
                     keySpecification: [
                         {
-                            name: Domain.KeyProperties.curve,
+                            name: SDK.Domain.KeyProperties.curve,
                             type: "string",
-                            value: Domain.Curve.ED25519,
+                            value: SDK.Domain.Curve.ED25519,
                         },
                     ],
                     toDomainPrivateKey: PrivateKeyMethods.toDomainPrivateKey,
@@ -252,15 +253,15 @@ describe("Pluto encrypted testing with different storages", () => {
                 }).toThrowError(new Error("Undefined key raw"));
 
                 const correctKey: any = {
-                    type: Domain.KeyTypes.EC,
+                    type: SDK.Domain.KeyTypes.EC,
                     keySpecification: [
                         {
-                            name: Domain.KeyProperties.curve,
+                            name: SDK.Domain.KeyProperties.curve,
                             type: "string",
-                            value: Domain.Curve.SECP256K1,
+                            value: SDK.Domain.Curve.SECP256K1,
                         },
                         {
-                            name: Domain.KeyProperties.rawKey,
+                            name: SDK.Domain.KeyProperties.rawKey,
                             type: "string",
                             value: Buffer.from(Fixtures.secp256K1.privateKey.raw).toString(
                                 "hex"
@@ -273,27 +274,27 @@ describe("Pluto encrypted testing with different storages", () => {
                 correctKey.toDomainPrivateKey();
 
                 const correctKeyWithIndex: any = {
-                    type: Domain.KeyTypes.EC,
+                    type: SDK.Domain.KeyTypes.EC,
                     keySpecification: [
                         {
-                            name: Domain.KeyProperties.curve,
+                            name: SDK.Domain.KeyProperties.curve,
                             type: "string",
-                            value: Domain.Curve.SECP256K1,
+                            value: SDK.Domain.Curve.SECP256K1,
                         },
                         {
-                            name: Domain.KeyProperties.rawKey,
+                            name: SDK.Domain.KeyProperties.rawKey,
                             type: "string",
                             value: Buffer.from(Fixtures.secp256K1.privateKey.raw).toString(
                                 "hex"
                             ),
                         },
                         {
-                            name: Domain.KeyProperties.index,
+                            name: SDK.Domain.KeyProperties.index,
                             type: "string",
                             value: Fixtures.secp256K1.privateKey.index,
                         },
                         {
-                            name: Domain.KeyProperties.seed,
+                            name: SDK.Domain.KeyProperties.seed,
                             type: "string",
                             value: "A12456",
                         },
@@ -304,15 +305,15 @@ describe("Pluto encrypted testing with different storages", () => {
                 correctKeyWithIndex.toDomainPrivateKey();
 
                 const correctEd25519Key: any = {
-                    type: Domain.KeyTypes.EC,
+                    type: SDK.Domain.KeyTypes.EC,
                     keySpecification: [
                         {
-                            name: Domain.KeyProperties.curve,
+                            name: SDK.Domain.KeyProperties.curve,
                             type: "string",
-                            value: Domain.Curve.ED25519,
+                            value: SDK.Domain.Curve.ED25519,
                         },
                         {
-                            name: Domain.KeyProperties.rawKey,
+                            name: SDK.Domain.KeyProperties.rawKey,
                             type: "string",
                             value: Buffer.from(Fixtures.ed25519.privateKey.raw).toString("hex"),
                         },
@@ -323,15 +324,15 @@ describe("Pluto encrypted testing with different storages", () => {
                 correctEd25519Key.toDomainPrivateKey();
 
                 const correctX25519Key: any = {
-                    type: Domain.KeyTypes.Curve25519,
+                    type: SDK.Domain.KeyTypes.Curve25519,
                     keySpecification: [
                         {
-                            name: Domain.KeyProperties.curve,
+                            name: SDK.Domain.KeyProperties.curve,
                             type: "string",
-                            value: Domain.Curve.X25519,
+                            value: SDK.Domain.Curve.X25519,
                         },
                         {
-                            name: Domain.KeyProperties.rawKey,
+                            name: SDK.Domain.KeyProperties.rawKey,
                             type: "string",
                             value: Buffer.from(Fixtures.x25519.privateKey.raw).toString("hex"),
                         },
@@ -343,7 +344,7 @@ describe("Pluto encrypted testing with different storages", () => {
             });
 
             it(storageName + "Should return null when no privateKey is found by its id", async ({ expect }) => {
-                const did = Domain.DID.fromString(
+                const did = SDK.Domain.DID.fromString(
                     "did:prism:733e594871d7700d35e6116011a08fc11e88ff9d366d8b5571ffc1aa18d249ea:Ct8BCtwBEnQKH2F1dGhlbnRpY2F0aW9uYXV0aGVudGljYXRpb25LZXkQBEJPCglzZWNwMjU2azESIDS5zeYUkLCSAJLI6aLXRTPRxstCLPUEI6TgBrAVCHkwGiDk-ffklrHIFW7pKkT8i-YksXi-XXi5h31czUMaVClcpxJkCg9tYXN0ZXJtYXN0ZXJLZXkQAUJPCglzZWNwMjU2azESIDS5zeYUkLCSAJLI6aLXRTPRxstCLPUEI6TgBrAVCHkwGiDk-ffklrHIFW7pKkT8i-YksXi-XXi5h31czUMaVClcpw"
                 );
                 expect(await db.getDIDInfoByDID(did)).toBe(null);
@@ -354,14 +355,14 @@ describe("Pluto encrypted testing with different storages", () => {
             });
 
             it(storageName + "Should return null when no privateKey is found by its did", async ({ expect }) => {
-                const did = Domain.DID.fromString(
+                const did = SDK.Domain.DID.fromString(
                     "did:prism::t8BCtwBEnQKH2F1dGhlbnRpY2F0aW9uYXV0aGVudGljYXRpb25LZXkQBEJPCglzZWNwMjU2azESIDS5zeYUkLCSAJLI6aLXRTPRxstCLPUEI6TgBrAVCHkwGiDk-ffklrHIFW7pKkT8i-YksXi-XXi5h31czUMaVClcpxJkCg9tYXN0ZXJtYXN0ZXJLZXkQAUJPCglzZWNwMjU2azESIDS5zeYUkLCSAJLI6aLXRTPRxstCLPUEI6TgBrAVCHkwGiDk-ffklrHIFW7pKkT8i-YksXi-XXi5h31czUMaVClcpw"
                 );
                 expect((await db.getDIDPrivateKeysByDID(did)).length).toBe(0);
             });
 
             it(storageName + "Should store a new Prism DID and its privateKeys with privateKeyMetadataId", async ({ expect }) => {
-                const did = Domain.DID.fromString(
+                const did = SDK.Domain.DID.fromString(
                     "did:prism:733e594871d7700d35e6116011a08fc11e88ff9d366d8b5571ffc1aa18d249ea:Ct8BCtwBEnQKH2F1dGhlbnRpY2F0aW9uYXV0aGVudGljYXRpb25LZXkQBEJPCglzZWNwMjU2azESIDS5zeYUkLCSAJLI6aLXRTPRxstCLPUEI6TgBrAVCHkwGiDk-ffklrHIFW7pKkT8i-YksXi-XXi5h31czUMaVClcpxJkCg9tYXN0ZXJtYXN0ZXJLZXkQAUJPCglzZWNwMjU2azESIDS5zeYUkLCSAJLI6aLXRTPRxstCLPUEI6TgBrAVCHkwGiDk-ffklrHIFW7pKkT8i-YksXi-XXi5h31czUMaVClcpw"
                 );
                 const privateKey = Fixtures.secp256K1.privateKey;
@@ -370,7 +371,7 @@ describe("Pluto encrypted testing with different storages", () => {
             });
 
             it(storageName + "Should store a new Prism DID and its privateKeys with privateKeyMetadataId and alias", async ({ expect }) => {
-                const did = Domain.DID.fromString(
+                const did = SDK.Domain.DID.fromString(
                     "did:prism:733e594871d7700d35e6116011a08fc11e88ff9d366d8b5571ffc1aa18d249ea:Ct8BCtwBEnQKH2F1dGhlbnRpY2F0aW9uYXV0aGVudGljYXRpb25LZXkQBEJPCglzZWNwMjU2azESIDS5zeYUkLCSAJLI6aLXRTPRxstCLPUEI6TgBrAVCHkwGiDk-ffklrHIFW7pKkT8i-YksXi-XXi5h31czUMaVClcpxJkCg9tYXN0ZXJtYXN0ZXJLZXkQAUJPCglzZWNwMjU2azESIDS5zeYUkLCSAJLI6aLXRTPRxstCLPUEI6TgBrAVCHkwGiDk-ffklrHIFW7pKkT8i-YksXi-XXi5h31czUMaVClcpw"
                 );
                 const privateKey = Fixtures.secp256K1.privateKey;
@@ -385,7 +386,7 @@ describe("Pluto encrypted testing with different storages", () => {
             });
 
             it(storageName + "Should store a new Prism DID and its privateKeys and fetch it by its alias", async ({ expect }) => {
-                const did = Domain.DID.fromString(
+                const did = SDK.Domain.DID.fromString(
                     "did:prism:733e594871d7700d35e6116011a08fc11e88ff9d366d8b5571ffc1aa18d249ea:Ct8BCtwBEnQKH2F1dGhlbnRpY2F0aW9uYXV0aGVudGljYXRpb25LZXkQBEJPCglzZWNwMjU2azESIDS5zeYUkLCSAJLI6aLXRTPRxstCLPUEI6TgBrAVCHkwGiDk-ffklrHIFW7pKkT8i-YksXi-XXi5h31czUMaVClcpxJkCg9tYXN0ZXJtYXN0ZXJLZXkQAUJPCglzZWNwMjU2azESIDS5zeYUkLCSAJLI6aLXRTPRxstCLPUEI6TgBrAVCHkwGiDk-ffklrHIFW7pKkT8i-YksXi-XXi5h31czUMaVClcpw"
                 );
                 const alias = "default";
@@ -423,14 +424,14 @@ describe("Pluto encrypted testing with different storages", () => {
             });
 
             it(storageName + "Should fetch stored messages either by type or by did", async ({ expect }) => {
-                const from = Domain.DID.fromString("did:prism:123456");
-                const to = Domain.DID.fromString("did:prism:654321");
-                const from2 = Domain.DID.fromString("did:prism:12345644");
-                const to2 = Domain.DID.fromString("did:prism:65432133");
+                const from = SDK.Domain.DID.fromString("did:prism:123456");
+                const to = SDK.Domain.DID.fromString("did:prism:654321");
+                const from2 = SDK.Domain.DID.fromString("did:prism:12345644");
+                const to2 = SDK.Domain.DID.fromString("did:prism:65432133");
 
                 await db.storeMessages([
-                    createMessage(from, to, Domain.MessageDirection.RECEIVED),
-                    createMessage(from2, to2, Domain.MessageDirection.SENT),
+                    createMessage(from, to, SDK.Domain.MessageDirection.RECEIVED),
+                    createMessage(from2, to2, SDK.Domain.MessageDirection.SENT),
                 ]);
 
                 const byType = await db.getAllMessagesOfType(messageType);
@@ -471,7 +472,7 @@ describe("Pluto encrypted testing with different storages", () => {
             });
 
             it(storageName + "Should store a peerDID", async ({ expect }) => {
-                const did = new Domain.DID(
+                const did = new SDK.Domain.DID(
                     "did",
                     "peer",
                     "2.Ez6LSms555YhFthn1WV8ciDBpZm86hK9tp83WojJUmxPGk1hZ.Vz6MkmdBjMyB4TS5UbbQw54szm8yvMMf1ftGV2sQVYAxaeWhE.SeyJpZCI6Im5ldy1pZCIsInQiOiJkbSIsInMiOiJodHRwczovL21lZGlhdG9yLnJvb3RzaWQuY2xvdWQiLCJhIjpbImRpZGNvbW0vdjIiXX0"
@@ -486,15 +487,15 @@ describe("Pluto encrypted testing with different storages", () => {
             });
 
             it(storageName + "Should store a didPair", async ({ expect }) => {
-                const host = Domain.DID.fromString("did:prism:123456");
-                const receiver = Domain.DID.fromString("did:prism:654321");
+                const host = SDK.Domain.DID.fromString("did:prism:123456");
+                const receiver = SDK.Domain.DID.fromString("did:prism:654321");
                 const name = "example";
                 await db.storeDIDPair(host, receiver, name);
             });
 
             it(storageName + "Should get all the didPairs", async ({ expect }) => {
-                const host = Domain.DID.fromString("did:prism:123456");
-                const receiver = Domain.DID.fromString("did:prism:654321");
+                const host = SDK.Domain.DID.fromString("did:prism:123456");
+                const receiver = SDK.Domain.DID.fromString("did:prism:654321");
                 const name = "example";
                 expect((await db.getAllDidPairs()).length).toBe(0);
                 await db.storeDIDPair(host, receiver, name);
@@ -502,21 +503,21 @@ describe("Pluto encrypted testing with different storages", () => {
             });
 
             it(storageName + "Should get a did pair by its did", async ({ expect }) => {
-                const host = Domain.DID.fromString("did:prism:123456");
-                const receiver = Domain.DID.fromString("did:prism:654321");
+                const host = SDK.Domain.DID.fromString("did:prism:123456");
+                const receiver = SDK.Domain.DID.fromString("did:prism:654321");
                 const name = "example";
                 await db.storeDIDPair(host, receiver, name);
                 expect(await db.getPairByDID(host)).not.toBe(null);
             });
 
             it(storageName + "Should return null when a pair is fetched by a non existing did", async ({ expect }) => {
-                const notfound = Domain.DID.fromString("did:prism:65432155555");
+                const notfound = SDK.Domain.DID.fromString("did:prism:65432155555");
                 expect(await db.getPairByDID(notfound)).toBe(null);
             });
 
             it(storageName + "Should get a did pair by its name", async ({ expect }) => {
-                const host = Domain.DID.fromString("did:prism:123456");
-                const receiver = Domain.DID.fromString("did:prism:654321");
+                const host = SDK.Domain.DID.fromString("did:prism:123456");
+                const receiver = SDK.Domain.DID.fromString("did:prism:654321");
                 const name = "example";
                 await db.storeDIDPair(host, receiver, name);
                 expect(await db.getPairByName(name)).not.toBe(null);
@@ -527,9 +528,9 @@ describe("Pluto encrypted testing with different storages", () => {
             });
 
             it(storageName + "Should store a mediator", async ({ expect }) => {
-                const host = Domain.DID.fromString("did:prism:333333");
-                const mediator = Domain.DID.fromString("did:prism:444444");
-                const routing = Domain.DID.fromString("did:prism:555555");
+                const host = SDK.Domain.DID.fromString("did:prism:333333");
+                const mediator = SDK.Domain.DID.fromString("did:prism:444444");
+                const routing = SDK.Domain.DID.fromString("did:prism:555555");
                 expect((await db.getAllMediators()).length).toBe(0);
                 await db.storeMediator(mediator, host, routing);
 
@@ -537,9 +538,9 @@ describe("Pluto encrypted testing with different storages", () => {
             });
 
             it(storageName + "Should go a backup of all the database and restore it", async ({ expect }) => {
-                const host = Domain.DID.fromString("did:prism:333333");
-                const mediator = Domain.DID.fromString("did:prism:444444");
-                const routing = Domain.DID.fromString("did:prism:555555");
+                const host = SDK.Domain.DID.fromString("did:prism:333333");
+                const mediator = SDK.Domain.DID.fromString("did:prism:444444");
+                const routing = SDK.Domain.DID.fromString("did:prism:555555");
                 expect((await db.getAllMediators()).length).toBe(0);
                 await db.storeMediator(mediator, host, routing);
                 expect((await db.getAllMediators()).length).toBe(1);
@@ -568,7 +569,7 @@ describe("Pluto encrypted testing with different storages", () => {
             });
 
             it(storageName + "Should throw an error when an incomplete did is loaded from db", async ({ expect }) => {
-                const did = Domain.DID.fromString("did:prism:65432133");
+                const did = SDK.Domain.DID.fromString("did:prism:65432133");
 
                 await (db as any).db.dids.insert({
                     did: did.toString(),
@@ -582,21 +583,21 @@ describe("Pluto encrypted testing with different storages", () => {
             });
 
             it(storageName + "Should get a privateKey by its ID", async ({ expect }) => {
-                const did = Domain.DID.fromString("did:prism:65432133");
+                const did = SDK.Domain.DID.fromString("did:prism:65432133");
 
                 await (db as any).db.privatekeys.insert({
                     id: "123",
                     did: did.toString(),
-                    type: Domain.KeyTypes.EC,
+                    type: SDK.Domain.KeyTypes.EC,
                     keySpecification: [
                         {
                             name: "curve",
-                            value: Domain.Curve.ED25519,
+                            value: SDK.Domain.Curve.ED25519,
                             type: "string",
                         },
                         {
                             name: "curve",
-                            value: Domain.Curve.ED25519,
+                            value: SDK.Domain.Curve.ED25519,
                             type: "string",
                         },
                         {
@@ -620,12 +621,12 @@ describe("Pluto encrypted testing with different storages", () => {
                 const jwtPayload = Fixtures.createJWTPayload(
                     "jwtid",
                     "proof",
-                    Domain.CredentialType.JWT
+                    SDK.Domain.CredentialType.JWT
                 );
                 const encoded = encodeJWTCredential(jwtPayload);
 
                 const result = await pollux.parseCredential(Buffer.from(encoded), {
-                    type: Domain.CredentialType.JWT,
+                    type: SDK.Domain.CredentialType.JWT,
                 });
                 await db.storeCredential(result);
                 const results = await db.getAllCredentials()

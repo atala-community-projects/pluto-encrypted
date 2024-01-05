@@ -1,7 +1,7 @@
 {
   "name": "@pluto-encrypted/encryption",
-  "version": "1.2.9",
-  "description": "Encryption layer for pluto encrypted database engines.",
+  "version": "1.5.0-rc.1",
+  "description": "Encryption layer for @pluto-encrypted/database storages.",
   "main": "./build/cjs/index.cjs",
   "module": "./build/esm/index.mjs",
   "types": "./build/index.d.ts",

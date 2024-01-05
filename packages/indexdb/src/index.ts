@@ -4,7 +4,6 @@
  * @description This is a RXDB IndexDB storage that supports encryption middleware.
  * In order to use this in your pluto-encrypted database you must write the following code:
  * Creating a IndexDB compatible storage is very simple.
- *
  * 
  * ```typescript
  * import IndexDB from "@pluto-encrypted/indexdb";

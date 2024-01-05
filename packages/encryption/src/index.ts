@@ -6,6 +6,7 @@
  * @examples In order to use this package in any RXDB environment type the following code.
  * Install the package with npm
  * 
+ * 
  * ```bash
  * npm i @pluto-encrypted/encryption --save
  * ```

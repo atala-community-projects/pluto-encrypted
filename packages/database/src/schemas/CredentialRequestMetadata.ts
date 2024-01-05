@@ -1,6 +1,4 @@
-import {
-  type Domain
-} from '@atala/prism-wallet-sdk'
+import SDK from '@atala/prism-wallet-sdk'
 import type { Schema } from '../types'
 import { type RxCollection, type RxDocument } from 'rxdb'
 
@@ -48,13 +46,13 @@ export type CredentialRequestMetadataDocument =
 export interface CredentialRequestMetadataMethodTypes {
   toDomainCredentialRequestMetadata: (
     this: CredentialRequestMetadataSchemaType
-  ) => Domain.Anoncreds.CredentialRequestMeta
+  ) => SDK.Domain.Anoncreds.CredentialRequestMeta
 }
 
 export const CredentialRequestMetadataMethods: CredentialRequestMetadataMethodTypes =
 {
   toDomainCredentialRequestMetadata:
-    function toDomainCredentialRequestMetadata (
+    function toDomainCredentialRequestMetadata(
       this: CredentialRequestMetadataSchemaType
     ) {
       return this
@@ -62,9 +60,9 @@ export const CredentialRequestMetadataMethods: CredentialRequestMetadataMethodTy
 }
 
 export type CredentialRequestMetadataCollection = RxCollection<
-CredentialRequestMetadataSchemaType,
-CredentialRequestMetadataMethodTypes,
-CredentialRequestMetadataDocument
+  CredentialRequestMetadataSchemaType,
+  CredentialRequestMetadataMethodTypes,
+  CredentialRequestMetadataDocument
 >
 
 export default CredentialRequestMetadataSchema
