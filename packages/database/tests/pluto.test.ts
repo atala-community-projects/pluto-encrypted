@@ -6,13 +6,14 @@ import path from 'path';
 import { randomUUID } from "crypto";
 import SDK from "@atala/prism-wallet-sdk";
 import * as sinon from "sinon";
-import { RxStorage } from "rxdb";
+import { RxCollection, RxStorage } from "rxdb";
 import InMemory from "../../inmemory/src";
 import IndexDb from "../../indexdb/src";
 import { createLevelDBStorage } from '../../leveldb/src'
 
 import * as Fixtures from "./fixtures";
-import { Database, PrivateKeyMethods } from "../src";
+import { Database, LinkSecretColletion, LinkSecretMethods, PrivateKeyMethods } from "../src";
+import LinkSecretSchema, { LinkSecretMethodTypes, LinkSecretSchemaType, LinkSecretStaticMethods } from "../src/schemas/LinkSecret";
 
 const {
     AnonCredsCredential,
@@ -950,6 +951,40 @@ describe("Pluto encrypted testing with different storages", () => {
                 expect(linkSecret).toBe("demo123")
 
             });
+
+            it(storageName + "Should allow anyone to add new models to the database", async ({ expect }) => {
+                const forceDatabaseName = `${databaseName}${randomUUID()}`
+
+                const db = await Database.createEncrypted<{
+                    demo: RxCollection<
+                        LinkSecretSchemaType,
+                        LinkSecretMethodTypes,
+                        { hola: (demo: boolean, demo2: boolean) => void }
+                    >
+                }>(
+                    {
+                        name: forceDatabaseName,
+                        encryptionKey: defaultPassword,
+                        storage,
+                        collections: {
+                            demo: {
+                                methods: LinkSecretMethods,
+                                schema: LinkSecretSchema,
+                                statics: {
+                                    hola: function (demo: boolean, demo2: boolean): void {
+                                        throw new Error('Function not implemented.')
+                                    }
+                                }
+                            }
+                        }
+                    }
+                );
+
+                expect(db.collections.demo).to.not.toBeUndefined();
+                expect(db.collections.demo.hola).to.not.toBeUndefined();
+
+
+            })
 
         });
     })

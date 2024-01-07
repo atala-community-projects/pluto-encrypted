@@ -1,6 +1,6 @@
 import SDK from '@atala/prism-wallet-sdk'
 import type { Schema } from '../types'
-import { type RxCollection, type RxDocument } from 'rxdb'
+import { KeyFunctionMap, type RxCollection, type RxDocument } from 'rxdb'
 
 export interface MessageSchemaType {
   readonly body: string
@@ -106,7 +106,7 @@ const MessageSchema: Schema<MessageSchemaType> = {
 }
 export type MessageDocument = RxDocument<MessageSchemaType, MessageMethodTypes>
 
-export interface MessageMethodTypes {
+export interface MessageMethodTypes extends KeyFunctionMap {
   toDomainMessage: (this: MessageDocument) => SDK.Domain.Message
 }
 

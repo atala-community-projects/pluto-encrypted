@@ -1,6 +1,6 @@
 import SDK from '@atala/prism-wallet-sdk'
 import type { Schema } from '../types'
-import { type RxCollection, type RxDocument } from 'rxdb'
+import { KeyFunctionMap, type RxCollection, type RxDocument } from 'rxdb'
 
 export interface CredentialSubjectType {
   type: string
@@ -70,7 +70,7 @@ const CredentialSchema: Schema<CredentialSchemaType> = {
 }
 
 export type CredentialDocument = RxDocument<CredentialSchemaType>
-export interface CredentialMethodTypes {
+export interface CredentialMethodTypes extends KeyFunctionMap {
   toDomainCredential: (this: CredentialSchemaType) => SDK.Domain.Credential
 }
 

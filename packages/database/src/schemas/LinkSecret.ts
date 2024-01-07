@@ -1,6 +1,6 @@
 import SDK from '@atala/prism-wallet-sdk'
 import type { Schema } from '../types'
-import { type RxCollection, type RxDocument } from 'rxdb'
+import { KeyFunctionMap, type RxCollection, type RxDocument } from 'rxdb'
 
 export interface LinkSecretSchemaType {
   readonly name: string
@@ -29,14 +29,18 @@ export type LinkSecretDocument = RxDocument<
   LinkSecretMethodTypes
 >
 
-export interface LinkSecretMethodTypes {
+export interface LinkSecretMethodTypes extends KeyFunctionMap {
   toDomainLinkSecret: (this: LinkSecretDocument) => SDK.Domain.Anoncreds.LinkSecret
+}
+
+export interface LinkSecretStaticMethodTypes extends KeyFunctionMap {
+  hola: (demo: boolean) => void
 }
 
 export type LinkSecretColletion = RxCollection<
   LinkSecretSchemaType,
   LinkSecretMethodTypes,
-  LinkSecretDocument
+  LinkSecretStaticMethodTypes
 >
 
 export const LinkSecretMethods: LinkSecretMethodTypes = {
@@ -44,4 +48,11 @@ export const LinkSecretMethods: LinkSecretMethodTypes = {
     return this.secret
   }
 }
+
+export const LinkSecretStaticMethods: LinkSecretStaticMethodTypes = {
+  hola: function (demo: boolean): void {
+    throw new Error('Function not implemented.')
+  }
+}
+
 export default LinkSecretSchema

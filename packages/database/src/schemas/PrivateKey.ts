@@ -1,6 +1,6 @@
 import SDK from '@atala/prism-wallet-sdk'
 import type { Schema } from '../types'
-import { type RxCollection, type RxDocument } from 'rxdb'
+import { KeyFunctionMap, type RxCollection, type RxDocument } from 'rxdb'
 
 
 export interface KeySpec {
@@ -53,7 +53,7 @@ const PrivateKeySchema: Schema<KeySchemaType> = {
   required: ['keySpecification', 'did', 'type', 'id']
 }
 
-export interface PrivateKeyMethodTypes {
+export interface PrivateKeyMethodTypes extends KeyFunctionMap {
   toDomainPrivateKey: (this: PrivateKeyDocument) => SDK.Domain.PrivateKey
 }
 export type PrivateKeyColletion = RxCollection<

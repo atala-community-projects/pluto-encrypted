@@ -1,4 +1,4 @@
-import { type RxCollection, type RxDocument } from 'rxdb'
+import { KeyFunctionMap, type RxCollection, type RxDocument } from 'rxdb'
 import type { Schema } from '../types'
 import SDK from '@atala/prism-wallet-sdk'
 
@@ -33,7 +33,7 @@ const MediatorSchema: Schema<MediatorSchemaType> = {
 }
 
 export type MediatorDocument = RxDocument<MediatorSchemaType>
-export interface MediatorMethodTypes {
+export interface MediatorMethodTypes extends KeyFunctionMap {
   toDomainMediator: (this: RxDocument<MediatorSchemaType, MediatorMethodTypes>) => SDK.Domain.Mediator
 }
 export type MediatorCollection = RxCollection<

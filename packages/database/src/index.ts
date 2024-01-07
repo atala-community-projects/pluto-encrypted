@@ -12,7 +12,9 @@ import {
   type RxStorage,
   addRxPlugin,
   createRxDatabase,
-  removeRxDatabase
+  removeRxDatabase,
+  CollectionsOfDatabase,
+  RxCollection
 } from 'rxdb'
 import { RxDBEncryptedMigrationPlugin } from '@pluto-encrypted/encryption'
 import { RxDBJsonDumpPlugin } from 'rxdb/plugins/json-dump'
@@ -59,15 +61,30 @@ export type * from './types'
 export type { Domain as WALLET_SDK_DOMAIN } from '@atala/prism-wallet-sdk'
 
 export type ValuesOf<T> = T[keyof T]
-export type PlutoDatabase = RxDatabase<PlutoCollections>
+export type DatabaseCreateOptions<CreatedCollections> = {
+  name: string
+  encryptionKey: Uint8Array
+  importData?: RxDumpDatabase<ExtendedCollections<CreatedCollections>>
+  storage: RxStorage<any, any>
+  autoStart?: boolean
+  collections?: {
+    [key in keyof CreatedCollections]: RxCollectionCreator<any>
+  }
+}
+export type DBOptions = RxDatabaseCreator;
+export type ExtendedCollections<T> = PlutoCollections & { [key in keyof T]: ValuesOf<T> }
+export type PlutoDatabase<Collections> = RxDatabase<ExtendedCollections<Collections>>
 
 /**
  * Pluto is a storage interface describing storage requirements of the edge agents
  * which will be implemented using this SDK. Implement this interface using your
  * preferred underlying storage technology, most appropriate for your use case.
  */
-export class Database implements SDK.Domain.Pluto {
-  private _db!: RxDatabase<PlutoCollections, any, any>
+export class Database<
+  Collections = CollectionsOfDatabase,
+> implements SDK.Domain.Pluto {
+
+  private _db!: PlutoDatabase<Collections>
 
   protected get db() {
     if (!this._db) {
@@ -76,7 +93,7 @@ export class Database implements SDK.Domain.Pluto {
     return this._db
   }
 
-  constructor(private readonly dbOptions: RxDatabaseCreator) {
+  constructor(private readonly dbOptions: DBOptions) {
     addRxPlugin(RxDBQueryBuilderPlugin)
     addRxPlugin(RxDBJsonDumpPlugin)
     addRxPlugin(RxDBEncryptedMigrationPlugin)
@@ -86,7 +103,7 @@ export class Database implements SDK.Domain.Pluto {
     return await this.db.exportJSON()
   }
 
-  get collections(): PlutoCollections {
+  get collections() {
     return this.db.collections
   }
 
@@ -359,35 +376,41 @@ export class Database implements SDK.Domain.Pluto {
   }
 
   /**
+   * Start the database and build collections
+   */
+  async start(collections?: {
+    [name: string]: RxCollectionCreator<any>
+  }): Promise<void> {
+    const { dbOptions } = this
+
+    const database = await createRxDatabase<ExtendedCollections<Collections>>({
+      ...dbOptions,
+      multiInstance: false
+    })
+
+    await database.addCollections({
+      ...this.getDefaultCollections(),
+      ...(collections)
+    });
+
+    this._db = database
+  }
+
+
+  /**
    * Creates a database instance.
    * @param options
    * @returns Database
    */
-  static async createEncrypted(
-    options: {
-      name: string
-      encryptionKey: Uint8Array
-      importData?: RxDumpDatabase<PlutoCollections>
-      storage: RxStorage<any, any>
-      autoStart?: boolean
-      collections?: Partial<{
-        messages: RxCollectionCreator<any>
-        dids: RxCollectionCreator<any>
-        didpairs: RxCollectionCreator<any>
-        mediators: RxCollectionCreator<any>
-        privatekeys: RxCollectionCreator<any>
-        credentials: RxCollectionCreator<any>
-        credentialrequestmetadatas: RxCollectionCreator<any>
-        linksecrets: RxCollectionCreator<any>
-      }>
-    }
+  static async createEncrypted<Collections = { [key: string]: RxCollection; }>(
+    options: DatabaseCreateOptions<Collections>
   ) {
     try {
       const { name, storage, encryptionKey, importData, autoStart = true, collections } = options
       if (!storage) {
         throw new Error('Please provide a valid storage.')
       }
-      const database = new Database({
+      const database = new Database<Collections>({
         ignoreDuplicate: true,
         name,
         storage,
@@ -483,7 +506,7 @@ export class Database implements SDK.Domain.Pluto {
     return messages.map((message) => message.toDomainMessage())
   }
 
-  private getDefaultCollections() {
+  private getDefaultCollections(): { [name: string]: RxCollectionCreator } {
     return {
       messages: {
         schema: MessageSchema,
@@ -516,34 +539,6 @@ export class Database implements SDK.Domain.Pluto {
         methods: LinkSecretMethods
       }
     }
-  }
-
-  /**
-   * Start the database and build collections
-   */
-  async start(collections?: Partial<{
-    messages: RxCollectionCreator<any>
-    dids: RxCollectionCreator<any>
-    didpairs: RxCollectionCreator<any>
-    mediators: RxCollectionCreator<any>
-    privatekeys: RxCollectionCreator<any>
-    credentials: RxCollectionCreator<any>
-    credentialrequestmetadatas: RxCollectionCreator<any>
-    linksecrets: RxCollectionCreator<any>
-  }>): Promise<void> {
-    const { dbOptions } = this
-
-    const database = await createRxDatabase<PlutoCollections>({
-      ...dbOptions,
-      multiInstance: false
-    })
-
-    await database.addCollections({
-      ...this.getDefaultCollections(),
-      ...(collections ?? {}) as any
-    })
-
-    this._db = database
   }
 
   /**
