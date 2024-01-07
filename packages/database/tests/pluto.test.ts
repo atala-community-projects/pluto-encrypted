@@ -12,8 +12,8 @@ import IndexDb from "../../indexdb/src";
 import { createLevelDBStorage } from '../../leveldb/src'
 
 import * as Fixtures from "./fixtures";
-import { Database, LinkSecretColletion, LinkSecretMethods, PrivateKeyMethods } from "../src";
-import LinkSecretSchema, { LinkSecretMethodTypes, LinkSecretSchemaType, LinkSecretStaticMethods } from "../src/schemas/LinkSecret";
+import { Database } from "../src";
+import { PrivateKeyMethods, LinkSecretSchemaType, LinkSecretMethodTypes, LinkSecretMethods, LinkSecretSchema } from "@pluto-encrypted/schemas";
 
 const {
     AnonCredsCredential,

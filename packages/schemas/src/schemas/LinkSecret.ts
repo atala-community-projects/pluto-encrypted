@@ -7,7 +7,7 @@ export interface LinkSecretSchemaType {
   readonly secret: string
 }
 
-const LinkSecretSchema: Schema<LinkSecretSchemaType> = {
+export const LinkSecretSchema: Schema<LinkSecretSchemaType> = {
   version: 0,
   primaryKey: 'name',
   type: 'object',
@@ -33,14 +33,9 @@ export interface LinkSecretMethodTypes extends KeyFunctionMap {
   toDomainLinkSecret: (this: LinkSecretDocument) => SDK.Domain.Anoncreds.LinkSecret
 }
 
-export interface LinkSecretStaticMethodTypes extends KeyFunctionMap {
-  hola: (demo: boolean) => void
-}
-
 export type LinkSecretColletion = RxCollection<
   LinkSecretSchemaType,
-  LinkSecretMethodTypes,
-  LinkSecretStaticMethodTypes
+  LinkSecretMethodTypes
 >
 
 export const LinkSecretMethods: LinkSecretMethodTypes = {
@@ -49,10 +44,5 @@ export const LinkSecretMethods: LinkSecretMethodTypes = {
   }
 }
 
-export const LinkSecretStaticMethods: LinkSecretStaticMethodTypes = {
-  hola: function (demo: boolean): void {
-    throw new Error('Function not implemented.')
-  }
-}
 
 export default LinkSecretSchema
