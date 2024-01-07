@@ -3,53 +3,42 @@
  * @module database
  */
 import SDK from '@atala/prism-wallet-sdk'
+import { RxDBEncryptedMigrationPlugin } from '@pluto-encrypted/encryption'
 import {
-  type MangoQuerySelector, type RxCollectionCreator,
-  type RxDatabase,
-  type RxDatabaseCreator,
-  type RxDumpDatabase,
-  type RxError,
-  type RxStorage,
+  CollectionsOfDatabase,
+  RxCollection,
   addRxPlugin,
   createRxDatabase,
   removeRxDatabase,
-  CollectionsOfDatabase,
-  RxCollection
+  type MangoQuerySelector, type RxCollectionCreator, type RxError
 } from 'rxdb'
-import { RxDBEncryptedMigrationPlugin } from '@pluto-encrypted/encryption'
 import { RxDBJsonDumpPlugin } from 'rxdb/plugins/json-dump'
 import { RxDBQueryBuilderPlugin } from 'rxdb/plugins/query-builder'
 import { v4 as uuidv4 } from 'uuid'
-import CredentialSchema, {
-  type CredentialCollection,
-  CredentialMethods
-} from './schemas/Credential'
-import CredentialRequestMetadataSchema, {
-  type CredentialRequestMetadataCollection,
-  CredentialRequestMetadataMethods
-} from './schemas/CredentialRequestMetadata'
-import DIDSchema, { type DIDCollection } from './schemas/DID'
-import DIDPairSchema, { type DIDPairCollection } from './schemas/DIDPair'
-import LinkSecretSchema, {
-  type LinkSecretColletion,
-  LinkSecretMethods
-} from './schemas/LinkSecret'
-import MediatorSchema, {
-  type MediatorCollection,
-  MediatorMethods
-} from './schemas/Mediator'
-import MessageSchema, {
-  type MessageColletion,
-  MessageMethods,
-  type MessageSchemaType
-} from './schemas/Message'
-import PrivateKeySchema, {
-  type KeySpec, type PrivateKeyColletion, type PrivateKeyDocument,
-  PrivateKeyMethods
-} from './schemas/PrivateKey'
-import { type PlutoCollections } from './types'
 import { getDefaultCollections } from './schemas'
+import {
+  type CredentialCollection
+} from './schemas/Credential'
+import {
+  type CredentialRequestMetadataCollection
+} from './schemas/CredentialRequestMetadata'
+import { type DIDCollection } from './schemas/DID'
+import { type DIDPairCollection } from './schemas/DIDPair'
+import {
+  type LinkSecretColletion
+} from './schemas/LinkSecret'
+import {
+  type MediatorCollection
+} from './schemas/Mediator'
+import {
+  type MessageColletion, type MessageSchemaType
+} from './schemas/Message'
+import {
+  type KeySpec, type PrivateKeyColletion, type PrivateKeyDocument
+} from './schemas/PrivateKey'
+import { DBOptions, DatabaseCreateOptions, ExtendedCollections, PlutoDatabase } from './types'
 
+export type { Domain as WALLET_SDK_DOMAIN } from '@atala/prism-wallet-sdk'
 export * from './schemas/Credential'
 export * from './schemas/CredentialRequestMetadata'
 export * from './schemas/DID'
@@ -59,22 +48,8 @@ export * from './schemas/Mediator'
 export * from './schemas/Message'
 export * from './schemas/PrivateKey'
 export type * from './types'
-export type { Domain as WALLET_SDK_DOMAIN } from '@atala/prism-wallet-sdk'
 
-export type ValuesOf<T> = T[keyof T]
-export type DatabaseCreateOptions<CreatedCollections> = {
-  name: string
-  encryptionKey: Uint8Array
-  importData?: RxDumpDatabase<ExtendedCollections<CreatedCollections>>
-  storage: RxStorage<any, any>
-  autoStart?: boolean
-  collections?: {
-    [key in keyof CreatedCollections]: RxCollectionCreator<any>
-  }
-}
-export type DBOptions = RxDatabaseCreator;
-export type ExtendedCollections<T> = PlutoCollections & { [key in keyof T]: ValuesOf<T> }
-export type PlutoDatabase<Collections> = RxDatabase<ExtendedCollections<Collections>>
+
 
 /**
  * Pluto is a storage interface describing storage requirements of the edge agents

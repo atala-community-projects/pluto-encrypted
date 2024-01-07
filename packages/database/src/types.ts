@@ -1,5 +1,5 @@
 import { type RxJsonSchema } from 'rxdb'
-import { type MangoQuery, type MangoQueryNoLimit, type RxCollection, type RxDocument, type RxDumpDatabase, type RxStorage } from 'rxdb/dist/types/types'
+import { RxCollectionCreator, RxDatabase, RxDatabaseCreator, type MangoQuery, type MangoQueryNoLimit, type RxCollection, type RxDocument, type RxDumpDatabase, type RxStorage } from 'rxdb/dist/types/types'
 import { type CredentialCollection } from './schemas/Credential'
 import { type CredentialRequestMetadataCollection } from './schemas/CredentialRequestMetadata'
 import { type DIDCollection } from './schemas/DID'
@@ -42,3 +42,18 @@ export interface createEncryptedOptions {
   importData?: RxDumpDatabase<PlutoCollections>
   storage: RxStorage<any, any>
 }
+
+export type ValuesOf<T> = T[keyof T]
+export type DatabaseCreateOptions<CreatedCollections> = {
+  name: string
+  encryptionKey: Uint8Array
+  importData?: RxDumpDatabase<ExtendedCollections<CreatedCollections>>
+  storage: RxStorage<any, any>
+  autoStart?: boolean
+  collections?: {
+    [key in keyof CreatedCollections]: RxCollectionCreator<any>
+  }
+}
+export type DBOptions = RxDatabaseCreator;
+export type ExtendedCollections<T> = PlutoCollections & { [key in keyof T]: ValuesOf<T> }
+export type PlutoDatabase<Collections> = RxDatabase<ExtendedCollections<Collections>>
