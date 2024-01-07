@@ -48,6 +48,7 @@ import PrivateKeySchema, {
   PrivateKeyMethods
 } from './schemas/PrivateKey'
 import { type PlutoCollections } from './types'
+import { getDefaultCollections } from './schemas'
 
 export * from './schemas/Credential'
 export * from './schemas/CredentialRequestMetadata'
@@ -388,10 +389,7 @@ export class Database<
       multiInstance: false
     })
 
-    await database.addCollections({
-      ...this.getDefaultCollections(),
-      ...(collections)
-    });
+    await database.addCollections(getDefaultCollections(collections));
 
     this._db = database
   }
@@ -504,41 +502,6 @@ export class Database<
   async getAllMessages(): Promise<SDK.Domain.Message[]> {
     const messages = await this.db.messages.find().exec()
     return messages.map((message) => message.toDomainMessage())
-  }
-
-  private getDefaultCollections(): { [name: string]: RxCollectionCreator } {
-    return {
-      messages: {
-        schema: MessageSchema,
-        methods: MessageMethods
-      },
-      dids: {
-        schema: DIDSchema
-      },
-      didpairs: {
-        schema: DIDPairSchema
-      },
-      mediators: {
-        schema: MediatorSchema,
-        methods: MediatorMethods
-      },
-      privatekeys: {
-        schema: PrivateKeySchema,
-        methods: PrivateKeyMethods
-      },
-      credentials: {
-        schema: CredentialSchema,
-        methods: CredentialMethods
-      },
-      credentialrequestmetadatas: {
-        schema: CredentialRequestMetadataSchema,
-        methods: CredentialRequestMetadataMethods
-      },
-      linksecrets: {
-        schema: LinkSecretSchema,
-        methods: LinkSecretMethods
-      }
-    }
   }
 
   /**
