@@ -15,38 +15,27 @@ import {
 import { RxDBJsonDumpPlugin } from 'rxdb/plugins/json-dump'
 import { RxDBQueryBuilderPlugin } from 'rxdb/plugins/query-builder'
 import { v4 as uuidv4 } from 'uuid'
-import { getDefaultCollections } from './schemas'
+
+import { DBOptions, DatabaseCreateOptions } from './types'
 import {
-  type CredentialCollection
-} from './schemas/Credential'
-import {
-  type CredentialRequestMetadataCollection
-} from './schemas/CredentialRequestMetadata'
-import { type DIDCollection } from './schemas/DID'
-import { type DIDPairCollection } from './schemas/DIDPair'
-import {
-  type LinkSecretColletion
-} from './schemas/LinkSecret'
-import {
-  type MediatorCollection
-} from './schemas/Mediator'
-import {
-  type MessageColletion, type MessageSchemaType
-} from './schemas/Message'
-import {
-  type KeySpec, type PrivateKeyColletion, type PrivateKeyDocument
-} from './schemas/PrivateKey'
-import { DBOptions, DatabaseCreateOptions, ExtendedCollections, PlutoDatabase } from './types'
+  CredentialCollection,
+  CredentialRequestMetadataCollection,
+  DIDCollection,
+  DIDPairCollection,
+  ExtendedCollections,
+  KeySpec,
+  LinkSecretColletion,
+  MediatorCollection,
+  MessageColletion,
+  MessageSchemaType,
+  PlutoDatabase,
+  PrivateKeyColletion,
+  PrivateKeyDocument
+} from '@pluto-encrypted/schemas'
+import { getDefaultCollections } from '@pluto-encrypted/schemas'
 
 export type { Domain as WALLET_SDK_DOMAIN } from '@atala/prism-wallet-sdk'
-export * from './schemas/Credential'
-export * from './schemas/CredentialRequestMetadata'
-export * from './schemas/DID'
-export * from './schemas/DIDPair'
-export * from './schemas/LinkSecret'
-export * from './schemas/Mediator'
-export * from './schemas/Message'
-export * from './schemas/PrivateKey'
+
 export type * from './types'
 
 
