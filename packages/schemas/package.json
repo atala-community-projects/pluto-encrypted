@@ -18,8 +18,7 @@
   "scripts": {
     "prepublishOnly": "npm run build",
     "clean-packages": "rm -rf node_modules && rm -rf build",
-    "build": "rm -rf build && npx rollup -c rollup/rollup.mjs",
-    "coverage": "npx vitest run --coverage && npx istanbul-badges-readme"
+    "build": "rm -rf build && npx rollup -c rollup/rollup.mjs"
   },
   "repository": {
     "type": "git",
