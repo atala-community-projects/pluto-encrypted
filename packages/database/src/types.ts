@@ -24,14 +24,4 @@ export interface createEncryptedOptions {
   storage: RxStorage<any, any>
 }
 
-export type DatabaseCreateOptions<CreatedCollections> = {
-  name: string
-  encryptionKey: Uint8Array
-  importData?: RxDumpDatabase<ExtendedCollections<CreatedCollections>>
-  storage: RxStorage<any, any>
-  autoStart?: boolean
-  collections?: {
-    [key in keyof CreatedCollections]: RxCollectionCreator<any>
-  }
-}
-export type DBOptions = RxDatabaseCreator;
+

@@ -45,13 +45,14 @@
     "@pluto-encrypted/indexdb": "1.9.4",
     "@pluto-encrypted/inmemory": "1.9.4",
     "@pluto-encrypted/leveldb": "1.9.4",
+    "@pluto-encrypted/schemas": "^0.0.0",
     "@vitest/coverage-v8": "^1.0.4",
     "level": "^6.0.1"
   },
   "dependencies": {
     "@atala/prism-wallet-sdk": "^4.0.0-rc.1",
     "@pluto-encrypted/encryption": "1.9.3",
-    "@pluto-encrypted/schemas": "0.0.0",
+    "@pluto-encrypted/schemas": "^0.0.0",
     "rxdb": "^14.17.0",
     "rxjs": "7.8.1",
     "uuid": "^9.0.1"

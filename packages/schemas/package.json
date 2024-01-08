@@ -31,10 +31,12 @@
     "@atala/prism-wallet-sdk": "^4.0.0-rc.1"
   },
   "devDependencies": {
+    "@pluto-encrypted/encryption": "^1.9.3",
     "@vitest/coverage-v8": "^1.0.4"
   },
   "dependencies": {
     "@atala/prism-wallet-sdk": "^4.0.0-rc.1",
+    "@pluto-encrypted/encryption": "^1.9.3",
     "rxdb": "^14.17.0",
     "rxjs": "7.8.1",
     "uuid": "^9.0.1"
