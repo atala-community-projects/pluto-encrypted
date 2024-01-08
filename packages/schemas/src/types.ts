@@ -22,16 +22,13 @@ import { CredentialRequestMetadataCollection } from "./schemas/credentialRequest
 
 import { MessageColletion } from "./schemas/message"
 import { PrivateKeyColletion } from "./schemas/privatekey"
-
-import {
-    DatabaseBase
-} from "."
-
+import { DatabaseBase, ExtendedCollections } from '@pluto-encrypted/shared'
 
 export type ValuesOf<T> = T[keyof T]
 export type Schema<T> = RxJsonSchema<T> & {
     encrypted: Array<keyof T>
 }
+
 export interface PlutoCollections {
     messages: MessageColletion
     dids: DIDCollection
@@ -42,21 +39,31 @@ export interface PlutoCollections {
     credentialrequestmetadatas: CredentialRequestMetadataCollection
     linksecrets: LinkSecretColletion
 }
-export type ExtendedCollections<T> = PlutoCollections & { [key in keyof T]: ValuesOf<T> }
-export type PlutoDatabase<Collections> = RxDatabase<ExtendedCollections<Collections>, any, any>
-export type DatabaseCreateOptions<CreatedCollections> = {
-    name: string
-    encryptionKey: Uint8Array
-    importData?: RxDumpDatabase<ExtendedCollections<CreatedCollections>>
-    storage: RxStorage<any, any>
-    autoStart?: boolean
-    collections?: {
-        [key in keyof CreatedCollections]: RxCollectionCreator<any>
-    }
+export interface PlutoCollectionsCreator {
+    messages: RxCollectionCreator
+    dids: RxCollectionCreator
+    didpairs: RxCollectionCreator
+    mediators: RxCollectionCreator
+    privatekeys: RxCollectionCreator
+    credentials: RxCollectionCreator
+    credentialrequestmetadatas: RxCollectionCreator
+    linksecrets: RxCollectionCreator
 }
+export type PlutoDatabase<Collections> = RxDatabase<ExtendedCollections<Collections>, any, any>;
+export type DatabaseCreateOptions<CreatedCollections> = {
+    name: string;
+    encryptionKey: Uint8Array;
+    importData?: RxDumpDatabase<ExtendedCollections<CreatedCollections>>;
+    storage: RxStorage<any, any>;
+    autoStart?: boolean;
+    withDefaultCollections: boolean;
+    collections?: {
+        [key in keyof CreatedCollections]: RxCollectionCreator<any>;
+    };
+};
 export type DBOptions = RxDatabaseCreator;
 export type PlutoInstance<
     Collections = CollectionsOfDatabase,
-> = DatabaseBase<Collections> & SDK.Domain.Pluto
+> = DatabaseBase<Collections & PlutoCollections> & SDK.Domain.Pluto
 
 export type StaticRxCollectionContext<Collections = { [name: string]: RxCollection }> = PlutoInstance<Collections>

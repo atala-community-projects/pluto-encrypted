@@ -13,6 +13,7 @@ export interface DIDSchemaType {
 }
 
 export type DIDDocument = RxDocument<DIDSchemaType>
+
 export interface DIDStaticMethodTypes extends KeyFunctionMap {
     getPrismLastKeyPathIndex(this: StaticRxCollectionContext<{ dids: DIDCollection }>): Promise<number>
     getPrismDIDKeyPathIndex(this: StaticRxCollectionContext<{ dids: DIDCollection }>, did: SDK.Domain.DID): Promise<number | null>

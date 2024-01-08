@@ -3,7 +3,8 @@
  * @module database
  */
 import SDK from '@atala/prism-wallet-sdk'
-import { DatabaseBase, DatabaseCreateOptions } from '@pluto-encrypted/schemas'
+import { DatabaseCreateOptions, PlutoCollections, getDefaultCollections } from '@pluto-encrypted/schemas'
+import { DatabaseBase } from '@pluto-encrypted/shared'
 import {
   CollectionsOfDatabase,
   RxCollection,
@@ -20,22 +21,33 @@ export type * from './types'
 export const Database = {
   createEncrypted: async function createEncrypted<
     Collections = CollectionsOfDatabase
-  >(options: DatabaseCreateOptions<Collections>): Promise<DatabaseBase<Collections> & SDK.Domain.Pluto> {
+  >(options: DatabaseCreateOptions<Collections & PlutoCollections>): Promise<DatabaseBase<Collections & PlutoCollections, PlutoCollections> & SDK.Domain.Pluto> {
     try {
-      const { name, storage, encryptionKey, importData, autoStart = true, collections } = options
+      const { name, storage, encryptionKey, importData, autoStart = true, collections, withDefaultCollections = true } = options
       if (!storage) {
         throw new Error('Please provide a valid storage.')
       }
 
-      const instance = new DatabaseBase<Collections>({
+      const instance = new DatabaseBase<Collections & PlutoCollections, PlutoCollections>({
         ignoreDuplicate: true,
         name,
         storage,
         password: Buffer.from(encryptionKey).toString('hex')
-      });
+      })
 
+      if (withDefaultCollections) {
+        instance.defaultCollections = getDefaultCollections()
+      }
 
-      const proxy = new Proxy<DatabaseBase<Collections> & SDK.Domain.Pluto>(instance as any, {
+      if (autoStart) {
+        await instance.start(collections)
+      }
+
+      if (importData) {
+        await instance.db.importJSON(importData)
+      }
+
+      const proxy = new Proxy<DatabaseBase<Collections & PlutoCollections, PlutoCollections> & SDK.Domain.Pluto>(instance as any, {
         get(target, prop) {
           const staticMethodModels = Object.keys(target.db.collections).reduce<Map<string, Function>>((statics, collectionName) => {
             const currentCollection: RxCollection = target.db.collections[collectionName];
@@ -64,13 +76,6 @@ export const Database = {
         },
       })
 
-      if (autoStart) {
-        await instance.start(collections)
-      }
-
-      if (importData) {
-        await instance.db.importJSON(importData)
-      }
 
       return proxy;
     } catch (err) {

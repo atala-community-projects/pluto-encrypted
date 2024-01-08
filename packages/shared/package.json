@@ -28,7 +28,8 @@
   "license": "Apache-2.0",
   "dependencies": {
     "rxdb": "^14.17.0",
-    "uuid": "^9.0.1"
+    "uuid": "^9.0.1",
+    "@pluto-encrypted/encryption": "1.9.3"
   },
   "files": [
     "build/*"
