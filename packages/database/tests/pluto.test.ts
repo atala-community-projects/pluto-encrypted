@@ -1007,6 +1007,90 @@ describe("Pluto encrypted testing with different storages", () => {
 
             })
 
+            it(storageName + "Should allow anyone to add new models to the database without using the same models", async ({ expect }) => {
+                const forceDatabaseName = `${databaseName}${randomUUID()}`
+
+                const db = await Database.createEncrypted<{
+                    demo: RxCollection<
+                        LinkSecretSchemaType,
+                        LinkSecretMethodTypes,
+                        { hola: (demo: boolean, demo2: boolean) => void }
+                    >
+                }>(
+                    {
+                        name: forceDatabaseName,
+                        encryptionKey: defaultPassword,
+                        storage,
+                        withDefaultCollections: false,
+                        collections: {
+                            demo: {
+                                methods: LinkSecretMethods,
+                                schema: LinkSecretSchema,
+                                statics: {
+                                    hola: function (demo: boolean, demo2: boolean): void {
+                                        throw new Error('Function not implemented.')
+                                    }
+                                }
+                            }
+                        }
+                    }
+                );
+
+                expect(db.db.collections.demo).to.not.toBeUndefined();
+                expect(db.db.collections.demo.hola).to.not.toBeUndefined();
+
+
+            })
+
+            it(storageName + "Should allow anyone to add new models to the database without using the same models", async ({ expect }) => {
+                const forceDatabaseName = `${databaseName}${randomUUID()}`
+
+
+                await expect(() => Database.createEncrypted<{
+                    demo: RxCollection<
+                        LinkSecretSchemaType,
+                        LinkSecretMethodTypes,
+                        { hola: (demo: boolean, demo2: boolean) => void }
+                    >,
+                    demo2: RxCollection<
+                        LinkSecretSchemaType,
+                        LinkSecretMethodTypes,
+                        { hola: (demo: boolean, demo2: boolean) => void }
+                    >
+                }>(
+                    {
+                        name: forceDatabaseName,
+                        encryptionKey: defaultPassword,
+                        storage,
+                        withDefaultCollections: false,
+                        collections: {
+                            demo: {
+                                methods: LinkSecretMethods,
+                                schema: LinkSecretSchema,
+                                statics: {
+                                    hola: function (demo: boolean, demo2: boolean): void {
+                                        throw new Error('Function not implemented.')
+                                    }
+                                }
+                            },
+                            demo2: {
+                                methods: LinkSecretMethods,
+                                schema: LinkSecretSchema,
+                                statics: {
+                                    hola: function (demo: boolean, demo2: boolean): void {
+                                        throw new Error('Function not implemented.')
+                                    }
+                                }
+                            }
+                        }
+                    }
+                )).rejects.toThrowError(new Error("Static function in model demo2.hola is duplicated, statics must be unique across al collections."));
+
+
+            })
+
+
+
         });
     })
 })

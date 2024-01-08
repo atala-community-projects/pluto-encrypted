@@ -52,13 +52,11 @@ export const Database = {
           const staticMethodModels = Object.keys(target.db.collections).reduce<Map<string, Function>>((statics, collectionName) => {
             const currentCollection: RxCollection = target.db.collections[collectionName];
             Object.keys(currentCollection.statics).forEach((staticName) => {
-              const func = currentCollection.statics[staticName];
+              const func = currentCollection.statics[staticName]!;
               if (statics.has(staticName)) {
                 throw new Error(`Static function in model ${collectionName}.${staticName} is duplicated, statics must be unique across al collections.`)
               }
-              if (func && typeof func === "function") {
-                statics.set(staticName, func)
-              }
+              statics.set(staticName, func)
             })
             return statics
           }, new Map<string, Function>())
