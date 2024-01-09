@@ -3,12 +3,15 @@
  * @module database
  */
 import SDK from '@atala/prism-wallet-sdk'
-import { DatabaseCreateOptions, PlutoCollections, getDefaultCollections } from '@pluto-encrypted/schemas'
-import { DatabaseBase } from '@pluto-encrypted/shared'
+import { PlutoCollections, getDefaultCollections } from '@pluto-encrypted/schemas'
+import { DatabaseBase, ExtendedCollections } from '@pluto-encrypted/shared'
 import {
   CollectionsOfDatabase,
   RxCollection,
-  RxError
+  RxCollectionCreator,
+  RxDumpDatabase,
+  RxError,
+  RxStorage
 } from 'rxdb'
 
 export type * from './types'
@@ -21,7 +24,17 @@ export type * from './types'
 export const Database = {
   createEncrypted: async function createEncrypted<
     Collections = CollectionsOfDatabase
-  >(options: DatabaseCreateOptions<Collections & PlutoCollections>): Promise<DatabaseBase<Collections & PlutoCollections, PlutoCollections> & SDK.Domain.Pluto> {
+  >(options: {
+    name: string;
+    encryptionKey: Uint8Array;
+    importData?: RxDumpDatabase<ExtendedCollections<Collections & PlutoCollections>>;
+    storage: RxStorage<any, any>;
+    autoStart?: boolean;
+    withDefaultCollections?: boolean;
+    collections?: {
+      [key in keyof Collections]: RxCollectionCreator<any>;
+    };
+  }): Promise<DatabaseBase<Collections & PlutoCollections, PlutoCollections> & SDK.Domain.Pluto> {
     try {
       const { name, storage, encryptionKey, importData, autoStart = true, collections, withDefaultCollections = true } = options
       if (!storage) {

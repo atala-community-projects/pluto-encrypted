@@ -50,17 +50,6 @@ export interface PlutoCollectionsCreator {
     linksecrets: RxCollectionCreator
 }
 export type PlutoDatabase<Collections> = RxDatabase<ExtendedCollections<Collections>, any, any>;
-export type DatabaseCreateOptions<CreatedCollections> = {
-    name: string;
-    encryptionKey: Uint8Array;
-    importData?: RxDumpDatabase<ExtendedCollections<CreatedCollections>>;
-    storage: RxStorage<any, any>;
-    autoStart?: boolean;
-    withDefaultCollections: boolean;
-    collections?: {
-        [key in keyof CreatedCollections]: RxCollectionCreator<any>;
-    };
-};
 export type DBOptions = RxDatabaseCreator;
 export type PlutoInstance<
     Collections = CollectionsOfDatabase,
