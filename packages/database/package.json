@@ -1,6 +1,6 @@
 {
   "name": "@pluto-encrypted/database",
-  "version": "2.0.0-rc.2",
+  "version": "2.0.0-rc.3",
   "description": "Encrypted database for Edge Wallet SDK that supports multiple db, IndexDB, LevelDB and InMemory",
   "main": "./build/cjs/index.cjs",
   "module": "./build/esm/index.mjs",
@@ -36,16 +36,16 @@
     "@atala/prism-wallet-sdk": "^4.0.0-rc.1"
   },
   "optionalDependencies": {
-    "@pluto-encrypted/indexdb": "2.0.0-rc.2",
-    "@pluto-encrypted/inmemory": "2.0.0-rc.2",
-    "@pluto-encrypted/leveldb": "2.0.0-rc.2"
+    "@pluto-encrypted/indexdb": "2.0.0-rc.3",
+    "@pluto-encrypted/inmemory": "2.0.0-rc.3",
+    "@pluto-encrypted/leveldb": "2.0.0-rc.3"
   },
   "devDependencies": {
     "@pluto-encrypted/encryption": "1.10.0-rc.1",
-    "@pluto-encrypted/indexdb": "2.0.0-rc.2",
-    "@pluto-encrypted/inmemory": "2.0.0-rc.2",
-    "@pluto-encrypted/leveldb": "2.0.0-rc.2",
-    "@pluto-encrypted/shared": "2.0.0-rc.2",
+    "@pluto-encrypted/indexdb": "2.0.0-rc.3",
+    "@pluto-encrypted/inmemory": "2.0.0-rc.3",
+    "@pluto-encrypted/leveldb": "2.0.0-rc.3",
+    "@pluto-encrypted/shared": "2.0.0-rc.3",
     "@pluto-encrypted/schemas": "^1.0.0-rc.1",
     "@vitest/coverage-v8": "^1.0.4",
     "level": "^6.0.1"
@@ -53,7 +53,7 @@
   "dependencies": {
     "@atala/prism-wallet-sdk": "^4.0.0-rc.1",
     "@pluto-encrypted/encryption": "1.10.0-rc.1",
-    "@pluto-encrypted/shared": "2.0.0-rc.2",
+    "@pluto-encrypted/shared": "2.0.0-rc.3",
     "@pluto-encrypted/schemas": "^1.0.0-rc.1",
     "rxdb": "^14.17.0",
     "rxjs": "7.8.1",
