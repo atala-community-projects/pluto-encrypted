@@ -1,11 +1,7 @@
 /**
  * @packageDocumentation
- * 
- * 
- * 
  * @module shared
  * @description Shared is used by other dependencies of pluto-encrypted to reduce code duplication.
- *
  */
 import { RxDBEncryptedMigrationPlugin } from '@pluto-encrypted/encryption'
 import { RxDBJsonDumpPlugin } from 'rxdb/plugins/json-dump'

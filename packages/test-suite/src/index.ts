@@ -1,5 +1,4 @@
 /**
- * 
  * @packageDocumentation
  * @module test-suite
  * @description This package can be used as a compliance test to validate a new storage created by you or the community.

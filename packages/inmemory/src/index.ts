@@ -1,5 +1,4 @@
 /**
- * 
  * @packageDocumentation
  * @module inmemory
  * @description This is a RXDB InMemory storage that supports encryption middleware.
