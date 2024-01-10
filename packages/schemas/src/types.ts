@@ -22,7 +22,7 @@ import { CredentialRequestMetadataCollection } from "./schemas/credentialRequest
 
 import { MessageColletion } from "./schemas/message"
 import { PrivateKeyColletion } from "./schemas/privatekey"
-import { DatabaseBase, ExtendedCollections } from '@pluto-encrypted/shared'
+import { DatabaseBase } from '@pluto-encrypted/shared'
 
 export type ValuesOf<T> = T[keyof T]
 export type Schema<T> = RxJsonSchema<T> & {
@@ -49,10 +49,9 @@ export interface PlutoCollectionsCreator {
     credentialrequestmetadatas: RxCollectionCreator
     linksecrets: RxCollectionCreator
 }
-export type PlutoDatabase<Collections> = RxDatabase<ExtendedCollections<Collections>, any, any>;
-export type DBOptions = RxDatabaseCreator;
+
 export type PlutoInstance<
     Collections = CollectionsOfDatabase,
 > = DatabaseBase<Collections & PlutoCollections> & SDK.Domain.Pluto
-
+export type DBOptions = RxDatabaseCreator;
 export type StaticRxCollectionContext<Collections = { [name: string]: RxCollection }> = PlutoInstance<Collections>

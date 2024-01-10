@@ -13,7 +13,7 @@ import { createLevelDBStorage } from '../../leveldb/src'
 
 import * as Fixtures from "./fixtures";
 import { Database } from "../src";
-import { PrivateKeyMethods, LinkSecretSchemaType, LinkSecretStaticMethodTypes, LinkSecretMethodTypes, LinkSecretMethods, LinkSecretSchema, PlutoInstance, LinkSecretStaticMethods, getDefaultCollections } from "@pluto-encrypted/schemas";
+import { PrivateKeyMethods, LinkSecretSchemaType, LinkSecretStaticMethodTypes, LinkSecretMethodTypes, LinkSecretMethods, LinkSecretSchema, LinkSecretStaticMethods, getDefaultCollections } from "@pluto-encrypted/schemas";
 
 const {
     AnonCredsCredential,
