@@ -1,6 +1,6 @@
 {
   "name": "@pluto-encrypted/schemas",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Provides the default schemas used in @pluto-encrypted/database",
   "main": "./build/cjs/index.cjs",
   "module": "./build/esm/index.mjs",
@@ -31,13 +31,13 @@
   },
   "devDependencies": {
     "@pluto-encrypted/encryption": "1.11.0",
-    "@pluto-encrypted/shared": "1.11.0",
+    "@pluto-encrypted/shared": "1.11.1",
     "@vitest/coverage-v8": "^1.0.4"
   },
   "dependencies": {
     "@atala/prism-wallet-sdk": "^4.0.0-rc.1",
     "@pluto-encrypted/encryption": "1.11.0",
-    "@pluto-encrypted/shared": "1.11.0",
+    "@pluto-encrypted/shared": "1.11.1",
     "rxdb": "^14.17.0",
     "rxjs": "7.8.1",
     "uuid": "^9.0.1"
