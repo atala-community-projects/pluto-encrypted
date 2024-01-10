@@ -135,9 +135,31 @@ jobs:
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v2
+        env:
+          GH_TOKEN: ${{ secrets.PLUTO_GITHUB }}
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          GIT_AUTHOR_NAME: ${{ secrets.GIT_AUTHOR_NAME }}
+          GIT_AUTHOR_EMAIL: ${{ secrets.GIT_AUTHOR_EMAIL }}
+          GIT_COMMITTER_NAME: ${{ secrets.GIT_COMMITTER_NAME }}
+          GIT_COMMITTER_EMAIL: ${{ secrets.GIT_COMMITTER_EMAIL }}
+          GITHUB_AUTHOR_NAME: ${{ secrets.GIT_AUTHOR_NAME }}
+          GITHUB_AUTHOR_EMAIL: ${{ secrets.GIT_AUTHOR_EMAIL }}
+          GITHUB_COMMITER_NAME: ${{ secrets.GIT_COMMITTER_NAME }}
+          GITHUB_COMMITER_EMAIL: ${{ secrets.GIT_COMMITTER_EMAIL }}
         with:
           path: './docs-html'
 
       - name: Deploy to GitHub Pages
+        env:
+          GH_TOKEN: ${{ secrets.PLUTO_GITHUB }}
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          GIT_AUTHOR_NAME: ${{ secrets.GIT_AUTHOR_NAME }}
+          GIT_AUTHOR_EMAIL: ${{ secrets.GIT_AUTHOR_EMAIL }}
+          GIT_COMMITTER_NAME: ${{ secrets.GIT_COMMITTER_NAME }}
+          GIT_COMMITTER_EMAIL: ${{ secrets.GIT_COMMITTER_EMAIL }}
+          GITHUB_AUTHOR_NAME: ${{ secrets.GIT_AUTHOR_NAME }}
+          GITHUB_AUTHOR_EMAIL: ${{ secrets.GIT_AUTHOR_EMAIL }}
+          GITHUB_COMMITER_NAME: ${{ secrets.GIT_COMMITTER_NAME }}
+          GITHUB_COMMITER_EMAIL: ${{ secrets.GIT_COMMITTER_EMAIL }}
         id: deployment
         uses: actions/deploy-pages@v3
