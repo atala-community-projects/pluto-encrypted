@@ -6,13 +6,14 @@ import path from 'path';
 import { randomUUID } from "crypto";
 import SDK from "@atala/prism-wallet-sdk";
 import * as sinon from "sinon";
-import { RxStorage } from "rxdb";
+import { RxCollection, RxStorage } from "rxdb";
 import InMemory from "../../inmemory/src";
 import IndexDb from "../../indexdb/src";
 import { createLevelDBStorage } from '../../leveldb/src'
 
 import * as Fixtures from "./fixtures";
-import { Database, PrivateKeyMethods } from "../src";
+import { Database } from "../src";
+import { PrivateKeyMethods, LinkSecretSchemaType, LinkSecretStaticMethodTypes, LinkSecretMethodTypes, LinkSecretMethods, LinkSecretSchema, PlutoInstance, LinkSecretStaticMethods, getDefaultCollections } from "@pluto-encrypted/schemas";
 
 const {
     AnonCredsCredential,
@@ -76,7 +77,7 @@ function getStorageDBName(storage: RxStorage<any, any>) {
 }
 
 describe("Pluto encrypted testing with different storages", () => {
-    let db: Database;
+    let db: Awaited<ReturnType<typeof Database.createEncrypted>>;
     let currentDBName: string;
 
     afterEach(async () => {
@@ -101,6 +102,7 @@ describe("Pluto encrypted testing with different storages", () => {
                         name: forceDatabaseName,
                         encryptionKey: password,
                         storage: storage,
+                        collections: getDefaultCollections()
                     }
                 );
                 await db.getAllPrismDIDs()
@@ -108,7 +110,7 @@ describe("Pluto encrypted testing with different storages", () => {
                     "did:prism:733e594871d7700d35e6116011a08fc11e88ff9d366d8b5571ffc1aa18d249ea:Ct8BCtwBEnQKH2F1dGhlbnRpY2F0aW9uYXV0aGVudGljYXRpb25LZXkQBEJPCglzZWNwMjU2azESIDS5zeYUkLCSAJLI6aLXRTPRxstCLPUEI6TgBrAVCHkwGiDk-ffklrHIFW7pKkT8i-YksXi-XXi5h31czUMaVClcpxJkCg9tYXN0ZXJtYXN0ZXJLZXkQAUJPCglzZWNwMjU2azESIDS5zeYUkLCSAJLI6aLXRTPRxstCLPUEI6TgBrAVCHkwGiDk-ffklrHIFW7pKkT8i-YksXi-XXi5h31czUMaVClcpw"
                 );
                 const privateKey = Fixtures.secp256K1.privateKey;
-                await db.storePrismDID(did, 0, privateKey);
+                await db.storePrismDID(did, 0, privateKey, null);
             }
 
             await createDatabase(defaultPassword);
@@ -131,6 +133,7 @@ describe("Pluto encrypted testing with different storages", () => {
                         name: currentDBName,
                         encryptionKey: defaultPassword,
                         storage: storage,
+                        collections: getDefaultCollections()
                     }
                 );
             });
@@ -148,7 +151,8 @@ describe("Pluto encrypted testing with different storages", () => {
                             name: currentDBName,
                             encryptionKey: defaultPassword,
                             storage: storage,
-                            autoStart: false
+                            autoStart: false,
+                            collections: getDefaultCollections()
                         }
                     );
                     await restored.getAllMediators()
@@ -164,7 +168,8 @@ describe("Pluto encrypted testing with different storages", () => {
                             name: currentDBName,
                             encryptionKey: defaultPassword,
                             storage: undefined as any,
-                            autoStart: false
+                            autoStart: false,
+                            collections: getDefaultCollections()
                         }
                     );
                 }
@@ -184,12 +189,12 @@ describe("Pluto encrypted testing with different storages", () => {
                     "did:prism:733e594871d7700d35e6116011a08fc11e88ff9d366d8b5571ffc1aa18d249ea:Ct8BCtwBEnQKH2F1dGhlbnRpY2F0aW9uYXV0aGVudGljYXRpb25LZXkQBEJPCglzZWNwMjU2azESIDS5zeYUkLCSAJLI6aLXRTPRxstCLPUEI6TgBrAVCHkwGiDk-ffklrHIFW7pKkT8i-YksXi-XXi5h31czUMaVClcpxJkCg9tYXN0ZXJtYXN0ZXJLZXkQAUJPCglzZWNwMjU2azESIDS5zeYUkLCSAJLI6aLXRTPRxstCLPUEI6TgBrAVCHkwGiDk-ffklrHIFW7pKkT8i-YksXi-XXi5h31czUMaVClcpw2"
                 );
                 const privateKey = Fixtures.secp256K1.privateKey;
-                await db.storePrismDID(did, 0, privateKey);
+                await db.storePrismDID(did, 0, privateKey, null);
                 expect((await db.getAllPrismDIDs()).length).toBe(1);
                 expect(await db.getDIDInfoByDID(did)).not.toBe(null);
                 expect(await db.getPrismDIDKeyPathIndex(did)).toBe(0);
                 expect(await db.getPrismLastKeyPathIndex()).toBe(0);
-                await db.storePrismDID(did2, 1, privateKey);
+                await db.storePrismDID(did2, 1, privateKey, null);
                 expect(await db.getPrismDIDKeyPathIndex(did2)).toBe(1);
                 expect(await db.getPrismLastKeyPathIndex()).toBe(1);
                 expect(await db.getPrismDIDKeyPathIndex(did3)).toBe(null);
@@ -562,6 +567,7 @@ describe("Pluto encrypted testing with different storages", () => {
                         encryptionKey: defaultPassword,
                         importData: backup,
                         storage: storage,
+                        collections: getDefaultCollections()
                     }
                 );
 
@@ -705,36 +711,36 @@ describe("Pluto encrypted testing with different storages", () => {
             });
 
             it(storageName + "Should be able to request models from database", async ({ expect }) => {
-                const collectionNames = Object.keys(db.collections);
+                const collectionNames = Object.keys(db.db.collections);
                 for (let collectionName of collectionNames) {
-                    const collection = db[collectionName];
+                    const collection = db.db.collections[collectionName];
                     expect(collection).not.undefined
                 }
 
             })
 
             it(storageName + "Should be able to request count orm method on all models", async ({ expect }) => {
-                const collectionNames = Object.keys(db.collections);
+                const collectionNames = Object.keys(db.db.collections);
                 for (let collectionName of collectionNames) {
-                    const collection = db[collectionName];
+                    const collection = db.db.collections[collectionName];
                     const count = await collection.count().exec();
                     expect(count).toBe(0)
                 }
             })
 
             it(storageName + "Should be able to request findByIds orm method on all models", async ({ expect }) => {
-                const collectionNames = Object.keys(db.collections);
+                const collectionNames = Object.keys(db.db.collections);
                 for (let collectionName of collectionNames) {
-                    const collection = db[collectionName];
+                    const collection = db.db.collections[collectionName];
                     const count = await collection.findByIds([]).exec();
                     expect(count.size).toBe(0)
                 }
             })
 
             it(storageName + "Should be able to request find orm method on all models", async ({ expect }) => {
-                const collectionNames = Object.keys(db.collections);
+                const collectionNames = Object.keys(db.db.collections);
                 for (let collectionName of collectionNames) {
-                    const collection = db[collectionName];
+                    const collection = db.db.collections[collectionName];
                     const results = await collection.find().exec();
                     expect(results.length).toBe(0)
                 }
@@ -753,7 +759,7 @@ describe("Pluto encrypted testing with different storages", () => {
                 result.recoveryId = "demo";
                 await db.storeCredential(result);
 
-                const storedCredential = await db.credentials.findOne({
+                const storedCredential = await db.db.collections.credentials.findOne({
                     selector: {
                         recoveryId: {
                             $eq: result.recoveryId
@@ -773,17 +779,25 @@ describe("Pluto encrypted testing with different storages", () => {
                         name: forceDatabaseName,
                         encryptionKey: defaultPassword,
                         storage,
+                        collections: getDefaultCollections()
                     }
                 );
 
                 await db.storeLinkSecret("demo123", "demo321");
 
-                const migrationDB = await Database.createEncrypted(
+                const migrationDB = await Database.createEncrypted<{
+                    linksecrets: RxCollection<
+                        LinkSecretSchemaType,
+                        LinkSecretMethodTypes,
+                        LinkSecretStaticMethodTypes
+                    >
+                }>(
                     {
                         name: forceDatabaseName,
                         encryptionKey: defaultPassword,
                         storage,
                         collections: {
+                            ...(getDefaultCollections()),
                             linksecrets: {
                                 methods: {
                                     toDomainLinkSecret: function toDomainLinkSecret(this: any) {
@@ -813,7 +827,8 @@ describe("Pluto encrypted testing with different storages", () => {
                                         delete oldDoc.secret
                                         return oldDoc;
                                     }
-                                }
+                                },
+                                statics: LinkSecretStaticMethods
                             }
                         }
                     }
@@ -832,23 +847,32 @@ describe("Pluto encrypted testing with different storages", () => {
                         name: forceDatabaseName,
                         encryptionKey: defaultPassword,
                         storage,
+                        collections: getDefaultCollections()
                     }
                 );
 
                 await db.storeLinkSecret("demo123", "demo321");
 
-                const migrationDB = await Database.createEncrypted(
+                const migrationDB = await Database.createEncrypted<{
+                    linksecrets: RxCollection<
+                        LinkSecretSchemaType,
+                        LinkSecretMethodTypes,
+                        LinkSecretStaticMethodTypes
+                    >
+                }>(
                     {
                         name: forceDatabaseName,
                         encryptionKey: defaultPassword,
                         storage,
                         collections: {
+                            ...(getDefaultCollections()),
                             linksecrets: {
                                 methods: {
                                     toDomainLinkSecret: function toDomainLinkSecret(this: any) {
                                         return this.secreto;
                                     },
                                 },
+                                statics: LinkSecretStaticMethods,
                                 schema: {
                                     version: 1,
                                     primaryKey: "name2",
@@ -893,23 +917,32 @@ describe("Pluto encrypted testing with different storages", () => {
                         name: forceDatabaseName,
                         encryptionKey: defaultPassword,
                         storage,
+                        collections: getDefaultCollections()
                     }
                 );
 
                 await db.storeLinkSecret("demo123", "demo321");
 
-                const migrationDB = await Database.createEncrypted(
+                const migrationDB = await Database.createEncrypted<{
+                    linksecrets: RxCollection<
+                        LinkSecretSchemaType,
+                        LinkSecretMethodTypes,
+                        LinkSecretStaticMethodTypes
+                    >
+                }>(
                     {
                         name: forceDatabaseName,
                         encryptionKey: defaultPassword,
                         storage,
                         collections: {
+                            ...(getDefaultCollections()),
                             linksecrets: {
                                 methods: {
                                     toDomainLinkSecret: function toDomainLinkSecret(this: any) {
                                         return this.secreto;
                                     },
                                 },
+                                statics: LinkSecretStaticMethods,
                                 schema: {
                                     version: 2,
                                     primaryKey: "test",
@@ -950,6 +983,154 @@ describe("Pluto encrypted testing with different storages", () => {
                 expect(linkSecret).toBe("demo123")
 
             });
+
+            it(storageName + "Should allow anyone to add new models to the database", async ({ expect }) => {
+                const forceDatabaseName = `${databaseName}${randomUUID()}`
+
+                const db = await Database.createEncrypted<{
+                    demo: RxCollection<
+                        LinkSecretSchemaType,
+                        LinkSecretMethodTypes,
+                        { hola: (demo: boolean, demo2: boolean) => void }
+                    >
+                }>(
+                    {
+                        name: forceDatabaseName,
+                        encryptionKey: defaultPassword,
+                        storage,
+                        collections: {
+                            ...(getDefaultCollections()),
+                            demo: {
+                                methods: LinkSecretMethods,
+                                schema: LinkSecretSchema,
+                                statics: {
+                                    hola: function (demo: boolean, demo2: boolean): void {
+                                        throw new Error('Function not implemented.')
+                                    }
+                                }
+                            }
+                        }
+                    }
+                );
+                expect(db.db.collections.credentials).to.not.toBeUndefined();
+                expect(db.db.collections.demo).to.not.toBeUndefined();
+                expect(db.db.collections.demo.hola).to.not.toBeUndefined();
+
+            })
+
+            // it(storageName + "Should allow anyone to add new models to the database without using the same models", async ({ expect }) => {
+            //     const forceDatabaseName = `${databaseName}${randomUUID()}`
+
+            //     const db = await Database.createBaseEncrypted<{
+            //         demo: RxCollection<
+            //             LinkSecretSchemaType,
+            //             LinkSecretMethodTypes,
+            //             { hola: (demo: boolean, demo2: boolean) => void }
+            //         >
+            //     }>(
+            //         {
+            //             name: forceDatabaseName,
+            //             encryptionKey: defaultPassword,
+            //             storage,
+            //             collections: {
+            //                 demo: {
+            //                     methods: LinkSecretMethods,
+            //                     schema: LinkSecretSchema,
+            //                     statics: {
+            //                         hola: function (demo: boolean, demo2: boolean): void {
+            //                             throw new Error('Function not implemented.')
+            //                         }
+            //                     }
+            //                 }
+            //             }
+            //         }
+            //     );
+
+            //     expect(db.db.collections.demo).to.not.toBeUndefined();
+            //     expect(db.db.collections.demo.hola).to.not.toBeUndefined();
+
+
+            // })
+
+            // it(storageName + "Should allow anyone to add new models to the database without using the same models", async ({ expect }) => {
+            //     const forceDatabaseName = `${databaseName}${randomUUID()}`
+
+
+            //     await expect(() => Database.createBaseEncrypted<{
+            //         demo: RxCollection<
+            //             LinkSecretSchemaType,
+            //             LinkSecretMethodTypes,
+            //             { hola: (demo: boolean, demo2: boolean) => void }
+            //         >,
+            //         demo2: RxCollection<
+            //             LinkSecretSchemaType,
+            //             LinkSecretMethodTypes,
+            //             { hola: (demo: boolean, demo2: boolean) => void }
+            //         >
+            //     }>(
+            //         {
+            //             name: forceDatabaseName,
+            //             encryptionKey: defaultPassword,
+            //             storage,
+            //             collections: {
+            //                 demo: {
+            //                     methods: LinkSecretMethods,
+            //                     schema: LinkSecretSchema,
+            //                     statics: {
+            //                         hola: function (demo: boolean, demo2: boolean): void {
+            //                             throw new Error('Function not implemented.')
+            //                         }
+            //                     }
+            //                 },
+            //                 demo2: {
+            //                     methods: LinkSecretMethods,
+            //                     schema: LinkSecretSchema,
+            //                     statics: {
+            //                         hola: function (demo: boolean, demo2: boolean): void {
+            //                             throw new Error('Function not implemented.')
+            //                         }
+            //                     }
+            //                 }
+            //             }
+            //         }
+            //     )).rejects.toThrowError(new Error("Static function in model demo2.hola is duplicated, statics must be unique across al collections."));
+
+
+            // })
+
+            // it(storageName + "Should allow anyone to add new models to the database without using the same models and the defaultModels won't be available", async ({ expect }) => {
+            //     const forceDatabaseName = `${databaseName}${randomUUID()}`
+
+            //     const db = await Database.createBaseEncrypted<{
+            //         demo: RxCollection<
+            //             LinkSecretSchemaType,
+            //             LinkSecretMethodTypes,
+            //             { hola: (demo: boolean, demo2: boolean) => void }
+            //         >
+            //     }>(
+            //         {
+            //             name: forceDatabaseName,
+            //             encryptionKey: defaultPassword,
+            //             storage,
+            //             collections: {
+            //                 demo: {
+            //                     methods: LinkSecretMethods,
+            //                     schema: LinkSecretSchema,
+            //                     statics: {
+            //                         hola: function (demo: boolean, demo2: boolean): void {
+            //                             throw new Error('Function not implemented.')
+            //                         }
+            //                     }
+            //                 }
+            //             }
+            //         }
+            //     );
+
+            //     expect((db.db.collections as any).credentials).toBeUndefined()
+            //     expect(db.db.collections.demo).to.not.toBeUndefined();
+            //     expect(db.db.collections.demo.hola).to.not.toBeUndefined();
+
+            // })
 
         });
     })

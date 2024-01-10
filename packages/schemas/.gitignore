@@ -1,0 +1,10 @@
+node_modules
+junit.xml
+lcov.info
+build
+.npmrc
+
+coverage/**/*.html
+coverage/**/*.css
+coverage/**/*.js
+coverage/**/*.png

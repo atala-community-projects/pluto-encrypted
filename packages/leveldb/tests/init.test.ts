@@ -8,6 +8,7 @@ import { runTestSuite } from '@pluto-encrypted/test-suite';
 
 import { createLevelDBStorage } from '../src'
 import { Database } from "../../database/src";
+import { getDefaultCollections } from "@pluto-encrypted/schemas";
 
 const keyData = new Uint8Array(32);
 
@@ -30,6 +31,7 @@ describe("Testing suite", () => {
         storage: createLevelDBStorage({
           dbPath: "./db1"
         }),
+        collections: getDefaultCollections()
       }
     );
 
@@ -42,6 +44,7 @@ describe("Testing suite", () => {
         storage: createLevelDBStorage({
           dbPath: "./db2"
         }),
+        collections: getDefaultCollections()
       }
     );
 
