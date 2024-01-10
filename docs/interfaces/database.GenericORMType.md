@@ -49,7 +49,7 @@
 
 #### Defined in
 
-[packages/database/src/types.ts:21](https://github.com/atala-community-projects/pluto-encrypted/blob/12959ad3/packages/database/src/types.ts#L21)
+[packages/database/src/types.ts:11](https://github.com/atala-community-projects/pluto-encrypted/blob/879549ef/packages/database/src/types.ts#L11)
 
 ___
 
@@ -73,7 +73,7 @@ ___
 
 #### Defined in
 
-[packages/database/src/types.ts:23](https://github.com/atala-community-projects/pluto-encrypted/blob/12959ad3/packages/database/src/types.ts#L23)
+[packages/database/src/types.ts:13](https://github.com/atala-community-projects/pluto-encrypted/blob/879549ef/packages/database/src/types.ts#L13)
 
 ___
 
@@ -98,7 +98,7 @@ ___
 
 #### Defined in
 
-[packages/database/src/types.ts:22](https://github.com/atala-community-projects/pluto-encrypted/blob/12959ad3/packages/database/src/types.ts#L22)
+[packages/database/src/types.ts:12](https://github.com/atala-community-projects/pluto-encrypted/blob/879549ef/packages/database/src/types.ts#L12)
 
 ___
 
@@ -122,7 +122,7 @@ ___
 
 #### Defined in
 
-[packages/database/src/types.ts:24](https://github.com/atala-community-projects/pluto-encrypted/blob/12959ad3/packages/database/src/types.ts#L24)
+[packages/database/src/types.ts:14](https://github.com/atala-community-projects/pluto-encrypted/blob/879549ef/packages/database/src/types.ts#L14)
 
 ___
 
@@ -146,4 +146,4 @@ ___
 
 #### Defined in
 
-[packages/database/src/types.ts:25](https://github.com/atala-community-projects/pluto-encrypted/blob/12959ad3/packages/database/src/types.ts#L25)
+[packages/database/src/types.ts:15](https://github.com/atala-community-projects/pluto-encrypted/blob/879549ef/packages/database/src/types.ts#L15)

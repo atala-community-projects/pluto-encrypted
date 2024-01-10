@@ -21,17 +21,17 @@
 
 #### Defined in
 
-[packages/database/src/types.ts:41](https://github.com/atala-community-projects/pluto-encrypted/blob/12959ad3/packages/database/src/types.ts#L41)
+[packages/database/src/types.ts:21](https://github.com/atala-community-projects/pluto-encrypted/blob/879549ef/packages/database/src/types.ts#L21)
 
 ___
 
 ### importData
 
-• `Optional` **importData**: `RxDumpDatabase`\<[`PlutoCollections`](database.PlutoCollections.md)\>
+• `Optional` **importData**: `RxDumpDatabase`\<`PlutoCollections`\>
 
 #### Defined in
 
-[packages/database/src/types.ts:42](https://github.com/atala-community-projects/pluto-encrypted/blob/12959ad3/packages/database/src/types.ts#L42)
+[packages/database/src/types.ts:22](https://github.com/atala-community-projects/pluto-encrypted/blob/879549ef/packages/database/src/types.ts#L22)
 
 ___
 
@@ -41,7 +41,7 @@ ___
 
 #### Defined in
 
-[packages/database/src/types.ts:40](https://github.com/atala-community-projects/pluto-encrypted/blob/12959ad3/packages/database/src/types.ts#L40)
+[packages/database/src/types.ts:20](https://github.com/atala-community-projects/pluto-encrypted/blob/879549ef/packages/database/src/types.ts#L20)
 
 ___
 
@@ -51,4 +51,4 @@ ___
 
 #### Defined in
 
-[packages/database/src/types.ts:43](https://github.com/atala-community-projects/pluto-encrypted/blob/12959ad3/packages/database/src/types.ts#L43)
+[packages/database/src/types.ts:23](https://github.com/atala-community-projects/pluto-encrypted/blob/879549ef/packages/database/src/types.ts#L23)
