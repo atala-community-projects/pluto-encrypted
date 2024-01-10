@@ -5,7 +5,7 @@
  */
 import SDK from '@atala/prism-wallet-sdk'
 import { getDefaultCollections } from '@pluto-encrypted/schemas'
-import { DatabaseBase } from '@pluto-encrypted/shared'
+import { DatabaseBase, ValuesOf } from '@pluto-encrypted/shared'
 import {
   CollectionsOfDatabase,
   RxCollection,
@@ -16,6 +16,8 @@ import {
 } from 'rxdb'
 
 export type * from './types'
+
+type ExtractDTcol2<P> = P extends RxCollectionCreator<infer T> ? T : any
 
 /**
  * Pluto is a storage interface describing storage requirements of the edge agents
@@ -68,26 +70,50 @@ export const Database = {
   },
   createEncrypted: async function createEncrypted<
     Collections extends CollectionsOfDatabase,
-    ExtendedCollections extends CollectionsOfDatabase = Collections & ReturnType<typeof getDefaultCollections>
+    ExtendedCollections extends CollectionsOfDatabase = Collections & { [key in keyof ReturnType<typeof getDefaultCollections>]: RxCollection<ExtractDTcol2<ValuesOf<typeof getDefaultCollections>[key]>> },
+    STATIC_RETURN = ExtendedCollections[keyof ExtendedCollections]['statics']
   >(options: {
     name: string;
     encryptionKey: Uint8Array;
     importData?: RxDumpDatabase<ExtendedCollections>;
     storage: RxStorage<any, any>;
     autoStart?: boolean;
+    withDefaultCollections?: boolean;
     collections?: {
-      [key in keyof (ExtendedCollections)]: RxCollectionCreator<any>;
+      [key in keyof Collections]: RxCollectionCreator<any>;
     };
-  }): Promise<DatabaseBase<ExtendedCollections> & SDK.Domain.Pluto> {
+  }): Promise<DatabaseBase<ExtendedCollections> & SDK.Domain.Pluto & STATIC_RETURN> {
     try {
+      const { withDefaultCollections = true, collections } = options;
+      const collectionMap = new Map<any, RxCollectionCreator<any>>();
+
+      if (withDefaultCollections) {
+        const defaultCollections = getDefaultCollections()
+        Object.keys(getDefaultCollections()).forEach((collectionName) => {
+          const currentCollection = defaultCollections[collectionName];
+          if (currentCollection) {
+            collectionMap.set(collectionName, currentCollection)
+          }
+        });
+      }
+
+      if (collections) {
+        Object.keys(collections).forEach((collectionName) => {
+          const currentCollection = collections[collectionName];
+          if (currentCollection) {
+            collectionMap.set(collectionName, currentCollection)
+          }
+        })
+      }
+
 
       const instance = await this.createBaseEncrypted<ExtendedCollections>({
-        ...options
-      })
+        ...options,
+        collections: Object.fromEntries(collectionMap)
+      });
 
       const currentCollections = instance.db.collections;
       const collectionKeys = Object.keys(currentCollections)
-
       const staticMethodModels = collectionKeys.reduce<Map<string, Function>>((statics, collectionName) => {
         const currentCollection: RxCollection = instance.getCollection(collectionName);
         Object.keys(currentCollection.statics).forEach((staticName) => {
@@ -100,18 +126,20 @@ export const Database = {
         return statics
       }, new Map<string, Function>());
 
-      const proxy = new Proxy<DatabaseBase<ExtendedCollections> & SDK.Domain.Pluto>(instance as any, {
-        get(target, prop) {
-          if (typeof target[prop] === 'function') {
+      const proxy = new Proxy<DatabaseBase<ExtendedCollections> & SDK.Domain.Pluto & STATIC_RETURN>(instance as any, {
+        get(target, propAny) {
+          const prop = String(propAny)
+          const destination = target[prop]
+          if (typeof destination === 'function') {
             // If the property is a function, return a function that calls it
             return function (...args) {
-              return target[prop].apply(target, args);
+              return destination.apply(target, args);
             };
           } else {
             if (staticMethodModels.has(prop.toString())) {
               return staticMethodModels.get(prop.toString())
             }
-            return target[prop];
+            return destination;
           }
         },
       })
