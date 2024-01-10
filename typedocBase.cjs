@@ -9,7 +9,7 @@ module.exports = (plugins, extraConfig = {}) => ({
     "excludeExternals": false,
     "entryPointStrategy": "packages",
 
-    "tsconfig": "tsconfig.json",
+    "tsconfig": "tsconfig.typedoc.json",
     "name": "@pluto-encrypted",
     "useTsLinkResolution": true,
     "hideGenerator": true,
