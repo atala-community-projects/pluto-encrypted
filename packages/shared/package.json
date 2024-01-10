@@ -1,6 +1,6 @@
 {
   "name": "@pluto-encrypted/shared",
-  "version": "1.9.3",
+  "version": "2.0.0-rc.3",
   "description": "Shared depencencies for @pluto-encrypted and its db providers",
   "main": "./build/cjs/index.cjs",
   "module": "./build/esm/index.mjs",
@@ -28,7 +28,8 @@
   "license": "Apache-2.0",
   "dependencies": {
     "rxdb": "^14.17.0",
-    "uuid": "^9.0.1"
+    "uuid": "^9.0.1",
+    "@pluto-encrypted/encryption": "1.10.0-rc.1"
   },
   "files": [
     "build/*"

@@ -1,4 +1,5 @@
 /**
+ * 
  * @packageDocumentation
  * @module encryption
  * @description This package is an rxdb encryption layer, a replacement for the vulnerable crypto-js dependency provided by the free version of rxDB.
