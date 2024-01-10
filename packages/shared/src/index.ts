@@ -240,11 +240,10 @@ export function getPrivateKeyValue<RxDocType>(document: RxDocumentData<RxDocType
 
 export type ValuesOf<T> = T[keyof T]
 export type DBOptions = RxDatabaseCreator;
-export type ExtendedCollections<T> = { [key in keyof T]: ValuesOf<T> }
 
-export class DatabaseBase<Collections = CollectionsOfDatabase, DefaultCollections = CollectionsOfDatabase>  {
-  private _db!: RxDatabase<ExtendedCollections<Collections & DefaultCollections>, any, any>
-  public defaultCollections!: { [key in keyof DefaultCollections]: RxCollectionCreator<any> }
+
+export class DatabaseBase<Collections = CollectionsOfDatabase>  {
+  private _db!: RxDatabase<Collections, any, any>
 
   get db() {
     if (!this._db) {
@@ -253,8 +252,15 @@ export class DatabaseBase<Collections = CollectionsOfDatabase, DefaultCollection
     return this._db
   }
 
+  getCollection(name: string) {
+    if (!this.db.collections[name]) {
+      throw new Error("Collection does not exist")
+    }
+    return this.db.collections[name]
+  }
+
   constructor(
-    private readonly dbOptions: DBOptions,
+    private readonly dbOptions: DBOptions
   ) {
     addRxPlugin(RxDBQueryBuilderPlugin)
     addRxPlugin(RxDBJsonDumpPlugin)
@@ -284,20 +290,12 @@ export class DatabaseBase<Collections = CollectionsOfDatabase, DefaultCollection
     [name: string]: RxCollectionCreator<any>
   }): Promise<void> {
     const { dbOptions } = this
-    const database = await createRxDatabase<ExtendedCollections<Collections & DefaultCollections>>({
+    const database = await createRxDatabase<Collections>({
       ...dbOptions,
       multiInstance: false
     })
-
     const extendedCollections = collections ? collections : {};
-    if (this.defaultCollections) {
-      await database.addCollections({
-        ...this.defaultCollections,
-        ...extendedCollections
-      });
-    } else {
-      await database.addCollections(extendedCollections);
-    }
+    await database.addCollections(extendedCollections);
 
     this._db = database
   }

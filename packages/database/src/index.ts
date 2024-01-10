@@ -3,8 +3,8 @@
  * @module database
  */
 import SDK from '@atala/prism-wallet-sdk'
-import { PlutoCollections, getDefaultCollections } from '@pluto-encrypted/schemas'
-import { DatabaseBase, ExtendedCollections } from '@pluto-encrypted/shared'
+import { getDefaultCollections } from '@pluto-encrypted/schemas'
+import { DatabaseBase } from '@pluto-encrypted/shared'
 import {
   CollectionsOfDatabase,
   RxCollection,
@@ -22,57 +22,85 @@ export type * from './types'
  * preferred underlying storage technology, most appropriate for your use case.
  */
 export const Database = {
-  createEncrypted: async function createEncrypted<
-    Collections = CollectionsOfDatabase
+  createBaseEncrypted: async function createBaseEncrypted<
+    Collections extends CollectionsOfDatabase,
   >(options: {
     name: string;
     encryptionKey: Uint8Array;
-    importData?: RxDumpDatabase<ExtendedCollections<Collections & PlutoCollections>>;
+    importData?: RxDumpDatabase<Collections>;
     storage: RxStorage<any, any>;
     autoStart?: boolean;
-    withDefaultCollections?: boolean;
     collections?: {
       [key in keyof Collections]: RxCollectionCreator<any>;
     };
-  }): Promise<DatabaseBase<Collections & PlutoCollections, PlutoCollections> & SDK.Domain.Pluto> {
-    try {
-      const { name, storage, encryptionKey, importData, autoStart = true, collections, withDefaultCollections = true } = options
-      if (!storage) {
-        throw new Error('Please provide a valid storage.')
-      }
+  }) {
 
-      const instance = new DatabaseBase<Collections & PlutoCollections, PlutoCollections>({
-        ignoreDuplicate: true,
-        name,
-        storage,
-        password: Buffer.from(encryptionKey).toString('hex')
+    const {
+      name,
+      storage,
+      encryptionKey,
+      importData,
+      autoStart = true,
+      collections
+    } = options
+
+    if (!storage) {
+      throw new Error('Please provide a valid storage.')
+    }
+
+    const instance = new DatabaseBase<Collections>({
+      ignoreDuplicate: true,
+      name,
+      storage,
+      password: Buffer.from(encryptionKey).toString('hex')
+    })
+
+    if (autoStart) {
+      await instance.start(collections)
+    }
+
+    if (importData) {
+      await instance.db.importJSON(importData)
+    }
+
+    return instance
+  },
+  createEncrypted: async function createEncrypted<
+    Collections extends CollectionsOfDatabase,
+    ExtendedCollections extends CollectionsOfDatabase = Collections & ReturnType<typeof getDefaultCollections>
+  >(options: {
+    name: string;
+    encryptionKey: Uint8Array;
+    importData?: RxDumpDatabase<ExtendedCollections>;
+    storage: RxStorage<any, any>;
+    autoStart?: boolean;
+    collections?: {
+      [key in keyof (ExtendedCollections)]: RxCollectionCreator<any>;
+    };
+  }): Promise<DatabaseBase<ExtendedCollections> & SDK.Domain.Pluto> {
+    try {
+
+      const instance = await this.createBaseEncrypted<ExtendedCollections>({
+        ...options
       })
 
-      if (withDefaultCollections) {
-        instance.defaultCollections = getDefaultCollections()
-      }
+      const currentCollections = instance.db.collections;
+      const collectionKeys = Object.keys(currentCollections)
 
-      if (autoStart) {
-        await instance.start(collections)
-      }
+      const staticMethodModels = collectionKeys.reduce<Map<string, Function>>((statics, collectionName) => {
+        const currentCollection: RxCollection = instance.getCollection(collectionName);
+        Object.keys(currentCollection.statics).forEach((staticName) => {
+          const func = currentCollection.statics[staticName]!;
+          if (statics.has(staticName)) {
+            throw new Error(`Static function in model ${collectionName}.${staticName} is duplicated, statics must be unique across al collections.`)
+          }
+          statics.set(staticName, func)
+        })
+        return statics
+      }, new Map<string, Function>());
 
-      if (importData) {
-        await instance.db.importJSON(importData)
-      }
-
-      const proxy = new Proxy<DatabaseBase<Collections & PlutoCollections, PlutoCollections> & SDK.Domain.Pluto>(instance as any, {
+      const proxy = new Proxy<DatabaseBase<ExtendedCollections> & SDK.Domain.Pluto>(instance as any, {
         get(target, prop) {
-          const staticMethodModels = Object.keys(target.db.collections).reduce<Map<string, Function>>((statics, collectionName) => {
-            const currentCollection: RxCollection = target.db.collections[collectionName];
-            Object.keys(currentCollection.statics).forEach((staticName) => {
-              const func = currentCollection.statics[staticName]!;
-              if (statics.has(staticName)) {
-                throw new Error(`Static function in model ${collectionName}.${staticName} is duplicated, statics must be unique across al collections.`)
-              }
-              statics.set(staticName, func)
-            })
-            return statics
-          }, new Map<string, Function>())
           if (typeof target[prop] === 'function') {
             // If the property is a function, return a function that calls it
             return function (...args) {
@@ -86,7 +114,6 @@ export const Database = {
           }
         },
       })
-
 
       return proxy;
     } catch (err) {
