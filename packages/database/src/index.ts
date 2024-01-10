@@ -90,18 +90,14 @@ export const Database = {
         const defaultCollections = getDefaultCollections()
         Object.keys(getDefaultCollections()).forEach((collectionName) => {
           const currentCollection = defaultCollections[collectionName];
-          if (currentCollection) {
-            collectionMap.set(collectionName, currentCollection)
-          }
+          collectionMap.set(collectionName, currentCollection)
         });
       }
 
       if (collections) {
         Object.keys(collections).forEach((collectionName) => {
           const currentCollection = collections[collectionName];
-          if (currentCollection) {
-            collectionMap.set(collectionName, currentCollection)
-          }
+          collectionMap.set(collectionName, currentCollection)
         })
       }
 
