@@ -1,4 +1,5 @@
 /**
+ * 
  * @packageDocumentation
  * @module indexdb
  * @description This is a RXDB IndexDB storage that supports encryption middleware.

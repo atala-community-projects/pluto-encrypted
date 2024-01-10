@@ -1,4 +1,5 @@
 /**
+ * 
  * @packageDocumentation
  * @module leveldb
  * @description This is a RXDB LevelDB storage that supports encryption middleware.
