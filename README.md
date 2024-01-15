@@ -31,13 +31,34 @@ npm i @pluto-encrypted/inmemory --save
 ```typescript
 import InMemory from "@pluto-encrypted/inmemory";
 import { Database } from "@pluto-encrypted/database";
+import { 
+    getDefaultCollections,
+    DIDCollection,
+    DIDPairCollection,
+    MediatorCollection,
+    PrivateKeyColletion,
+    CredentialCollection,
+    CredentialRequestMetadataCollection,
+    LinkSecretColletion,
+    MessageColletion
+} from "@pluto-encrypted/schemas";
 //default password must be 32 bytes long
 const defaultPassword = new Uint8Array(32).fill(1);
-const database = db = await Database.createEncrypted(
+const database = db = await Database.createEncrypted<{
+    dids: DIDCollection;
+    didpairs: DIDPairCollection;
+    mediators: MediatorCollection;
+    privatekeys: PrivateKeyColletion;
+    credentials: CredentialCollection;
+    credentialrequestmetadatas: CredentialRequestMetadataCollection;
+    linksecrets: LinkSecretColletion;
+    messages: MessageColletion;
+}>(
     {
         name: `my-db`,
         encryptionKey: defaultPassword,
         storage: InMemory,
+        collections: getDefaultCollections()
     }
 );
 ```
@@ -47,13 +68,34 @@ const database = db = await Database.createEncrypted(
 ```typescript
 import IndexDB from "@pluto-encrypted/indexdb";
 import { Database } from "@pluto-encrypted/database";
+import { 
+    getDefaultCollections,
+    DIDCollection,
+    DIDPairCollection,
+    MediatorCollection,
+    PrivateKeyColletion,
+    CredentialCollection,
+    CredentialRequestMetadataCollection,
+    LinkSecretColletion,
+    MessageColletion
+} from "@pluto-encrypted/schemas";
 //default password must be 32 bytes long
 const defaultPassword = new Uint8Array(32).fill(1);
-const database = db = await Database.createEncrypted(
+const database = db = await Database.createEncrypted<{
+    dids: DIDCollection;
+    didpairs: DIDPairCollection;
+    mediators: MediatorCollection;
+    privatekeys: PrivateKeyColletion;
+    credentials: CredentialCollection;
+    credentialrequestmetadatas: CredentialRequestMetadataCollection;
+    linksecrets: LinkSecretColletion;
+    messages: MessageColletion;
+}>(
     {
         name: `my-db`,
         encryptionKey: defaultPassword,
         storage: IndexDB,
+        collections: getDefaultCollections()
     }
 );
 ```
@@ -65,7 +107,16 @@ import { createLevelDBStorage } from "@pluto-encrypted/leveldb";
 import { Database } from "@pluto-encrypted/database";
 //default password must be 32 bytes long
 const defaultPassword = new Uint8Array(32).fill(1);
-const database = db = await Database.createEncrypted(
+const database = db = await Database.createEncrypted<{
+    dids: DIDCollection;
+    didpairs: DIDPairCollection;
+    mediators: MediatorCollection;
+    privatekeys: PrivateKeyColletion;
+    credentials: CredentialCollection;
+    credentialrequestmetadatas: CredentialRequestMetadataCollection;
+    linksecrets: LinkSecretColletion;
+    messages: MessageColletion;
+}>(
     {
         name: `my-db`,
         encryptionKey: defaultPassword,
@@ -73,6 +124,7 @@ const database = db = await Database.createEncrypted(
             dbName: "demo",
             dbPath: "/tmp/demo" 
         }),
+        collections: getDefaultCollections()
     }
 );
 ```
