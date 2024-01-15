@@ -97,8 +97,6 @@ export const Database = {
       }, new Map<string, Function>());
 
 
-
-
       const proxy = new Proxy<DatabaseBase<Collections> & UnionToIntersection<ExtractStaticMethods<
         Collections[keyof Collections]
       >>>(instance as any, {

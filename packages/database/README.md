@@ -19,12 +19,33 @@ Password is a 32 bytes buffer.
 import { Database } from 'pluto-encrypted';
 //You can use IndexDB any other storage that is compatible.
 import IndexDB from "@pluto-encrypted/indexdb"; 
+import { 
+    getDefaultCollections,
+    DIDCollection,
+    DIDPairCollection,
+    MediatorCollection,
+    PrivateKeyColletion,
+    CredentialCollection,
+    CredentialRequestMetadataCollection,
+    LinkSecretColletion,
+    MessageColletion
+} from "@pluto-encrypted/schemas";
 const defaultPassword = new Uint8Array(32).fill(1);
-const db = await Database.createEncrypted(
+const db = await Database.createEncrypted<{
+    dids: DIDCollection;
+    didpairs: DIDPairCollection;
+    mediators: MediatorCollection;
+    privatekeys: PrivateKeyColletion;
+    credentials: CredentialCollection;
+    credentialrequestmetadatas: CredentialRequestMetadataCollection;
+    linksecrets: LinkSecretColletion;
+    messages: MessageColletion;
+}>(
    {
         name: `my-db`,
         encryptionKey: defaultPassword,
         storage: IndexDB,
+        collections: getDefaultCollections()
     }
 );
 const messages = await db.getAllMessages();
@@ -35,21 +56,52 @@ Backup database into an unencrypted JSON string and restore from backup.
 import { Database } from 'pluto-encrypted';
 //You can use IndexDB any other storage that is compatible.
 import IndexDB from "@pluto-encrypted/indexdb"; 
+import { 
+    getDefaultCollections,
+    DIDCollection,
+    DIDPairCollection,
+    MediatorCollection,
+    PrivateKeyColletion,
+    CredentialCollection,
+    CredentialRequestMetadataCollection,
+    LinkSecretColletion,
+    MessageColletion
+} from "@pluto-encrypted/schemas";
 const defaultPassword = new Uint8Array(32).fill(1);
-const db = await Database.createEncrypted(
+const db = await Database.createEncrypted<{
+    dids: DIDCollection;
+    didpairs: DIDPairCollection;
+    mediators: MediatorCollection;
+    privatekeys: PrivateKeyColletion;
+    credentials: CredentialCollection;
+    credentialrequestmetadatas: CredentialRequestMetadataCollection;
+    linksecrets: LinkSecretColletion;
+    messages: MessageColletion;
+}>(
    {
         name: "my-db",
         encryptionKey: defaultPassword,
         storage: IndexDB,
+        collections: getDefaultCollections()
     }
 );
 const backup = await db.backup();
-const restoredDatabase = await Database.createEncrypted(
+const restoredDatabase = await Database.createEncrypted<{
+    dids: DIDCollection;
+    didpairs: DIDPairCollection;
+    mediators: MediatorCollection;
+    privatekeys: PrivateKeyColletion;
+    credentials: CredentialCollection;
+    credentialrequestmetadatas: CredentialRequestMetadataCollection;
+    linksecrets: LinkSecretColletion;
+    messages: MessageColletion;
+}>(
        {
         name: "my-db",
         encryptionKey: defaultPassword,
         storage: IndexDB,
-        importData: backup
+        importData: backup,
+        collections: getDefaultCollections()
     }
 );
 const messages = await restoredDatabase.getAllMessages();
