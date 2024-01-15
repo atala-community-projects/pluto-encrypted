@@ -27,7 +27,7 @@
 
 | Name | Type |
 | :------ | :------ |
-| `this` | [`StaticRxCollectionContext`](../modules/database-1.md#staticrxcollectioncontext)\<\{ `credentials`: [`CredentialCollection`](../modules/database-1.md#credentialcollection)  }\> |
+| `this` | [`PlutoDBontext`](../modules/database-1.md#plutodbontext) |
 
 #### Returns
 
@@ -35,7 +35,7 @@
 
 #### Defined in
 
-[packages/schemas/src/schemas/credential/types.ts:31](https://github.com/atala-community-projects/pluto-encrypted/blob/879549ef/packages/schemas/src/schemas/credential/types.ts#L31)
+[packages/schemas/src/schemas/credential/types.ts:32](https://github.com/atala-community-projects/pluto-encrypted/blob/054e08f/packages/schemas/src/schemas/credential/types.ts#L32)
 
 ___
 
@@ -47,7 +47,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `this` | [`StaticRxCollectionContext`](../modules/database-1.md#staticrxcollectioncontext)\<\{ `credentials`: [`CredentialCollection`](../modules/database-1.md#credentialcollection)  }\> |
+| `this` | [`PlutoDBontext`](../modules/database-1.md#plutodbontext) |
 | `credential` | [`Credential`](../classes/database-1.WALLET_SDK_DOMAIN.Credential.md) |
 
 #### Returns
@@ -56,4 +56,4 @@ ___
 
 #### Defined in
 
-[packages/schemas/src/schemas/credential/types.ts:32](https://github.com/atala-community-projects/pluto-encrypted/blob/879549ef/packages/schemas/src/schemas/credential/types.ts#L32)
+[packages/schemas/src/schemas/credential/types.ts:33](https://github.com/atala-community-projects/pluto-encrypted/blob/054e08f/packages/schemas/src/schemas/credential/types.ts#L33)

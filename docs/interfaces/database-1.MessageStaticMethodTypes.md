@@ -36,7 +36,7 @@
 
 | Name | Type |
 | :------ | :------ |
-| `this` | [`StaticRxCollectionContext`](../modules/database-1.md#staticrxcollectioncontext)\<\{ `messages`: [`MessageColletion`](../modules/database-1.md#messagecolletion)  }\> |
+| `this` | [`PlutoDBontext`](../modules/database-1.md#plutodbontext) |
 
 #### Returns
 
@@ -44,7 +44,7 @@
 
 #### Defined in
 
-[packages/schemas/src/schemas/message/types.ts:50](https://github.com/atala-community-projects/pluto-encrypted/blob/879549ef/packages/schemas/src/schemas/message/types.ts#L50)
+[packages/schemas/src/schemas/message/types.ts:44](https://github.com/atala-community-projects/pluto-encrypted/blob/054e08f/packages/schemas/src/schemas/message/types.ts#L44)
 
 ___
 
@@ -56,7 +56,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `this` | [`StaticRxCollectionContext`](../modules/database-1.md#staticrxcollectioncontext)\<\{ `messages`: [`MessageColletion`](../modules/database-1.md#messagecolletion)  }\> |
+| `this` | [`PlutoDBontext`](../modules/database-1.md#plutodbontext) |
 | `did` | [`DID`](../classes/database-1.WALLET_SDK_DOMAIN.DID.md) |
 
 #### Returns
@@ -65,7 +65,7 @@ ___
 
 #### Defined in
 
-[packages/schemas/src/schemas/message/types.ts:91](https://github.com/atala-community-projects/pluto-encrypted/blob/879549ef/packages/schemas/src/schemas/message/types.ts#L91)
+[packages/schemas/src/schemas/message/types.ts:71](https://github.com/atala-community-projects/pluto-encrypted/blob/054e08f/packages/schemas/src/schemas/message/types.ts#L71)
 
 ___
 
@@ -77,7 +77,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `this` | [`StaticRxCollectionContext`](../modules/database-1.md#staticrxcollectioncontext)\<\{ `messages`: [`MessageColletion`](../modules/database-1.md#messagecolletion)  }\> |
+| `this` | [`PlutoDBontext`](../modules/database-1.md#plutodbontext) |
 | `from` | [`DID`](../classes/database-1.WALLET_SDK_DOMAIN.DID.md) |
 | `to` | [`DID`](../classes/database-1.WALLET_SDK_DOMAIN.DID.md) |
 
@@ -87,7 +87,7 @@ ___
 
 #### Defined in
 
-[packages/schemas/src/schemas/message/types.ts:55](https://github.com/atala-community-projects/pluto-encrypted/blob/879549ef/packages/schemas/src/schemas/message/types.ts#L55)
+[packages/schemas/src/schemas/message/types.ts:47](https://github.com/atala-community-projects/pluto-encrypted/blob/054e08f/packages/schemas/src/schemas/message/types.ts#L47)
 
 ___
 
@@ -99,7 +99,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `this` | [`StaticRxCollectionContext`](../modules/database-1.md#staticrxcollectioncontext)\<\{ `messages`: [`MessageColletion`](../modules/database-1.md#messagecolletion)  }\> |
+| `this` | [`PlutoDBontext`](../modules/database-1.md#plutodbontext) |
 | `type` | `string` |
 | `relatedWithDID?` | [`DID`](../classes/database-1.WALLET_SDK_DOMAIN.DID.md) |
 
@@ -109,7 +109,7 @@ ___
 
 #### Defined in
 
-[packages/schemas/src/schemas/message/types.ts:62](https://github.com/atala-community-projects/pluto-encrypted/blob/879549ef/packages/schemas/src/schemas/message/types.ts#L62)
+[packages/schemas/src/schemas/message/types.ts:52](https://github.com/atala-community-projects/pluto-encrypted/blob/054e08f/packages/schemas/src/schemas/message/types.ts#L52)
 
 ___
 
@@ -121,7 +121,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `this` | [`StaticRxCollectionContext`](../modules/database-1.md#staticrxcollectioncontext)\<\{ `messages`: [`MessageColletion`](../modules/database-1.md#messagecolletion)  }\> |
+| `this` | [`PlutoDBontext`](../modules/database-1.md#plutodbontext) |
 
 #### Returns
 
@@ -129,7 +129,7 @@ ___
 
 #### Defined in
 
-[packages/schemas/src/schemas/message/types.ts:81](https://github.com/atala-community-projects/pluto-encrypted/blob/879549ef/packages/schemas/src/schemas/message/types.ts#L81)
+[packages/schemas/src/schemas/message/types.ts:65](https://github.com/atala-community-projects/pluto-encrypted/blob/054e08f/packages/schemas/src/schemas/message/types.ts#L65)
 
 ___
 
@@ -141,7 +141,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `this` | [`StaticRxCollectionContext`](../modules/database-1.md#staticrxcollectioncontext)\<\{ `messages`: [`MessageColletion`](../modules/database-1.md#messagecolletion)  }\> |
+| `this` | [`PlutoDBontext`](../modules/database-1.md#plutodbontext) |
 | `did` | [`DID`](../classes/database-1.WALLET_SDK_DOMAIN.DID.md) |
 
 #### Returns
@@ -150,7 +150,7 @@ ___
 
 #### Defined in
 
-[packages/schemas/src/schemas/message/types.ts:69](https://github.com/atala-community-projects/pluto-encrypted/blob/879549ef/packages/schemas/src/schemas/message/types.ts#L69)
+[packages/schemas/src/schemas/message/types.ts:57](https://github.com/atala-community-projects/pluto-encrypted/blob/054e08f/packages/schemas/src/schemas/message/types.ts#L57)
 
 ___
 
@@ -162,7 +162,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `this` | [`StaticRxCollectionContext`](../modules/database-1.md#staticrxcollectioncontext)\<\{ `messages`: [`MessageColletion`](../modules/database-1.md#messagecolletion)  }\> |
+| `this` | [`PlutoDBontext`](../modules/database-1.md#plutodbontext) |
 
 #### Returns
 
@@ -170,7 +170,7 @@ ___
 
 #### Defined in
 
-[packages/schemas/src/schemas/message/types.ts:86](https://github.com/atala-community-projects/pluto-encrypted/blob/879549ef/packages/schemas/src/schemas/message/types.ts#L86)
+[packages/schemas/src/schemas/message/types.ts:68](https://github.com/atala-community-projects/pluto-encrypted/blob/054e08f/packages/schemas/src/schemas/message/types.ts#L68)
 
 ___
 
@@ -182,7 +182,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `this` | [`StaticRxCollectionContext`](../modules/database-1.md#staticrxcollectioncontext)\<\{ `messages`: [`MessageColletion`](../modules/database-1.md#messagecolletion)  }\> |
+| `this` | [`PlutoDBontext`](../modules/database-1.md#plutodbontext) |
 | `did` | [`DID`](../classes/database-1.WALLET_SDK_DOMAIN.DID.md) |
 
 #### Returns
@@ -191,7 +191,7 @@ ___
 
 #### Defined in
 
-[packages/schemas/src/schemas/message/types.ts:75](https://github.com/atala-community-projects/pluto-encrypted/blob/879549ef/packages/schemas/src/schemas/message/types.ts#L75)
+[packages/schemas/src/schemas/message/types.ts:61](https://github.com/atala-community-projects/pluto-encrypted/blob/054e08f/packages/schemas/src/schemas/message/types.ts#L61)
 
 ___
 
@@ -203,7 +203,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `this` | [`StaticRxCollectionContext`](../modules/database-1.md#staticrxcollectioncontext)\<\{ `messages`: [`MessageColletion`](../modules/database-1.md#messagecolletion)  }\> |
+| `this` | [`PlutoDBontext`](../modules/database-1.md#plutodbontext) |
 | `id` | `string` |
 
 #### Returns
@@ -212,7 +212,7 @@ ___
 
 #### Defined in
 
-[packages/schemas/src/schemas/message/types.ts:32](https://github.com/atala-community-projects/pluto-encrypted/blob/879549ef/packages/schemas/src/schemas/message/types.ts#L32)
+[packages/schemas/src/schemas/message/types.ts:32](https://github.com/atala-community-projects/pluto-encrypted/blob/054e08f/packages/schemas/src/schemas/message/types.ts#L32)
 
 ___
 
@@ -224,7 +224,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `this` | [`StaticRxCollectionContext`](../modules/database-1.md#staticrxcollectioncontext)\<\{ `messages`: [`MessageColletion`](../modules/database-1.md#messagecolletion)  }\> |
+| `this` | [`PlutoDBontext`](../modules/database-1.md#plutodbontext) |
 | `message` | [`Message`](../classes/database-1.WALLET_SDK_DOMAIN.Message.md) |
 
 #### Returns
@@ -233,7 +233,7 @@ ___
 
 #### Defined in
 
-[packages/schemas/src/schemas/message/types.ts:38](https://github.com/atala-community-projects/pluto-encrypted/blob/879549ef/packages/schemas/src/schemas/message/types.ts#L38)
+[packages/schemas/src/schemas/message/types.ts:36](https://github.com/atala-community-projects/pluto-encrypted/blob/054e08f/packages/schemas/src/schemas/message/types.ts#L36)
 
 ___
 
@@ -245,7 +245,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `this` | [`StaticRxCollectionContext`](../modules/database-1.md#staticrxcollectioncontext)\<\{ `messages`: [`MessageColletion`](../modules/database-1.md#messagecolletion)  }\> |
+| `this` | [`PlutoDBontext`](../modules/database-1.md#plutodbontext) |
 | `messages` | [`Message`](../classes/database-1.WALLET_SDK_DOMAIN.Message.md)[] |
 
 #### Returns
@@ -254,4 +254,4 @@ ___
 
 #### Defined in
 
-[packages/schemas/src/schemas/message/types.ts:44](https://github.com/atala-community-projects/pluto-encrypted/blob/879549ef/packages/schemas/src/schemas/message/types.ts#L44)
+[packages/schemas/src/schemas/message/types.ts:40](https://github.com/atala-community-projects/pluto-encrypted/blob/054e08f/packages/schemas/src/schemas/message/types.ts#L40)

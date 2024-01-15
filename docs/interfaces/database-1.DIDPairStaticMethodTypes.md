@@ -29,7 +29,7 @@
 
 | Name | Type |
 | :------ | :------ |
-| `this` | [`StaticRxCollectionContext`](../modules/database-1.md#staticrxcollectioncontext)\<\{ `didpairs`: [`DIDPairCollection`](../modules/database-1.md#didpaircollection)  }\> |
+| `this` | [`PlutoDBontext`](../modules/database-1.md#plutodbontext) |
 
 #### Returns
 
@@ -37,7 +37,7 @@
 
 #### Defined in
 
-[packages/schemas/src/schemas/didpair/types.ts:21](https://github.com/atala-community-projects/pluto-encrypted/blob/879549ef/packages/schemas/src/schemas/didpair/types.ts#L21)
+[packages/schemas/src/schemas/didpair/types.ts:21](https://github.com/atala-community-projects/pluto-encrypted/blob/054e08f/packages/schemas/src/schemas/didpair/types.ts#L21)
 
 ___
 
@@ -49,7 +49,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `this` | [`StaticRxCollectionContext`](../modules/database-1.md#staticrxcollectioncontext)\<\{ `didpairs`: [`DIDPairCollection`](../modules/database-1.md#didpaircollection)  }\> |
+| `this` | [`PlutoDBontext`](../modules/database-1.md#plutodbontext) |
 | `did` | [`DID`](../classes/database-1.WALLET_SDK_DOMAIN.DID.md) |
 
 #### Returns
@@ -58,7 +58,7 @@ ___
 
 #### Defined in
 
-[packages/schemas/src/schemas/didpair/types.ts:23](https://github.com/atala-community-projects/pluto-encrypted/blob/879549ef/packages/schemas/src/schemas/didpair/types.ts#L23)
+[packages/schemas/src/schemas/didpair/types.ts:23](https://github.com/atala-community-projects/pluto-encrypted/blob/054e08f/packages/schemas/src/schemas/didpair/types.ts#L23)
 
 ___
 
@@ -70,7 +70,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `this` | [`StaticRxCollectionContext`](../modules/database-1.md#staticrxcollectioncontext)\<\{ `didpairs`: [`DIDPairCollection`](../modules/database-1.md#didpaircollection)  }\> |
+| `this` | [`PlutoDBontext`](../modules/database-1.md#plutodbontext) |
 | `name` | `string` |
 
 #### Returns
@@ -79,7 +79,7 @@ ___
 
 #### Defined in
 
-[packages/schemas/src/schemas/didpair/types.ts:22](https://github.com/atala-community-projects/pluto-encrypted/blob/879549ef/packages/schemas/src/schemas/didpair/types.ts#L22)
+[packages/schemas/src/schemas/didpair/types.ts:22](https://github.com/atala-community-projects/pluto-encrypted/blob/054e08f/packages/schemas/src/schemas/didpair/types.ts#L22)
 
 ___
 
@@ -91,7 +91,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `this` | [`StaticRxCollectionContext`](../modules/database-1.md#staticrxcollectioncontext)\<\{ `didpairs`: [`DIDPairCollection`](../modules/database-1.md#didpaircollection)  }\> |
+| `this` | [`PlutoDBontext`](../modules/database-1.md#plutodbontext) |
 | `host` | [`DID`](../classes/database-1.WALLET_SDK_DOMAIN.DID.md) |
 | `receiver` | [`DID`](../classes/database-1.WALLET_SDK_DOMAIN.DID.md) |
 | `name` | `string` |
@@ -102,4 +102,4 @@ ___
 
 #### Defined in
 
-[packages/schemas/src/schemas/didpair/types.ts:15](https://github.com/atala-community-projects/pluto-encrypted/blob/879549ef/packages/schemas/src/schemas/didpair/types.ts#L15)
+[packages/schemas/src/schemas/didpair/types.ts:15](https://github.com/atala-community-projects/pluto-encrypted/blob/054e08f/packages/schemas/src/schemas/didpair/types.ts#L15)

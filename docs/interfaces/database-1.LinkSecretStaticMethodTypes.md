@@ -27,7 +27,7 @@
 
 | Name | Type |
 | :------ | :------ |
-| `this` | [`StaticRxCollectionContext`](../modules/database-1.md#staticrxcollectioncontext)\<\{ `linksecrets`: [`LinkSecretColletion`](../modules/database-1.md#linksecretcolletion)  }\> |
+| `this` | [`PlutoDBontext`](../modules/database-1.md#plutodbontext) |
 | `linkSecretName?` | `string` |
 
 #### Returns
@@ -36,7 +36,7 @@
 
 #### Defined in
 
-[packages/schemas/src/schemas/linksecret/types.ts:31](https://github.com/atala-community-projects/pluto-encrypted/blob/879549ef/packages/schemas/src/schemas/linksecret/types.ts#L31)
+[packages/schemas/src/schemas/linksecret/types.ts:31](https://github.com/atala-community-projects/pluto-encrypted/blob/054e08f/packages/schemas/src/schemas/linksecret/types.ts#L31)
 
 ___
 
@@ -48,7 +48,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `this` | [`StaticRxCollectionContext`](../modules/database-1.md#staticrxcollectioncontext)\<\{ `linksecrets`: [`LinkSecretColletion`](../modules/database-1.md#linksecretcolletion)  }\> |
+| `this` | [`PlutoDBontext`](../modules/database-1.md#plutodbontext) |
 | `linkSecret` | `string` |
 | `linkSecretName` | `string` |
 
@@ -58,4 +58,4 @@ ___
 
 #### Defined in
 
-[packages/schemas/src/schemas/linksecret/types.ts:26](https://github.com/atala-community-projects/pluto-encrypted/blob/879549ef/packages/schemas/src/schemas/linksecret/types.ts#L26)
+[packages/schemas/src/schemas/linksecret/types.ts:26](https://github.com/atala-community-projects/pluto-encrypted/blob/054e08f/packages/schemas/src/schemas/linksecret/types.ts#L26)

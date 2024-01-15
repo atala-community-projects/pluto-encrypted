@@ -33,7 +33,7 @@
 
 | Name | Type |
 | :------ | :------ |
-| `this` | [`StaticRxCollectionContext`](../modules/database-1.md#staticrxcollectioncontext)\<\{ `dids`: [`DIDCollection`](../modules/database-1.md#didcollection)  }\> |
+| `this` | [`PlutoDBontext`](../modules/database-1.md#plutodbontext) |
 
 #### Returns
 
@@ -41,7 +41,7 @@
 
 #### Defined in
 
-[packages/schemas/src/schemas/did/types.ts:25](https://github.com/atala-community-projects/pluto-encrypted/blob/879549ef/packages/schemas/src/schemas/did/types.ts#L25)
+[packages/schemas/src/schemas/did/types.ts:26](https://github.com/atala-community-projects/pluto-encrypted/blob/054e08f/packages/schemas/src/schemas/did/types.ts#L26)
 
 ___
 
@@ -53,7 +53,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `this` | [`StaticRxCollectionContext`](../modules/database-1.md#staticrxcollectioncontext)\<\{ `dids`: [`DIDCollection`](../modules/database-1.md#didcollection)  }\> |
+| `this` | [`PlutoDBontext`](../modules/database-1.md#plutodbontext) |
 
 #### Returns
 
@@ -61,7 +61,7 @@ ___
 
 #### Defined in
 
-[packages/schemas/src/schemas/did/types.ts:26](https://github.com/atala-community-projects/pluto-encrypted/blob/879549ef/packages/schemas/src/schemas/did/types.ts#L26)
+[packages/schemas/src/schemas/did/types.ts:27](https://github.com/atala-community-projects/pluto-encrypted/blob/054e08f/packages/schemas/src/schemas/did/types.ts#L27)
 
 ___
 
@@ -73,7 +73,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `this` | [`StaticRxCollectionContext`](../modules/database-1.md#staticrxcollectioncontext)\<\{ `dids`: [`DIDCollection`](../modules/database-1.md#didcollection)  }\> |
+| `this` | [`PlutoDBontext`](../modules/database-1.md#plutodbontext) |
 | `alias` | `string` |
 
 #### Returns
@@ -82,7 +82,7 @@ ___
 
 #### Defined in
 
-[packages/schemas/src/schemas/did/types.ts:28](https://github.com/atala-community-projects/pluto-encrypted/blob/879549ef/packages/schemas/src/schemas/did/types.ts#L28)
+[packages/schemas/src/schemas/did/types.ts:29](https://github.com/atala-community-projects/pluto-encrypted/blob/054e08f/packages/schemas/src/schemas/did/types.ts#L29)
 
 ___
 
@@ -94,7 +94,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `this` | [`StaticRxCollectionContext`](../modules/database-1.md#staticrxcollectioncontext)\<\{ `dids`: [`DIDCollection`](../modules/database-1.md#didcollection)  }\> |
+| `this` | [`PlutoDBontext`](../modules/database-1.md#plutodbontext) |
 | `did` | [`DID`](../classes/database-1.WALLET_SDK_DOMAIN.DID.md) |
 
 #### Returns
@@ -103,7 +103,7 @@ ___
 
 #### Defined in
 
-[packages/schemas/src/schemas/did/types.ts:27](https://github.com/atala-community-projects/pluto-encrypted/blob/879549ef/packages/schemas/src/schemas/did/types.ts#L27)
+[packages/schemas/src/schemas/did/types.ts:28](https://github.com/atala-community-projects/pluto-encrypted/blob/054e08f/packages/schemas/src/schemas/did/types.ts#L28)
 
 ___
 
@@ -115,7 +115,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `this` | [`StaticRxCollectionContext`](../modules/database-1.md#staticrxcollectioncontext)\<\{ `dids`: [`DIDCollection`](../modules/database-1.md#didcollection)  }\> |
+| `this` | [`PlutoDBontext`](../modules/database-1.md#plutodbontext) |
 | `did` | [`DID`](../classes/database-1.WALLET_SDK_DOMAIN.DID.md) |
 
 #### Returns
@@ -124,7 +124,7 @@ ___
 
 #### Defined in
 
-[packages/schemas/src/schemas/did/types.ts:19](https://github.com/atala-community-projects/pluto-encrypted/blob/879549ef/packages/schemas/src/schemas/did/types.ts#L19)
+[packages/schemas/src/schemas/did/types.ts:20](https://github.com/atala-community-projects/pluto-encrypted/blob/054e08f/packages/schemas/src/schemas/did/types.ts#L20)
 
 ___
 
@@ -136,7 +136,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `this` | [`StaticRxCollectionContext`](../modules/database-1.md#staticrxcollectioncontext)\<\{ `dids`: [`DIDCollection`](../modules/database-1.md#didcollection)  }\> |
+| `this` | [`PlutoDBontext`](../modules/database-1.md#plutodbontext) |
 
 #### Returns
 
@@ -144,7 +144,7 @@ ___
 
 #### Defined in
 
-[packages/schemas/src/schemas/did/types.ts:18](https://github.com/atala-community-projects/pluto-encrypted/blob/879549ef/packages/schemas/src/schemas/did/types.ts#L18)
+[packages/schemas/src/schemas/did/types.ts:19](https://github.com/atala-community-projects/pluto-encrypted/blob/054e08f/packages/schemas/src/schemas/did/types.ts#L19)
 
 ___
 
@@ -156,7 +156,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `this` | [`StaticRxCollectionContext`](../modules/database-1.md#staticrxcollectioncontext)\<\{ `dids`: [`DIDCollection`](../modules/database-1.md#didcollection)  }\> |
+| `this` | [`PlutoDBontext`](../modules/database-1.md#plutodbontext) |
 | `did` | [`DID`](../classes/database-1.WALLET_SDK_DOMAIN.DID.md) |
 | `privateKeys` | [`PrivateKey`](../classes/database-1.WALLET_SDK_DOMAIN.PrivateKey.md)[] |
 
@@ -166,7 +166,7 @@ ___
 
 #### Defined in
 
-[packages/schemas/src/schemas/did/types.ts:20](https://github.com/atala-community-projects/pluto-encrypted/blob/879549ef/packages/schemas/src/schemas/did/types.ts#L20)
+[packages/schemas/src/schemas/did/types.ts:21](https://github.com/atala-community-projects/pluto-encrypted/blob/054e08f/packages/schemas/src/schemas/did/types.ts#L21)
 
 ___
 
@@ -178,7 +178,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `this` | [`StaticRxCollectionContext`](../modules/database-1.md#staticrxcollectioncontext)\<\{ `dids`: [`DIDCollection`](../modules/database-1.md#didcollection)  }\> |
+| `this` | [`PlutoDBontext`](../modules/database-1.md#plutodbontext) |
 | `did` | [`DID`](../classes/database-1.WALLET_SDK_DOMAIN.DID.md) |
 | `keyPathIndex` | `number` |
 | `privateKey` | [`PrivateKey`](../classes/database-1.WALLET_SDK_DOMAIN.PrivateKey.md) |
@@ -191,4 +191,4 @@ ___
 
 #### Defined in
 
-[packages/schemas/src/schemas/did/types.ts:29](https://github.com/atala-community-projects/pluto-encrypted/blob/879549ef/packages/schemas/src/schemas/did/types.ts#L29)
+[packages/schemas/src/schemas/did/types.ts:30](https://github.com/atala-community-projects/pluto-encrypted/blob/054e08f/packages/schemas/src/schemas/did/types.ts#L30)

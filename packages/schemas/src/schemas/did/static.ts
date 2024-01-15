@@ -19,7 +19,6 @@ export const DIDStaticMethods: DIDStaticMethodTypes = {
             privateKey,
             did,
             keyPathIndex,
-            null
         )
     },
     async getAllPrismDIDs(): Promise<SDK.Domain.PrismDIDInfo[]> {

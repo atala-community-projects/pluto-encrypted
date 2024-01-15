@@ -32,7 +32,6 @@
 - [MessageMethodTypes](../interfaces/database-1.MessageMethodTypes.md)
 - [MessageSchemaType](../interfaces/database-1.MessageSchemaType.md)
 - [MessageStaticMethodTypes](../interfaces/database-1.MessageStaticMethodTypes.md)
-- [PlutoCollections](../interfaces/database-1.PlutoCollections.md)
 - [PlutoCollectionsCreator](../interfaces/database-1.PlutoCollectionsCreator.md)
 - [PrivateKeyMethodTypes](../interfaces/database-1.PrivateKeyMethodTypes.md)
 - [PrivateKeyStaticMethodTypes](../interfaces/database-1.PrivateKeyStaticMethodTypes.md)
@@ -54,6 +53,8 @@
 - [MediatorDocument](database-1.md#mediatordocument)
 - [MessageColletion](database-1.md#messagecolletion)
 - [MessageDocument](database-1.md#messagedocument)
+- [PlutoCollections](database-1.md#plutocollections)
+- [PlutoDBontext](database-1.md#plutodbontext)
 - [PlutoInstance](database-1.md#plutoinstance)
 - [PrivateKeyColletion](database-1.md#privatekeycolletion)
 - [PrivateKeyDocument](database-1.md#privatekeydocument)
@@ -69,11 +70,11 @@
 
 ### CredentialCollection
 
-Ƭ **CredentialCollection**: `RxCollection`\<[`CredentialSchemaType`](../interfaces/database-1.CredentialSchemaType.md), [`CredentialMethodTypes`](../interfaces/database-1.CredentialMethodTypes.md), [`CredentialDocument`](database-1.md#credentialdocument)\>
+Ƭ **CredentialCollection**: `RxCollection`\<[`CredentialSchemaType`](../interfaces/database-1.CredentialSchemaType.md), [`CredentialMethodTypes`](../interfaces/database-1.CredentialMethodTypes.md), [`CredentialStaticMethodTypes`](../interfaces/database-1.CredentialStaticMethodTypes.md)\>
 
 #### Defined in
 
-[packages/schemas/src/schemas/credential/types.ts:35](https://github.com/atala-community-projects/pluto-encrypted/blob/879549ef/packages/schemas/src/schemas/credential/types.ts#L35)
+[packages/schemas/src/schemas/credential/types.ts:36](https://github.com/atala-community-projects/pluto-encrypted/blob/054e08f/packages/schemas/src/schemas/credential/types.ts#L36)
 
 ___
 
@@ -83,7 +84,7 @@ ___
 
 #### Defined in
 
-[packages/schemas/src/schemas/credential/types.ts:25](https://github.com/atala-community-projects/pluto-encrypted/blob/879549ef/packages/schemas/src/schemas/credential/types.ts#L25)
+[packages/schemas/src/schemas/credential/types.ts:26](https://github.com/atala-community-projects/pluto-encrypted/blob/054e08f/packages/schemas/src/schemas/credential/types.ts#L26)
 
 ___
 
@@ -93,7 +94,7 @@ ___
 
 #### Defined in
 
-[packages/schemas/src/schemas/credentialRequestMetadata/types.ts:8](https://github.com/atala-community-projects/pluto-encrypted/blob/879549ef/packages/schemas/src/schemas/credentialRequestMetadata/types.ts#L8)
+[packages/schemas/src/schemas/credentialRequestMetadata/types.ts:9](https://github.com/atala-community-projects/pluto-encrypted/blob/054e08f/packages/schemas/src/schemas/credentialRequestMetadata/types.ts#L9)
 
 ___
 
@@ -103,7 +104,7 @@ ___
 
 #### Defined in
 
-[packages/schemas/src/schemas/credentialRequestMetadata/types.ts:25](https://github.com/atala-community-projects/pluto-encrypted/blob/879549ef/packages/schemas/src/schemas/credentialRequestMetadata/types.ts#L25)
+[packages/schemas/src/schemas/credentialRequestMetadata/types.ts:26](https://github.com/atala-community-projects/pluto-encrypted/blob/054e08f/packages/schemas/src/schemas/credentialRequestMetadata/types.ts#L26)
 
 ___
 
@@ -113,7 +114,7 @@ ___
 
 #### Defined in
 
-[packages/schemas/src/types.ts:56](https://github.com/atala-community-projects/pluto-encrypted/blob/879549ef/packages/schemas/src/types.ts#L56)
+[packages/schemas/src/types.ts:57](https://github.com/atala-community-projects/pluto-encrypted/blob/054e08f/packages/schemas/src/types.ts#L57)
 
 ___
 
@@ -123,7 +124,7 @@ ___
 
 #### Defined in
 
-[packages/schemas/src/schemas/did/types.ts:41](https://github.com/atala-community-projects/pluto-encrypted/blob/879549ef/packages/schemas/src/schemas/did/types.ts#L41)
+[packages/schemas/src/schemas/did/types.ts:42](https://github.com/atala-community-projects/pluto-encrypted/blob/054e08f/packages/schemas/src/schemas/did/types.ts#L42)
 
 ___
 
@@ -133,7 +134,7 @@ ___
 
 #### Defined in
 
-[packages/schemas/src/schemas/did/types.ts:15](https://github.com/atala-community-projects/pluto-encrypted/blob/879549ef/packages/schemas/src/schemas/did/types.ts#L15)
+[packages/schemas/src/schemas/did/types.ts:16](https://github.com/atala-community-projects/pluto-encrypted/blob/054e08f/packages/schemas/src/schemas/did/types.ts#L16)
 
 ___
 
@@ -143,7 +144,7 @@ ___
 
 #### Defined in
 
-[packages/schemas/src/schemas/didpair/types.ts:25](https://github.com/atala-community-projects/pluto-encrypted/blob/879549ef/packages/schemas/src/schemas/didpair/types.ts#L25)
+[packages/schemas/src/schemas/didpair/types.ts:25](https://github.com/atala-community-projects/pluto-encrypted/blob/054e08f/packages/schemas/src/schemas/didpair/types.ts#L25)
 
 ___
 
@@ -153,7 +154,7 @@ ___
 
 #### Defined in
 
-[packages/schemas/src/schemas/didpair/types.ts:12](https://github.com/atala-community-projects/pluto-encrypted/blob/879549ef/packages/schemas/src/schemas/didpair/types.ts#L12)
+[packages/schemas/src/schemas/didpair/types.ts:12](https://github.com/atala-community-projects/pluto-encrypted/blob/054e08f/packages/schemas/src/schemas/didpair/types.ts#L12)
 
 ___
 
@@ -163,7 +164,7 @@ ___
 
 #### Defined in
 
-[packages/schemas/src/schemas/linksecret/types.ts:37](https://github.com/atala-community-projects/pluto-encrypted/blob/879549ef/packages/schemas/src/schemas/linksecret/types.ts#L37)
+[packages/schemas/src/schemas/linksecret/types.ts:37](https://github.com/atala-community-projects/pluto-encrypted/blob/054e08f/packages/schemas/src/schemas/linksecret/types.ts#L37)
 
 ___
 
@@ -173,7 +174,7 @@ ___
 
 #### Defined in
 
-[packages/schemas/src/schemas/linksecret/types.ts:16](https://github.com/atala-community-projects/pluto-encrypted/blob/879549ef/packages/schemas/src/schemas/linksecret/types.ts#L16)
+[packages/schemas/src/schemas/linksecret/types.ts:16](https://github.com/atala-community-projects/pluto-encrypted/blob/054e08f/packages/schemas/src/schemas/linksecret/types.ts#L16)
 
 ___
 
@@ -183,7 +184,7 @@ ___
 
 #### Defined in
 
-[packages/schemas/src/schemas/mediator/types.ts:28](https://github.com/atala-community-projects/pluto-encrypted/blob/879549ef/packages/schemas/src/schemas/mediator/types.ts#L28)
+[packages/schemas/src/schemas/mediator/types.ts:28](https://github.com/atala-community-projects/pluto-encrypted/blob/054e08f/packages/schemas/src/schemas/mediator/types.ts#L28)
 
 ___
 
@@ -193,7 +194,7 @@ ___
 
 #### Defined in
 
-[packages/schemas/src/schemas/mediator/types.ts:14](https://github.com/atala-community-projects/pluto-encrypted/blob/879549ef/packages/schemas/src/schemas/mediator/types.ts#L14)
+[packages/schemas/src/schemas/mediator/types.ts:14](https://github.com/atala-community-projects/pluto-encrypted/blob/054e08f/packages/schemas/src/schemas/mediator/types.ts#L14)
 
 ___
 
@@ -203,7 +204,7 @@ ___
 
 #### Defined in
 
-[packages/schemas/src/schemas/message/types.ts:99](https://github.com/atala-community-projects/pluto-encrypted/blob/879549ef/packages/schemas/src/schemas/message/types.ts#L99)
+[packages/schemas/src/schemas/message/types.ts:77](https://github.com/atala-community-projects/pluto-encrypted/blob/054e08f/packages/schemas/src/schemas/message/types.ts#L77)
 
 ___
 
@@ -213,13 +214,33 @@ ___
 
 #### Defined in
 
-[packages/schemas/src/schemas/message/types.ts:23](https://github.com/atala-community-projects/pluto-encrypted/blob/879549ef/packages/schemas/src/schemas/message/types.ts#L23)
+[packages/schemas/src/schemas/message/types.ts:23](https://github.com/atala-community-projects/pluto-encrypted/blob/054e08f/packages/schemas/src/schemas/message/types.ts#L23)
+
+___
+
+### PlutoCollections
+
+Ƭ **PlutoCollections**: \{ `credentialrequestmetadatas`: [`CredentialRequestMetadataCollection`](database-1.md#credentialrequestmetadatacollection) ; `credentials`: [`CredentialCollection`](database-1.md#credentialcollection) ; `didpairs`: [`DIDPairCollection`](database-1.md#didpaircollection) ; `dids`: [`DIDCollection`](database-1.md#didcollection) ; `linksecrets`: [`LinkSecretColletion`](database-1.md#linksecretcolletion) ; `mediators`: [`MediatorCollection`](database-1.md#mediatorcollection) ; `messages`: [`MessageColletion`](database-1.md#messagecolletion) ; `privatekeys`: [`PrivateKeyColletion`](database-1.md#privatekeycolletion)  } & \{ `[name: string]`: `RxCollection`;  }
+
+#### Defined in
+
+[packages/schemas/src/types.ts:32](https://github.com/atala-community-projects/pluto-encrypted/blob/054e08f/packages/schemas/src/types.ts#L32)
+
+___
+
+### PlutoDBontext
+
+Ƭ **PlutoDBontext**: `DatabaseBase`\<`Collections`\> & `UnionToIntersection`\<`ExtractStaticMethods`\<`Collections`[keyof `Collections`]\>\>
+
+#### Defined in
+
+[packages/schemas/src/index.ts:30](https://github.com/atala-community-projects/pluto-encrypted/blob/054e08f/packages/schemas/src/index.ts#L30)
 
 ___
 
 ### PlutoInstance
 
-Ƭ **PlutoInstance**\<`Collections`\>: `DatabaseBase`\<`Collections` & [`PlutoCollections`](../interfaces/database-1.PlutoCollections.md)\> & [`Pluto`](../interfaces/database-1.WALLET_SDK_DOMAIN.Pluto.md)
+Ƭ **PlutoInstance**\<`Collections`\>: `DatabaseBase`\<`Collections`\>
 
 #### Type parameters
 
@@ -229,7 +250,7 @@ ___
 
 #### Defined in
 
-[packages/schemas/src/types.ts:53](https://github.com/atala-community-projects/pluto-encrypted/blob/879549ef/packages/schemas/src/types.ts#L53)
+[packages/schemas/src/types.ts:54](https://github.com/atala-community-projects/pluto-encrypted/blob/054e08f/packages/schemas/src/types.ts#L54)
 
 ___
 
@@ -239,7 +260,7 @@ ___
 
 #### Defined in
 
-[packages/schemas/src/schemas/privatekey/types.ts:43](https://github.com/atala-community-projects/pluto-encrypted/blob/879549ef/packages/schemas/src/schemas/privatekey/types.ts#L43)
+[packages/schemas/src/schemas/privatekey/types.ts:41](https://github.com/atala-community-projects/pluto-encrypted/blob/054e08f/packages/schemas/src/schemas/privatekey/types.ts#L41)
 
 ___
 
@@ -249,7 +270,7 @@ ___
 
 #### Defined in
 
-[packages/schemas/src/schemas/privatekey/types.ts:48](https://github.com/atala-community-projects/pluto-encrypted/blob/879549ef/packages/schemas/src/schemas/privatekey/types.ts#L48)
+[packages/schemas/src/schemas/privatekey/types.ts:46](https://github.com/atala-community-projects/pluto-encrypted/blob/054e08f/packages/schemas/src/schemas/privatekey/types.ts#L46)
 
 ___
 
@@ -265,7 +286,7 @@ ___
 
 #### Defined in
 
-[packages/schemas/src/types.ts:28](https://github.com/atala-community-projects/pluto-encrypted/blob/879549ef/packages/schemas/src/types.ts#L28)
+[packages/schemas/src/types.ts:28](https://github.com/atala-community-projects/pluto-encrypted/blob/054e08f/packages/schemas/src/types.ts#L28)
 
 ___
 
@@ -281,7 +302,7 @@ ___
 
 #### Defined in
 
-[packages/schemas/src/types.ts:57](https://github.com/atala-community-projects/pluto-encrypted/blob/879549ef/packages/schemas/src/types.ts#L57)
+[packages/schemas/src/types.ts:58](https://github.com/atala-community-projects/pluto-encrypted/blob/054e08f/packages/schemas/src/types.ts#L58)
 
 ___
 
@@ -297,7 +318,7 @@ ___
 
 #### Defined in
 
-[packages/schemas/src/types.ts:27](https://github.com/atala-community-projects/pluto-encrypted/blob/879549ef/packages/schemas/src/types.ts#L27)
+[packages/schemas/src/types.ts:27](https://github.com/atala-community-projects/pluto-encrypted/blob/054e08f/packages/schemas/src/types.ts#L27)
 
 ## Functions
 
@@ -317,4 +338,4 @@ ___
 
 #### Defined in
 
-[packages/schemas/src/index.ts:16](https://github.com/atala-community-projects/pluto-encrypted/blob/879549ef/packages/schemas/src/index.ts#L16)
+[packages/schemas/src/index.ts:34](https://github.com/atala-community-projects/pluto-encrypted/blob/054e08f/packages/schemas/src/index.ts#L34)

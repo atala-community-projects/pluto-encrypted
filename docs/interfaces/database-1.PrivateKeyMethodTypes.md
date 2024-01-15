@@ -38,4 +38,4 @@
 
 #### Defined in
 
-[packages/schemas/src/schemas/privatekey/types.ts:19](https://github.com/atala-community-projects/pluto-encrypted/blob/879549ef/packages/schemas/src/schemas/privatekey/types.ts#L19)
+[packages/schemas/src/schemas/privatekey/types.ts:21](https://github.com/atala-community-projects/pluto-encrypted/blob/054e08f/packages/schemas/src/schemas/privatekey/types.ts#L21)

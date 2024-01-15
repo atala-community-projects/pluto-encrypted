@@ -27,7 +27,7 @@
 
 | Name | Type |
 | :------ | :------ |
-| `this` | [`StaticRxCollectionContext`](../modules/database-1.md#staticrxcollectioncontext)\<\{ `credentialrequestmetadatas`: [`CredentialRequestMetadataCollection`](../modules/database-1.md#credentialrequestmetadatacollection)  }\> |
+| `this` | [`PlutoDBontext`](../modules/database-1.md#plutodbontext) |
 | `linkSecretName` | `string` |
 
 #### Returns
@@ -36,7 +36,7 @@
 
 #### Defined in
 
-[packages/schemas/src/schemas/credentialRequestMetadata/types.ts:35](https://github.com/atala-community-projects/pluto-encrypted/blob/879549ef/packages/schemas/src/schemas/credentialRequestMetadata/types.ts#L35)
+[packages/schemas/src/schemas/credentialRequestMetadata/types.ts:36](https://github.com/atala-community-projects/pluto-encrypted/blob/054e08f/packages/schemas/src/schemas/credentialRequestMetadata/types.ts#L36)
 
 ___
 
@@ -48,7 +48,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `this` | [`StaticRxCollectionContext`](../modules/database-1.md#staticrxcollectioncontext)\<\{ `credentialrequestmetadatas`: [`CredentialRequestMetadataCollection`](../modules/database-1.md#credentialrequestmetadatacollection)  }\> |
+| `this` | [`PlutoDBontext`](../modules/database-1.md#plutodbontext) |
 | `metadata` | [`CredentialRequestMeta`](database-1.WALLET_SDK_DOMAIN.Anoncreds.CredentialRequestMeta.md) |
 | `linkSecret` | `string` |
 
@@ -58,4 +58,4 @@ ___
 
 #### Defined in
 
-[packages/schemas/src/schemas/credentialRequestMetadata/types.ts:39](https://github.com/atala-community-projects/pluto-encrypted/blob/879549ef/packages/schemas/src/schemas/credentialRequestMetadata/types.ts#L39)
+[packages/schemas/src/schemas/credentialRequestMetadata/types.ts:40](https://github.com/atala-community-projects/pluto-encrypted/blob/054e08f/packages/schemas/src/schemas/credentialRequestMetadata/types.ts#L40)

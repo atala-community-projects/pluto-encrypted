@@ -28,7 +28,7 @@
 
 | Name | Type |
 | :------ | :------ |
-| `this` | [`StaticRxCollectionContext`](../modules/database-1.md#staticrxcollectioncontext)\<\{ `privatekeys`: [`PrivateKeyColletion`](../modules/database-1.md#privatekeycolletion)  }\> |
+| `this` | [`PlutoDBontext`](../modules/database-1.md#plutodbontext) |
 | `id` | `string` |
 
 #### Returns
@@ -37,7 +37,7 @@
 
 #### Defined in
 
-[packages/schemas/src/schemas/privatekey/types.ts:35](https://github.com/atala-community-projects/pluto-encrypted/blob/879549ef/packages/schemas/src/schemas/privatekey/types.ts#L35)
+[packages/schemas/src/schemas/privatekey/types.ts:35](https://github.com/atala-community-projects/pluto-encrypted/blob/054e08f/packages/schemas/src/schemas/privatekey/types.ts#L35)
 
 ___
 
@@ -49,7 +49,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `this` | [`StaticRxCollectionContext`](../modules/database-1.md#staticrxcollectioncontext)\<\{ `privatekeys`: [`PrivateKeyColletion`](../modules/database-1.md#privatekeycolletion)  }\> |
+| `this` | [`PlutoDBontext`](../modules/database-1.md#plutodbontext) |
 | `did` | [`DID`](../classes/database-1.WALLET_SDK_DOMAIN.DID.md) |
 
 #### Returns
@@ -58,7 +58,7 @@ ___
 
 #### Defined in
 
-[packages/schemas/src/schemas/privatekey/types.ts:29](https://github.com/atala-community-projects/pluto-encrypted/blob/879549ef/packages/schemas/src/schemas/privatekey/types.ts#L29)
+[packages/schemas/src/schemas/privatekey/types.ts:31](https://github.com/atala-community-projects/pluto-encrypted/blob/054e08f/packages/schemas/src/schemas/privatekey/types.ts#L31)
 
 ___
 
@@ -70,7 +70,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `this` | [`StaticRxCollectionContext`](../modules/database-1.md#staticrxcollectioncontext)\<\{ `privatekeys`: [`PrivateKeyColletion`](../modules/database-1.md#privatekeycolletion)  }\> |
+| `this` | [`PlutoDBontext`](../modules/database-1.md#plutodbontext) |
 | `privateKey` | [`PrivateKey`](../classes/database-1.WALLET_SDK_DOMAIN.PrivateKey.md) |
 | `did` | [`DID`](../classes/database-1.WALLET_SDK_DOMAIN.DID.md) |
 | `keyPathIndex` | `number` |
@@ -81,4 +81,4 @@ ___
 
 #### Defined in
 
-[packages/schemas/src/schemas/privatekey/types.ts:23](https://github.com/atala-community-projects/pluto-encrypted/blob/879549ef/packages/schemas/src/schemas/privatekey/types.ts#L23)
+[packages/schemas/src/schemas/privatekey/types.ts:25](https://github.com/atala-community-projects/pluto-encrypted/blob/054e08f/packages/schemas/src/schemas/privatekey/types.ts#L25)

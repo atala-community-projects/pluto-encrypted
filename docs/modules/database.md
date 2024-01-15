@@ -32,7 +32,7 @@
 
 #### Defined in
 
-[packages/database/src/types.ts:4](https://github.com/atala-community-projects/pluto-encrypted/blob/879549ef/packages/database/src/types.ts#L4)
+[packages/database/src/types.ts:4](https://github.com/atala-community-projects/pluto-encrypted/blob/054e08f/packages/database/src/types.ts#L4)
 
 ## Variables
 
@@ -48,9 +48,8 @@ preferred underlying storage technology, most appropriate for your use case.
 
 | Name | Type |
 | :------ | :------ |
-| `createBaseEncrypted` | \<Collections\>(`options`: \{ `autoStart?`: `boolean` ; `collections?`: \{ [key in string \| number \| symbol]: RxCollectionCreator\<any\> } ; `encryptionKey`: `Uint8Array` ; `importData?`: `RxDumpDatabase`\<`Collections`\> ; `name`: `string` ; `storage`: [`RxStorage`](../interfaces/encryption.RxStorage.md)\<`any`, `any`\>  }) => `Promise`\<`DatabaseBase`\<`Collections`\>\> |
-| `createEncrypted` | \<Collections, ExtendedCollections, STATIC_RETURN\>(`options`: \{ `autoStart?`: `boolean` ; `collections?`: \{ [key in string \| number \| symbol]: RxCollectionCreator\<any\> } ; `encryptionKey`: `Uint8Array` ; `importData?`: `RxDumpDatabase`\<`ExtendedCollections`\> ; `name`: `string` ; `storage`: [`RxStorage`](../interfaces/encryption.RxStorage.md)\<`any`, `any`\> ; `withDefaultCollections?`: `boolean`  }) => `Promise`\<`DatabaseBase`\<`ExtendedCollections`\> & [`Pluto`](../interfaces/database-1.WALLET_SDK_DOMAIN.Pluto.md) & `STATIC_RETURN`\> |
+| `createEncrypted` | \<Collections\>(`options`: \{ `autoStart?`: `boolean` ; `collections`: \{ [key in string \| number \| symbol]: RxCollectionCreator\<any\> } ; `encryptionKey`: `Uint8Array` ; `importData?`: `RxDumpDatabase`\<`Collections`\> ; `name`: `string` ; `storage`: [`RxStorage`](../interfaces/encryption.RxStorage.md)\<`any`, `any`\>  }) => `Promise`\<`DatabaseBase`\<`Collections`\> & `UnionToIntersection`\<`ExtractStaticMethods`\<`Collections`[keyof `Collections`]\>\>\> |
 
 #### Defined in
 
-[packages/database/src/index.ts:26](https://github.com/atala-community-projects/pluto-encrypted/blob/879549ef/packages/database/src/index.ts#L26)
+[packages/database/src/index.ts:22](https://github.com/atala-community-projects/pluto-encrypted/blob/054e08f/packages/database/src/index.ts#L22)

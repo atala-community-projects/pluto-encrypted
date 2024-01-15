@@ -27,7 +27,7 @@
 
 | Name | Type |
 | :------ | :------ |
-| `this` | [`StaticRxCollectionContext`](../modules/database-1.md#staticrxcollectioncontext)\<\{ `mediators`: [`MediatorCollection`](../modules/database-1.md#mediatorcollection)  }\> |
+| `this` | [`PlutoDBontext`](../modules/database-1.md#plutodbontext) |
 
 #### Returns
 
@@ -35,7 +35,7 @@
 
 #### Defined in
 
-[packages/schemas/src/schemas/mediator/types.ts:20](https://github.com/atala-community-projects/pluto-encrypted/blob/879549ef/packages/schemas/src/schemas/mediator/types.ts#L20)
+[packages/schemas/src/schemas/mediator/types.ts:20](https://github.com/atala-community-projects/pluto-encrypted/blob/054e08f/packages/schemas/src/schemas/mediator/types.ts#L20)
 
 ___
 
@@ -47,7 +47,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `this` | [`StaticRxCollectionContext`](../modules/database-1.md#staticrxcollectioncontext)\<\{ `mediators`: [`MediatorCollection`](../modules/database-1.md#mediatorcollection)  }\> |
+| `this` | [`PlutoDBontext`](../modules/database-1.md#plutodbontext) |
 | `mediator` | [`DID`](../classes/database-1.WALLET_SDK_DOMAIN.DID.md) |
 | `host` | [`DID`](../classes/database-1.WALLET_SDK_DOMAIN.DID.md) |
 | `routing` | [`DID`](../classes/database-1.WALLET_SDK_DOMAIN.DID.md) |
@@ -58,4 +58,4 @@ ___
 
 #### Defined in
 
-[packages/schemas/src/schemas/mediator/types.ts:21](https://github.com/atala-community-projects/pluto-encrypted/blob/879549ef/packages/schemas/src/schemas/mediator/types.ts#L21)
+[packages/schemas/src/schemas/mediator/types.ts:21](https://github.com/atala-community-projects/pluto-encrypted/blob/054e08f/packages/schemas/src/schemas/mediator/types.ts#L21)

@@ -16,8 +16,19 @@ import { DatabaseBase } from '@pluto-encrypted/shared'
 import { UnionToIntersection } from '@pluto-encrypted/shared'
 import { ExtractStaticMethods } from '@pluto-encrypted/shared'
 
-export type PlutoDBontext = DatabaseBase<PlutoCollections> & UnionToIntersection<ExtractStaticMethods<
-    PlutoCollections[keyof PlutoCollections]
+type Collections = {
+    messages: MessageColletion;
+    dids: DIDCollection;
+    didpairs: DIDPairCollection;
+    mediators: MediatorCollection;
+    privatekeys: PrivateKeyColletion;
+    credentials: CredentialCollection;
+    credentialrequestmetadatas: CredentialRequestMetadataCollection;
+    linksecrets: LinkSecretColletion;
+}
+
+export type PlutoDBontext = DatabaseBase<Collections> & UnionToIntersection<ExtractStaticMethods<
+    Collections[keyof Collections]
 >>
 
 export function getDefaultCollections(extendedCollections: { [name: string]: RxCollectionCreator } = {}): { [name: string]: RxCollectionCreator } & PlutoCollectionsCreator {

@@ -26,7 +26,7 @@
 
 #### Defined in
 
-[packages/shared/src/index.ts:16](https://github.com/atala-community-projects/pluto-encrypted/blob/879549ef/packages/shared/src/index.ts#L16)
+[packages/shared/src/index.ts:25](https://github.com/atala-community-projects/pluto-encrypted/blob/054e08f/packages/shared/src/index.ts#L25)
 
 ___
 
@@ -36,7 +36,7 @@ ___
 
 #### Defined in
 
-[packages/shared/src/index.ts:15](https://github.com/atala-community-projects/pluto-encrypted/blob/879549ef/packages/shared/src/index.ts#L15)
+[packages/shared/src/index.ts:24](https://github.com/atala-community-projects/pluto-encrypted/blob/054e08f/packages/shared/src/index.ts#L24)
 
 ___
 
@@ -46,4 +46,4 @@ ___
 
 #### Defined in
 
-[packages/shared/src/index.ts:17](https://github.com/atala-community-projects/pluto-encrypted/blob/879549ef/packages/shared/src/index.ts#L17)
+[packages/shared/src/index.ts:26](https://github.com/atala-community-projects/pluto-encrypted/blob/054e08f/packages/shared/src/index.ts#L26)
