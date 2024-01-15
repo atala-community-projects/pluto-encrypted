@@ -16,7 +16,14 @@ import {
 
 export type * from './types'
 
-type ExtractDTcol2<P> = P extends RxCollectionCreator<infer T> ? T : any
+
+type ExtractStaticMethods<T> = {
+  [K in keyof T as T[K] extends (...args: any[]) => any ? K : never]: T[K];
+};
+
+type UnionToIntersection<U> =
+  (U extends any ? (k: U) => void : never) extends ((k: infer I) => void) ? I : never;
+
 
 /**
  * Pluto is a storage interface describing storage requirements of the edge agents
@@ -24,7 +31,7 @@ type ExtractDTcol2<P> = P extends RxCollectionCreator<infer T> ? T : any
  * preferred underlying storage technology, most appropriate for your use case.
  */
 export const Database = {
-  createBaseEncrypted: async function createBaseEncrypted<
+  createEncrypted: async function createEncrypted<
     Collections extends CollectionsOfDatabase,
   >(options: {
     name: string;
@@ -32,67 +39,26 @@ export const Database = {
     importData?: RxDumpDatabase<Collections>;
     storage: RxStorage<any, any>;
     autoStart?: boolean;
-    collections?: {
+    collections: {
       [key in keyof Collections]: RxCollectionCreator<any>;
     };
   }) {
-
-    const {
-      name,
-      storage,
-      encryptionKey,
-      importData,
-      autoStart = true,
-      collections
-    } = options
-
-    if (!storage) {
-      throw new Error('Please provide a valid storage.')
-    }
-
-    const instance = new DatabaseBase<Collections>({
-      ignoreDuplicate: true,
-      name,
-      storage,
-      password: Buffer.from(encryptionKey).toString('hex')
-    })
-
-    if (autoStart) {
-      await instance.start(collections)
-    }
-
-    if (importData) {
-      await instance.db.importJSON(importData)
-    }
-
-    return instance
-  },
-  createEncrypted: async function createEncrypted<
-    Collections extends CollectionsOfDatabase,
-    ExtendedCollections extends CollectionsOfDatabase = Collections & { [key in keyof ReturnType<typeof getDefaultCollections>]: RxCollection<ExtractDTcol2<ValuesOf<typeof getDefaultCollections>[key]>> },
-    STATIC_RETURN = ExtendedCollections[keyof ExtendedCollections]['statics']
-  >(options: {
-    name: string;
-    encryptionKey: Uint8Array;
-    importData?: RxDumpDatabase<ExtendedCollections>;
-    storage: RxStorage<any, any>;
-    autoStart?: boolean;
-    withDefaultCollections?: boolean;
-    collections?: {
-      [key in keyof Collections]: RxCollectionCreator<any>;
-    };
-  }): Promise<DatabaseBase<ExtendedCollections> & SDK.Domain.Pluto & STATIC_RETURN> {
     try {
-      const { withDefaultCollections = true, collections } = options;
-      const collectionMap = new Map<any, RxCollectionCreator<any>>();
+      const {
+        collections,
+        name,
+        storage,
+        encryptionKey,
+        importData,
+        autoStart = true,
+      } = options;
 
-      if (withDefaultCollections) {
-        const defaultCollections = getDefaultCollections()
-        Object.keys(getDefaultCollections()).forEach((collectionName) => {
-          const currentCollection = defaultCollections[collectionName]!;
-          collectionMap.set(collectionName, currentCollection)
-        });
+
+      if (!storage) {
+        throw new Error('Please provide a valid storage.')
       }
+
+      const collectionMap = new Map<any, RxCollectionCreator<any>>();
 
       if (collections) {
         Object.keys(collections).forEach((collectionName) => {
@@ -101,11 +67,20 @@ export const Database = {
         })
       }
 
+      const instance = new DatabaseBase<Collections>({
+        ignoreDuplicate: true,
+        name,
+        storage,
+        password: Buffer.from(encryptionKey).toString('hex')
+      })
 
-      const instance = await this.createBaseEncrypted<ExtendedCollections>({
-        ...options,
-        collections: Object.fromEntries(collectionMap)
-      });
+      if (autoStart) {
+        await instance.start(collections)
+      }
+
+      if (importData) {
+        await instance.db.importJSON(importData)
+      }
 
       const currentCollections = instance.db.collections;
       const collectionKeys = Object.keys(currentCollections)
@@ -121,7 +96,12 @@ export const Database = {
         return statics
       }, new Map<string, Function>());
 
-      const proxy = new Proxy<DatabaseBase<ExtendedCollections> & SDK.Domain.Pluto & STATIC_RETURN>(instance as any, {
+
+
+
+      const proxy = new Proxy<DatabaseBase<Collections> & UnionToIntersection<ExtractStaticMethods<
+        Collections[keyof Collections]
+      >>>(instance as any, {
         get(target, propAny) {
           const prop = String(propAny)
           const destination = target[prop]
@@ -139,7 +119,7 @@ export const Database = {
         },
       })
 
-      return proxy;
+      return proxy
     } catch (err) {
       /* istanbul ignore else */
       if ((err as RxError).code === 'DB1') {

@@ -1,6 +1,5 @@
 import SDK from '@atala/prism-wallet-sdk'
 import { RxDocument, KeyFunctionMap, RxCollection } from 'rxdb'
-import { StaticRxCollectionContext } from '../../types'
 
 
 
@@ -24,12 +23,10 @@ export interface LinkSecretMethodTypes extends KeyFunctionMap {
 
 export interface LinkSecretStaticMethodTypes extends KeyFunctionMap {
     storeLinkSecret(
-        this: StaticRxCollectionContext<{ linksecrets: LinkSecretColletion }>,
         linkSecret: string,
         linkSecretName: string
     ): Promise<void>
     getLinkSecret(
-        this: StaticRxCollectionContext<{ linksecrets: LinkSecretColletion }>,
         linkSecretName?: string | undefined
     ): Promise<string | null>
 }

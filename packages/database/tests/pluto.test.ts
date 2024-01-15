@@ -12,8 +12,9 @@ import IndexDb from "../../indexdb/src";
 import { createLevelDBStorage } from '../../leveldb/src'
 
 import * as Fixtures from "./fixtures";
-import { Database } from "../src";
-import { PrivateKeyMethods, LinkSecretSchemaType, LinkSecretStaticMethodTypes, LinkSecretMethodTypes, LinkSecretMethods, LinkSecretSchema, LinkSecretStaticMethods, getDefaultCollections } from "@pluto-encrypted/schemas";
+import { Database, ExtractStaticMethods, UnionToIntersection } from "../src";
+import { PrivateKeyMethods, LinkSecretSchemaType, LinkSecretStaticMethodTypes, LinkSecretMethodTypes, LinkSecretMethods, LinkSecretSchema, LinkSecretStaticMethods, getDefaultCollections, PlutoCollections, CredentialCollection, CredentialRequestMetadataCollection, DIDCollection, DIDPairCollection, LinkSecretColletion, MediatorCollection, MessageColletion, PrivateKeyColletion, MessageSchemaType, MessageMethodTypes, MessageStaticMethodTypes } from "@pluto-encrypted/schemas";
+import { DatabaseBase } from "@pluto-encrypted/shared";
 
 const {
     AnonCredsCredential,
@@ -76,8 +77,22 @@ function getStorageDBName(storage: RxStorage<any, any>) {
     return `${databaseName}${randomUUID()}`
 }
 
+type DefaultCollections = {
+    dids: DIDCollection;
+    didpairs: DIDPairCollection;
+    mediators: MediatorCollection;
+    privatekeys: PrivateKeyColletion;
+    credentials: CredentialCollection;
+    credentialrequestmetadatas: CredentialRequestMetadataCollection;
+    linksecrets: LinkSecretColletion;
+    messages: MessageColletion;
+}
+
 describe("Pluto encrypted testing with different storages", () => {
-    let db: Awaited<ReturnType<typeof Database.createEncrypted>>;
+    let db: DatabaseBase<DefaultCollections> & UnionToIntersection<ExtractStaticMethods<
+        DefaultCollections[keyof DefaultCollections]
+    >>;
+
     let currentDBName: string;
 
     afterEach(async () => {
@@ -97,13 +112,15 @@ describe("Pluto encrypted testing with different storages", () => {
         it(storageName + "Should throw an error if pluto has is startede with a wrong database password", async ({ expect }) => {
             const forceDatabaseName = getStorageDBName(storage)
             const createDatabase = async (password: Uint8Array) => {
-                const db = await Database.createEncrypted(
+                const db = await Database.createEncrypted<DefaultCollections>(
                     {
                         name: forceDatabaseName,
                         encryptionKey: password,
-                        storage: storage
+                        storage: storage,
+                        collections: getDefaultCollections()
                     }
                 );
+
                 await db.getAllPrismDIDs()
                 const did = SDK.Domain.DID.fromString(
                     "did:prism:733e594871d7700d35e6116011a08fc11e88ff9d366d8b5571ffc1aa18d249ea:Ct8BCtwBEnQKH2F1dGhlbnRpY2F0aW9uYXV0aGVudGljYXRpb25LZXkQBEJPCglzZWNwMjU2azESIDS5zeYUkLCSAJLI6aLXRTPRxstCLPUEI6TgBrAVCHkwGiDk-ffklrHIFW7pKkT8i-YksXi-XXi5h31czUMaVClcpxJkCg9tYXN0ZXJtYXN0ZXJLZXkQAUJPCglzZWNwMjU2azESIDS5zeYUkLCSAJLI6aLXRTPRxstCLPUEI6TgBrAVCHkwGiDk-ffklrHIFW7pKkT8i-YksXi-XXi5h31czUMaVClcpw"
@@ -127,11 +144,12 @@ describe("Pluto encrypted testing with different storages", () => {
 
             beforeEach(async () => {
                 currentDBName = getStorageDBName(storage);
-                db = await Database.createEncrypted(
+                db = await Database.createEncrypted<DefaultCollections>(
                     {
                         name: currentDBName,
                         encryptionKey: defaultPassword,
-                        storage: storage
+                        storage: storage,
+                        collections: getDefaultCollections()
                     }
                 );
             });
@@ -144,14 +162,16 @@ describe("Pluto encrypted testing with different storages", () => {
 
             it(storageName + "Should throw an error if pluto has not been started", async ({ expect }) => {
                 const createDatabase = async () => {
-                    const restored = await Database.createEncrypted(
+                    const restored = await Database.createEncrypted<DefaultCollections>(
                         {
                             name: currentDBName,
                             encryptionKey: defaultPassword,
                             storage: storage,
-                            autoStart: false
+                            autoStart: false,
+                            collections: getDefaultCollections()
                         }
                     );
+
                     await restored.getAllMediators()
                 }
 
@@ -160,12 +180,22 @@ describe("Pluto encrypted testing with different storages", () => {
 
             it(storageName + "Should throw an error if pluto has been initialised with no storage.", async ({ expect }) => {
                 const createDatabase = async () => {
-                    await Database.createEncrypted(
+                    await Database.createEncrypted<{
+                        dids: DIDCollection;
+                        didpairs: DIDPairCollection;
+                        mediators: MediatorCollection;
+                        privatekeys: PrivateKeyColletion;
+                        credentials: CredentialCollection;
+                        credentialrequestmetadatas: CredentialRequestMetadataCollection;
+                        linksecrets: LinkSecretColletion;
+                        messages: MessageColletion;
+                    }>(
                         {
                             name: currentDBName,
                             encryptionKey: defaultPassword,
                             storage: undefined as any,
-                            autoStart: false
+                            autoStart: false,
+                            collections: getDefaultCollections()
                         }
                     );
                 }
@@ -557,12 +587,13 @@ describe("Pluto encrypted testing with different storages", () => {
                     }
                 }
 
-                const restored = await Database.createEncrypted(
+                const restored = await Database.createEncrypted<DefaultCollections>(
                     {
                         name: currentDBName,
                         encryptionKey: defaultPassword,
                         importData: backup,
-                        storage: storage
+                        storage: storage,
+                        collections: getDefaultCollections()
                     }
                 );
 
@@ -769,11 +800,20 @@ describe("Pluto encrypted testing with different storages", () => {
             it(storageName + "Should run migration once the schema version has changed and user had existing data", async ({ expect }) => {
 
                 const forceDatabaseName = `${databaseName}${randomUUID()}`
-                const db = await Database.createEncrypted(
+                const db = await Database.createEncrypted<{
+                    linksecrets: RxCollection<
+                        LinkSecretSchemaType,
+                        LinkSecretMethodTypes,
+                        LinkSecretStaticMethodTypes
+                    >
+                }>(
                     {
                         name: forceDatabaseName,
                         encryptionKey: defaultPassword,
                         storage,
+                        collections: {
+                            linksecrets: getDefaultCollections().linksecrets
+                        }
                     }
                 );
 
@@ -835,11 +875,18 @@ describe("Pluto encrypted testing with different storages", () => {
             it(storageName + "Should run migration once the schema version has changed its primaryKey and user had existing data", async ({ expect }) => {
 
                 const forceDatabaseName = `${databaseName}${randomUUID()}`
-                const db = await Database.createEncrypted(
+                const db = await Database.createEncrypted<{
+                    linksecrets: RxCollection<
+                        LinkSecretSchemaType,
+                        LinkSecretMethodTypes,
+                        LinkSecretStaticMethodTypes
+                    >
+                }>(
                     {
                         name: forceDatabaseName,
                         encryptionKey: defaultPassword,
                         storage,
+                        collections: getDefaultCollections()
                     }
                 );
 
@@ -903,7 +950,7 @@ describe("Pluto encrypted testing with different storages", () => {
             it(storageName + "Should run migration once the schema version has changed and user had existing data over time, with multiple versions", async ({ expect }) => {
 
                 const forceDatabaseName = `${databaseName}${randomUUID()}`
-                const db = await Database.createEncrypted(
+                const db = await Database.createEncrypted<DefaultCollections>(
                     {
                         name: forceDatabaseName,
                         encryptionKey: defaultPassword,
@@ -914,13 +961,7 @@ describe("Pluto encrypted testing with different storages", () => {
 
                 await db.storeLinkSecret("demo123", "demo321");
 
-                const migrationDB = await Database.createEncrypted<{
-                    linksecrets: RxCollection<
-                        LinkSecretSchemaType,
-                        LinkSecretMethodTypes,
-                        LinkSecretStaticMethodTypes
-                    >
-                }>(
+                const migrationDB = await Database.createEncrypted<DefaultCollections>(
                     {
                         name: forceDatabaseName,
                         encryptionKey: defaultPassword,
@@ -978,7 +1019,7 @@ describe("Pluto encrypted testing with different storages", () => {
             it(storageName + "Should allow anyone to add new models to the database", async ({ expect }) => {
                 const forceDatabaseName = `${databaseName}${randomUUID()}`
 
-                const db = await Database.createEncrypted<{
+                const db = await Database.createEncrypted<DefaultCollections & {
                     demo: RxCollection<
                         LinkSecretSchemaType,
                         LinkSecretMethodTypes,
@@ -990,6 +1031,7 @@ describe("Pluto encrypted testing with different storages", () => {
                         encryptionKey: defaultPassword,
                         storage,
                         collections: {
+                            ...getDefaultCollections(),
                             demo: {
                                 methods: LinkSecretMethods,
                                 schema: LinkSecretSchema,
@@ -1012,7 +1054,7 @@ describe("Pluto encrypted testing with different storages", () => {
             it(storageName + "Should allow anyone to add new models to the database without using the same models", async ({ expect }) => {
                 const forceDatabaseName = `${databaseName}${randomUUID()}`
 
-                const db = await Database.createBaseEncrypted<{
+                const db = await Database.createEncrypted<DefaultCollections & {
                     demo: RxCollection<
                         LinkSecretSchemaType,
                         LinkSecretMethodTypes,
@@ -1024,6 +1066,7 @@ describe("Pluto encrypted testing with different storages", () => {
                         encryptionKey: defaultPassword,
                         storage,
                         collections: {
+                            ...getDefaultCollections(),
                             demo: {
                                 methods: LinkSecretMethods,
                                 schema: LinkSecretSchema,
@@ -1048,24 +1091,24 @@ describe("Pluto encrypted testing with different storages", () => {
                 const forceDatabaseName = `${databaseName}${randomUUID()}`
 
 
-                await expect(() => Database.createEncrypted<{
+                await expect(() => Database.createEncrypted<DefaultCollections & {
                     demo: RxCollection<
                         LinkSecretSchemaType,
                         LinkSecretMethodTypes,
                         { hola: (demo: boolean, demo2: boolean) => void }
-                    >,
+                    >;
                     demo2: RxCollection<
                         LinkSecretSchemaType,
                         LinkSecretMethodTypes,
                         { hola: (demo: boolean, demo2: boolean) => void }
-                    >
+                    >;
                 }>(
                     {
                         name: forceDatabaseName,
                         encryptionKey: defaultPassword,
                         storage,
-                        withDefaultCollections: false,
                         collections: {
+                            ...getDefaultCollections(),
                             demo: {
                                 methods: LinkSecretMethods,
                                 schema: LinkSecretSchema,
@@ -1094,12 +1137,12 @@ describe("Pluto encrypted testing with different storages", () => {
             it(storageName + "Should allow anyone to add new models to the database without using the same models and the defaultModels won't be available", async ({ expect }) => {
                 const forceDatabaseName = `${databaseName}${randomUUID()}`
 
-                const db = await Database.createBaseEncrypted<{
+                const db = await Database.createEncrypted<{
                     demo: RxCollection<
                         LinkSecretSchemaType,
                         LinkSecretMethodTypes,
                         { hola: (demo: boolean, demo2: boolean) => void }
-                    >
+                    >;
                 }>(
                     {
                         name: forceDatabaseName,
@@ -1119,9 +1162,11 @@ describe("Pluto encrypted testing with different storages", () => {
                     }
                 );
 
+
                 expect((db.db.collections as any).credentials).toBeUndefined()
                 expect(db.db.collections.demo).to.not.toBeUndefined();
                 expect(db.db.collections.demo.hola).to.not.toBeUndefined();
+                expect(db.hola).to.not.toBeUndefined();
             })
 
         });

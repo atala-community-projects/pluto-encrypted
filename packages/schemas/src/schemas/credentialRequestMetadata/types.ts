@@ -33,11 +33,9 @@ export interface CredentialRequestMetadataMethodTypes extends KeyFunctionMap {
 
 export interface CredentialRequestMetadataStaticMethodTypes extends KeyFunctionMap {
     fetchCredentialMetadata(
-        this: StaticRxCollectionContext<{ credentialrequestmetadatas: CredentialRequestMetadataCollection }>,
         linkSecretName: string
     ): Promise<SDK.Domain.Anoncreds.CredentialRequestMeta | null>
     storeCredentialMetadata(
-        this: StaticRxCollectionContext<{ credentialrequestmetadatas: CredentialRequestMetadataCollection }>,
         metadata: SDK.Domain.Anoncreds.CredentialRequestMeta,
         linkSecret: string
     ): Promise<void>

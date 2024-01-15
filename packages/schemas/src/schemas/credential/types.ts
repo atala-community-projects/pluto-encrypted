@@ -28,12 +28,12 @@ export interface CredentialMethodTypes extends KeyFunctionMap {
 }
 
 export interface CredentialStaticMethodTypes extends KeyFunctionMap {
-    getAllCredentials(this: StaticRxCollectionContext<{ credentials: CredentialCollection }>): Promise<SDK.Domain.Credential[]>
-    storeCredential(this: StaticRxCollectionContext<{ credentials: CredentialCollection }>, credential: SDK.Domain.Credential): Promise<void>
+    getAllCredentials(): Promise<SDK.Domain.Credential[]>
+    storeCredential(credential: SDK.Domain.Credential): Promise<void>
 }
 
 export type CredentialCollection = RxCollection<
     CredentialSchemaType,
     CredentialMethodTypes,
-    CredentialDocument
+    CredentialStaticMethodTypes
 >

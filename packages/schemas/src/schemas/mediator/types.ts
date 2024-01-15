@@ -1,6 +1,5 @@
 import { KeyFunctionMap, RxCollection, RxDocument } from "rxdb"
 import SDK from '@atala/prism-wallet-sdk'
-import { StaticRxCollectionContext } from "../../types"
 
 export interface MediatorSchemaType {
     id: string
@@ -17,9 +16,8 @@ export interface MediatorMethodTypes extends KeyFunctionMap {
 }
 
 export interface MediatorStaticMethodTypes extends KeyFunctionMap {
-    getAllMediators(this: StaticRxCollectionContext<{ mediators: MediatorCollection }>): Promise<SDK.Domain.Mediator[]>
+    getAllMediators(): Promise<SDK.Domain.Mediator[]>
     storeMediator(
-        this: StaticRxCollectionContext<{ mediators: MediatorCollection }>,
         mediator: SDK.Domain.DID,
         host: SDK.Domain.DID,
         routing: SDK.Domain.DID

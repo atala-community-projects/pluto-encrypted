@@ -21,21 +21,16 @@ export interface PrivateKeyMethodTypes extends KeyFunctionMap {
 
 export interface PrivateKeyStaticMethodTypes extends KeyFunctionMap {
     storePrivateKeys(
-        this: StaticRxCollectionContext<{ privatekeys: PrivateKeyColletion }>,
         privateKey: SDK.Domain.PrivateKey,
         did: SDK.Domain.DID,
         keyPathIndex: number
     ): Promise<void>
     getDIDPrivateKeysByDID(
-        this: StaticRxCollectionContext<{
-            privatekeys: PrivateKeyColletion
-        }>,
+
         did: SDK.Domain.DID
     ): Promise<SDK.Domain.PrivateKey[]>
     getDIDPrivateKeyByID(
-        this: StaticRxCollectionContext<{
-            privatekeys: PrivateKeyColletion
-        }>,
+
         id: string
     ): Promise<SDK.Domain.PrivateKey | null>
 }

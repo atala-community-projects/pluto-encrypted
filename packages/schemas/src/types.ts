@@ -29,16 +29,17 @@ export type Schema<T> = RxJsonSchema<T> & {
     encrypted: Array<keyof T>
 }
 
-export interface PlutoCollections {
-    messages: MessageColletion
-    dids: DIDCollection
-    didpairs: DIDPairCollection
-    mediators: MediatorCollection
-    privatekeys: PrivateKeyColletion
-    credentials: CredentialCollection
-    credentialrequestmetadatas: CredentialRequestMetadataCollection
-    linksecrets: LinkSecretColletion
-}
+export type PlutoCollections = {
+    messages: MessageColletion;
+    dids: DIDCollection;
+    didpairs: DIDPairCollection;
+    mediators: MediatorCollection;
+    privatekeys: PrivateKeyColletion;
+    credentials: CredentialCollection;
+    credentialrequestmetadatas: CredentialRequestMetadataCollection;
+    linksecrets: LinkSecretColletion;
+} & { [name: string]: RxCollection }
+
 export interface PlutoCollectionsCreator {
     messages: RxCollectionCreator
     dids: RxCollectionCreator
@@ -52,6 +53,6 @@ export interface PlutoCollectionsCreator {
 
 export type PlutoInstance<
     Collections = CollectionsOfDatabase,
-> = DatabaseBase<Collections & PlutoCollections> & SDK.Domain.Pluto
+> = DatabaseBase<Collections>
 export type DBOptions = RxDatabaseCreator;
 export type StaticRxCollectionContext<Collections = { [name: string]: RxCollection }> = PlutoInstance<Collections>
