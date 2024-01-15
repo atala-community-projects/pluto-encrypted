@@ -1,6 +1,7 @@
 import { KeyFunctionMap, RxCollection, RxDocument } from "rxdb"
 import SDK from '@atala/prism-wallet-sdk'
 import { StaticRxCollectionContext } from "../../types"
+import { PlutoDBontext } from "../.."
 
 export interface CredentialSubjectType {
     type: string
@@ -28,8 +29,8 @@ export interface CredentialMethodTypes extends KeyFunctionMap {
 }
 
 export interface CredentialStaticMethodTypes extends KeyFunctionMap {
-    getAllCredentials(): Promise<SDK.Domain.Credential[]>
-    storeCredential(credential: SDK.Domain.Credential): Promise<void>
+    getAllCredentials(this: PlutoDBontext): Promise<SDK.Domain.Credential[]>
+    storeCredential(this: PlutoDBontext, credential: SDK.Domain.Credential): Promise<void>
 }
 
 export type CredentialCollection = RxCollection<

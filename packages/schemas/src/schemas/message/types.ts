@@ -1,6 +1,6 @@
 import SDK from '@atala/prism-wallet-sdk'
 import { RxDocument, KeyFunctionMap, RxCollection } from 'rxdb'
-import { StaticRxCollectionContext } from '../../types'
+import { PlutoDBontext } from '../..'
 
 
 export interface MessageSchemaType {
@@ -30,46 +30,46 @@ export interface MessageMethodTypes extends KeyFunctionMap {
 
 export interface MessageStaticMethodTypes extends KeyFunctionMap {
     getMessage(
-
+        this: PlutoDBontext,
         id: string
     ): Promise<SDK.Domain.Message | null>
     storeMessage(
-
+        this: PlutoDBontext,
         message: SDK.Domain.Message
     ): Promise<void>
     storeMessages(
-
+        this: PlutoDBontext,
         messages: SDK.Domain.Message[]
     ): Promise<void>
     getAllMessages(
-
+        this: PlutoDBontext,
     ): Promise<SDK.Domain.Message[]>
     getAllMessagesByFromToDID(
-
+        this: PlutoDBontext,
         from: SDK.Domain.DID,
         to: SDK.Domain.DID
     ): Promise<SDK.Domain.Message[]>
     getAllMessagesOfType(
-
+        this: PlutoDBontext,
         type: string,
         relatedWithDID?: SDK.Domain.DID | undefined
     ): Promise<SDK.Domain.Message[]>
     getAllMessagesReceivedFrom(
-
+        this: PlutoDBontext,
         did: SDK.Domain.DID
     ): Promise<SDK.Domain.Message[]>
     getAllMessagesSentTo(
-
+        this: PlutoDBontext,
         did: SDK.Domain.DID
     ): Promise<SDK.Domain.Message[]>
     getAllMessagesReceived(
-
+        this: PlutoDBontext,
     ): Promise<SDK.Domain.Message[]>
     getAllMessagesSent(
-
+        this: PlutoDBontext,
     ): Promise<SDK.Domain.Message[]>
     getAllMessagesByDID(
-
+        this: PlutoDBontext,
         did: SDK.Domain.DID
     ): Promise<SDK.Domain.Message[]>
 }

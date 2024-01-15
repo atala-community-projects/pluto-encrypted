@@ -11,6 +11,15 @@ import { CollectionsOfDatabase, RxCollectionCreator, addRxPlugin, createRxDataba
 export type { RxDocumentMeta, PlainJsonValue, PropertyType, PlainSimpleJsonObject } from 'rxdb/dist/types/types'
 export type { MangoQuerySelector, RxAttachmentDataBase, MangoQueryOperators, RxDocumentData, RxAttachmentData } from 'rxdb'
 
+export type ExtractStaticMethods<T> = {
+  [K in keyof T as T[K] extends (...args: any[]) => any ? K : never]: T[K];
+};
+
+export type UnionToIntersection<U> =
+  (U extends any ? (k: U) => void : never) extends ((k: infer I) => void) ? I : never;
+
+
+
 export interface DocWithIndexString<RxDocType> {
   id: string
   doc: RxDocumentData<RxDocType>

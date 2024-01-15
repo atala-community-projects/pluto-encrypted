@@ -1,5 +1,6 @@
 import { KeyFunctionMap, RxCollection, RxDocument } from "rxdb"
 import SDK from '@atala/prism-wallet-sdk'
+import { PlutoDBontext } from "../.."
 
 export interface MediatorSchemaType {
     id: string
@@ -16,8 +17,9 @@ export interface MediatorMethodTypes extends KeyFunctionMap {
 }
 
 export interface MediatorStaticMethodTypes extends KeyFunctionMap {
-    getAllMediators(): Promise<SDK.Domain.Mediator[]>
+    getAllMediators(this: PlutoDBontext): Promise<SDK.Domain.Mediator[]>
     storeMediator(
+        this: PlutoDBontext,
         mediator: SDK.Domain.DID,
         host: SDK.Domain.DID,
         routing: SDK.Domain.DID

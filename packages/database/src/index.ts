@@ -2,9 +2,7 @@
  * @packageDocumentation
  * @module database
  */
-import SDK from '@atala/prism-wallet-sdk'
-import { getDefaultCollections } from '@pluto-encrypted/schemas'
-import { DatabaseBase, ValuesOf } from '@pluto-encrypted/shared'
+import { DatabaseBase, ExtractStaticMethods, UnionToIntersection } from '@pluto-encrypted/shared'
 import {
   CollectionsOfDatabase,
   RxCollection,
@@ -14,16 +12,7 @@ import {
   RxStorage
 } from 'rxdb'
 
-export type * from './types'
-
-
-type ExtractStaticMethods<T> = {
-  [K in keyof T as T[K] extends (...args: any[]) => any ? K : never]: T[K];
-};
-
-type UnionToIntersection<U> =
-  (U extends any ? (k: U) => void : never) extends ((k: infer I) => void) ? I : never;
-
+export type * from './types';
 
 /**
  * Pluto is a storage interface describing storage requirements of the edge agents

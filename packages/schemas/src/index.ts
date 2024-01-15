@@ -3,15 +3,22 @@
  * @module database
  */
 import { RxCollectionCreator } from 'rxdb'
-import { CredentialSchema, CredentialMethods, CredentialStaticMethods } from './schemas/credential'
-import { CredentialRequestMetadataSchema, CredentialRequestMetadataMethods, CredentialRequestMetadataStaticMethods } from './schemas/credentialRequestMetadata'
-import { DIDSchema, DIDStaticMethods } from './schemas/did'
-import { DIDPairSchema, DIDPairStaticMethods } from './schemas/didpair'
-import { LinkSecretSchema, LinkSecretMethods, LinkSecretStaticMethods } from './schemas/linksecret'
-import { MediatorSchema, MediatorMethods, MediatorStaticMethods } from './schemas/mediator'
-import { MessageSchema, MessageMethods, MessageStaticMethods } from './schemas/message'
-import { PrivateKeySchema, PrivateKeyMethods, PrivateKeyStaticMethods } from './schemas/privatekey'
-import { PlutoCollectionsCreator } from './types'
+import { CredentialSchema, CredentialMethods, CredentialStaticMethods, CredentialCollection } from './schemas/credential'
+import { CredentialRequestMetadataSchema, CredentialRequestMetadataMethods, CredentialRequestMetadataStaticMethods, CredentialRequestMetadataCollection } from './schemas/credentialRequestMetadata'
+import { DIDCollection, DIDSchema, DIDStaticMethods } from './schemas/did'
+import { DIDPairCollection, DIDPairSchema, DIDPairStaticMethods } from './schemas/didpair'
+import { LinkSecretSchema, LinkSecretMethods, LinkSecretStaticMethods, LinkSecretColletion } from './schemas/linksecret'
+import { MediatorSchema, MediatorMethods, MediatorStaticMethods, MediatorCollection } from './schemas/mediator'
+import { MessageSchema, MessageMethods, MessageStaticMethods, MessageColletion } from './schemas/message'
+import { PrivateKeySchema, PrivateKeyMethods, PrivateKeyStaticMethods, PrivateKeyColletion } from './schemas/privatekey'
+import { PlutoCollections, PlutoCollectionsCreator } from './types'
+import { DatabaseBase } from '@pluto-encrypted/shared'
+import { UnionToIntersection } from '@pluto-encrypted/shared'
+import { ExtractStaticMethods } from '@pluto-encrypted/shared'
+
+export type PlutoDBontext = DatabaseBase<PlutoCollections> & UnionToIntersection<ExtractStaticMethods<
+    PlutoCollections[keyof PlutoCollections]
+>>
 
 export function getDefaultCollections(extendedCollections: { [name: string]: RxCollectionCreator } = {}): { [name: string]: RxCollectionCreator } & PlutoCollectionsCreator {
     return {

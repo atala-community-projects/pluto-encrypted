@@ -1,5 +1,6 @@
 import SDK from '@atala/prism-wallet-sdk'
 import { RxDocument, KeyFunctionMap, RxCollection } from 'rxdb'
+import { PlutoDBontext } from '../..'
 
 
 
@@ -23,10 +24,12 @@ export interface LinkSecretMethodTypes extends KeyFunctionMap {
 
 export interface LinkSecretStaticMethodTypes extends KeyFunctionMap {
     storeLinkSecret(
+        this: PlutoDBontext,
         linkSecret: string,
         linkSecretName: string
     ): Promise<void>
     getLinkSecret(
+        this: PlutoDBontext,
         linkSecretName?: string | undefined
     ): Promise<string | null>
 }
