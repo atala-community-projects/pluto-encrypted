@@ -64,3 +64,5 @@ const storage: RxStorage<any, any> = wrappedKeyEncryptionStorage({
 })
 
 export default storage
+
+

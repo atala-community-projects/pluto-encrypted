@@ -47,10 +47,28 @@
       "type": "node"
     },
     {
+      "name": "IAGON",
+      "program": "${workspaceFolder}/examples/node/src/iagon.js",
+      "request": "launch",
+      "skipFiles": [
+        "<node_internals>/**"
+      ],
+      "type": "node",
+      "env": {
+        "IAGON_API_KEY": "ll.IAG-SN.-.rediF-afIHyqB/Vt=O.uPm+Xpnc4-kfqD8+2^hCQOd8SyChEfcW3+/cf+kuxRj",
+        "IAGON_PW": "elribonazo"
+      }
+    },
+    {
       "command": "npm run test",
+      "cwd": "${workspaceFolder}/packages/iagon",
       "name": "TEST",
       "request": "launch",
-      "type": "node-terminal"
+      "type": "node-terminal",
+      "env": {
+        "IAGON_API_KEY": "ll.IAG-SN.-.rediF-afIHyqB/Vt=O.uPm+Xpnc4-kfqD8+2^hCQOd8SyChEfcW3+/cf+kuxRj",
+        "IAGON_PW": "elribonazo"
+      }
     }
   ]
 }

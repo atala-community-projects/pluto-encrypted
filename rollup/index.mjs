@@ -38,7 +38,7 @@ export default function CreateConfig(buildPath, plugins = [], extraInputs = []) 
     const allPlugins = [
         ...plugins,
         nodeResolve({
-            preferBuiltins: false,
+            preferBuiltins: true,
         }),
         ignore(externals),
         json(),

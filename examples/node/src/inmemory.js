@@ -1,9 +1,10 @@
+import { getDefaultCollections } from '@pluto-encrypted/schemas';
 
 async function createTestScenario() {
 
   const PlutoEncrypted = await import('@pluto-encrypted/database')
   const { default: InMemory } = await import("@pluto-encrypted/inmemory")
-  const SDK = await import("@atala/prism-wallet-sdk");
+  const { default: SDK } = await import("@atala/prism-wallet-sdk");
 
   const { Database } = PlutoEncrypted;
   const defaultPassword = new Uint8Array(32).fill(1);
@@ -18,6 +19,7 @@ async function createTestScenario() {
       name: `my-db`,
       encryptionKey: defaultPassword,
       storage: InMemory,
+      collections: getDefaultCollections()
     }
   );
   const didcomm = new SDK.DIDCommWrapper(apollo, castor, pluto);
