@@ -298,13 +298,15 @@ export class DatabaseBase<Collections = CollectionsOfDatabase>  {
     [name: string]: RxCollectionCreator<any>
   }): Promise<void> {
     const { dbOptions } = this
-    const database = await createRxDatabase<Collections>({
-      ...dbOptions,
-      multiInstance: false
-    })
-    const extendedCollections = collections ? collections : {};
-    await database.addCollections(extendedCollections);
-
-    this._db = database
+    if (!this._db) {
+      this._db = await createRxDatabase<Collections>({
+        ...dbOptions,
+        multiInstance: false
+      })
+    }
+    if (collections) {
+      const extendedCollections = collections ? collections : {};
+      await this._db.addCollections(extendedCollections);
+    }
   }
 }
