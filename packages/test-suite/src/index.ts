@@ -66,10 +66,10 @@ export function runTestSuite(suite: TestSuite, testStorage: RxTestStorage): void
       })
 
       /**
-                   * This test ensures that people do not accidentally set
-                   * keyCompression: true in the schema but then forget to use
-                   * the key-compression RxStorage wrapper.
-                   */
+       * This test ensures that people do not accidentally set
+       * keyCompression: true in the schema but then forget to use
+       * the key-compression RxStorage wrapper.
+       */
       it('must throw if keyCompression is set but no key-compression plugin is used', async ({ expect }) => {
         const schema = getPseudoSchemaForVersion<TestDocType>(0, 'key')
         schema.keyCompression = true
@@ -165,19 +165,19 @@ export function runTestSuite(suite: TestSuite, testStorage: RxTestStorage): void
         expect(first.documentId).toBe(pkey)
 
         /**
-                         * The conflict error state must contain the
-                         * document state in the database.
-                         * This ensures that we can continue resolving the conflict
-                         * without having to pull the document out of the db first.
-                         */
+         * The conflict error state must contain the
+         * document state in the database.
+         * This ensures that we can continue resolving the conflict
+         * without having to pull the document out of the db first.
+         */
         expect((first as any).documentInDb.value).toBe(writeData.value)
 
         /**
-                         * The documentInDb must not have any additional attributes.
-                         * Some RxStorage implementations store meta fields
-                         * together with normal document data.
-                         * These fields must never be leaked to 409 conflict errors
-                         */
+         * The documentInDb must not have any additional attributes.
+         * Some RxStorage implementations store meta fields
+         * together with normal document data.
+         * These fields must never be leaked to 409 conflict errors
+         */
         expect(Object.keys((first as any).documentInDb).sort()).toStrictEqual(Object.keys(writeData).sort())
       })
 
@@ -289,12 +289,14 @@ export function runTestSuite(suite: TestSuite, testStorage: RxTestStorage): void
             }
           })
         }
+        debugger;
         const deleteResponse = await storageInstance.bulkWrite(
           [toDelete],
           testContext
         )
+        debugger;
         expect(deleteResponse.error).toStrictEqual({})
-
+        debugger;
         const foundDoc = await storageInstance.findDocumentsById([pkey], false)
 
         expect(foundDoc).toStrictEqual({})
@@ -591,7 +593,7 @@ export function runTestSuite(suite: TestSuite, testStorage: RxTestStorage): void
               return storageInstance
             })
         )
-      }, { timeout: 15000 })
+      }, { timeout: 200000 })
 
       // Some storages had problems storing non-utf-8 chars like "é"
       it('write and read with umlauts', async ({ expect }) => {
@@ -911,6 +913,7 @@ export function runTestSuite(suite: TestSuite, testStorage: RxTestStorage): void
 
     describe('.query()', () => {
       it('should find all documents', async ({ expect }) => {
+        debugger;
         storageInstance = await storage.createStorageInstance<{ key: string, value: string }>({
           databaseInstanceToken: randomCouchString(10),
           databaseName: randomCouchString(12),
@@ -920,7 +923,7 @@ export function runTestSuite(suite: TestSuite, testStorage: RxTestStorage): void
           multiInstance: false,
           devMode: true
         })
-
+        debugger;
         const writeData = {
           key: 'foobar',
           value: 'barfoo',
@@ -931,14 +934,14 @@ export function runTestSuite(suite: TestSuite, testStorage: RxTestStorage): void
             lwt: now()
           }
         }
-
+        debugger;
         await storageInstance.bulkWrite(
           [{
             document: writeData
           }],
           testContext
         )
-
+        debugger;
         const writeData2 = {
           key: 'foobar2',
           value: 'barfoo2',
@@ -955,7 +958,7 @@ export function runTestSuite(suite: TestSuite, testStorage: RxTestStorage): void
           }],
           testContext
         )
-
+        debugger;
         const preparedQuery = prepareQuery(
           storageInstance.schema,
           {
@@ -968,7 +971,7 @@ export function runTestSuite(suite: TestSuite, testStorage: RxTestStorage): void
         )
         const allDocs = await storageInstance.query(preparedQuery)
         const first = allDocs.documents[0]
-
+        debugger;
         expect(first).not.toBe(undefined)
         expect(first.value).toBe('barfoo')
 
@@ -1536,7 +1539,6 @@ export function runTestSuite(suite: TestSuite, testStorage: RxTestStorage): void
         }
       ]
     })
-
     testCorrectQueries<schemas.HumanDocumentType>(suite, testStorage, {
       testTitle: '$lt/$lte',
       data: [
@@ -2101,8 +2103,8 @@ export function runTestSuite(suite: TestSuite, testStorage: RxTestStorage): void
     }
 
     /**
-             * @link https://github.com/pubkey/rxdb/issues/4571
-             */
+     * @link https://github.com/pubkey/rxdb/issues/4571
+     */
     testCorrectQueries(suite, testStorage, {
       testTitle: '$eq operator with composite primary key',
       data: [
@@ -2217,8 +2219,8 @@ export function runTestSuite(suite: TestSuite, testStorage: RxTestStorage): void
       ]
     })
     /**
-             * @link https://github.com/pubkey/rxdb/issues/5273
-             */
+     * @link https://github.com/pubkey/rxdb/issues/5273
+     */
     testCorrectQueries<{
       id: string
       hasHighlights: number

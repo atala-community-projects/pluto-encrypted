@@ -2,7 +2,7 @@
  * @packageDocumentation
  * @module database
  */
-import { RxCollectionCreator } from 'rxdb'
+import { RxCollection, RxCollectionCreator } from 'rxdb'
 import { CredentialSchema, CredentialMethods, CredentialStaticMethods, CredentialCollection } from './schemas/credential'
 import { CredentialRequestMetadataSchema, CredentialRequestMetadataMethods, CredentialRequestMetadataStaticMethods, CredentialRequestMetadataCollection } from './schemas/credentialRequestMetadata'
 import { DIDCollection, DIDSchema, DIDStaticMethods } from './schemas/did'
@@ -11,7 +11,7 @@ import { LinkSecretSchema, LinkSecretMethods, LinkSecretStaticMethods, LinkSecre
 import { MediatorSchema, MediatorMethods, MediatorStaticMethods, MediatorCollection } from './schemas/mediator'
 import { MessageSchema, MessageMethods, MessageStaticMethods, MessageColletion } from './schemas/message'
 import { PrivateKeySchema, PrivateKeyMethods, PrivateKeyStaticMethods, PrivateKeyColletion } from './schemas/privatekey'
-import { PlutoCollections, PlutoCollectionsCreator } from './types'
+import { PlutoCollectionsCreator } from './types'
 import { DatabaseBase } from '@pluto-encrypted/shared'
 import { UnionToIntersection } from '@pluto-encrypted/shared'
 import { ExtractStaticMethods } from '@pluto-encrypted/shared'
@@ -25,9 +25,11 @@ type Collections = {
     credentials: CredentialCollection;
     credentialrequestmetadatas: CredentialRequestMetadataCollection;
     linksecrets: LinkSecretColletion;
+} & {
+    [name: string]: RxCollection<any, any, any, any>
 }
 
-export type PlutoDBontext = DatabaseBase<Collections> & UnionToIntersection<ExtractStaticMethods<
+export type PlutoDBontext = DatabaseBase<any> & ExtractStaticMethods<UnionToIntersection<
     Collections[keyof Collections]
 >>
 

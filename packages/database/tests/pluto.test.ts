@@ -12,9 +12,9 @@ import IndexDb from "../../indexdb/src";
 import { createLevelDBStorage } from '../../leveldb/src'
 
 import * as Fixtures from "./fixtures";
-import { Database, ExtractStaticMethods, UnionToIntersection } from "../src";
+import { Database } from "../src";
 import { PrivateKeyMethods, LinkSecretSchemaType, LinkSecretStaticMethodTypes, LinkSecretMethodTypes, LinkSecretMethods, LinkSecretSchema, LinkSecretStaticMethods, getDefaultCollections, PlutoCollections, CredentialCollection, CredentialRequestMetadataCollection, DIDCollection, DIDPairCollection, LinkSecretColletion, MediatorCollection, MessageColletion, PrivateKeyColletion, MessageSchemaType, MessageMethodTypes, MessageStaticMethodTypes } from "@pluto-encrypted/schemas";
-import { DatabaseBase } from "@pluto-encrypted/shared";
+import { DatabaseBase, ExtractStaticMethods, UnionToIntersection } from "@pluto-encrypted/shared";
 
 const {
     AnonCredsCredential,

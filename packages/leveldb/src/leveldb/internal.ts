@@ -120,9 +120,9 @@ export class LevelDBInternal<RxDocType> implements LevelDBStorageInternals<RxDoc
     await new Promise<void>((resolve, reject) => {
       db.put(key, JSON.stringify(data), (err) => {
         if (err) {
-          return reject(err);
+          reject(err); return
         }
-        return resolve()
+        resolve()
       })
     })
   }
@@ -132,9 +132,9 @@ export class LevelDBInternal<RxDocType> implements LevelDBStorageInternals<RxDoc
     await new Promise<void>((resolve, reject) => {
       db.put(key, JSON.stringify(ids), (err) => {
         if (err) {
-          return reject(err);
+          reject(err); return
         }
-        return resolve()
+        resolve()
       })
     })
   }
@@ -144,9 +144,9 @@ export class LevelDBInternal<RxDocType> implements LevelDBStorageInternals<RxDoc
     await new Promise<void>((resolve, reject) => {
       db.del(key, (err) => {
         if (err) {
-          return reject(err);
+          reject(err); return
         }
-        return resolve()
+        resolve()
       })
     })
   }

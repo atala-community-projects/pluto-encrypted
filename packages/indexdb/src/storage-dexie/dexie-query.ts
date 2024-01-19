@@ -23,7 +23,7 @@ import { fixTxPipe } from '@pluto-encrypted/shared'
 /**
  * Runs mango queries over the Dexie.js database.
  */
-export async function dexieQuery<RxDocType>(
+export async function dexieQuery<RxDocType> (
   instance: RxStorageInstanceDexie<RxDocType>,
   preparedQuery: DefaultPreparedQuery<RxDocType>,
   schema: Readonly<RxJsonSchema<RxDocumentData<RxDocType>>>

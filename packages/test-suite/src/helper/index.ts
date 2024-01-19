@@ -29,7 +29,7 @@ export interface OptionalValueTestDoc { key: string, value?: string }
 export const TEST_DATA_CHARSET = '0987654321ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzäöüÖÄßÜ[]{}\''
 export const TEST_DATA_CHARSET_LAST_SORTED = ensureNotFalsy(lastOfArray(TEST_DATA_CHARSET.split('').sort()))
 // const someEmojis = '😊💩👵🍌';
-export function randomStringWithSpecialChars(length: number) {
+export function randomStringWithSpecialChars (length: number) {
   return randomString(length, TEST_DATA_CHARSET)
 }
 
@@ -37,7 +37,7 @@ export function randomStringWithSpecialChars(length: number) {
  * @returns a format of the query that can be used with the storage
  * when calling RxStorageInstance().query()
  */
-export function prepareQuery<RxDocType>(schema, mutateableQuery) {
+export function prepareQuery<RxDocType> (schema, mutateableQuery) {
   if (!mutateableQuery.sort) {
     throw newRxError('SNH', {
       query: mutateableQuery
@@ -55,7 +55,7 @@ export function prepareQuery<RxDocType>(schema, mutateableQuery) {
   }
 }
 
-export function getNestedDocSchema() {
+export function getNestedDocSchema () {
   const schema: RxJsonSchema<RxDocumentData<NestedDoc>> = fillWithDefaultSettings({
     version: 0,
     primaryKey: 'id',
@@ -89,7 +89,7 @@ export function getNestedDocSchema() {
   return schema
 }
 
-export function getWriteData(
+export function getWriteData (
   ownParams: Partial<RxDocumentData<TestDocType>> = {}
 ): RxDocumentData<TestDocType> {
   return Object.assign(
@@ -107,7 +107,7 @@ export function getWriteData(
   )
 }
 
-export function getTestDataSchema(): RxJsonSchema<RxDocumentData<TestDocType>> {
+export function getTestDataSchema (): RxJsonSchema<RxDocumentData<TestDocType>> {
   return fillWithDefaultSettings({
     version: 0,
     type: 'object',
@@ -195,7 +195,7 @@ export interface TestCorrectQueriesInput<RxDocType> {
   } | undefined>
 }
 
-export function withIndexes<RxDocType>(
+export function withIndexes<RxDocType> (
   schema: RxJsonSchema<RxDocType>,
   indexes: string[][]
 ): RxJsonSchema<RxDocType> {
@@ -204,7 +204,7 @@ export function withIndexes<RxDocType>(
   return schema
 }
 
-export function testCorrectQueries<RxDocType>(
+export function testCorrectQueries<RxDocType> (
   suite: TestSuite,
   testStorage: RxTestStorage,
   input: TestCorrectQueriesInput<RxDocType>
@@ -308,7 +308,6 @@ export function testCorrectQueries<RxDocType>(
 
         expect(resultStaticsIds, 'expectedResultDocIds does not match').toStrictEqual(queryData.expectedResultDocIds)
 
-
         // Test output of RxStorageInstance.query();
         const resultFromStorage = await storageInstance.query(preparedQuery)
         const resultIds = resultFromStorage.documents.map(d => (d as any)[primaryPath])
@@ -335,7 +334,7 @@ export function testCorrectQueries<RxDocType>(
       await storageInstance.bulkWrite(
         rawDocsData.map(document => ({
           document: {
-            ...document, _deleted: true, _rev: "1"
+            ...document, _deleted: true, _rev: '1'
           }
         })),
         testQueryContext
