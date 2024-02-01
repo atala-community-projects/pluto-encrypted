@@ -49,12 +49,10 @@ export const Database = {
 
       const collectionMap = new Map<any, RxCollectionCreator<any>>();
 
-      if (collections) {
-        Object.keys(collections).forEach((collectionName) => {
-          const currentCollection = collections[collectionName]!;
-          collectionMap.set(collectionName, currentCollection)
-        })
-      }
+      Object.keys(collections).forEach((collectionName) => {
+        const currentCollection = collections[collectionName]!;
+        collectionMap.set(collectionName, currentCollection)
+      })
 
       const instance = new DatabaseBase<Collections>({
         ignoreDuplicate: true,
