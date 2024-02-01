@@ -17,7 +17,7 @@ const defaultPassword = Buffer.from(keyData);
 
 describe("Testing suite", () => {
 
-  it('should be able to instanciate multiple databases in the same thread', async ({ expect }) => {
+  it('should be able to instantiate multiple databases in the same thread', async ({ expect }) => {
     if (fs.existsSync("./db1")) {
       fs.rmdirSync("./db1", { recursive: true })
     }
