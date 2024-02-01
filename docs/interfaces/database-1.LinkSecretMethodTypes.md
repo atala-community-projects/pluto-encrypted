@@ -38,4 +38,4 @@
 
 #### Defined in
 
-[packages/schemas/src/schemas/linksecret/types.ts:22](https://github.com/atala-community-projects/pluto-encrypted/blob/054e08f/packages/schemas/src/schemas/linksecret/types.ts#L22)
+[packages/schemas/src/schemas/linksecret/types.ts:22](https://github.com/atala-community-projects/pluto-encrypted/blob/5df4bd7/packages/schemas/src/schemas/linksecret/types.ts#L22)

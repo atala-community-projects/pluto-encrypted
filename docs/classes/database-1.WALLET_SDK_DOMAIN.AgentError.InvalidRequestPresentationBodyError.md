@@ -47,7 +47,7 @@ Error.constructor
 
 #### Defined in
 
-node_modules/@atala/prism-wallet-sdk/build/typings/domain/models/errors/Agent.d.ts:58
+node_modules/@atala/prism-wallet-sdk/build/typings/domain/models/errors/Agent.d.ts:60
 
 ## Properties
 

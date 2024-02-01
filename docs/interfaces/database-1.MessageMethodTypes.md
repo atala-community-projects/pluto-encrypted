@@ -20,11 +20,11 @@
 
 ### toDomainMessage
 
-• **toDomainMessage**: (`this`: [`MessageDocument`](../modules/database-1.md#messagedocument)) => [`Message`](../classes/database-1.WALLET_SDK_DOMAIN.Message.md)
+• **toDomainMessage**: (`this`: [`MessageDocument`](../modules/database-1.md#messagedocument)) => [`Message`](../classes/database-1.WALLET_SDK_DOMAIN.Message-1.md)
 
 #### Type declaration
 
-▸ (`this`): [`Message`](../classes/database-1.WALLET_SDK_DOMAIN.Message.md)
+▸ (`this`): [`Message`](../classes/database-1.WALLET_SDK_DOMAIN.Message-1.md)
 
 ##### Parameters
 
@@ -34,8 +34,8 @@
 
 ##### Returns
 
-[`Message`](../classes/database-1.WALLET_SDK_DOMAIN.Message.md)
+[`Message`](../classes/database-1.WALLET_SDK_DOMAIN.Message-1.md)
 
 #### Defined in
 
-[packages/schemas/src/schemas/message/types.ts:26](https://github.com/atala-community-projects/pluto-encrypted/blob/054e08f/packages/schemas/src/schemas/message/types.ts#L26)
+[packages/schemas/src/schemas/message/types.ts:26](https://github.com/atala-community-projects/pluto-encrypted/blob/5df4bd7/packages/schemas/src/schemas/message/types.ts#L26)

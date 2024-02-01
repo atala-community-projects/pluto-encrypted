@@ -8,30 +8,30 @@
 
 ### Constructors
 
-- [constructor](database-1.WALLET_SDK_DOMAIN.Message.md#constructor)
+- [constructor](database-1.WALLET_SDK_DOMAIN.Message-1.md#constructor)
 
 ### Properties
 
-- [ack](database-1.WALLET_SDK_DOMAIN.Message.md#ack)
-- [attachments](database-1.WALLET_SDK_DOMAIN.Message.md#attachments)
-- [body](database-1.WALLET_SDK_DOMAIN.Message.md#body)
-- [createdTime](database-1.WALLET_SDK_DOMAIN.Message.md#createdtime)
-- [direction](database-1.WALLET_SDK_DOMAIN.Message.md#direction)
-- [expiresTimePlus](database-1.WALLET_SDK_DOMAIN.Message.md#expirestimeplus)
-- [extraHeaders](database-1.WALLET_SDK_DOMAIN.Message.md#extraheaders)
-- [from](database-1.WALLET_SDK_DOMAIN.Message.md#from)
-- [fromPrior](database-1.WALLET_SDK_DOMAIN.Message.md#fromprior)
-- [id](database-1.WALLET_SDK_DOMAIN.Message.md#id)
-- [piuri](database-1.WALLET_SDK_DOMAIN.Message.md#piuri)
-- [pthid](database-1.WALLET_SDK_DOMAIN.Message.md#pthid)
-- [thid](database-1.WALLET_SDK_DOMAIN.Message.md#thid)
-- [to](database-1.WALLET_SDK_DOMAIN.Message.md#to)
+- [ack](database-1.WALLET_SDK_DOMAIN.Message-1.md#ack)
+- [attachments](database-1.WALLET_SDK_DOMAIN.Message-1.md#attachments)
+- [body](database-1.WALLET_SDK_DOMAIN.Message-1.md#body)
+- [createdTime](database-1.WALLET_SDK_DOMAIN.Message-1.md#createdtime)
+- [direction](database-1.WALLET_SDK_DOMAIN.Message-1.md#direction)
+- [expiresTimePlus](database-1.WALLET_SDK_DOMAIN.Message-1.md#expirestimeplus)
+- [extraHeaders](database-1.WALLET_SDK_DOMAIN.Message-1.md#extraheaders)
+- [from](database-1.WALLET_SDK_DOMAIN.Message-1.md#from)
+- [fromPrior](database-1.WALLET_SDK_DOMAIN.Message-1.md#fromprior)
+- [id](database-1.WALLET_SDK_DOMAIN.Message-1.md#id)
+- [piuri](database-1.WALLET_SDK_DOMAIN.Message-1.md#piuri)
+- [pthid](database-1.WALLET_SDK_DOMAIN.Message-1.md#pthid)
+- [thid](database-1.WALLET_SDK_DOMAIN.Message-1.md#thid)
+- [to](database-1.WALLET_SDK_DOMAIN.Message-1.md#to)
 
 ### Methods
 
-- [fromJson](database-1.WALLET_SDK_DOMAIN.Message.md#fromjson)
-- [isBase64Attachment](database-1.WALLET_SDK_DOMAIN.Message.md#isbase64attachment)
-- [isJsonAttachment](database-1.WALLET_SDK_DOMAIN.Message.md#isjsonattachment)
+- [fromJson](database-1.WALLET_SDK_DOMAIN.Message-1.md#fromjson)
+- [isBase64Attachment](database-1.WALLET_SDK_DOMAIN.Message-1.md#isbase64attachment)
+- [isJsonAttachment](database-1.WALLET_SDK_DOMAIN.Message-1.md#isjsonattachment)
 
 ## Constructors
 
@@ -206,7 +206,7 @@ node_modules/@atala/prism-wallet-sdk/build/typings/domain/models/Message.d.ts:13
 
 ### fromJson
 
-▸ `Static` **fromJson**(`jsonString`): [`Message`](database-1.WALLET_SDK_DOMAIN.Message.md)
+▸ `Static` **fromJson**(`jsonString`): [`Message`](database-1.WALLET_SDK_DOMAIN.Message-1.md)
 
 #### Parameters
 
@@ -216,7 +216,7 @@ node_modules/@atala/prism-wallet-sdk/build/typings/domain/models/Message.d.ts:13
 
 #### Returns
 
-[`Message`](database-1.WALLET_SDK_DOMAIN.Message.md)
+[`Message`](database-1.WALLET_SDK_DOMAIN.Message-1.md)
 
 #### Defined in
 

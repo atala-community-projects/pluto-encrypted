@@ -52,7 +52,7 @@
 
 #### Defined in
 
-[packages/shared/src/index.ts:270](https://github.com/atala-community-projects/pluto-encrypted/blob/054e08f/packages/shared/src/index.ts#L270)
+[packages/shared/src/index.ts:270](https://github.com/atala-community-projects/pluto-encrypted/blob/5df4bd7/packages/shared/src/index.ts#L270)
 
 ## Properties
 
@@ -62,7 +62,7 @@
 
 #### Defined in
 
-[packages/shared/src/index.ts:254](https://github.com/atala-community-projects/pluto-encrypted/blob/054e08f/packages/shared/src/index.ts#L254)
+[packages/shared/src/index.ts:254](https://github.com/atala-community-projects/pluto-encrypted/blob/5df4bd7/packages/shared/src/index.ts#L254)
 
 ___
 
@@ -72,7 +72,7 @@ ___
 
 #### Defined in
 
-[packages/shared/src/index.ts:271](https://github.com/atala-community-projects/pluto-encrypted/blob/054e08f/packages/shared/src/index.ts#L271)
+[packages/shared/src/index.ts:271](https://github.com/atala-community-projects/pluto-encrypted/blob/5df4bd7/packages/shared/src/index.ts#L271)
 
 ## Accessors
 
@@ -86,7 +86,7 @@ ___
 
 #### Defined in
 
-[packages/shared/src/index.ts:256](https://github.com/atala-community-projects/pluto-encrypted/blob/054e08f/packages/shared/src/index.ts#L256)
+[packages/shared/src/index.ts:256](https://github.com/atala-community-projects/pluto-encrypted/blob/5df4bd7/packages/shared/src/index.ts#L256)
 
 ## Methods
 
@@ -100,7 +100,7 @@ ___
 
 #### Defined in
 
-[packages/shared/src/index.ts:278](https://github.com/atala-community-projects/pluto-encrypted/blob/054e08f/packages/shared/src/index.ts#L278)
+[packages/shared/src/index.ts:278](https://github.com/atala-community-projects/pluto-encrypted/blob/5df4bd7/packages/shared/src/index.ts#L278)
 
 ___
 
@@ -117,7 +117,7 @@ and then destroy the database itself.
 
 #### Defined in
 
-[packages/shared/src/index.ts:286](https://github.com/atala-community-projects/pluto-encrypted/blob/054e08f/packages/shared/src/index.ts#L286)
+[packages/shared/src/index.ts:286](https://github.com/atala-community-projects/pluto-encrypted/blob/5df4bd7/packages/shared/src/index.ts#L286)
 
 ___
 
@@ -137,7 +137,7 @@ ___
 
 #### Defined in
 
-[packages/shared/src/index.ts:263](https://github.com/atala-community-projects/pluto-encrypted/blob/054e08f/packages/shared/src/index.ts#L263)
+[packages/shared/src/index.ts:263](https://github.com/atala-community-projects/pluto-encrypted/blob/5df4bd7/packages/shared/src/index.ts#L263)
 
 ___
 
@@ -159,4 +159,4 @@ Start the database and build collections
 
 #### Defined in
 
-[packages/shared/src/index.ts:297](https://github.com/atala-community-projects/pluto-encrypted/blob/054e08f/packages/shared/src/index.ts#L297)
+[packages/shared/src/index.ts:297](https://github.com/atala-community-projects/pluto-encrypted/blob/5df4bd7/packages/shared/src/index.ts#L297)

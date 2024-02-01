@@ -31,7 +31,7 @@
 
 #### Defined in
 
-[packages/schemas/src/schemas/message/types.ts:17](https://github.com/atala-community-projects/pluto-encrypted/blob/054e08f/packages/schemas/src/schemas/message/types.ts#L17)
+[packages/schemas/src/schemas/message/types.ts:17](https://github.com/atala-community-projects/pluto-encrypted/blob/5df4bd7/packages/schemas/src/schemas/message/types.ts#L17)
 
 ___
 
@@ -41,7 +41,7 @@ ___
 
 #### Defined in
 
-[packages/schemas/src/schemas/message/types.ts:12](https://github.com/atala-community-projects/pluto-encrypted/blob/054e08f/packages/schemas/src/schemas/message/types.ts#L12)
+[packages/schemas/src/schemas/message/types.ts:12](https://github.com/atala-community-projects/pluto-encrypted/blob/5df4bd7/packages/schemas/src/schemas/message/types.ts#L12)
 
 ___
 
@@ -51,7 +51,7 @@ ___
 
 #### Defined in
 
-[packages/schemas/src/schemas/message/types.ts:7](https://github.com/atala-community-projects/pluto-encrypted/blob/054e08f/packages/schemas/src/schemas/message/types.ts#L7)
+[packages/schemas/src/schemas/message/types.ts:7](https://github.com/atala-community-projects/pluto-encrypted/blob/5df4bd7/packages/schemas/src/schemas/message/types.ts#L7)
 
 ___
 
@@ -61,7 +61,7 @@ ___
 
 #### Defined in
 
-[packages/schemas/src/schemas/message/types.ts:15](https://github.com/atala-community-projects/pluto-encrypted/blob/054e08f/packages/schemas/src/schemas/message/types.ts#L15)
+[packages/schemas/src/schemas/message/types.ts:15](https://github.com/atala-community-projects/pluto-encrypted/blob/5df4bd7/packages/schemas/src/schemas/message/types.ts#L15)
 
 ___
 
@@ -71,7 +71,7 @@ ___
 
 #### Defined in
 
-[packages/schemas/src/schemas/message/types.ts:18](https://github.com/atala-community-projects/pluto-encrypted/blob/054e08f/packages/schemas/src/schemas/message/types.ts#L18)
+[packages/schemas/src/schemas/message/types.ts:18](https://github.com/atala-community-projects/pluto-encrypted/blob/5df4bd7/packages/schemas/src/schemas/message/types.ts#L18)
 
 ___
 
@@ -81,7 +81,7 @@ ___
 
 #### Defined in
 
-[packages/schemas/src/schemas/message/types.ts:16](https://github.com/atala-community-projects/pluto-encrypted/blob/054e08f/packages/schemas/src/schemas/message/types.ts#L16)
+[packages/schemas/src/schemas/message/types.ts:16](https://github.com/atala-community-projects/pluto-encrypted/blob/5df4bd7/packages/schemas/src/schemas/message/types.ts#L16)
 
 ___
 
@@ -91,7 +91,7 @@ ___
 
 #### Defined in
 
-[packages/schemas/src/schemas/message/types.ts:14](https://github.com/atala-community-projects/pluto-encrypted/blob/054e08f/packages/schemas/src/schemas/message/types.ts#L14)
+[packages/schemas/src/schemas/message/types.ts:14](https://github.com/atala-community-projects/pluto-encrypted/blob/5df4bd7/packages/schemas/src/schemas/message/types.ts#L14)
 
 ___
 
@@ -101,7 +101,7 @@ ___
 
 #### Defined in
 
-[packages/schemas/src/schemas/message/types.ts:10](https://github.com/atala-community-projects/pluto-encrypted/blob/054e08f/packages/schemas/src/schemas/message/types.ts#L10)
+[packages/schemas/src/schemas/message/types.ts:10](https://github.com/atala-community-projects/pluto-encrypted/blob/5df4bd7/packages/schemas/src/schemas/message/types.ts#L10)
 
 ___
 
@@ -111,7 +111,7 @@ ___
 
 #### Defined in
 
-[packages/schemas/src/schemas/message/types.ts:19](https://github.com/atala-community-projects/pluto-encrypted/blob/054e08f/packages/schemas/src/schemas/message/types.ts#L19)
+[packages/schemas/src/schemas/message/types.ts:19](https://github.com/atala-community-projects/pluto-encrypted/blob/5df4bd7/packages/schemas/src/schemas/message/types.ts#L19)
 
 ___
 
@@ -121,7 +121,7 @@ ___
 
 #### Defined in
 
-[packages/schemas/src/schemas/message/types.ts:8](https://github.com/atala-community-projects/pluto-encrypted/blob/054e08f/packages/schemas/src/schemas/message/types.ts#L8)
+[packages/schemas/src/schemas/message/types.ts:8](https://github.com/atala-community-projects/pluto-encrypted/blob/5df4bd7/packages/schemas/src/schemas/message/types.ts#L8)
 
 ___
 
@@ -131,7 +131,7 @@ ___
 
 #### Defined in
 
-[packages/schemas/src/schemas/message/types.ts:9](https://github.com/atala-community-projects/pluto-encrypted/blob/054e08f/packages/schemas/src/schemas/message/types.ts#L9)
+[packages/schemas/src/schemas/message/types.ts:9](https://github.com/atala-community-projects/pluto-encrypted/blob/5df4bd7/packages/schemas/src/schemas/message/types.ts#L9)
 
 ___
 
@@ -141,7 +141,7 @@ ___
 
 #### Defined in
 
-[packages/schemas/src/schemas/message/types.ts:20](https://github.com/atala-community-projects/pluto-encrypted/blob/054e08f/packages/schemas/src/schemas/message/types.ts#L20)
+[packages/schemas/src/schemas/message/types.ts:20](https://github.com/atala-community-projects/pluto-encrypted/blob/5df4bd7/packages/schemas/src/schemas/message/types.ts#L20)
 
 ___
 
@@ -151,7 +151,7 @@ ___
 
 #### Defined in
 
-[packages/schemas/src/schemas/message/types.ts:13](https://github.com/atala-community-projects/pluto-encrypted/blob/054e08f/packages/schemas/src/schemas/message/types.ts#L13)
+[packages/schemas/src/schemas/message/types.ts:13](https://github.com/atala-community-projects/pluto-encrypted/blob/5df4bd7/packages/schemas/src/schemas/message/types.ts#L13)
 
 ___
 
@@ -161,4 +161,4 @@ ___
 
 #### Defined in
 
-[packages/schemas/src/schemas/message/types.ts:11](https://github.com/atala-community-projects/pluto-encrypted/blob/054e08f/packages/schemas/src/schemas/message/types.ts#L11)
+[packages/schemas/src/schemas/message/types.ts:11](https://github.com/atala-community-projects/pluto-encrypted/blob/5df4bd7/packages/schemas/src/schemas/message/types.ts#L11)

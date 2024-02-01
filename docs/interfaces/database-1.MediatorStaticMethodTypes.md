@@ -35,7 +35,7 @@
 
 #### Defined in
 
-[packages/schemas/src/schemas/mediator/types.ts:20](https://github.com/atala-community-projects/pluto-encrypted/blob/054e08f/packages/schemas/src/schemas/mediator/types.ts#L20)
+[packages/schemas/src/schemas/mediator/types.ts:20](https://github.com/atala-community-projects/pluto-encrypted/blob/5df4bd7/packages/schemas/src/schemas/mediator/types.ts#L20)
 
 ___
 
@@ -58,4 +58,4 @@ ___
 
 #### Defined in
 
-[packages/schemas/src/schemas/mediator/types.ts:21](https://github.com/atala-community-projects/pluto-encrypted/blob/054e08f/packages/schemas/src/schemas/mediator/types.ts#L21)
+[packages/schemas/src/schemas/mediator/types.ts:21](https://github.com/atala-community-projects/pluto-encrypted/blob/5df4bd7/packages/schemas/src/schemas/mediator/types.ts#L21)

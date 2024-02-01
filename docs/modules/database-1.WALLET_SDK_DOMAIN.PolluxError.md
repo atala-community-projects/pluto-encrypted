@@ -10,3 +10,4 @@
 
 - [InvalidCredentialError](../classes/database-1.WALLET_SDK_DOMAIN.PolluxError.InvalidCredentialError.md)
 - [InvalidJWTString](../classes/database-1.WALLET_SDK_DOMAIN.PolluxError.InvalidJWTString.md)
+- [InvalidPresentationProofArgs](../classes/database-1.WALLET_SDK_DOMAIN.PolluxError.InvalidPresentationProofArgs.md)

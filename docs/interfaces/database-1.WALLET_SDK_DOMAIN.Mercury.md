@@ -23,7 +23,7 @@
 
 | Name | Type |
 | :------ | :------ |
-| `message` | [`Message`](../classes/database-1.WALLET_SDK_DOMAIN.Message.md) |
+| `message` | [`Message`](../classes/database-1.WALLET_SDK_DOMAIN.Message-1.md) |
 
 #### Returns
 
@@ -43,7 +43,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `message` | [`Message`](../classes/database-1.WALLET_SDK_DOMAIN.Message.md) |
+| `message` | [`Message`](../classes/database-1.WALLET_SDK_DOMAIN.Message-1.md) |
 
 #### Returns
 
@@ -57,17 +57,17 @@ ___
 
 ### sendMessageParseMessage
 
-▸ **sendMessageParseMessage**(`message`): `Promise`\<`undefined` \| [`Message`](../classes/database-1.WALLET_SDK_DOMAIN.Message.md)\>
+▸ **sendMessageParseMessage**(`message`): `Promise`\<`undefined` \| [`Message`](../classes/database-1.WALLET_SDK_DOMAIN.Message-1.md)\>
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `message` | [`Message`](../classes/database-1.WALLET_SDK_DOMAIN.Message.md) |
+| `message` | [`Message`](../classes/database-1.WALLET_SDK_DOMAIN.Message-1.md) |
 
 #### Returns
 
-`Promise`\<`undefined` \| [`Message`](../classes/database-1.WALLET_SDK_DOMAIN.Message.md)\>
+`Promise`\<`undefined` \| [`Message`](../classes/database-1.WALLET_SDK_DOMAIN.Message-1.md)\>
 
 #### Defined in
 
@@ -77,7 +77,7 @@ ___
 
 ### unpackMessage
 
-▸ **unpackMessage**(`message`): `Promise`\<[`Message`](../classes/database-1.WALLET_SDK_DOMAIN.Message.md)\>
+▸ **unpackMessage**(`message`): `Promise`\<[`Message`](../classes/database-1.WALLET_SDK_DOMAIN.Message-1.md)\>
 
 #### Parameters
 
@@ -87,7 +87,7 @@ ___
 
 #### Returns
 
-`Promise`\<[`Message`](../classes/database-1.WALLET_SDK_DOMAIN.Message.md)\>
+`Promise`\<[`Message`](../classes/database-1.WALLET_SDK_DOMAIN.Message-1.md)\>
 
 #### Defined in
 

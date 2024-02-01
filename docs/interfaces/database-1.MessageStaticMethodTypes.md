@@ -30,7 +30,7 @@
 
 ### getAllMessages
 
-▸ **getAllMessages**(`this`): `Promise`\<[`Message`](../classes/database-1.WALLET_SDK_DOMAIN.Message.md)[]\>
+▸ **getAllMessages**(`this`): `Promise`\<[`Message`](../classes/database-1.WALLET_SDK_DOMAIN.Message-1.md)[]\>
 
 #### Parameters
 
@@ -40,17 +40,17 @@
 
 #### Returns
 
-`Promise`\<[`Message`](../classes/database-1.WALLET_SDK_DOMAIN.Message.md)[]\>
+`Promise`\<[`Message`](../classes/database-1.WALLET_SDK_DOMAIN.Message-1.md)[]\>
 
 #### Defined in
 
-[packages/schemas/src/schemas/message/types.ts:44](https://github.com/atala-community-projects/pluto-encrypted/blob/054e08f/packages/schemas/src/schemas/message/types.ts#L44)
+[packages/schemas/src/schemas/message/types.ts:44](https://github.com/atala-community-projects/pluto-encrypted/blob/5df4bd7/packages/schemas/src/schemas/message/types.ts#L44)
 
 ___
 
 ### getAllMessagesByDID
 
-▸ **getAllMessagesByDID**(`this`, `did`): `Promise`\<[`Message`](../classes/database-1.WALLET_SDK_DOMAIN.Message.md)[]\>
+▸ **getAllMessagesByDID**(`this`, `did`): `Promise`\<[`Message`](../classes/database-1.WALLET_SDK_DOMAIN.Message-1.md)[]\>
 
 #### Parameters
 
@@ -61,17 +61,17 @@ ___
 
 #### Returns
 
-`Promise`\<[`Message`](../classes/database-1.WALLET_SDK_DOMAIN.Message.md)[]\>
+`Promise`\<[`Message`](../classes/database-1.WALLET_SDK_DOMAIN.Message-1.md)[]\>
 
 #### Defined in
 
-[packages/schemas/src/schemas/message/types.ts:71](https://github.com/atala-community-projects/pluto-encrypted/blob/054e08f/packages/schemas/src/schemas/message/types.ts#L71)
+[packages/schemas/src/schemas/message/types.ts:71](https://github.com/atala-community-projects/pluto-encrypted/blob/5df4bd7/packages/schemas/src/schemas/message/types.ts#L71)
 
 ___
 
 ### getAllMessagesByFromToDID
 
-▸ **getAllMessagesByFromToDID**(`this`, `from`, `to`): `Promise`\<[`Message`](../classes/database-1.WALLET_SDK_DOMAIN.Message.md)[]\>
+▸ **getAllMessagesByFromToDID**(`this`, `from`, `to`): `Promise`\<[`Message`](../classes/database-1.WALLET_SDK_DOMAIN.Message-1.md)[]\>
 
 #### Parameters
 
@@ -83,17 +83,17 @@ ___
 
 #### Returns
 
-`Promise`\<[`Message`](../classes/database-1.WALLET_SDK_DOMAIN.Message.md)[]\>
+`Promise`\<[`Message`](../classes/database-1.WALLET_SDK_DOMAIN.Message-1.md)[]\>
 
 #### Defined in
 
-[packages/schemas/src/schemas/message/types.ts:47](https://github.com/atala-community-projects/pluto-encrypted/blob/054e08f/packages/schemas/src/schemas/message/types.ts#L47)
+[packages/schemas/src/schemas/message/types.ts:47](https://github.com/atala-community-projects/pluto-encrypted/blob/5df4bd7/packages/schemas/src/schemas/message/types.ts#L47)
 
 ___
 
 ### getAllMessagesOfType
 
-▸ **getAllMessagesOfType**(`this`, `type`, `relatedWithDID?`): `Promise`\<[`Message`](../classes/database-1.WALLET_SDK_DOMAIN.Message.md)[]\>
+▸ **getAllMessagesOfType**(`this`, `type`, `relatedWithDID?`): `Promise`\<[`Message`](../classes/database-1.WALLET_SDK_DOMAIN.Message-1.md)[]\>
 
 #### Parameters
 
@@ -105,17 +105,17 @@ ___
 
 #### Returns
 
-`Promise`\<[`Message`](../classes/database-1.WALLET_SDK_DOMAIN.Message.md)[]\>
+`Promise`\<[`Message`](../classes/database-1.WALLET_SDK_DOMAIN.Message-1.md)[]\>
 
 #### Defined in
 
-[packages/schemas/src/schemas/message/types.ts:52](https://github.com/atala-community-projects/pluto-encrypted/blob/054e08f/packages/schemas/src/schemas/message/types.ts#L52)
+[packages/schemas/src/schemas/message/types.ts:52](https://github.com/atala-community-projects/pluto-encrypted/blob/5df4bd7/packages/schemas/src/schemas/message/types.ts#L52)
 
 ___
 
 ### getAllMessagesReceived
 
-▸ **getAllMessagesReceived**(`this`): `Promise`\<[`Message`](../classes/database-1.WALLET_SDK_DOMAIN.Message.md)[]\>
+▸ **getAllMessagesReceived**(`this`): `Promise`\<[`Message`](../classes/database-1.WALLET_SDK_DOMAIN.Message-1.md)[]\>
 
 #### Parameters
 
@@ -125,17 +125,17 @@ ___
 
 #### Returns
 
-`Promise`\<[`Message`](../classes/database-1.WALLET_SDK_DOMAIN.Message.md)[]\>
+`Promise`\<[`Message`](../classes/database-1.WALLET_SDK_DOMAIN.Message-1.md)[]\>
 
 #### Defined in
 
-[packages/schemas/src/schemas/message/types.ts:65](https://github.com/atala-community-projects/pluto-encrypted/blob/054e08f/packages/schemas/src/schemas/message/types.ts#L65)
+[packages/schemas/src/schemas/message/types.ts:65](https://github.com/atala-community-projects/pluto-encrypted/blob/5df4bd7/packages/schemas/src/schemas/message/types.ts#L65)
 
 ___
 
 ### getAllMessagesReceivedFrom
 
-▸ **getAllMessagesReceivedFrom**(`this`, `did`): `Promise`\<[`Message`](../classes/database-1.WALLET_SDK_DOMAIN.Message.md)[]\>
+▸ **getAllMessagesReceivedFrom**(`this`, `did`): `Promise`\<[`Message`](../classes/database-1.WALLET_SDK_DOMAIN.Message-1.md)[]\>
 
 #### Parameters
 
@@ -146,17 +146,17 @@ ___
 
 #### Returns
 
-`Promise`\<[`Message`](../classes/database-1.WALLET_SDK_DOMAIN.Message.md)[]\>
+`Promise`\<[`Message`](../classes/database-1.WALLET_SDK_DOMAIN.Message-1.md)[]\>
 
 #### Defined in
 
-[packages/schemas/src/schemas/message/types.ts:57](https://github.com/atala-community-projects/pluto-encrypted/blob/054e08f/packages/schemas/src/schemas/message/types.ts#L57)
+[packages/schemas/src/schemas/message/types.ts:57](https://github.com/atala-community-projects/pluto-encrypted/blob/5df4bd7/packages/schemas/src/schemas/message/types.ts#L57)
 
 ___
 
 ### getAllMessagesSent
 
-▸ **getAllMessagesSent**(`this`): `Promise`\<[`Message`](../classes/database-1.WALLET_SDK_DOMAIN.Message.md)[]\>
+▸ **getAllMessagesSent**(`this`): `Promise`\<[`Message`](../classes/database-1.WALLET_SDK_DOMAIN.Message-1.md)[]\>
 
 #### Parameters
 
@@ -166,17 +166,17 @@ ___
 
 #### Returns
 
-`Promise`\<[`Message`](../classes/database-1.WALLET_SDK_DOMAIN.Message.md)[]\>
+`Promise`\<[`Message`](../classes/database-1.WALLET_SDK_DOMAIN.Message-1.md)[]\>
 
 #### Defined in
 
-[packages/schemas/src/schemas/message/types.ts:68](https://github.com/atala-community-projects/pluto-encrypted/blob/054e08f/packages/schemas/src/schemas/message/types.ts#L68)
+[packages/schemas/src/schemas/message/types.ts:68](https://github.com/atala-community-projects/pluto-encrypted/blob/5df4bd7/packages/schemas/src/schemas/message/types.ts#L68)
 
 ___
 
 ### getAllMessagesSentTo
 
-▸ **getAllMessagesSentTo**(`this`, `did`): `Promise`\<[`Message`](../classes/database-1.WALLET_SDK_DOMAIN.Message.md)[]\>
+▸ **getAllMessagesSentTo**(`this`, `did`): `Promise`\<[`Message`](../classes/database-1.WALLET_SDK_DOMAIN.Message-1.md)[]\>
 
 #### Parameters
 
@@ -187,17 +187,17 @@ ___
 
 #### Returns
 
-`Promise`\<[`Message`](../classes/database-1.WALLET_SDK_DOMAIN.Message.md)[]\>
+`Promise`\<[`Message`](../classes/database-1.WALLET_SDK_DOMAIN.Message-1.md)[]\>
 
 #### Defined in
 
-[packages/schemas/src/schemas/message/types.ts:61](https://github.com/atala-community-projects/pluto-encrypted/blob/054e08f/packages/schemas/src/schemas/message/types.ts#L61)
+[packages/schemas/src/schemas/message/types.ts:61](https://github.com/atala-community-projects/pluto-encrypted/blob/5df4bd7/packages/schemas/src/schemas/message/types.ts#L61)
 
 ___
 
 ### getMessage
 
-▸ **getMessage**(`this`, `id`): `Promise`\<``null`` \| [`Message`](../classes/database-1.WALLET_SDK_DOMAIN.Message.md)\>
+▸ **getMessage**(`this`, `id`): `Promise`\<``null`` \| [`Message`](../classes/database-1.WALLET_SDK_DOMAIN.Message-1.md)\>
 
 #### Parameters
 
@@ -208,11 +208,11 @@ ___
 
 #### Returns
 
-`Promise`\<``null`` \| [`Message`](../classes/database-1.WALLET_SDK_DOMAIN.Message.md)\>
+`Promise`\<``null`` \| [`Message`](../classes/database-1.WALLET_SDK_DOMAIN.Message-1.md)\>
 
 #### Defined in
 
-[packages/schemas/src/schemas/message/types.ts:32](https://github.com/atala-community-projects/pluto-encrypted/blob/054e08f/packages/schemas/src/schemas/message/types.ts#L32)
+[packages/schemas/src/schemas/message/types.ts:32](https://github.com/atala-community-projects/pluto-encrypted/blob/5df4bd7/packages/schemas/src/schemas/message/types.ts#L32)
 
 ___
 
@@ -225,7 +225,7 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `this` | [`PlutoDBontext`](../modules/database-1.md#plutodbontext) |
-| `message` | [`Message`](../classes/database-1.WALLET_SDK_DOMAIN.Message.md) |
+| `message` | [`Message`](../classes/database-1.WALLET_SDK_DOMAIN.Message-1.md) |
 
 #### Returns
 
@@ -233,7 +233,7 @@ ___
 
 #### Defined in
 
-[packages/schemas/src/schemas/message/types.ts:36](https://github.com/atala-community-projects/pluto-encrypted/blob/054e08f/packages/schemas/src/schemas/message/types.ts#L36)
+[packages/schemas/src/schemas/message/types.ts:36](https://github.com/atala-community-projects/pluto-encrypted/blob/5df4bd7/packages/schemas/src/schemas/message/types.ts#L36)
 
 ___
 
@@ -246,7 +246,7 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `this` | [`PlutoDBontext`](../modules/database-1.md#plutodbontext) |
-| `messages` | [`Message`](../classes/database-1.WALLET_SDK_DOMAIN.Message.md)[] |
+| `messages` | [`Message`](../classes/database-1.WALLET_SDK_DOMAIN.Message-1.md)[] |
 
 #### Returns
 
@@ -254,4 +254,4 @@ ___
 
 #### Defined in
 
-[packages/schemas/src/schemas/message/types.ts:40](https://github.com/atala-community-projects/pluto-encrypted/blob/054e08f/packages/schemas/src/schemas/message/types.ts#L40)
+[packages/schemas/src/schemas/message/types.ts:40](https://github.com/atala-community-projects/pluto-encrypted/blob/5df4bd7/packages/schemas/src/schemas/message/types.ts#L40)

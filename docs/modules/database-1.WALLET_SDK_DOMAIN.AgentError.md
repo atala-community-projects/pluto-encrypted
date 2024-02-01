@@ -10,6 +10,7 @@
 
 - [CannotFindDIDKeyPairIndex](../classes/database-1.WALLET_SDK_DOMAIN.AgentError.CannotFindDIDKeyPairIndex.md)
 - [CannotFindDIDPrivateKey](../classes/database-1.WALLET_SDK_DOMAIN.AgentError.CannotFindDIDPrivateKey.md)
+- [CannotFindLinkSecret](../classes/database-1.WALLET_SDK_DOMAIN.AgentError.CannotFindLinkSecret.md)
 - [FailedToOnboardError](../classes/database-1.WALLET_SDK_DOMAIN.AgentError.FailedToOnboardError.md)
 - [InvalidBasicMessageBodyError](../classes/database-1.WALLET_SDK_DOMAIN.AgentError.InvalidBasicMessageBodyError.md)
 - [InvalidCredentialBodyError](../classes/database-1.WALLET_SDK_DOMAIN.AgentError.InvalidCredentialBodyError.md)
@@ -42,6 +43,8 @@
 - [NoMediatorAvailableError](../classes/database-1.WALLET_SDK_DOMAIN.AgentError.NoMediatorAvailableError.md)
 - [NoValidServiceEndpointError](../classes/database-1.WALLET_SDK_DOMAIN.AgentError.NoValidServiceEndpointError.md)
 - [OfferDoesntProvideEnoughInformation](../classes/database-1.WALLET_SDK_DOMAIN.AgentError.OfferDoesntProvideEnoughInformation.md)
+- [UnhandledCredential](../classes/database-1.WALLET_SDK_DOMAIN.AgentError.UnhandledCredential.md)
+- [UnhandledPresentationRequest](../classes/database-1.WALLET_SDK_DOMAIN.AgentError.UnhandledPresentationRequest.md)
 - [UnknownCredentialBodyError](../classes/database-1.WALLET_SDK_DOMAIN.AgentError.UnknownCredentialBodyError.md)
 - [UnknownInvitationTypeError](../classes/database-1.WALLET_SDK_DOMAIN.AgentError.UnknownInvitationTypeError.md)
 - [UnknownPrismOnboardingTypeError](../classes/database-1.WALLET_SDK_DOMAIN.AgentError.UnknownPrismOnboardingTypeError.md)

@@ -185,7 +185,7 @@ ___
 
 ### $type
 
-• `Optional` **$type**: ``"string"`` \| ``"number"`` \| ``"boolean"`` \| ``"object"`` \| ``"array"`` \| ``"null"``
+• `Optional` **$type**: ``"string"`` \| ``"number"`` \| ``"boolean"`` \| ``"object"`` \| ``"null"`` \| ``"array"``
 
 #### Defined in
 

@@ -18,8 +18,10 @@
 - [ImportableKey](database-1.WALLET_SDK_DOMAIN.ImportableKey.md)
 - [JWK](database-1.WALLET_SDK_DOMAIN.JWK.md)
 - [MercuryError](database-1.WALLET_SDK_DOMAIN.MercuryError.md)
+- [Message](database-1.WALLET_SDK_DOMAIN.Message.md)
 - [PEM](database-1.WALLET_SDK_DOMAIN.PEM.md)
 - [PlutoError](database-1.WALLET_SDK_DOMAIN.PlutoError.md)
+- [Pollux](database-1.WALLET_SDK_DOMAIN.Pollux.md)
 - [PolluxError](database-1.WALLET_SDK_DOMAIN.PolluxError.md)
 
 ### Enumerations
@@ -51,7 +53,7 @@
 - [Key](../classes/database-1.WALLET_SDK_DOMAIN.Key.md)
 - [KeyAgreement](../classes/database-1.WALLET_SDK_DOMAIN.KeyAgreement.md)
 - [KeyPair](../classes/database-1.WALLET_SDK_DOMAIN.KeyPair.md)
-- [Message](../classes/database-1.WALLET_SDK_DOMAIN.Message.md)
+- [Message](../classes/database-1.WALLET_SDK_DOMAIN.Message-1.md)
 - [PrismDIDInfo](../classes/database-1.WALLET_SDK_DOMAIN.PrismDIDInfo.md)
 - [PrismDIDMethodId](../classes/database-1.WALLET_SDK_DOMAIN.PrismDIDMethodId.md)
 - [PrivateKey](../classes/database-1.WALLET_SDK_DOMAIN.PrivateKey.md)
@@ -83,7 +85,7 @@
 - [Mediator](../interfaces/database-1.WALLET_SDK_DOMAIN.Mediator.md)
 - [Mercury](../interfaces/database-1.WALLET_SDK_DOMAIN.Mercury.md)
 - [Pluto](../interfaces/database-1.WALLET_SDK_DOMAIN.Pluto.md)
-- [Pollux](../interfaces/database-1.WALLET_SDK_DOMAIN.Pollux.md)
+- [Pollux](../interfaces/database-1.WALLET_SDK_DOMAIN.Pollux-1.md)
 - [ProvableCredential](../interfaces/database-1.WALLET_SDK_DOMAIN.ProvableCredential.md)
 - [PublicKeyJWK](../interfaces/database-1.WALLET_SDK_DOMAIN.PublicKeyJWK.md)
 - [Seed](../interfaces/database-1.WALLET_SDK_DOMAIN.Seed.md)

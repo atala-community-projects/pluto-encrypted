@@ -122,13 +122,13 @@ ___
 
 ### getAllMessages
 
-▸ **getAllMessages**(): `Promise`\<[`Message`](../classes/database-1.WALLET_SDK_DOMAIN.Message.md)[]\>
+▸ **getAllMessages**(): `Promise`\<[`Message`](../classes/database-1.WALLET_SDK_DOMAIN.Message-1.md)[]\>
 
 Retrieve all stored DIDComm messages.
 
 #### Returns
 
-`Promise`\<[`Message`](../classes/database-1.WALLET_SDK_DOMAIN.Message.md)[]\>
+`Promise`\<[`Message`](../classes/database-1.WALLET_SDK_DOMAIN.Message-1.md)[]\>
 
 #### Defined in
 
@@ -138,7 +138,7 @@ ___
 
 ### getAllMessagesByDID
 
-▸ **getAllMessagesByDID**(`did`): `Promise`\<[`Message`](../classes/database-1.WALLET_SDK_DOMAIN.Message.md)[]\>
+▸ **getAllMessagesByDID**(`did`): `Promise`\<[`Message`](../classes/database-1.WALLET_SDK_DOMAIN.Message-1.md)[]\>
 
 Retrieve all stored DIDComm messages, received from or sent to a given DID
 
@@ -150,7 +150,7 @@ Retrieve all stored DIDComm messages, received from or sent to a given DID
 
 #### Returns
 
-`Promise`\<[`Message`](../classes/database-1.WALLET_SDK_DOMAIN.Message.md)[]\>
+`Promise`\<[`Message`](../classes/database-1.WALLET_SDK_DOMAIN.Message-1.md)[]\>
 
 #### Defined in
 
@@ -160,7 +160,7 @@ ___
 
 ### getAllMessagesByFromToDID
 
-▸ **getAllMessagesByFromToDID**(`from`, `to`): `Promise`\<[`Message`](../classes/database-1.WALLET_SDK_DOMAIN.Message.md)[]\>
+▸ **getAllMessagesByFromToDID**(`from`, `to`): `Promise`\<[`Message`](../classes/database-1.WALLET_SDK_DOMAIN.Message-1.md)[]\>
 
 Retrieve all DIDComm messages containing given "from" AND "to" DIDs.
 
@@ -173,7 +173,7 @@ Retrieve all DIDComm messages containing given "from" AND "to" DIDs.
 
 #### Returns
 
-`Promise`\<[`Message`](../classes/database-1.WALLET_SDK_DOMAIN.Message.md)[]\>
+`Promise`\<[`Message`](../classes/database-1.WALLET_SDK_DOMAIN.Message-1.md)[]\>
 
 #### Defined in
 
@@ -183,7 +183,7 @@ ___
 
 ### getAllMessagesOfType
 
-▸ **getAllMessagesOfType**(`type`, `relatedWithDID?`): `Promise`\<[`Message`](../classes/database-1.WALLET_SDK_DOMAIN.Message.md)[]\>
+▸ **getAllMessagesOfType**(`type`, `relatedWithDID?`): `Promise`\<[`Message`](../classes/database-1.WALLET_SDK_DOMAIN.Message-1.md)[]\>
 
 Retrieve all stored DIDComm messages with given message type, and
 optionally, related to a given DID. "Related" means that message should
@@ -198,7 +198,7 @@ contain a given DID in either "from" or "to" field.
 
 #### Returns
 
-`Promise`\<[`Message`](../classes/database-1.WALLET_SDK_DOMAIN.Message.md)[]\>
+`Promise`\<[`Message`](../classes/database-1.WALLET_SDK_DOMAIN.Message-1.md)[]\>
 
 #### Defined in
 
@@ -208,13 +208,13 @@ ___
 
 ### getAllMessagesReceived
 
-▸ **getAllMessagesReceived**(): `Promise`\<[`Message`](../classes/database-1.WALLET_SDK_DOMAIN.Message.md)[]\>
+▸ **getAllMessagesReceived**(): `Promise`\<[`Message`](../classes/database-1.WALLET_SDK_DOMAIN.Message-1.md)[]\>
 
 Retrieve all stored, received DIDComm messages.
 
 #### Returns
 
-`Promise`\<[`Message`](../classes/database-1.WALLET_SDK_DOMAIN.Message.md)[]\>
+`Promise`\<[`Message`](../classes/database-1.WALLET_SDK_DOMAIN.Message-1.md)[]\>
 
 #### Defined in
 
@@ -224,7 +224,7 @@ ___
 
 ### getAllMessagesReceivedFrom
 
-▸ **getAllMessagesReceivedFrom**(`did`): `Promise`\<[`Message`](../classes/database-1.WALLET_SDK_DOMAIN.Message.md)[]\>
+▸ **getAllMessagesReceivedFrom**(`did`): `Promise`\<[`Message`](../classes/database-1.WALLET_SDK_DOMAIN.Message-1.md)[]\>
 
 Retrieve all stored DIDComm messages, received from a given DID.
 
@@ -236,7 +236,7 @@ Retrieve all stored DIDComm messages, received from a given DID.
 
 #### Returns
 
-`Promise`\<[`Message`](../classes/database-1.WALLET_SDK_DOMAIN.Message.md)[]\>
+`Promise`\<[`Message`](../classes/database-1.WALLET_SDK_DOMAIN.Message-1.md)[]\>
 
 #### Defined in
 
@@ -246,13 +246,13 @@ ___
 
 ### getAllMessagesSent
 
-▸ **getAllMessagesSent**(): `Promise`\<[`Message`](../classes/database-1.WALLET_SDK_DOMAIN.Message.md)[]\>
+▸ **getAllMessagesSent**(): `Promise`\<[`Message`](../classes/database-1.WALLET_SDK_DOMAIN.Message-1.md)[]\>
 
 Retrieve all stored, sent DIDComm messages.
 
 #### Returns
 
-`Promise`\<[`Message`](../classes/database-1.WALLET_SDK_DOMAIN.Message.md)[]\>
+`Promise`\<[`Message`](../classes/database-1.WALLET_SDK_DOMAIN.Message-1.md)[]\>
 
 #### Defined in
 
@@ -262,7 +262,7 @@ ___
 
 ### getAllMessagesSentTo
 
-▸ **getAllMessagesSentTo**(`did`): `Promise`\<[`Message`](../classes/database-1.WALLET_SDK_DOMAIN.Message.md)[]\>
+▸ **getAllMessagesSentTo**(`did`): `Promise`\<[`Message`](../classes/database-1.WALLET_SDK_DOMAIN.Message-1.md)[]\>
 
 Retrieve all stored DIDComm messages, sent to a given DID.
 
@@ -274,7 +274,7 @@ Retrieve all stored DIDComm messages, sent to a given DID.
 
 #### Returns
 
-`Promise`\<[`Message`](../classes/database-1.WALLET_SDK_DOMAIN.Message.md)[]\>
+`Promise`\<[`Message`](../classes/database-1.WALLET_SDK_DOMAIN.Message-1.md)[]\>
 
 #### Defined in
 
@@ -426,7 +426,7 @@ ___
 
 ### getMessage
 
-▸ **getMessage**(`id`): `Promise`\<``null`` \| [`Message`](../classes/database-1.WALLET_SDK_DOMAIN.Message.md)\>
+▸ **getMessage**(`id`): `Promise`\<``null`` \| [`Message`](../classes/database-1.WALLET_SDK_DOMAIN.Message-1.md)\>
 
 Retrieve a DIDComm message by ID.
 
@@ -438,7 +438,7 @@ Retrieve a DIDComm message by ID.
 
 #### Returns
 
-`Promise`\<``null`` \| [`Message`](../classes/database-1.WALLET_SDK_DOMAIN.Message.md)\>
+`Promise`\<``null`` \| [`Message`](../classes/database-1.WALLET_SDK_DOMAIN.Message-1.md)\>
 
 #### Defined in
 
@@ -670,7 +670,7 @@ Store a DIDComm message.
 
 | Name | Type |
 | :------ | :------ |
-| `message` | [`Message`](../classes/database-1.WALLET_SDK_DOMAIN.Message.md) |
+| `message` | [`Message`](../classes/database-1.WALLET_SDK_DOMAIN.Message-1.md) |
 
 #### Returns
 
@@ -692,7 +692,7 @@ Store an array of DIDComm messages
 
 | Name | Type |
 | :------ | :------ |
-| `messages` | [`Message`](../classes/database-1.WALLET_SDK_DOMAIN.Message.md)[] |
+| `messages` | [`Message`](../classes/database-1.WALLET_SDK_DOMAIN.Message-1.md)[] |
 
 #### Returns
 
