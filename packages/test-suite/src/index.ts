@@ -4,11 +4,15 @@
  * @description This package can be used as a compliance test to validate a new storage created by you or the community.
  */
 import { type FilledMangoQuery, type RxDocumentData, type RxDocumentWriteData, type RxJsonSchema, type RxStorage, type RxStorageBulkWriteResponse, type RxStorageInstance, type RxStorageInstanceCreationParams, clone, createRevision, ensureNotFalsy, fillWithDefaultSettings, flatCloneDocWithMeta, getPseudoSchemaForVersion, getQueryMatcher, getSortComparator, newRxError, now, parseRevision, randomCouchString, shuffleArray } from 'rxdb'
+import { randomString } from 'async-test-util'
+import SDK from '@atala/prism-wallet-sdk'
+import { Database } from '@pluto-encrypted/database'
+import { getDefaultCollections } from "@pluto-encrypted/schemas";
+
 import { EXAMPLE_REVISION_1, EXAMPLE_REVISION_2, EXAMPLE_REVISION_3, EXAMPLE_REVISION_4, type NestedDoc, type OptionalValueTestDoc, type RandomDoc, type RxTestStorage, type TestDocType, type TestSuite, getNestedDocSchema, getTestDataSchema, getWriteData, prepareQuery, testContext, testCorrectQueries, withIndexes } from './helper'
 import * as schemas from './helper/schemas'
 import { type HeroArrayDocumentType, type NestedHumanDocumentType, type SimpleHumanV3DocumentType, human, nestedHuman, simpleHumanV3 } from './helper/schema-objects'
 import { type HumanDocumentType } from './helper/schemas'
-import { randomString } from 'async-test-util'
 
 let storage: RxStorage<any, any>
 let storageInstance: RxStorageInstance<any, any, any, any>
@@ -2583,6 +2587,47 @@ export function runTestSuite(suite: TestSuite, testStorage: RxTestStorage): void
           expectedResultDocIds: ['utarwoqkav', 'zmbznyggnu']
         }
       ]
+    })
+
+    describe('@atala/prism-sdk-wallet will start with this pluto', async ({ expect }) => {
+      const defaultPassword = new Uint8Array(32).fill(1)
+      const pluto = await Database.createEncrypted({
+        name: 'my-db',
+        encryptionKey: defaultPassword,
+        storage,
+        collections: getDefaultCollections()
+      })
+
+      const mediatorDIDString = 'did:peer:2.Ez6LSghwSE437wnDE1pt3X6hVDUQzSjsHzinpX3XFvMjRAm7y.Vz6Mkhh1e5CEYYq6JBUcTZ6Cp2ranCWRrv7Yax3Le4N59R6dd.SeyJ0IjoiZG0iLCJzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgwIiwiciI6W10sImEiOlsiZGlkY29tbS92MiJdfQ'
+      const mediatorDID = SDK.Domain.DID.fromString(mediatorDIDString)
+
+      const apollo = new SDK.Apollo()
+      const api = new SDK.ApiImpl()
+      const castor = new SDK.Castor(apollo)
+
+      const didcomm = new SDK.DIDCommWrapper(apollo, castor, pluto)
+      const mercury = new SDK.Mercury(castor, didcomm, api)
+      const store = new SDK.PublicMediatorStore(pluto)
+      const handler = new SDK.BasicMediatorHandler(mediatorDID, mercury, store)
+      const manager = new SDK.ConnectionsManager(castor, mercury, pluto, handler)
+
+      const seed = apollo.createRandomSeed()
+      // TODO persist this?
+
+      const agent = new SDK.Agent(
+        apollo,
+        castor,
+        pluto,
+        mercury,
+        handler,
+        manager,
+        seed.seed
+      )
+
+      const result = await agent.start()
+        .catch(console.error)
+
+      expect(result).not.toBe(undefined)
     })
   })
 }
