@@ -2,7 +2,7 @@
 Is a community maintained project which aims to bring a scalable and future proof storage solution for Wallet SDK on typescript. By using this package you can ensure that this dependency will fit the AtalaPrism wallet SDK contract and provide the SDK with storage finally.
 
 ## Interface
-Edge SDK Pluto interface [v4.0.0-rc1](https://input-output-hk.github.io/atala-prism-wallet-sdk-ts/interfaces/Domain.Pluto.html)
+Edge SDK Pluto interface [v4.0.0](https://input-output-hk.github.io/atala-prism-wallet-sdk-ts/interfaces/Domain.Pluto.html)
 ```typescript
 
 export interface Pluto {
