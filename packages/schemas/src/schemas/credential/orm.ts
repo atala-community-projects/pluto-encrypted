@@ -7,7 +7,8 @@ export const CredentialMethods: CredentialMethodTypes = {
         if (this.recoveryId === SDK.JWTVerifiableCredentialRecoveryId) {
             const jwtString = Buffer.from(this.credentialData).toString()
             const jwtObj = JSON.parse(jwtString)
-            return SDK.JWTCredential.fromJWT(jwtObj, jwtString)
+            const fromJWT = SDK.JWTCredential.fromJWT(jwtObj, jwtObj.jti)
+            return fromJWT
         } else if (this.recoveryId === SDK.AnonCredsRecoveryId) {
             const credentialData = Buffer.from(this.credentialData).toString()
             const credentialJson = JSON.parse(credentialData)

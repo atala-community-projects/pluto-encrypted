@@ -27,7 +27,7 @@
   "author": "elribonazo@gmail.com",
   "license": "Apache-2.0",
   "peerDependencies": {
-    "@atala/prism-wallet-sdk": "^4.0.0-rc.1"
+    "@atala/prism-wallet-sdk": "^4.0.2"
   },
   "devDependencies": {
     "@pluto-encrypted/encryption": "1.11.0",
@@ -35,7 +35,7 @@
     "@vitest/coverage-v8": "^1.0.4"
   },
   "dependencies": {
-    "@atala/prism-wallet-sdk": "^4.0.0-rc.1",
+    "@atala/prism-wallet-sdk": "^4.0.2",
     "@pluto-encrypted/encryption": "1.11.0",
     "@pluto-encrypted/shared": "1.11.3",
     "rxdb": "^14.17.0",

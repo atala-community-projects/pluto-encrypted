@@ -289,14 +289,14 @@ export function runTestSuite(suite: TestSuite, testStorage: RxTestStorage): void
             }
           })
         }
-        debugger;
+
         const deleteResponse = await storageInstance.bulkWrite(
           [toDelete],
           testContext
         )
-        debugger;
+
         expect(deleteResponse.error).toStrictEqual({})
-        debugger;
+
         const foundDoc = await storageInstance.findDocumentsById([pkey], false)
 
         expect(foundDoc).toStrictEqual({})
@@ -913,7 +913,7 @@ export function runTestSuite(suite: TestSuite, testStorage: RxTestStorage): void
 
     describe('.query()', () => {
       it('should find all documents', async ({ expect }) => {
-        debugger;
+
         storageInstance = await storage.createStorageInstance<{ key: string, value: string }>({
           databaseInstanceToken: randomCouchString(10),
           databaseName: randomCouchString(12),
@@ -923,7 +923,7 @@ export function runTestSuite(suite: TestSuite, testStorage: RxTestStorage): void
           multiInstance: false,
           devMode: true
         })
-        debugger;
+
         const writeData = {
           key: 'foobar',
           value: 'barfoo',
@@ -934,14 +934,14 @@ export function runTestSuite(suite: TestSuite, testStorage: RxTestStorage): void
             lwt: now()
           }
         }
-        debugger;
+
         await storageInstance.bulkWrite(
           [{
             document: writeData
           }],
           testContext
         )
-        debugger;
+
         const writeData2 = {
           key: 'foobar2',
           value: 'barfoo2',
@@ -958,7 +958,7 @@ export function runTestSuite(suite: TestSuite, testStorage: RxTestStorage): void
           }],
           testContext
         )
-        debugger;
+
         const preparedQuery = prepareQuery(
           storageInstance.schema,
           {
@@ -971,7 +971,7 @@ export function runTestSuite(suite: TestSuite, testStorage: RxTestStorage): void
         )
         const allDocs = await storageInstance.query(preparedQuery)
         const first = allDocs.documents[0]
-        debugger;
+
         expect(first).not.toBe(undefined)
         expect(first.value).toBe('barfoo')
 
