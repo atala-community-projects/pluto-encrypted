@@ -1,3 +1,21 @@
+## @pluto-encrypted/database [1.15.3](https://github.com/atala-community-projects/pluto-encrypted/compare/@pluto-encrypted/database@1.15.2...@pluto-encrypted/database@1.15.3) (2024-02-08)
+
+
+### Bug Fixes
+
+* improve coverage ([9de11a9](https://github.com/atala-community-projects/pluto-encrypted/commit/9de11a9095b6a4c232f78108bea5b3059b591e29))
+* Upgrade SDK to latest version which contains a fix to deserialize the JWT Credential from JTI String. ([e9aa761](https://github.com/atala-community-projects/pluto-encrypted/commit/e9aa7610f263fbe7aecf9786e42a1840c2b9a18d))
+
+
+
+
+
+### Dependencies
+
+* **@pluto-encrypted/indexdb:** upgraded to 1.12.2
+* **@pluto-encrypted/inmemory:** upgraded to 1.12.2
+* **@pluto-encrypted/leveldb:** upgraded to 1.12.2
+
 ## @pluto-encrypted/database [1.13.3](https://github.com/atala-community-projects/pluto-encrypted/compare/@pluto-encrypted/database@1.13.2...@pluto-encrypted/database@1.13.3) (2024-01-10)
 
 
