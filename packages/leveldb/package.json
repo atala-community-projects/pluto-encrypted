@@ -1,6 +1,6 @@
 {
   "name": "@pluto-encrypted/leveldb",
-  "version": "1.12.1",
+  "version": "1.12.2",
   "description": "Secure Encrypted LevelDB storage for @pluto-encrypted/database",
   "main": "./build/cjs/index.cjs",
   "module": "./build/esm/index.mjs",
@@ -44,7 +44,7 @@
   "devDependencies": {
     "@pluto-encrypted/encryption": "1.11.0",
     "@pluto-encrypted/shared": "1.11.3",
-    "@pluto-encrypted/test-suite": "1.12.0"
+    "@pluto-encrypted/test-suite": "1.12.1"
   },
   "files": [
     "build/*"
