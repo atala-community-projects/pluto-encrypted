@@ -8,18 +8,27 @@ import { DIDStaticMethodTypes } from './types'
 
 export const DIDStaticMethods: DIDStaticMethodTypes = {
     async storePrismDID(did: SDK.Domain.DID, keyPathIndex: number, privateKey: SDK.Domain.PrivateKey, _privateKeyMetaId?: string | null | undefined, alias?: string | undefined): Promise<void> {
-        await this.db.collections.dids.insert({
-            did: did.toString(),
-            method: did.method,
-            methodId: did.methodId,
-            schema: did.schema,
-            alias
-        })
-        await this.storePrivateKeys(
-            privateKey,
-            did,
-            keyPathIndex,
-        )
+        const found = await this.db.collections.dids.findOne({
+            selector: {
+                did: {
+                    $eq: did.toString(),
+                }
+            }
+        }).exec();
+        if (!found) {
+            await this.db.collections.dids.insert({
+                did: did.toString(),
+                method: did.method,
+                methodId: did.methodId,
+                schema: did.schema,
+                alias
+            })
+            await this.storePrivateKeys(
+                privateKey,
+                did,
+                keyPathIndex,
+            )
+        }
     },
     async getAllPrismDIDs(): Promise<SDK.Domain.PrismDIDInfo[]> {
         const dids = await this.db.collections.dids.find({
