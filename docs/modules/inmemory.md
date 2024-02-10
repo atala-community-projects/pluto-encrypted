@@ -40,4 +40,4 @@ Use this as storage in our RXDB database. For now there is no initialisation set
 
 #### Defined in
 
-[packages/inmemory/src/index.ts:62](https://github.com/atala-community-projects/pluto-encrypted/blob/771b3b2/packages/inmemory/src/index.ts#L62)
+[packages/inmemory/src/index.ts:62](https://github.com/atala-community-projects/pluto-encrypted/blob/dd87575/packages/inmemory/src/index.ts#L62)

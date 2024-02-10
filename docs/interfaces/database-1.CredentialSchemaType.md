@@ -28,7 +28,7 @@
 
 #### Defined in
 
-[packages/schemas/src/schemas/credential/types.ts:23](https://github.com/atala-community-projects/pluto-encrypted/blob/771b3b2/packages/schemas/src/schemas/credential/types.ts#L23)
+[packages/schemas/src/schemas/credential/types.ts:23](https://github.com/atala-community-projects/pluto-encrypted/blob/dd87575/packages/schemas/src/schemas/credential/types.ts#L23)
 
 ___
 
@@ -38,7 +38,7 @@ ___
 
 #### Defined in
 
-[packages/schemas/src/schemas/credential/types.ts:18](https://github.com/atala-community-projects/pluto-encrypted/blob/771b3b2/packages/schemas/src/schemas/credential/types.ts#L18)
+[packages/schemas/src/schemas/credential/types.ts:18](https://github.com/atala-community-projects/pluto-encrypted/blob/dd87575/packages/schemas/src/schemas/credential/types.ts#L18)
 
 ___
 
@@ -48,7 +48,7 @@ ___
 
 #### Defined in
 
-[packages/schemas/src/schemas/credential/types.ts:15](https://github.com/atala-community-projects/pluto-encrypted/blob/771b3b2/packages/schemas/src/schemas/credential/types.ts#L15)
+[packages/schemas/src/schemas/credential/types.ts:15](https://github.com/atala-community-projects/pluto-encrypted/blob/dd87575/packages/schemas/src/schemas/credential/types.ts#L15)
 
 ___
 
@@ -58,7 +58,7 @@ ___
 
 #### Defined in
 
-[packages/schemas/src/schemas/credential/types.ts:20](https://github.com/atala-community-projects/pluto-encrypted/blob/771b3b2/packages/schemas/src/schemas/credential/types.ts#L20)
+[packages/schemas/src/schemas/credential/types.ts:20](https://github.com/atala-community-projects/pluto-encrypted/blob/dd87575/packages/schemas/src/schemas/credential/types.ts#L20)
 
 ___
 
@@ -68,7 +68,7 @@ ___
 
 #### Defined in
 
-[packages/schemas/src/schemas/credential/types.ts:19](https://github.com/atala-community-projects/pluto-encrypted/blob/771b3b2/packages/schemas/src/schemas/credential/types.ts#L19)
+[packages/schemas/src/schemas/credential/types.ts:19](https://github.com/atala-community-projects/pluto-encrypted/blob/dd87575/packages/schemas/src/schemas/credential/types.ts#L19)
 
 ___
 
@@ -78,7 +78,7 @@ ___
 
 #### Defined in
 
-[packages/schemas/src/schemas/credential/types.ts:13](https://github.com/atala-community-projects/pluto-encrypted/blob/771b3b2/packages/schemas/src/schemas/credential/types.ts#L13)
+[packages/schemas/src/schemas/credential/types.ts:13](https://github.com/atala-community-projects/pluto-encrypted/blob/dd87575/packages/schemas/src/schemas/credential/types.ts#L13)
 
 ___
 
@@ -88,7 +88,7 @@ ___
 
 #### Defined in
 
-[packages/schemas/src/schemas/credential/types.ts:16](https://github.com/atala-community-projects/pluto-encrypted/blob/771b3b2/packages/schemas/src/schemas/credential/types.ts#L16)
+[packages/schemas/src/schemas/credential/types.ts:16](https://github.com/atala-community-projects/pluto-encrypted/blob/dd87575/packages/schemas/src/schemas/credential/types.ts#L16)
 
 ___
 
@@ -98,7 +98,7 @@ ___
 
 #### Defined in
 
-[packages/schemas/src/schemas/credential/types.ts:14](https://github.com/atala-community-projects/pluto-encrypted/blob/771b3b2/packages/schemas/src/schemas/credential/types.ts#L14)
+[packages/schemas/src/schemas/credential/types.ts:14](https://github.com/atala-community-projects/pluto-encrypted/blob/dd87575/packages/schemas/src/schemas/credential/types.ts#L14)
 
 ___
 
@@ -108,7 +108,7 @@ ___
 
 #### Defined in
 
-[packages/schemas/src/schemas/credential/types.ts:22](https://github.com/atala-community-projects/pluto-encrypted/blob/771b3b2/packages/schemas/src/schemas/credential/types.ts#L22)
+[packages/schemas/src/schemas/credential/types.ts:22](https://github.com/atala-community-projects/pluto-encrypted/blob/dd87575/packages/schemas/src/schemas/credential/types.ts#L22)
 
 ___
 
@@ -118,7 +118,7 @@ ___
 
 #### Defined in
 
-[packages/schemas/src/schemas/credential/types.ts:17](https://github.com/atala-community-projects/pluto-encrypted/blob/771b3b2/packages/schemas/src/schemas/credential/types.ts#L17)
+[packages/schemas/src/schemas/credential/types.ts:17](https://github.com/atala-community-projects/pluto-encrypted/blob/dd87575/packages/schemas/src/schemas/credential/types.ts#L17)
 
 ___
 
@@ -128,4 +128,4 @@ ___
 
 #### Defined in
 
-[packages/schemas/src/schemas/credential/types.ts:21](https://github.com/atala-community-projects/pluto-encrypted/blob/771b3b2/packages/schemas/src/schemas/credential/types.ts#L21)
+[packages/schemas/src/schemas/credential/types.ts:21](https://github.com/atala-community-projects/pluto-encrypted/blob/dd87575/packages/schemas/src/schemas/credential/types.ts#L21)
