@@ -113,7 +113,7 @@ export const DIDStaticMethods: DIDStaticMethodTypes = {
         if (!key) {
             return null
         }
-        return key.index || 0
+        return key.index++ || 0
     },
 
     async getPrismLastKeyPathIndex(): Promise<number> {
