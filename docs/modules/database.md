@@ -32,7 +32,7 @@
 
 #### Defined in
 
-[packages/database/src/types.ts:4](https://github.com/atala-community-projects/pluto-encrypted/blob/eabdd0c/packages/database/src/types.ts#L4)
+[packages/database/src/types.ts:4](https://github.com/atala-community-projects/pluto-encrypted/blob/8d4a2cf/packages/database/src/types.ts#L4)
 
 ## Variables
 
@@ -52,4 +52,4 @@ preferred underlying storage technology, most appropriate for your use case.
 
 #### Defined in
 
-[packages/database/src/index.ts:22](https://github.com/atala-community-projects/pluto-encrypted/blob/eabdd0c/packages/database/src/index.ts#L22)
+[packages/database/src/index.ts:22](https://github.com/atala-community-projects/pluto-encrypted/blob/8d4a2cf/packages/database/src/index.ts#L22)

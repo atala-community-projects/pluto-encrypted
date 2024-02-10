@@ -1,3 +1,10 @@
+## @pluto-encrypted/database [1.15.4](https://github.com/atala-community-projects/pluto-encrypted/compare/@pluto-encrypted/database@1.15.3...@pluto-encrypted/database@1.15.4) (2024-02-10)
+
+
+### Bug Fixes
+
+* database and schemas fix for last key index for prism did keys. ([b88fa6e](https://github.com/atala-community-projects/pluto-encrypted/commit/b88fa6ed71a6f44da48129bf5bd7a5222b8d000f))
+
 ## @pluto-encrypted/database [1.15.3](https://github.com/atala-community-projects/pluto-encrypted/compare/@pluto-encrypted/database@1.15.2...@pluto-encrypted/database@1.15.3) (2024-02-08)
 
 

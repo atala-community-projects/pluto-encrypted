@@ -21,7 +21,7 @@
 
 #### Defined in
 
-[packages/schemas/src/schemas/credentialRequestMetadata/types.ts:18](https://github.com/atala-community-projects/pluto-encrypted/blob/eabdd0c/packages/schemas/src/schemas/credentialRequestMetadata/types.ts#L18)
+[packages/schemas/src/schemas/credentialRequestMetadata/types.ts:18](https://github.com/atala-community-projects/pluto-encrypted/blob/8d4a2cf/packages/schemas/src/schemas/credentialRequestMetadata/types.ts#L18)
 
 ___
 
@@ -37,7 +37,7 @@ ___
 
 #### Defined in
 
-[packages/schemas/src/schemas/credentialRequestMetadata/types.ts:19](https://github.com/atala-community-projects/pluto-encrypted/blob/eabdd0c/packages/schemas/src/schemas/credentialRequestMetadata/types.ts#L19)
+[packages/schemas/src/schemas/credentialRequestMetadata/types.ts:19](https://github.com/atala-community-projects/pluto-encrypted/blob/8d4a2cf/packages/schemas/src/schemas/credentialRequestMetadata/types.ts#L19)
 
 ___
 
@@ -47,7 +47,7 @@ ___
 
 #### Defined in
 
-[packages/schemas/src/schemas/credentialRequestMetadata/types.ts:22](https://github.com/atala-community-projects/pluto-encrypted/blob/eabdd0c/packages/schemas/src/schemas/credentialRequestMetadata/types.ts#L22)
+[packages/schemas/src/schemas/credentialRequestMetadata/types.ts:22](https://github.com/atala-community-projects/pluto-encrypted/blob/8d4a2cf/packages/schemas/src/schemas/credentialRequestMetadata/types.ts#L22)
 
 ___
 
@@ -57,4 +57,4 @@ ___
 
 #### Defined in
 
-[packages/schemas/src/schemas/credentialRequestMetadata/types.ts:23](https://github.com/atala-community-projects/pluto-encrypted/blob/eabdd0c/packages/schemas/src/schemas/credentialRequestMetadata/types.ts#L23)
+[packages/schemas/src/schemas/credentialRequestMetadata/types.ts:23](https://github.com/atala-community-projects/pluto-encrypted/blob/8d4a2cf/packages/schemas/src/schemas/credentialRequestMetadata/types.ts#L23)

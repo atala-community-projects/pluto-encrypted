@@ -19,7 +19,7 @@
 
 #### Defined in
 
-[packages/schemas/src/schemas/linksecret/types.ts:10](https://github.com/atala-community-projects/pluto-encrypted/blob/eabdd0c/packages/schemas/src/schemas/linksecret/types.ts#L10)
+[packages/schemas/src/schemas/linksecret/types.ts:10](https://github.com/atala-community-projects/pluto-encrypted/blob/8d4a2cf/packages/schemas/src/schemas/linksecret/types.ts#L10)
 
 ___
 
@@ -29,4 +29,4 @@ ___
 
 #### Defined in
 
-[packages/schemas/src/schemas/linksecret/types.ts:11](https://github.com/atala-community-projects/pluto-encrypted/blob/eabdd0c/packages/schemas/src/schemas/linksecret/types.ts#L11)
+[packages/schemas/src/schemas/linksecret/types.ts:11](https://github.com/atala-community-projects/pluto-encrypted/blob/8d4a2cf/packages/schemas/src/schemas/linksecret/types.ts#L11)
