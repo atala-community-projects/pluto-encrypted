@@ -19,7 +19,7 @@
 
 #### Defined in
 
-[packages/iagon/src/IagonStorage/types.ts:11](https://github.com/atala-community-projects/pluto-encrypted/blob/a4b16d4/packages/iagon/src/IagonStorage/types.ts#L11)
+[packages/iagon/src/IagonStorage/types.ts:11](https://github.com/atala-community-projects/pluto-encrypted/blob/eabdd0c/packages/iagon/src/IagonStorage/types.ts#L11)
 
 ___
 
@@ -29,4 +29,4 @@ ___
 
 #### Defined in
 
-[packages/iagon/src/IagonStorage/types.ts:12](https://github.com/atala-community-projects/pluto-encrypted/blob/a4b16d4/packages/iagon/src/IagonStorage/types.ts#L12)
+[packages/iagon/src/IagonStorage/types.ts:12](https://github.com/atala-community-projects/pluto-encrypted/blob/eabdd0c/packages/iagon/src/IagonStorage/types.ts#L12)

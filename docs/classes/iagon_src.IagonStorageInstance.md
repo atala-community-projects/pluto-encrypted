@@ -75,7 +75,7 @@
 
 #### Defined in
 
-[packages/iagon/src/IagonStorage/instance.ts:27](https://github.com/atala-community-projects/pluto-encrypted/blob/a4b16d4/packages/iagon/src/IagonStorage/instance.ts#L27)
+[packages/iagon/src/IagonStorage/instance.ts:27](https://github.com/atala-community-projects/pluto-encrypted/blob/eabdd0c/packages/iagon/src/IagonStorage/instance.ts#L27)
 
 ## Properties
 
@@ -85,7 +85,7 @@
 
 #### Defined in
 
-[packages/iagon/src/IagonStorage/instance.ts:25](https://github.com/atala-community-projects/pluto-encrypted/blob/a4b16d4/packages/iagon/src/IagonStorage/instance.ts#L25)
+[packages/iagon/src/IagonStorage/instance.ts:25](https://github.com/atala-community-projects/pluto-encrypted/blob/eabdd0c/packages/iagon/src/IagonStorage/instance.ts#L25)
 
 ___
 
@@ -99,7 +99,7 @@ RxStorageInstance.collectionName
 
 #### Defined in
 
-[packages/iagon/src/IagonStorage/instance.ts:32](https://github.com/atala-community-projects/pluto-encrypted/blob/a4b16d4/packages/iagon/src/IagonStorage/instance.ts#L32)
+[packages/iagon/src/IagonStorage/instance.ts:32](https://github.com/atala-community-projects/pluto-encrypted/blob/eabdd0c/packages/iagon/src/IagonStorage/instance.ts#L32)
 
 ___
 
@@ -109,7 +109,7 @@ ___
 
 #### Defined in
 
-[packages/iagon/src/IagonStorage/instance.ts:24](https://github.com/atala-community-projects/pluto-encrypted/blob/a4b16d4/packages/iagon/src/IagonStorage/instance.ts#L24)
+[packages/iagon/src/IagonStorage/instance.ts:24](https://github.com/atala-community-projects/pluto-encrypted/blob/eabdd0c/packages/iagon/src/IagonStorage/instance.ts#L24)
 
 ___
 
@@ -123,7 +123,7 @@ RxStorageInstance.databaseName
 
 #### Defined in
 
-[packages/iagon/src/IagonStorage/instance.ts:28](https://github.com/atala-community-projects/pluto-encrypted/blob/a4b16d4/packages/iagon/src/IagonStorage/instance.ts#L28)
+[packages/iagon/src/IagonStorage/instance.ts:28](https://github.com/atala-community-projects/pluto-encrypted/blob/eabdd0c/packages/iagon/src/IagonStorage/instance.ts#L28)
 
 ___
 
@@ -137,7 +137,7 @@ RxStorageInstance.internals
 
 #### Defined in
 
-[packages/iagon/src/IagonStorage/instance.ts:29](https://github.com/atala-community-projects/pluto-encrypted/blob/a4b16d4/packages/iagon/src/IagonStorage/instance.ts#L29)
+[packages/iagon/src/IagonStorage/instance.ts:29](https://github.com/atala-community-projects/pluto-encrypted/blob/eabdd0c/packages/iagon/src/IagonStorage/instance.ts#L29)
 
 ___
 
@@ -147,7 +147,7 @@ ___
 
 #### Defined in
 
-[packages/iagon/src/IagonStorage/instance.ts:22](https://github.com/atala-community-projects/pluto-encrypted/blob/a4b16d4/packages/iagon/src/IagonStorage/instance.ts#L22)
+[packages/iagon/src/IagonStorage/instance.ts:22](https://github.com/atala-community-projects/pluto-encrypted/blob/eabdd0c/packages/iagon/src/IagonStorage/instance.ts#L22)
 
 ___
 
@@ -161,7 +161,7 @@ RxStorageInstance.options
 
 #### Defined in
 
-[packages/iagon/src/IagonStorage/instance.ts:30](https://github.com/atala-community-projects/pluto-encrypted/blob/a4b16d4/packages/iagon/src/IagonStorage/instance.ts#L30)
+[packages/iagon/src/IagonStorage/instance.ts:30](https://github.com/atala-community-projects/pluto-encrypted/blob/eabdd0c/packages/iagon/src/IagonStorage/instance.ts#L30)
 
 ___
 
@@ -171,7 +171,7 @@ ___
 
 #### Defined in
 
-[packages/iagon/src/IagonStorage/instance.ts:20](https://github.com/atala-community-projects/pluto-encrypted/blob/a4b16d4/packages/iagon/src/IagonStorage/instance.ts#L20)
+[packages/iagon/src/IagonStorage/instance.ts:20](https://github.com/atala-community-projects/pluto-encrypted/blob/eabdd0c/packages/iagon/src/IagonStorage/instance.ts#L20)
 
 ___
 
@@ -181,7 +181,7 @@ ___
 
 #### Defined in
 
-[packages/iagon/src/IagonStorage/instance.ts:33](https://github.com/atala-community-projects/pluto-encrypted/blob/a4b16d4/packages/iagon/src/IagonStorage/instance.ts#L33)
+[packages/iagon/src/IagonStorage/instance.ts:33](https://github.com/atala-community-projects/pluto-encrypted/blob/eabdd0c/packages/iagon/src/IagonStorage/instance.ts#L33)
 
 ___
 
@@ -195,7 +195,7 @@ RxStorageInstance.schema
 
 #### Defined in
 
-[packages/iagon/src/IagonStorage/instance.ts:31](https://github.com/atala-community-projects/pluto-encrypted/blob/a4b16d4/packages/iagon/src/IagonStorage/instance.ts#L31)
+[packages/iagon/src/IagonStorage/instance.ts:31](https://github.com/atala-community-projects/pluto-encrypted/blob/eabdd0c/packages/iagon/src/IagonStorage/instance.ts#L31)
 
 ## Methods
 
@@ -220,7 +220,7 @@ RxStorageInstance.bulkWrite
 
 #### Defined in
 
-[packages/iagon/src/IagonStorage/instance.ts:176](https://github.com/atala-community-projects/pluto-encrypted/blob/a4b16d4/packages/iagon/src/IagonStorage/instance.ts#L176)
+[packages/iagon/src/IagonStorage/instance.ts:176](https://github.com/atala-community-projects/pluto-encrypted/blob/eabdd0c/packages/iagon/src/IagonStorage/instance.ts#L176)
 
 ___
 
@@ -238,7 +238,7 @@ RxStorageInstance.changeStream
 
 #### Defined in
 
-[packages/iagon/src/IagonStorage/instance.ts:153](https://github.com/atala-community-projects/pluto-encrypted/blob/a4b16d4/packages/iagon/src/IagonStorage/instance.ts#L153)
+[packages/iagon/src/IagonStorage/instance.ts:153](https://github.com/atala-community-projects/pluto-encrypted/blob/eabdd0c/packages/iagon/src/IagonStorage/instance.ts#L153)
 
 ___
 
@@ -262,7 +262,7 @@ RxStorageInstance.cleanup
 
 #### Defined in
 
-[packages/iagon/src/IagonStorage/instance.ts:146](https://github.com/atala-community-projects/pluto-encrypted/blob/a4b16d4/packages/iagon/src/IagonStorage/instance.ts#L146)
+[packages/iagon/src/IagonStorage/instance.ts:146](https://github.com/atala-community-projects/pluto-encrypted/blob/eabdd0c/packages/iagon/src/IagonStorage/instance.ts#L146)
 
 ___
 
@@ -280,7 +280,7 @@ RxStorageInstance.close
 
 #### Defined in
 
-[packages/iagon/src/IagonStorage/instance.ts:150](https://github.com/atala-community-projects/pluto-encrypted/blob/a4b16d4/packages/iagon/src/IagonStorage/instance.ts#L150)
+[packages/iagon/src/IagonStorage/instance.ts:150](https://github.com/atala-community-projects/pluto-encrypted/blob/eabdd0c/packages/iagon/src/IagonStorage/instance.ts#L150)
 
 ___
 
@@ -298,7 +298,7 @@ RxStorageInstance.conflictResultionTasks
 
 #### Defined in
 
-[packages/iagon/src/IagonStorage/instance.ts:159](https://github.com/atala-community-projects/pluto-encrypted/blob/a4b16d4/packages/iagon/src/IagonStorage/instance.ts#L159)
+[packages/iagon/src/IagonStorage/instance.ts:159](https://github.com/atala-community-projects/pluto-encrypted/blob/eabdd0c/packages/iagon/src/IagonStorage/instance.ts#L159)
 
 ___
 
@@ -322,7 +322,7 @@ RxStorageInstance.count
 
 #### Defined in
 
-[packages/iagon/src/IagonStorage/instance.ts:132](https://github.com/atala-community-projects/pluto-encrypted/blob/a4b16d4/packages/iagon/src/IagonStorage/instance.ts#L132)
+[packages/iagon/src/IagonStorage/instance.ts:132](https://github.com/atala-community-projects/pluto-encrypted/blob/eabdd0c/packages/iagon/src/IagonStorage/instance.ts#L132)
 
 ___
 
@@ -347,7 +347,7 @@ RxStorageInstance.findDocumentsById
 
 #### Defined in
 
-[packages/iagon/src/IagonStorage/instance.ts:38](https://github.com/atala-community-projects/pluto-encrypted/blob/a4b16d4/packages/iagon/src/IagonStorage/instance.ts#L38)
+[packages/iagon/src/IagonStorage/instance.ts:38](https://github.com/atala-community-projects/pluto-encrypted/blob/eabdd0c/packages/iagon/src/IagonStorage/instance.ts#L38)
 
 ___
 
@@ -361,7 +361,7 @@ ___
 
 #### Defined in
 
-[packages/iagon/src/IagonStorage/instance.ts:165](https://github.com/atala-community-projects/pluto-encrypted/blob/a4b16d4/packages/iagon/src/IagonStorage/instance.ts#L165)
+[packages/iagon/src/IagonStorage/instance.ts:165](https://github.com/atala-community-projects/pluto-encrypted/blob/eabdd0c/packages/iagon/src/IagonStorage/instance.ts#L165)
 
 ___
 
@@ -387,7 +387,7 @@ RxStorageInstance.getAttachmentData
 
 #### Defined in
 
-[packages/iagon/src/IagonStorage/instance.ts:139](https://github.com/atala-community-projects/pluto-encrypted/blob/a4b16d4/packages/iagon/src/IagonStorage/instance.ts#L139)
+[packages/iagon/src/IagonStorage/instance.ts:139](https://github.com/atala-community-projects/pluto-encrypted/blob/eabdd0c/packages/iagon/src/IagonStorage/instance.ts#L139)
 
 ___
 
@@ -412,7 +412,7 @@ RxStorageInstance.getChangedDocumentsSince
 
 #### Defined in
 
-[packages/iagon/src/IagonStorage/instance.ts:142](https://github.com/atala-community-projects/pluto-encrypted/blob/a4b16d4/packages/iagon/src/IagonStorage/instance.ts#L142)
+[packages/iagon/src/IagonStorage/instance.ts:142](https://github.com/atala-community-projects/pluto-encrypted/blob/eabdd0c/packages/iagon/src/IagonStorage/instance.ts#L142)
 
 ___
 
@@ -436,7 +436,7 @@ RxStorageInstance.query
 
 #### Defined in
 
-[packages/iagon/src/IagonStorage/instance.ts:69](https://github.com/atala-community-projects/pluto-encrypted/blob/a4b16d4/packages/iagon/src/IagonStorage/instance.ts#L69)
+[packages/iagon/src/IagonStorage/instance.ts:69](https://github.com/atala-community-projects/pluto-encrypted/blob/eabdd0c/packages/iagon/src/IagonStorage/instance.ts#L69)
 
 ___
 
@@ -454,7 +454,7 @@ RxStorageInstance.remove
 
 #### Defined in
 
-[packages/iagon/src/IagonStorage/instance.ts:156](https://github.com/atala-community-projects/pluto-encrypted/blob/a4b16d4/packages/iagon/src/IagonStorage/instance.ts#L156)
+[packages/iagon/src/IagonStorage/instance.ts:156](https://github.com/atala-community-projects/pluto-encrypted/blob/eabdd0c/packages/iagon/src/IagonStorage/instance.ts#L156)
 
 ___
 
@@ -478,7 +478,7 @@ RxStorageInstance.resolveConflictResultionTask
 
 #### Defined in
 
-[packages/iagon/src/IagonStorage/instance.ts:162](https://github.com/atala-community-projects/pluto-encrypted/blob/a4b16d4/packages/iagon/src/IagonStorage/instance.ts#L162)
+[packages/iagon/src/IagonStorage/instance.ts:162](https://github.com/atala-community-projects/pluto-encrypted/blob/eabdd0c/packages/iagon/src/IagonStorage/instance.ts#L162)
 
 ___
 
@@ -500,4 +500,4 @@ ___
 
 #### Defined in
 
-[packages/iagon/src/IagonStorage/instance.ts:52](https://github.com/atala-community-projects/pluto-encrypted/blob/a4b16d4/packages/iagon/src/IagonStorage/instance.ts#L52)
+[packages/iagon/src/IagonStorage/instance.ts:52](https://github.com/atala-community-projects/pluto-encrypted/blob/eabdd0c/packages/iagon/src/IagonStorage/instance.ts#L52)

@@ -21,7 +21,7 @@
 
 #### Defined in
 
-[packages/database/src/types.ts:21](https://github.com/atala-community-projects/pluto-encrypted/blob/a4b16d4/packages/database/src/types.ts#L21)
+[packages/database/src/types.ts:21](https://github.com/atala-community-projects/pluto-encrypted/blob/eabdd0c/packages/database/src/types.ts#L21)
 
 ___
 
@@ -31,7 +31,7 @@ ___
 
 #### Defined in
 
-[packages/database/src/types.ts:22](https://github.com/atala-community-projects/pluto-encrypted/blob/a4b16d4/packages/database/src/types.ts#L22)
+[packages/database/src/types.ts:22](https://github.com/atala-community-projects/pluto-encrypted/blob/eabdd0c/packages/database/src/types.ts#L22)
 
 ___
 
@@ -41,7 +41,7 @@ ___
 
 #### Defined in
 
-[packages/database/src/types.ts:20](https://github.com/atala-community-projects/pluto-encrypted/blob/a4b16d4/packages/database/src/types.ts#L20)
+[packages/database/src/types.ts:20](https://github.com/atala-community-projects/pluto-encrypted/blob/eabdd0c/packages/database/src/types.ts#L20)
 
 ___
 
@@ -51,4 +51,4 @@ ___
 
 #### Defined in
 
-[packages/database/src/types.ts:23](https://github.com/atala-community-projects/pluto-encrypted/blob/a4b16d4/packages/database/src/types.ts#L23)
+[packages/database/src/types.ts:23](https://github.com/atala-community-projects/pluto-encrypted/blob/eabdd0c/packages/database/src/types.ts#L23)

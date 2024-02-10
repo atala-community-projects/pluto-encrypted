@@ -35,7 +35,7 @@
 
 #### Defined in
 
-[packages/schemas/src/schemas/credential/types.ts:32](https://github.com/atala-community-projects/pluto-encrypted/blob/a4b16d4/packages/schemas/src/schemas/credential/types.ts#L32)
+[packages/schemas/src/schemas/credential/types.ts:32](https://github.com/atala-community-projects/pluto-encrypted/blob/eabdd0c/packages/schemas/src/schemas/credential/types.ts#L32)
 
 ___
 
@@ -56,4 +56,4 @@ ___
 
 #### Defined in
 
-[packages/schemas/src/schemas/credential/types.ts:33](https://github.com/atala-community-projects/pluto-encrypted/blob/a4b16d4/packages/schemas/src/schemas/credential/types.ts#L33)
+[packages/schemas/src/schemas/credential/types.ts:33](https://github.com/atala-community-projects/pluto-encrypted/blob/eabdd0c/packages/schemas/src/schemas/credential/types.ts#L33)

@@ -46,7 +46,7 @@
 
 #### Defined in
 
-[packages/iagon/src/IagonStorage/api.ts:8](https://github.com/atala-community-projects/pluto-encrypted/blob/a4b16d4/packages/iagon/src/IagonStorage/api.ts#L8)
+[packages/iagon/src/IagonStorage/api.ts:8](https://github.com/atala-community-projects/pluto-encrypted/blob/eabdd0c/packages/iagon/src/IagonStorage/api.ts#L8)
 
 ## Properties
 
@@ -56,7 +56,7 @@
 
 #### Defined in
 
-[packages/iagon/src/IagonStorage/api.ts:7](https://github.com/atala-community-projects/pluto-encrypted/blob/a4b16d4/packages/iagon/src/IagonStorage/api.ts#L7)
+[packages/iagon/src/IagonStorage/api.ts:7](https://github.com/atala-community-projects/pluto-encrypted/blob/eabdd0c/packages/iagon/src/IagonStorage/api.ts#L7)
 
 ___
 
@@ -66,7 +66,7 @@ ___
 
 #### Defined in
 
-[packages/iagon/src/IagonStorage/api.ts:8](https://github.com/atala-community-projects/pluto-encrypted/blob/a4b16d4/packages/iagon/src/IagonStorage/api.ts#L8)
+[packages/iagon/src/IagonStorage/api.ts:8](https://github.com/atala-community-projects/pluto-encrypted/blob/eabdd0c/packages/iagon/src/IagonStorage/api.ts#L8)
 
 ## Accessors
 
@@ -80,7 +80,7 @@ ___
 
 #### Defined in
 
-[packages/iagon/src/IagonStorage/api.ts:10](https://github.com/atala-community-projects/pluto-encrypted/blob/a4b16d4/packages/iagon/src/IagonStorage/api.ts#L10)
+[packages/iagon/src/IagonStorage/api.ts:10](https://github.com/atala-community-projects/pluto-encrypted/blob/eabdd0c/packages/iagon/src/IagonStorage/api.ts#L10)
 
 ## Methods
 
@@ -102,7 +102,7 @@ ___
 
 #### Defined in
 
-[packages/iagon/src/IagonStorage/api.ts:107](https://github.com/atala-community-projects/pluto-encrypted/blob/a4b16d4/packages/iagon/src/IagonStorage/api.ts#L107)
+[packages/iagon/src/IagonStorage/api.ts:107](https://github.com/atala-community-projects/pluto-encrypted/blob/eabdd0c/packages/iagon/src/IagonStorage/api.ts#L107)
 
 ___
 
@@ -122,7 +122,7 @@ ___
 
 #### Defined in
 
-[packages/iagon/src/IagonStorage/api.ts:41](https://github.com/atala-community-projects/pluto-encrypted/blob/a4b16d4/packages/iagon/src/IagonStorage/api.ts#L41)
+[packages/iagon/src/IagonStorage/api.ts:41](https://github.com/atala-community-projects/pluto-encrypted/blob/eabdd0c/packages/iagon/src/IagonStorage/api.ts#L41)
 
 ___
 
@@ -144,7 +144,7 @@ ___
 
 #### Defined in
 
-[packages/iagon/src/IagonStorage/api.ts:65](https://github.com/atala-community-projects/pluto-encrypted/blob/a4b16d4/packages/iagon/src/IagonStorage/api.ts#L65)
+[packages/iagon/src/IagonStorage/api.ts:65](https://github.com/atala-community-projects/pluto-encrypted/blob/eabdd0c/packages/iagon/src/IagonStorage/api.ts#L65)
 
 ___
 
@@ -164,7 +164,7 @@ ___
 
 #### Defined in
 
-[packages/iagon/src/IagonStorage/api.ts:81](https://github.com/atala-community-projects/pluto-encrypted/blob/a4b16d4/packages/iagon/src/IagonStorage/api.ts#L81)
+[packages/iagon/src/IagonStorage/api.ts:81](https://github.com/atala-community-projects/pluto-encrypted/blob/eabdd0c/packages/iagon/src/IagonStorage/api.ts#L81)
 
 ___
 
@@ -184,7 +184,7 @@ ___
 
 #### Defined in
 
-[packages/iagon/src/IagonStorage/api.ts:161](https://github.com/atala-community-projects/pluto-encrypted/blob/a4b16d4/packages/iagon/src/IagonStorage/api.ts#L161)
+[packages/iagon/src/IagonStorage/api.ts:161](https://github.com/atala-community-projects/pluto-encrypted/blob/eabdd0c/packages/iagon/src/IagonStorage/api.ts#L161)
 
 ___
 
@@ -204,7 +204,7 @@ ___
 
 #### Defined in
 
-[packages/iagon/src/IagonStorage/api.ts:151](https://github.com/atala-community-projects/pluto-encrypted/blob/a4b16d4/packages/iagon/src/IagonStorage/api.ts#L151)
+[packages/iagon/src/IagonStorage/api.ts:151](https://github.com/atala-community-projects/pluto-encrypted/blob/eabdd0c/packages/iagon/src/IagonStorage/api.ts#L151)
 
 ___
 
@@ -225,7 +225,7 @@ ___
 
 #### Defined in
 
-[packages/iagon/src/IagonStorage/api.ts:139](https://github.com/atala-community-projects/pluto-encrypted/blob/a4b16d4/packages/iagon/src/IagonStorage/api.ts#L139)
+[packages/iagon/src/IagonStorage/api.ts:139](https://github.com/atala-community-projects/pluto-encrypted/blob/eabdd0c/packages/iagon/src/IagonStorage/api.ts#L139)
 
 ___
 
@@ -245,7 +245,7 @@ ___
 
 #### Defined in
 
-[packages/iagon/src/IagonStorage/api.ts:28](https://github.com/atala-community-projects/pluto-encrypted/blob/a4b16d4/packages/iagon/src/IagonStorage/api.ts#L28)
+[packages/iagon/src/IagonStorage/api.ts:28](https://github.com/atala-community-projects/pluto-encrypted/blob/eabdd0c/packages/iagon/src/IagonStorage/api.ts#L28)
 
 ___
 
@@ -271,7 +271,7 @@ ___
 
 #### Defined in
 
-[packages/iagon/src/IagonStorage/api.ts:14](https://github.com/atala-community-projects/pluto-encrypted/blob/a4b16d4/packages/iagon/src/IagonStorage/api.ts#L14)
+[packages/iagon/src/IagonStorage/api.ts:14](https://github.com/atala-community-projects/pluto-encrypted/blob/eabdd0c/packages/iagon/src/IagonStorage/api.ts#L14)
 
 ___
 
@@ -293,4 +293,4 @@ ___
 
 #### Defined in
 
-[packages/iagon/src/IagonStorage/api.ts:172](https://github.com/atala-community-projects/pluto-encrypted/blob/a4b16d4/packages/iagon/src/IagonStorage/api.ts#L172)
+[packages/iagon/src/IagonStorage/api.ts:172](https://github.com/atala-community-projects/pluto-encrypted/blob/eabdd0c/packages/iagon/src/IagonStorage/api.ts#L172)

@@ -1,3 +1,10 @@
+## @pluto-encrypted/schemas [1.3.3](https://github.com/atala-community-projects/pluto-encrypted/compare/@pluto-encrypted/schemas@1.3.2...@pluto-encrypted/schemas@1.3.3) (2024-02-10)
+
+
+### Bug Fixes
+
+* workaround to fix last keypath issue in SDKs. ([f4d1f94](https://github.com/atala-community-projects/pluto-encrypted/commit/f4d1f9430cfd0ed6e90c1c79783f4c91c6101752))
+
 ## @pluto-encrypted/schemas [1.3.2](https://github.com/atala-community-projects/pluto-encrypted/compare/@pluto-encrypted/schemas@1.3.1...@pluto-encrypted/schemas@1.3.2) (2024-02-08)
 
 

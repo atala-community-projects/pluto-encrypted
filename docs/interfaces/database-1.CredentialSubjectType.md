@@ -20,7 +20,7 @@
 
 #### Defined in
 
-[packages/schemas/src/schemas/credential/types.ts:8](https://github.com/atala-community-projects/pluto-encrypted/blob/a4b16d4/packages/schemas/src/schemas/credential/types.ts#L8)
+[packages/schemas/src/schemas/credential/types.ts:8](https://github.com/atala-community-projects/pluto-encrypted/blob/eabdd0c/packages/schemas/src/schemas/credential/types.ts#L8)
 
 ___
 
@@ -30,7 +30,7 @@ ___
 
 #### Defined in
 
-[packages/schemas/src/schemas/credential/types.ts:7](https://github.com/atala-community-projects/pluto-encrypted/blob/a4b16d4/packages/schemas/src/schemas/credential/types.ts#L7)
+[packages/schemas/src/schemas/credential/types.ts:7](https://github.com/atala-community-projects/pluto-encrypted/blob/eabdd0c/packages/schemas/src/schemas/credential/types.ts#L7)
 
 ___
 
@@ -40,4 +40,4 @@ ___
 
 #### Defined in
 
-[packages/schemas/src/schemas/credential/types.ts:9](https://github.com/atala-community-projects/pluto-encrypted/blob/a4b16d4/packages/schemas/src/schemas/credential/types.ts#L9)
+[packages/schemas/src/schemas/credential/types.ts:9](https://github.com/atala-community-projects/pluto-encrypted/blob/eabdd0c/packages/schemas/src/schemas/credential/types.ts#L9)
