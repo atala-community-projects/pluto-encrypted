@@ -65,7 +65,7 @@
 
 #### Defined in
 
-[packages/iagon/src/IagonStorage/internals.ts:21](https://github.com/atala-community-projects/pluto-encrypted/blob/8d4a2cf/packages/iagon/src/IagonStorage/internals.ts#L21)
+[packages/iagon/src/IagonStorage/internals.ts:21](https://github.com/atala-community-projects/pluto-encrypted/blob/771b3b2/packages/iagon/src/IagonStorage/internals.ts#L21)
 
 ## Properties
 
@@ -79,7 +79,7 @@ IagonStorageInternals.\_\_collectionFolder
 
 #### Defined in
 
-[packages/iagon/src/IagonStorage/internals.ts:13](https://github.com/atala-community-projects/pluto-encrypted/blob/8d4a2cf/packages/iagon/src/IagonStorage/internals.ts#L13)
+[packages/iagon/src/IagonStorage/internals.ts:13](https://github.com/atala-community-projects/pluto-encrypted/blob/771b3b2/packages/iagon/src/IagonStorage/internals.ts#L13)
 
 ___
 
@@ -93,7 +93,7 @@ IagonStorageInternals.\_\_dataFolder
 
 #### Defined in
 
-[packages/iagon/src/IagonStorage/internals.ts:15](https://github.com/atala-community-projects/pluto-encrypted/blob/8d4a2cf/packages/iagon/src/IagonStorage/internals.ts#L15)
+[packages/iagon/src/IagonStorage/internals.ts:15](https://github.com/atala-community-projects/pluto-encrypted/blob/771b3b2/packages/iagon/src/IagonStorage/internals.ts#L15)
 
 ___
 
@@ -107,7 +107,7 @@ IagonStorageInternals.\_\_databaseFolder
 
 #### Defined in
 
-[packages/iagon/src/IagonStorage/internals.ts:12](https://github.com/atala-community-projects/pluto-encrypted/blob/8d4a2cf/packages/iagon/src/IagonStorage/internals.ts#L12)
+[packages/iagon/src/IagonStorage/internals.ts:12](https://github.com/atala-community-projects/pluto-encrypted/blob/771b3b2/packages/iagon/src/IagonStorage/internals.ts#L12)
 
 ___
 
@@ -121,7 +121,7 @@ IagonStorageInternals.\_\_indexFolder
 
 #### Defined in
 
-[packages/iagon/src/IagonStorage/internals.ts:14](https://github.com/atala-community-projects/pluto-encrypted/blob/8d4a2cf/packages/iagon/src/IagonStorage/internals.ts#L14)
+[packages/iagon/src/IagonStorage/internals.ts:14](https://github.com/atala-community-projects/pluto-encrypted/blob/771b3b2/packages/iagon/src/IagonStorage/internals.ts#L14)
 
 ___
 
@@ -131,7 +131,7 @@ ___
 
 #### Defined in
 
-[packages/iagon/src/IagonStorage/internals.ts:16](https://github.com/atala-community-projects/pluto-encrypted/blob/8d4a2cf/packages/iagon/src/IagonStorage/internals.ts#L16)
+[packages/iagon/src/IagonStorage/internals.ts:16](https://github.com/atala-community-projects/pluto-encrypted/blob/771b3b2/packages/iagon/src/IagonStorage/internals.ts#L16)
 
 ___
 
@@ -145,7 +145,7 @@ IagonStorageInternals.refCount
 
 #### Defined in
 
-[packages/iagon/src/IagonStorage/internals.ts:21](https://github.com/atala-community-projects/pluto-encrypted/blob/8d4a2cf/packages/iagon/src/IagonStorage/internals.ts#L21)
+[packages/iagon/src/IagonStorage/internals.ts:21](https://github.com/atala-community-projects/pluto-encrypted/blob/771b3b2/packages/iagon/src/IagonStorage/internals.ts#L21)
 
 ___
 
@@ -155,7 +155,7 @@ ___
 
 #### Defined in
 
-[packages/iagon/src/IagonStorage/internals.ts:18](https://github.com/atala-community-projects/pluto-encrypted/blob/8d4a2cf/packages/iagon/src/IagonStorage/internals.ts#L18)
+[packages/iagon/src/IagonStorage/internals.ts:18](https://github.com/atala-community-projects/pluto-encrypted/blob/771b3b2/packages/iagon/src/IagonStorage/internals.ts#L18)
 
 ## Methods
 
@@ -180,7 +180,7 @@ IagonStorageInternals.addDoc
 
 #### Defined in
 
-[packages/iagon/src/IagonStorage/internals.ts:99](https://github.com/atala-community-projects/pluto-encrypted/blob/8d4a2cf/packages/iagon/src/IagonStorage/internals.ts#L99)
+[packages/iagon/src/IagonStorage/internals.ts:99](https://github.com/atala-community-projects/pluto-encrypted/blob/771b3b2/packages/iagon/src/IagonStorage/internals.ts#L99)
 
 ___
 
@@ -204,7 +204,7 @@ IagonStorageInternals.bulkGet
 
 #### Defined in
 
-[packages/iagon/src/IagonStorage/internals.ts:96](https://github.com/atala-community-projects/pluto-encrypted/blob/8d4a2cf/packages/iagon/src/IagonStorage/internals.ts#L96)
+[packages/iagon/src/IagonStorage/internals.ts:96](https://github.com/atala-community-projects/pluto-encrypted/blob/771b3b2/packages/iagon/src/IagonStorage/internals.ts#L96)
 
 ___
 
@@ -230,7 +230,7 @@ IagonStorageInternals.bulkPut
 
 #### Defined in
 
-[packages/iagon/src/IagonStorage/internals.ts:132](https://github.com/atala-community-projects/pluto-encrypted/blob/8d4a2cf/packages/iagon/src/IagonStorage/internals.ts#L132)
+[packages/iagon/src/IagonStorage/internals.ts:132](https://github.com/atala-community-projects/pluto-encrypted/blob/771b3b2/packages/iagon/src/IagonStorage/internals.ts#L132)
 
 ___
 
@@ -254,7 +254,7 @@ IagonStorageInternals.get
 
 #### Defined in
 
-[packages/iagon/src/IagonStorage/internals.ts:120](https://github.com/atala-community-projects/pluto-encrypted/blob/8d4a2cf/packages/iagon/src/IagonStorage/internals.ts#L120)
+[packages/iagon/src/IagonStorage/internals.ts:120](https://github.com/atala-community-projects/pluto-encrypted/blob/771b3b2/packages/iagon/src/IagonStorage/internals.ts#L120)
 
 ___
 
@@ -278,7 +278,7 @@ IagonStorageInternals.getDBDirectory
 
 #### Defined in
 
-[packages/iagon/src/IagonStorage/internals.ts:25](https://github.com/atala-community-projects/pluto-encrypted/blob/8d4a2cf/packages/iagon/src/IagonStorage/internals.ts#L25)
+[packages/iagon/src/IagonStorage/internals.ts:25](https://github.com/atala-community-projects/pluto-encrypted/blob/771b3b2/packages/iagon/src/IagonStorage/internals.ts#L25)
 
 ___
 
@@ -302,7 +302,7 @@ IagonStorageInternals.getIndex
 
 #### Defined in
 
-[packages/iagon/src/IagonStorage/internals.ts:158](https://github.com/atala-community-projects/pluto-encrypted/blob/8d4a2cf/packages/iagon/src/IagonStorage/internals.ts#L158)
+[packages/iagon/src/IagonStorage/internals.ts:158](https://github.com/atala-community-projects/pluto-encrypted/blob/771b3b2/packages/iagon/src/IagonStorage/internals.ts#L158)
 
 ___
 
@@ -327,7 +327,7 @@ IagonStorageInternals.initialiseDB
 
 #### Defined in
 
-[packages/iagon/src/IagonStorage/internals.ts:44](https://github.com/atala-community-projects/pluto-encrypted/blob/8d4a2cf/packages/iagon/src/IagonStorage/internals.ts#L44)
+[packages/iagon/src/IagonStorage/internals.ts:44](https://github.com/atala-community-projects/pluto-encrypted/blob/771b3b2/packages/iagon/src/IagonStorage/internals.ts#L44)
 
 ___
 
@@ -351,7 +351,7 @@ IagonStorageInternals.removeDoc
 
 #### Defined in
 
-[packages/iagon/src/IagonStorage/internals.ts:104](https://github.com/atala-community-projects/pluto-encrypted/blob/8d4a2cf/packages/iagon/src/IagonStorage/internals.ts#L104)
+[packages/iagon/src/IagonStorage/internals.ts:104](https://github.com/atala-community-projects/pluto-encrypted/blob/771b3b2/packages/iagon/src/IagonStorage/internals.ts#L104)
 
 ___
 
@@ -376,7 +376,7 @@ IagonStorageInternals.removeFromIndex
 
 #### Defined in
 
-[packages/iagon/src/IagonStorage/internals.ts:111](https://github.com/atala-community-projects/pluto-encrypted/blob/8d4a2cf/packages/iagon/src/IagonStorage/internals.ts#L111)
+[packages/iagon/src/IagonStorage/internals.ts:111](https://github.com/atala-community-projects/pluto-encrypted/blob/771b3b2/packages/iagon/src/IagonStorage/internals.ts#L111)
 
 ___
 
@@ -390,7 +390,7 @@ ___
 
 #### Defined in
 
-[packages/iagon/src/IagonStorage/internals.ts:37](https://github.com/atala-community-projects/pluto-encrypted/blob/8d4a2cf/packages/iagon/src/IagonStorage/internals.ts#L37)
+[packages/iagon/src/IagonStorage/internals.ts:37](https://github.com/atala-community-projects/pluto-encrypted/blob/771b3b2/packages/iagon/src/IagonStorage/internals.ts#L37)
 
 ___
 
@@ -415,4 +415,4 @@ IagonStorageInternals.updateIndex
 
 #### Defined in
 
-[packages/iagon/src/IagonStorage/internals.ts:172](https://github.com/atala-community-projects/pluto-encrypted/blob/8d4a2cf/packages/iagon/src/IagonStorage/internals.ts#L172)
+[packages/iagon/src/IagonStorage/internals.ts:172](https://github.com/atala-community-projects/pluto-encrypted/blob/771b3b2/packages/iagon/src/IagonStorage/internals.ts#L172)

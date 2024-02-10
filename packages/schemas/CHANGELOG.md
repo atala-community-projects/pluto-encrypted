@@ -1,3 +1,10 @@
+## @pluto-encrypted/schemas [1.3.5](https://github.com/atala-community-projects/pluto-encrypted/compare/@pluto-encrypted/schemas@1.3.4...@pluto-encrypted/schemas@1.3.5) (2024-02-10)
+
+
+### Bug Fixes
+
+* workaround to not store dids twice ([aa3b069](https://github.com/atala-community-projects/pluto-encrypted/commit/aa3b0696aa5c438750d9add0e04f599d9260fcc6))
+
 ## @pluto-encrypted/schemas [1.3.4](https://github.com/atala-community-projects/pluto-encrypted/compare/@pluto-encrypted/schemas@1.3.3...@pluto-encrypted/schemas@1.3.4) (2024-02-10)
 
 

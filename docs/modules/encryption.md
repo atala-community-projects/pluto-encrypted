@@ -84,7 +84,7 @@ ___
 
 #### Defined in
 
-[packages/encryption/src/index.ts:106](https://github.com/atala-community-projects/pluto-encrypted/blob/8d4a2cf/packages/encryption/src/index.ts#L106)
+[packages/encryption/src/index.ts:106](https://github.com/atala-community-projects/pluto-encrypted/blob/771b3b2/packages/encryption/src/index.ts#L106)
 
 ## Functions
 
@@ -106,7 +106,7 @@ get an array with OldCollection-instances from all existing old storage-instance
 
 #### Defined in
 
-[packages/encryption/src/migration/index.ts:140](https://github.com/atala-community-projects/pluto-encrypted/blob/8d4a2cf/packages/encryption/src/migration/index.ts#L140)
+[packages/encryption/src/migration/index.ts:140](https://github.com/atala-community-projects/pluto-encrypted/blob/771b3b2/packages/encryption/src/migration/index.ts#L140)
 
 ___
 
@@ -137,7 +137,7 @@ status-action with status and migrated document
 
 #### Defined in
 
-[packages/encryption/src/migration/index.ts:287](https://github.com/atala-community-projects/pluto-encrypted/blob/8d4a2cf/packages/encryption/src/migration/index.ts#L287)
+[packages/encryption/src/migration/index.ts:287](https://github.com/atala-community-projects/pluto-encrypted/blob/771b3b2/packages/encryption/src/migration/index.ts#L287)
 
 ___
 
@@ -159,7 +159,7 @@ ___
 
 #### Defined in
 
-[packages/encryption/src/migration/index.ts:79](https://github.com/atala-community-projects/pluto-encrypted/blob/8d4a2cf/packages/encryption/src/migration/index.ts#L79)
+[packages/encryption/src/migration/index.ts:79](https://github.com/atala-community-projects/pluto-encrypted/blob/771b3b2/packages/encryption/src/migration/index.ts#L79)
 
 ___
 
@@ -180,7 +180,7 @@ ___
 
 #### Defined in
 
-[packages/encryption/src/index.ts:78](https://github.com/atala-community-projects/pluto-encrypted/blob/8d4a2cf/packages/encryption/src/index.ts#L78)
+[packages/encryption/src/index.ts:78](https://github.com/atala-community-projects/pluto-encrypted/blob/771b3b2/packages/encryption/src/index.ts#L78)
 
 ___
 
@@ -202,7 +202,7 @@ deletes this.storageInstance and removes it from the database.collectionsCollect
 
 #### Defined in
 
-[packages/encryption/src/migration/index.ts:426](https://github.com/atala-community-projects/pluto-encrypted/blob/8d4a2cf/packages/encryption/src/migration/index.ts#L426)
+[packages/encryption/src/migration/index.ts:426](https://github.com/atala-community-projects/pluto-encrypted/blob/771b3b2/packages/encryption/src/migration/index.ts#L426)
 
 ___
 
@@ -223,7 +223,7 @@ ___
 
 #### Defined in
 
-[packages/encryption/src/index.ts:63](https://github.com/atala-community-projects/pluto-encrypted/blob/8d4a2cf/packages/encryption/src/index.ts#L63)
+[packages/encryption/src/index.ts:63](https://github.com/atala-community-projects/pluto-encrypted/blob/771b3b2/packages/encryption/src/index.ts#L63)
 
 ___
 
@@ -245,7 +245,7 @@ ___
 
 #### Defined in
 
-[packages/encryption/src/migration/index.ts:193](https://github.com/atala-community-projects/pluto-encrypted/blob/8d4a2cf/packages/encryption/src/migration/index.ts#L193)
+[packages/encryption/src/migration/index.ts:193](https://github.com/atala-community-projects/pluto-encrypted/blob/771b3b2/packages/encryption/src/migration/index.ts#L193)
 
 ___
 
@@ -265,7 +265,7 @@ ___
 
 #### Defined in
 
-[packages/encryption/src/migration/index.ts:447](https://github.com/atala-community-projects/pluto-encrypted/blob/8d4a2cf/packages/encryption/src/migration/index.ts#L447)
+[packages/encryption/src/migration/index.ts:447](https://github.com/atala-community-projects/pluto-encrypted/blob/771b3b2/packages/encryption/src/migration/index.ts#L447)
 
 ___
 
@@ -285,7 +285,7 @@ ___
 
 #### Defined in
 
-[packages/encryption/src/migration/index.ts:121](https://github.com/atala-community-projects/pluto-encrypted/blob/8d4a2cf/packages/encryption/src/migration/index.ts#L121)
+[packages/encryption/src/migration/index.ts:121](https://github.com/atala-community-projects/pluto-encrypted/blob/771b3b2/packages/encryption/src/migration/index.ts#L121)
 
 ___
 
@@ -312,7 +312,7 @@ ___
 
 #### Defined in
 
-[packages/encryption/src/migration/index.ts:271](https://github.com/atala-community-projects/pluto-encrypted/blob/8d4a2cf/packages/encryption/src/migration/index.ts#L271)
+[packages/encryption/src/migration/index.ts:271](https://github.com/atala-community-projects/pluto-encrypted/blob/771b3b2/packages/encryption/src/migration/index.ts#L271)
 
 ___
 
@@ -342,7 +342,7 @@ Error if final doc does not match final schema or migrationStrategy crashes
 
 #### Defined in
 
-[packages/encryption/src/migration/index.ts:226](https://github.com/atala-community-projects/pluto-encrypted/blob/8d4a2cf/packages/encryption/src/migration/index.ts#L226)
+[packages/encryption/src/migration/index.ts:226](https://github.com/atala-community-projects/pluto-encrypted/blob/771b3b2/packages/encryption/src/migration/index.ts#L226)
 
 ___
 
@@ -364,7 +364,7 @@ returns true if a migration is needed
 
 #### Defined in
 
-[packages/encryption/src/migration/index.ts:161](https://github.com/atala-community-projects/pluto-encrypted/blob/8d4a2cf/packages/encryption/src/migration/index.ts#L161)
+[packages/encryption/src/migration/index.ts:161](https://github.com/atala-community-projects/pluto-encrypted/blob/771b3b2/packages/encryption/src/migration/index.ts#L161)
 
 ___
 
@@ -387,7 +387,7 @@ so people do not have to unsubscribe
 
 #### Defined in
 
-[packages/encryption/src/migration/index.ts:459](https://github.com/atala-community-projects/pluto-encrypted/blob/8d4a2cf/packages/encryption/src/migration/index.ts#L459)
+[packages/encryption/src/migration/index.ts:459](https://github.com/atala-community-projects/pluto-encrypted/blob/771b3b2/packages/encryption/src/migration/index.ts#L459)
 
 ___
 
@@ -409,7 +409,7 @@ ___
 
 #### Defined in
 
-[packages/encryption/src/migration/index.ts:175](https://github.com/atala-community-projects/pluto-encrypted/blob/8d4a2cf/packages/encryption/src/migration/index.ts#L175)
+[packages/encryption/src/migration/index.ts:175](https://github.com/atala-community-projects/pluto-encrypted/blob/771b3b2/packages/encryption/src/migration/index.ts#L175)
 
 ___
 
@@ -440,4 +440,4 @@ RxStorage<Internals, InstanceCreationOptions>
 
 #### Defined in
 
-[packages/encryption/src/index.ts:119](https://github.com/atala-community-projects/pluto-encrypted/blob/8d4a2cf/packages/encryption/src/index.ts#L119)
+[packages/encryption/src/index.ts:119](https://github.com/atala-community-projects/pluto-encrypted/blob/771b3b2/packages/encryption/src/index.ts#L119)

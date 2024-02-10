@@ -38,7 +38,7 @@
 
 #### Defined in
 
-[packages/encryption/src/migration/index.ts:28](https://github.com/atala-community-projects/pluto-encrypted/blob/8d4a2cf/packages/encryption/src/migration/index.ts#L28)
+[packages/encryption/src/migration/index.ts:28](https://github.com/atala-community-projects/pluto-encrypted/blob/771b3b2/packages/encryption/src/migration/index.ts#L28)
 
 ## Properties
 
@@ -48,7 +48,7 @@
 
 #### Defined in
 
-[packages/encryption/src/migration/index.ts:37](https://github.com/atala-community-projects/pluto-encrypted/blob/8d4a2cf/packages/encryption/src/migration/index.ts#L37)
+[packages/encryption/src/migration/index.ts:37](https://github.com/atala-community-projects/pluto-encrypted/blob/771b3b2/packages/encryption/src/migration/index.ts#L37)
 
 ___
 
@@ -58,7 +58,7 @@ ___
 
 #### Defined in
 
-[packages/encryption/src/migration/index.ts:38](https://github.com/atala-community-projects/pluto-encrypted/blob/8d4a2cf/packages/encryption/src/migration/index.ts#L38)
+[packages/encryption/src/migration/index.ts:38](https://github.com/atala-community-projects/pluto-encrypted/blob/771b3b2/packages/encryption/src/migration/index.ts#L38)
 
 ___
 
@@ -68,7 +68,7 @@ ___
 
 #### Defined in
 
-[packages/encryption/src/migration/index.ts:30](https://github.com/atala-community-projects/pluto-encrypted/blob/8d4a2cf/packages/encryption/src/migration/index.ts#L30)
+[packages/encryption/src/migration/index.ts:30](https://github.com/atala-community-projects/pluto-encrypted/blob/771b3b2/packages/encryption/src/migration/index.ts#L30)
 
 ___
 
@@ -78,7 +78,7 @@ ___
 
 #### Defined in
 
-[packages/encryption/src/migration/index.ts:39](https://github.com/atala-community-projects/pluto-encrypted/blob/8d4a2cf/packages/encryption/src/migration/index.ts#L39)
+[packages/encryption/src/migration/index.ts:39](https://github.com/atala-community-projects/pluto-encrypted/blob/771b3b2/packages/encryption/src/migration/index.ts#L39)
 
 ___
 
@@ -88,7 +88,7 @@ ___
 
 #### Defined in
 
-[packages/encryption/src/migration/index.ts:29](https://github.com/atala-community-projects/pluto-encrypted/blob/8d4a2cf/packages/encryption/src/migration/index.ts#L29)
+[packages/encryption/src/migration/index.ts:29](https://github.com/atala-community-projects/pluto-encrypted/blob/771b3b2/packages/encryption/src/migration/index.ts#L29)
 
 ## Methods
 
@@ -110,7 +110,7 @@ ___
 
 #### Defined in
 
-[packages/encryption/src/migration/index.ts:41](https://github.com/atala-community-projects/pluto-encrypted/blob/8d4a2cf/packages/encryption/src/migration/index.ts#L41)
+[packages/encryption/src/migration/index.ts:41](https://github.com/atala-community-projects/pluto-encrypted/blob/771b3b2/packages/encryption/src/migration/index.ts#L41)
 
 ___
 
@@ -130,4 +130,4 @@ ___
 
 #### Defined in
 
-[packages/encryption/src/migration/index.ts:57](https://github.com/atala-community-projects/pluto-encrypted/blob/8d4a2cf/packages/encryption/src/migration/index.ts#L57)
+[packages/encryption/src/migration/index.ts:57](https://github.com/atala-community-projects/pluto-encrypted/blob/771b3b2/packages/encryption/src/migration/index.ts#L57)

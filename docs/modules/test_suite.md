@@ -31,4 +31,4 @@ This package can be used as a compliance test to validate a new storage created 
 
 #### Defined in
 
-[packages/test-suite/src/index.ts:16](https://github.com/atala-community-projects/pluto-encrypted/blob/8d4a2cf/packages/test-suite/src/index.ts#L16)
+[packages/test-suite/src/index.ts:16](https://github.com/atala-community-projects/pluto-encrypted/blob/771b3b2/packages/test-suite/src/index.ts#L16)
