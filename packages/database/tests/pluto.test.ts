@@ -4,7 +4,7 @@ import { describe, it, beforeEach, afterEach } from 'vitest';
 import fs from 'fs';
 import path from 'path';
 import { randomUUID } from "crypto";
-import SDK from "@atala/prism-wallet-sdk";
+import SDK, { JWTCredential } from "@atala/prism-wallet-sdk";
 import * as sinon from "sinon";
 import { RxCollection, RxStorage } from "rxdb";
 import InMemory from "../../inmemory/src";
@@ -215,15 +215,17 @@ describe("Pluto encrypted testing with different storages", () => {
                     "did:prism:733e594871d7700d35e6116011a08fc11e88ff9d366d8b5571ffc1aa18d249ea:Ct8BCtwBEnQKH2F1dGhlbnRpY2F0aW9uYXV0aGVudGljYXRpb25LZXkQBEJPCglzZWNwMjU2azESIDS5zeYUkLCSAJLI6aLXRTPRxstCLPUEI6TgBrAVCHkwGiDk-ffklrHIFW7pKkT8i-YksXi-XXi5h31czUMaVClcpxJkCg9tYXN0ZXJtYXN0ZXJLZXkQAUJPCglzZWNwMjU2azESIDS5zeYUkLCSAJLI6aLXRTPRxstCLPUEI6TgBrAVCHkwGiDk-ffklrHIFW7pKkT8i-YksXi-XXi5h31czUMaVClcpw2"
                 );
                 const privateKey = Fixtures.secp256K1.privateKey;
+                expect(await db.getPrismLastKeyPathIndex()).toBe(0);
+
                 await db.storePrismDID(did, 0, privateKey, null);
                 expect((await db.getAllPrismDIDs()).length).toBe(1);
                 expect(await db.getDIDInfoByDID(did)).not.toBe(null);
-                expect(await db.getPrismDIDKeyPathIndex(did)).toBe(0);
-                expect(await db.getPrismLastKeyPathIndex()).toBe(0);
-                await db.storePrismDID(did2, 1, privateKey, null);
-                expect(await db.getPrismDIDKeyPathIndex(did2)).toBe(1);
+                expect(await db.getPrismDIDKeyPathIndex(did)).toBe(1);
                 expect(await db.getPrismLastKeyPathIndex()).toBe(1);
-                expect(await db.getPrismDIDKeyPathIndex(did3)).toBe(null);
+                await db.storePrismDID(did2, 1, privateKey, null);
+                expect(await db.getPrismDIDKeyPathIndex(did2)).toBe(2);
+                expect(await db.getPrismLastKeyPathIndex()).toBe(2);
+                expect(await db.getPrismDIDKeyPathIndex(did3)).toBe(0);
             });
 
             it(storageName + "Should throw an exception if a wrong key object from Database is loaded", async ({ expect }) => {
@@ -664,6 +666,93 @@ describe("Pluto encrypted testing with different storages", () => {
                 const results = await db.getAllCredentials()
                 expect(results.length).toBe(1);
             });
+
+            it(storageName + "Should store and fetch a JWT Credential and then generate  a proof", async ({ expect }) => {
+                class PresentationRequest<T = unknown> {
+                    /**
+                     * @constructor
+                     * @param type - CredentialType the json is related to
+                     * @param json - the raw value
+                     */
+                    constructor(type: SDK.Domain.CredentialType.AnonCreds, json: SDK.Domain.Anoncreds.PresentationRequest);
+                    constructor(type: SDK.Domain.CredentialType.JWT, json: any);
+                    constructor(
+                        private readonly type: SDK.Domain.CredentialType,
+                        private readonly json: T
+                    ) { }
+
+                    /**
+                     * Type guard that the instance is for the given CredentialType
+                     * 
+                     * @param type 
+                     * @returns {boolean}
+                     */
+                    isType(type: SDK.Domain.CredentialType.AnonCreds): this is PresentationRequest<SDK.Domain.Anoncreds.PresentationRequest>;
+                    isType(type: SDK.Domain.CredentialType.JWT): this is PresentationRequest<any>;
+                    isType(target: SDK.Domain.CredentialType) {
+                        return this.type === target;
+                    }
+
+                    /**
+                     * Get the raw PresentationRequest JSON
+                     * 
+                     * @returns JSON
+                     */
+                    toJSON(): T {
+                        return this.json;
+                    }
+                }
+
+                expect((await db.getAllCredentials()).length).toBe(0);
+                const jwtPayload = Fixtures.createJWTPayload(
+                    "jwtid",
+                    "proof",
+                    SDK.Domain.CredentialType.JWT
+                );
+                const encoded = encodeJWTCredential(jwtPayload);
+
+                const parsedCredential = await pollux.parseCredential(Buffer.from(encoded), {
+                    type: SDK.Domain.CredentialType.JWT,
+                });
+                await db.storeCredential(parsedCredential);
+
+
+                const credentials = await db.getAllCredentials()
+                expect(credentials.length).toBe(1);
+
+                const credential = credentials[0];
+                const apollo = new Apollo();
+
+                const pr = new PresentationRequest(SDK.Domain.CredentialType.JWT, {
+                    "options": {
+                        "challenge": "11c91493-01b3-4c4d-ac36-b336bab5bddf",
+                        "domain": "http://localhost:8000/prism-agent"
+                    },
+                    "presentation_definition": {
+                        "format": null,
+                        "id": "b2a49475-f8ba-4952-a719-a28e909858fa",
+                        "input_descriptors": [],
+                        "name": null,
+                        "purpose": null
+                    }
+                });
+                const key = apollo.createPrivateKey({
+                    type: SDK.Domain.KeyTypes.EC,
+                    curve: SDK.Domain.Curve.SECP256K1,
+                    seed: Buffer.from(apollo.createRandomSeed().seed.value).toString('hex')
+                });
+                const did = SDK.Domain.DID.fromString("did:prism:333333");
+                const result = await pollux.createPresentationProof(pr as any, credential as any, {
+                    did,
+                    privateKey: key
+                });
+
+                expect(result).not.to.be.null;
+            })
+
+
+
+
 
             it(storageName + "Should store and fetch a Anoncreds Credential", async ({ expect }) => {
                 expect((await db.getAllCredentials()).length).toBe(0);

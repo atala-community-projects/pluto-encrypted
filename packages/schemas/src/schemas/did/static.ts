@@ -111,9 +111,9 @@ export const DIDStaticMethods: DIDStaticMethodTypes = {
     async getPrismDIDKeyPathIndex(did: SDK.Domain.DID): Promise<number | null> {
         const [key] = await this.getDIDPrivateKeysByDID!(did)
         if (!key) {
-            return null
+            return 0
         }
-        return key.index++ || 0
+        return key.index + 1
     },
 
     async getPrismLastKeyPathIndex(): Promise<number> {
@@ -121,7 +121,8 @@ export const DIDStaticMethods: DIDStaticMethodTypes = {
         if (!results || results.length === 0) {
             return 0
         }
-        return Math.max(...results.map((result) => result.keyPathIndex))
+        const maxim = Math.max(...results.map((result) => result.keyPathIndex))
+        return maxim + 1
     },
     async getAllPeerDIDs(): Promise<SDK.PeerDID[]> {
         const peerDIDs: SDK.PeerDID[] = []
