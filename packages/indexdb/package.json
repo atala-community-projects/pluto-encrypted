@@ -31,11 +31,11 @@
   "author": "elribonazo@gmail.com",
   "license": "Apache-2.0",
   "dependencies": {
-    "rxdb": "^14.17.0",
-    "uuid": "^9.0.1",
     "@pluto-encrypted/encryption": "1.11.0",
     "@pluto-encrypted/shared": "1.11.3",
-    "array-push-at-sort-position": "^4.0.1"
+    "array-push-at-sort-position": "^4.0.1",
+    "rxdb": "^15.8.0",
+    "uuid": "^9.0.1"
   },
   "devDependencies": {
     "@pluto-encrypted/encryption": "1.11.0",

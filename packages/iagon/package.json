@@ -32,7 +32,7 @@
     "array-push-at-sort-position": "^4.0.1",
     "axios": "^1.6.5",
     "request": "^2.88.2",
-    "rxdb": "^14.17.0",
+    "rxdb": "^15.8.0",
     "uuid": "^9.0.1"
   },
   "devDependencies": {
