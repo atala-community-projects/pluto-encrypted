@@ -38,4 +38,4 @@
 
 #### Defined in
 
-[packages/schemas/src/schemas/credential/types.ts:28](https://github.com/atala-community-projects/pluto-encrypted/blob/dd87575/packages/schemas/src/schemas/credential/types.ts#L28)
+[packages/schemas/src/schemas/credential/types.ts:28](https://github.com/atala-community-projects/pluto-encrypted/blob/a4d8dff/packages/schemas/src/schemas/credential/types.ts#L28)

@@ -54,7 +54,7 @@
 
 #### Defined in
 
-[packages/iagon/src/IagonStorage/types.ts:28](https://github.com/atala-community-projects/pluto-encrypted/blob/dd87575/packages/iagon/src/IagonStorage/types.ts#L28)
+[packages/iagon/src/IagonStorage/types.ts:28](https://github.com/atala-community-projects/pluto-encrypted/blob/a4d8dff/packages/iagon/src/IagonStorage/types.ts#L28)
 
 ___
 
@@ -79,7 +79,7 @@ ___
 
 #### Defined in
 
-[packages/iagon/src/IagonStorage/types.ts:15](https://github.com/atala-community-projects/pluto-encrypted/blob/dd87575/packages/iagon/src/IagonStorage/types.ts#L15)
+[packages/iagon/src/IagonStorage/types.ts:15](https://github.com/atala-community-projects/pluto-encrypted/blob/a4d8dff/packages/iagon/src/IagonStorage/types.ts#L15)
 
 ___
 
@@ -96,7 +96,7 @@ ___
 
 #### Defined in
 
-[packages/iagon/src/IagonStorage/types.ts:5](https://github.com/atala-community-projects/pluto-encrypted/blob/dd87575/packages/iagon/src/IagonStorage/types.ts#L5)
+[packages/iagon/src/IagonStorage/types.ts:5](https://github.com/atala-community-projects/pluto-encrypted/blob/a4d8dff/packages/iagon/src/IagonStorage/types.ts#L5)
 
 ___
 
@@ -112,7 +112,7 @@ ___
 
 #### Defined in
 
-[packages/iagon/src/IagonStorage/types.ts:46](https://github.com/atala-community-projects/pluto-encrypted/blob/dd87575/packages/iagon/src/IagonStorage/types.ts#L46)
+[packages/iagon/src/IagonStorage/types.ts:46](https://github.com/atala-community-projects/pluto-encrypted/blob/a4d8dff/packages/iagon/src/IagonStorage/types.ts#L46)
 
 ___
 
@@ -148,7 +148,7 @@ ___
 
 #### Defined in
 
-[packages/iagon/src/IagonStorage/types.ts:54](https://github.com/atala-community-projects/pluto-encrypted/blob/dd87575/packages/iagon/src/IagonStorage/types.ts#L54)
+[packages/iagon/src/IagonStorage/types.ts:54](https://github.com/atala-community-projects/pluto-encrypted/blob/a4d8dff/packages/iagon/src/IagonStorage/types.ts#L54)
 
 ## Functions
 
@@ -168,4 +168,4 @@ ___
 
 #### Defined in
 
-[packages/iagon/src/IagonStorage/index.ts:60](https://github.com/atala-community-projects/pluto-encrypted/blob/dd87575/packages/iagon/src/IagonStorage/index.ts#L60)
+[packages/iagon/src/IagonStorage/index.ts:60](https://github.com/atala-community-projects/pluto-encrypted/blob/a4d8dff/packages/iagon/src/IagonStorage/index.ts#L60)

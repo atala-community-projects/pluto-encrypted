@@ -38,4 +38,4 @@
 
 #### Defined in
 
-[packages/schemas/src/schemas/mediator/types.ts:16](https://github.com/atala-community-projects/pluto-encrypted/blob/dd87575/packages/schemas/src/schemas/mediator/types.ts#L16)
+[packages/schemas/src/schemas/mediator/types.ts:16](https://github.com/atala-community-projects/pluto-encrypted/blob/a4d8dff/packages/schemas/src/schemas/mediator/types.ts#L16)
