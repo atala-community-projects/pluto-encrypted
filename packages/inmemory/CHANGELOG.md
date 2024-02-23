@@ -1,3 +1,11 @@
+## @pluto-encrypted/inmemory [1.12.3](https://github.com/atala-community-projects/pluto-encrypted/compare/@pluto-encrypted/inmemory@1.12.2...@pluto-encrypted/inmemory@1.12.3) (2024-02-23)
+
+
+### Bug Fixes
+
+* force inmemory release after ci issue ([5487cbd](https://github.com/atala-community-projects/pluto-encrypted/commit/5487cbdff34ff16d0a923e3ed894d948e4a15fd9))
+* migration fixes for testing scenarios. ([a4d8dff](https://github.com/atala-community-projects/pluto-encrypted/commit/a4d8dff278a76e0b17411598f4ef19287fb6cfce))
+
 ## @pluto-encrypted/inmemory [1.12.2](https://github.com/atala-community-projects/pluto-encrypted/compare/@pluto-encrypted/inmemory@1.12.1...@pluto-encrypted/inmemory@1.12.2) (2024-02-08)
 
 

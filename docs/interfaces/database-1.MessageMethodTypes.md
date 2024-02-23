@@ -38,4 +38,4 @@
 
 #### Defined in
 
-[packages/schemas/src/schemas/message/types.ts:26](https://github.com/atala-community-projects/pluto-encrypted/blob/a4d8dff/packages/schemas/src/schemas/message/types.ts#L26)
+[packages/schemas/src/schemas/message/types.ts:26](https://github.com/atala-community-projects/pluto-encrypted/blob/b730e61/packages/schemas/src/schemas/message/types.ts#L26)

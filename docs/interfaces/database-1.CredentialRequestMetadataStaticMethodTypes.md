@@ -36,7 +36,7 @@
 
 #### Defined in
 
-[packages/schemas/src/schemas/credentialRequestMetadata/types.ts:36](https://github.com/atala-community-projects/pluto-encrypted/blob/a4d8dff/packages/schemas/src/schemas/credentialRequestMetadata/types.ts#L36)
+[packages/schemas/src/schemas/credentialRequestMetadata/types.ts:36](https://github.com/atala-community-projects/pluto-encrypted/blob/b730e61/packages/schemas/src/schemas/credentialRequestMetadata/types.ts#L36)
 
 ___
 
@@ -58,4 +58,4 @@ ___
 
 #### Defined in
 
-[packages/schemas/src/schemas/credentialRequestMetadata/types.ts:40](https://github.com/atala-community-projects/pluto-encrypted/blob/a4d8dff/packages/schemas/src/schemas/credentialRequestMetadata/types.ts#L40)
+[packages/schemas/src/schemas/credentialRequestMetadata/types.ts:40](https://github.com/atala-community-projects/pluto-encrypted/blob/b730e61/packages/schemas/src/schemas/credentialRequestMetadata/types.ts#L40)
