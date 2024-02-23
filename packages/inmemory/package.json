@@ -1,7 +1,7 @@
 {
   "name": "@pluto-encrypted/inmemory",
   "version": "1.12.2",
-  "description": "Secure Encrypted InMemory storage for @pluto-encrypted/database",
+  "description": "Secure Encrypted InMemory storage for Edge agent SDK",
   "main": "./build/cjs/index.cjs",
   "module": "./build/esm/index.mjs",
   "types": "./build/index.d.ts",
