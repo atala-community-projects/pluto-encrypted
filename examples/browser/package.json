@@ -14,7 +14,7 @@
     "@types/react": "^18.2.7",
     "@types/react-dom": "^18.2.4",
     "eslint-config-react-app": "^7.0.1",
-    "jose": "^4.14.4",
+    "jose": "^4.15.5",
     "jotai": "^2.0.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
